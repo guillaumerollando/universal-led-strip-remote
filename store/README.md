@@ -28,9 +28,10 @@ Tout ce qu'il faut pour la fiche Play Store de **Universal LED Strip Remote** (�
 
 ## Encore à faire avant la publication
 
-1. Pousser le site (`~/Dev/site`) pour mettre les pages légales en ligne (contact : `guija35@gmail.com`, dans `_config.yml`)
-2. Choisir l'identifiant définitif du paquet (il apparaît dans l'adresse Play Store et ne peut plus changer ensuite)
-3. Clé de signature de publication (upload key) + Play App Signing ; build `.aab` (`./gradlew bundleRelease`)
+1. ~~Pages légales en ligne~~ (fait le 2026-10-09)
+2. ~~Identifiant `com.rollandostudio.ledstripremote`~~ (2026-10-09)
+3. ~~Clé d'envoi (`~/Dev/Utils/keystore/led-strip-remote-upload.jks` + `.env`, à sauvegarder hors de l'ordi) et AAB signé
+   `export/LedStripRemote-1.0.0.aab`~~ (2026-10-09) ; Play App Signing à activer à la création de l'appli
 4. Captures d'écran (au moins 2, idéalement 4 à 8, format téléphone) : accueil avec pièces, fiche Bluetooth (couleurs,
    effets), assistant infrarouge, recherche
 5. Compte développeur personnel récent : **test fermé obligatoire** (12 testeurs pendant 14 jours) avant la production

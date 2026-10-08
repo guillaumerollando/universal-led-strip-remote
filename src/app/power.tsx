@@ -12,7 +12,7 @@ const norm = (s: string): string => s.normalize('NFD').replace(/[̀-ͯ]/g, '').t
 
 /**
  * Lien profond pour les raccourcis et les assistants :
- * `rubanix://power?room=Salon&on=1`, `rubanix://power?device=<nom>&on=0`, `rubanix://power?all=1&on=0`.
+ * `ledstrip://power?room=Salon&on=1`, `ledstrip://power?device=<nom>&on=0`, `ledstrip://power?all=1&on=0`.
  */
 export default function PowerLink() {
   const { room, device, all, on } = useLocalSearchParams<{ room?: string; device?: string; all?: string; on?: string }>();

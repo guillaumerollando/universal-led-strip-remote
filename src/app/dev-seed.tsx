@@ -7,7 +7,7 @@ import { styles } from '../ui/kit';
 
 /**
  * Développement seulement : remplit l'appli d'une pièce et de rubans de démonstration (allumés, en couleur),
- * pour vérifier l'interface sur l'émulateur, qui n'a ni Bluetooth ni infrarouge. `rubanix://dev-seed`
+ * pour vérifier l'interface sur l'émulateur, qui n'a ni Bluetooth ni infrarouge. `ledstrip://dev-seed`
  */
 export default function DevSeed() {
   useEffect(() => {

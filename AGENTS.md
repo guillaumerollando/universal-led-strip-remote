@@ -15,6 +15,11 @@ et pilote directement ce qu'il sait piloter (ELK-BLEDOM en Bluetooth, rubans inf
 lien avec un compte ou une appli d'origine (Smart Life…), jamais de kit propriétaire : un système fermé (Tuya) reçoit juste
 un lien vers son appli et l'astuce « ajoute-le en infrarouge ».
 
+Identifiant Android : `com.rollandostudio.ledstripremote` (définitif dès la création dans la Play Console) ; liens
+`ledstrip://`. « Rubanix » ne reste que dans les noms internes (dossier, module natif, clés de stockage).
+Publication : vault `06-publication/` (plan, réponses aux formulaires), `store/`, skill `publier-sur-le-play-store`.
+`versionCode` (app.json) à augmenter à chaque envoi.
+
 Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adresses Bluetooth et bride le réseau local).
 
 ## Où trouver quoi
@@ -57,7 +62,9 @@ pnpm prebuild                # régénère android/ (jamais modifié à la main)
 pnpm android                 # build + installe le dev build sur le téléphone / l'émulateur
 pnpm start                   # Metro pour le dev build
 cd android && ./gradlew assembleDebug   # dev build (a besoin de Metro) : android/app/build/outputs/apk/debug/app-debug.apk
-cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && cp app/build/outputs/apk/release/app-release.apk ../export/Rubanix.apk   # APK autonome pour le téléphone (signé avec la clé de debug)
+source ~/Dev/Utils/keystore/led-strip-remote-upload.env   # clé d'envoi Google Play (sinon : clé de debug)
+cd android && ./gradlew bundleRelease && cp app/build/outputs/bundle/release/app-release.aab ../export/LedStripRemote-<version>.aab   # pour le Play Store
+cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && cp app/build/outputs/apk/release/app-release.apk ../export/LedStripRemote.apk   # APK pour le téléphone
 ```
 
 ## Règles
@@ -96,9 +103,9 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
   les fichiers et l'appli garde l'ancienne version
 - En développement, sur un appareil sans émetteur infrarouge (émulateur), l'émission est **simulée** (`services/ir.ts`)
   pour pouvoir parcourir l'assistant ; jamais dans l'APK publié
-- `rubanix://dev-seed` (développement seulement) : remplit l'appli d'une pièce « Salon » et de rubans allumés en couleur,
+- `ledstrip://dev-seed` (développement seulement) : remplit l'appli d'une pièce « Salon » et de rubans allumés en couleur,
   pour voir l'interface sur l'émulateur
-- Liens profonds : `rubanix://power?room=Salon&on=1`, `rubanix://power?device=<nom>&on=0`, `rubanix://power?all=1&on=0`
+- Liens profonds : `ledstrip://power?room=Salon&on=1`, `ledstrip://power?device=<nom>&on=0`, `ledstrip://power?all=1&on=0`
 
 - L'émulateur Android n'a ni vrai Bluetooth ni émetteur infrarouge, et son réseau est isolé (NAT) : il ne sert qu'à
   l'interface. Les protocoles se vérifient avec `src/core` (Vitest) et avec les sondes Python de `tools/`

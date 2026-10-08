@@ -39,3 +39,12 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+/android
+/export
+
+# outils
+__pycache__/
+tools/.tuya-*.json
+.venv/
+modules/*/android/build/
+modules/*/android/.gradle/

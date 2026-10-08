@@ -7,7 +7,8 @@ import { elkEffects } from '../../core/elk';
 import { FAMILIES } from '../../core/families';
 import { IR_REMOTES } from '../../core/ir';
 import { LAYOUTS } from '../../core/irSetup';
-import { EN } from '../en';
+import { DICTS, pickLang } from '../dicts';
+import { EN } from '../langs/en';
 
 const SRC = join(__dirname, '../..');
 
@@ -41,7 +42,9 @@ function dataKeys(): string[] {
   ];
 }
 
-describe('traduction anglaise', () => {
+const vars = (s: string): string => (s.match(/\{\w+\}/g) ?? []).sort().join();
+
+describe('traduction anglaise (modèle des autres langues)', () => {
   it('trouve les textes du code', () => {
     expect(literalKeys().length).toBeGreaterThan(100);
   });
@@ -52,7 +55,6 @@ describe('traduction anglaise', () => {
   });
 
   it('garde les mêmes {variables}', () => {
-    const vars = (s: string): string => (s.match(/\{\w+\}/g) ?? []).sort().join();
     const wrong = Object.entries(EN).filter(([fr, en]) => vars(fr) !== vars(en));
     expect(wrong).toEqual([]);
   });
@@ -60,5 +62,37 @@ describe('traduction anglaise', () => {
   it("n'a pas de traduction orpheline", () => {
     const used = new Set([...literalKeys(), ...dataKeys()]);
     expect(Object.keys(EN).filter((k) => !used.has(k))).toEqual([]);
+  });
+});
+
+describe.each(Object.entries(DICTS).filter(([code]) => code !== 'fr' && code !== 'en'))('langue %s', (_code, dict) => {
+  it('traduit exactement les mêmes textes que l’anglais', () => {
+    const keys = Object.keys(dict!);
+    expect(Object.keys(EN).filter((k) => !keys.includes(k))).toEqual([]);
+    expect(keys.filter((k) => !(k in EN))).toEqual([]);
+  });
+
+  it('garde les mêmes {variables} et ne laisse rien de vide', () => {
+    expect(Object.entries(dict!).filter(([fr, txt]) => !txt.trim() || vars(fr) !== vars(txt))).toEqual([]);
+  });
+});
+
+describe('choix de la langue', () => {
+  it('prend la première langue parlée par l’appli, anglais sinon', () => {
+    expect(pickLang([{ languageCode: 'fr' }])).toBe('fr');
+    expect(pickLang([{ languageCode: 'eu' }, { languageCode: 'es' }])).toBe('es');
+    expect(pickLang([{ languageCode: 'eu' }])).toBe('en');
+    expect(pickLang([])).toBe('en');
+  });
+
+  it('distingue chinois simplifié et traditionnel', () => {
+    expect(pickLang([{ languageCode: 'zh', scriptCode: 'Hans', regionCode: 'CN' }])).toBe('zh-Hans');
+    expect(pickLang([{ languageCode: 'zh', scriptCode: 'Hant' }])).toBe('zh-Hant');
+    expect(pickLang([{ languageCode: 'zh', regionCode: 'TW' }])).toBe('zh-Hant');
+  });
+
+  it('comprend les anciens codes Android', () => {
+    expect(pickLang([{ languageCode: 'iw' }])).toBe('he');
+    expect(pickLang([{ languageCode: 'in' }])).toBe('id');
   });
 });

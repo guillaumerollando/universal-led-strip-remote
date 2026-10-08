@@ -1,0 +1,26 @@
+Hangi uygulamanın hangi LED şeride ait olduğunu unuttunuz mu? Evrensel LED Şerit Kumandası hepsini tek ve basit bir uygulamada toplar. Ücretsiz, reklamsız, hesap gerektirmez.
+
+★ Bluetooth LED şeritler
+İnternette satılan ucuz Bluetooth LED şerit kontrol kutularının çoğu (ELK-BLEDOM, ELK-BLEDOB veya MELK adlı) doğrudan çalışır:
+• açma ve kapatma
+• istediğiniz renk, hızlı renkler ve beyaz ayarı
+• parlaklık
+• hazır efektler (geçiş, atlama, gökkuşağı, ateş…) ve hızları
+
+★ Kumandalı şeritler
+Kumandayı mı kaybettiniz? Telefonunuzda kızılötesi verici varsa (birçok Xiaomi, Redmi ve POCO telefonda var), telefonunuz kumanda olur. Uygulama doğru kodları kendisi bulur: şeridiniz tepki verir vermez ekrana dokunun, hepsi bu. Renkler, parlaklık ve efektler sonra tıpkı kumandadaki gibi çalışır.
+İpucu: telefonun kızılötesi vericisi bir kumandadan çok daha kısa mesafeye ulaşır. Telefonun üst kısmını şerit kablosundaki küçük kutuya yaklaşık 30 cm'den daha yakın tutun.
+
+★ Odalar
+Şeritlerinizi odalara göre gruplayın, sonra bir odanın tamamını tek dokunuşla açın veya kapatın.
+
+★ Kısayollar
+Basit bir bağlantıyla, ana ekran kısayolundan veya bir otomasyon uygulamasından bir odayı açın ya da kapatın.
+
+★ Diğer kontrol kutuları
+Uygulama diğer birçok kontrol kutusunu da (Bluetooth ve Wi-Fi) tanır ve hangi uygulamaya ait olduklarını söyler. Kızılötesi kumandası olan bir cihazı kızılötesi olarak ekleyin ve her şeyi buradan kontrol edin.
+
+★ Gizliliğe saygılı
+Hesap yok, reklam yok, takip yok. Her şey telefonunuzda kalır. Uygulama internet olmadan çalışır.
+
+Not: Üreticisi tarafından kilitlenmiş Wi-Fi cihazları (Tuya / Smart Life) başka hiçbir uygulamayla kontrol edilemez. Evrensel LED Şerit Kumandası bağımsız bir uygulamadır; bu kontrol kutularının veya uygulamalarının üreticileriyle hiçbir bağlantısı yoktur.

@@ -1,0 +1,26 @@
+Nevíte, která aplikace patří ke kterému LED pásku? Univerzální ovladač LED pásků je spojí všechny v jedné jednoduché aplikaci. Zdarma, bez reklam a bez účtu.
+
+★ LED pásky s Bluetooth
+Většina levných Bluetooth ovladačů pásků z e-shopů (s názvy ELK-BLEDOM, ELK-BLEDOB nebo MELK) funguje hned:
+• zapnutí a vypnutí
+• jakákoli barva, rychlé barvy a nastavení bílé
+• jas
+• vestavěné efekty (prolínání, skoky, duha, oheň…) a jejich rychlost
+
+★ Pásky s infračerveným ovladačem
+Ztratili jste ovladač? Pokud má váš telefon IR vysílač (mají ho mnohé telefony Xiaomi, Redmi a POCO), stane se z něj ovladač. Aplikace sama najde správné kódy: stačí klepnout na obrazovku, jakmile pásek zareaguje. Barvy, jas a efekty pak fungují stejně jako na ovladači.
+Tip: IR vysílač telefonu má mnohem kratší dosah než ovladač. Držte horní část telefonu asi do 30 cm od malé krabičky na kabelu pásku.
+
+★ Místnosti
+Rozdělte pásky podle místností a celou místnost zapněte nebo vypněte jedním klepnutím.
+
+★ Zkratky
+Zapněte nebo vypněte místnost zkratkou na ploše nebo z aplikace pro automatizaci, pomocí jednoduchého odkazu.
+
+★ Další ovladače
+Aplikace pozná spoustu dalších typů pásků (Bluetooth i Wi-Fi) a řekne vám, ze které aplikace pocházejí. Pokud má pásek infračervený ovladač, přidejte ho jako infračervený a ovládejte vše odsud.
+
+★ Soukromí na prvním místě
+Žádný účet, žádné reklamy, žádné sledování. Vše zůstává ve vašem telefonu. Aplikace funguje i bez internetu.
+
+Upozornění: zařízení Wi-Fi zamčená výrobcem (Tuya / Smart Life) nemůže ovládat žádná jiná aplikace. Univerzální ovladač LED pásků je nezávislá aplikace bez vazby na výrobce těchto ovladačů nebo jejich aplikace.

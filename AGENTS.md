@@ -37,7 +37,10 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
   ruban à télécommande), `power` (lien profond), `dev-seed`
 - `src/services/control.ts` : **une seule porte d'entrée** pour piloter un ruban quelle que soit sa famille (`setPower`,
   `setColor`, `setEffect`, `setGroupPower`…) ; retient l'état envoyé (ces contrôleurs ne le renvoient pas)
-- `src/i18n/` : `t()` et la langue (`expo-localization`), `en.ts` (traductions anglaises indexées par le texte français)
+- `src/i18n/` : `t()` et la langue (`expo-localization`) ; `dicts.ts` (26 langues, `pickLang`) ; `langs/*.ts` (une
+  traduction par langue, indexée par le texte français ; `en.ts` sert de modèle)
+- `store/` : fiche Play Store (`metadata/android/<langue>/`, format fastlane), icône 512, bannière, politique de
+  confidentialité, liste des étapes de publication (`store/README.md`)
 - `src/ui/` : `theme.ts` (DA « la lumière d'abord »), `kit.tsx` (Screen avec clavier, Button, Card…), `light.tsx` (Glow,
   LightStrip, PowerButton, SignatureStrip, Swatch, Chip), `DeviceTile`, `RoomSection`, `RoomPicker`, `ElkControls`, `EffectsPanel`, `IrControls` (fiche infrarouge dans le
   style Bluetooth), `LedRow` (LED illuminées à la fin de l'ajout)
@@ -65,11 +68,12 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - **Aucun jargon pour l'utilisateur** (Guillaume, 2026-10-08) : jamais de nom de télécommande (« 24 / 44 touches »), de
   fréquence, de protocole ou de famille de contrôleur à l'écran. L'utilisateur veut que ça marche, vite, automatiquement
 - Dans l'interface, ne jamais écrire « Rubanix » : dire « l'appli » (nom sous l'icône : « LED Strip Remote », « Ruban LED »
-  sur un téléphone en français — `locales/fr.json`)
-- **Traduction** : français si le téléphone est en français, anglais sinon. Tout texte affiché passe par
-  `t('texte en français', { variables })` (`src/i18n`) et sa traduction va dans `src/i18n/en.ts` ; le test
-  `src/i18n/__tests__/en.test.ts` échoue s'il en manque une. Les libellés de `src/core` (effets, couleurs) se traduisent à
-  l'affichage : `t(effet.label)`
+  sur un téléphone en français, traduit dans chaque langue — `locales/`)
+- **Traduction (26 langues, automatique)** : l'appli prend la première langue du téléphone qu'elle connaît, anglais sinon.
+  Tout texte affiché passe par `t('texte en français', { variables })` (`src/i18n`). Nouveau texte : sa traduction dans
+  `langs/en.ts` **et dans toutes les autres langues** de `langs/` ; `src/i18n/__tests__/langs.test.ts` échoue s'il en manque
+  une. Les libellés de `src/core` (effets, couleurs) se traduisent à l'affichage : `t(effet.label)`. Nom sous l'icône :
+  `locales/<langue>.json`. Arabe et hébreu : texte traduit, mise en page encore de gauche à droite
 - Après un ajout de ruban : retour à l'accueil (`router.dismissAll()`), avec choix de la pièce pendant l'ajout
 
 - Expo SDK 57 : vérifier la doc versionnée (`https://docs.expo.dev/versions/v57.0.0/`), ne pas se fier à sa mémoire
@@ -79,7 +83,8 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - Paquet natif : vérifier la compatibilité New Architecture sur reactnative.directory
 - Une seule connexion Bluetooth à la fois sur ces contrôleurs : toujours libérer la connexion (`ble.ts` coupe après 20 s)
 - Pas de backend, pas de compte, pas de collecte : tout reste sur le téléphone
-- Pas de commit sans demande explicite de Guillaume
+- Dépôt git privé : `github.com/guillaumerollando/universal-led-strip-remote` (branche `main`). Pas de commit sans
+  demande explicite de Guillaume
 
 ## Tester sans téléphone
 

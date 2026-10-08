@@ -1,0 +1,26 @@
+Không nhớ ứng dụng nào đi với dây đèn LED nào? Điều khiển dây đèn LED gom tất cả vào một ứng dụng đơn giản. Miễn phí, không quảng cáo, không cần tài khoản.
+
+★ Dây đèn LED Bluetooth
+Hầu hết các bộ điều khiển dây đèn LED Bluetooth giá rẻ bán trên mạng (tên ELK-BLEDOM, ELK-BLEDOB hoặc MELK) dùng được ngay:
+• bật và tắt
+• mọi màu sắc, có màu nhanh và thanh chỉnh ánh trắng
+• độ sáng
+• các hiệu ứng có sẵn (chuyển dần, nhảy màu, cầu vồng, lửa…) và tốc độ của chúng
+
+★ Dây đèn dùng điều khiển hồng ngoại
+Mất điều khiển? Nếu điện thoại của bạn có cổng hồng ngoại (nhiều máy Xiaomi, Redmi và POCO có), nó sẽ thành chiếc điều khiển. Ứng dụng tự tìm đúng mã: chỉ cần chạm màn hình ngay khi dây đèn phản ứng, vậy là xong. Sau đó màu, độ sáng và hiệu ứng hoạt động giống như trên điều khiển.
+Mẹo: cổng hồng ngoại của điện thoại chiếu gần hơn nhiều so với điều khiển. Hãy đưa đầu trên điện thoại cách hộp nhỏ trên dây cáp của đèn khoảng 30 cm.
+
+★ Phòng
+Xếp dây đèn theo phòng, rồi bật hoặc tắt cả phòng chỉ với một chạm.
+
+★ Lối tắt
+Bật hoặc tắt một phòng từ lối tắt trên màn hình chính hoặc từ ứng dụng tự động hóa, chỉ bằng một đường liên kết đơn giản.
+
+★ Bộ điều khiển khác
+Ứng dụng nhận ra nhiều bộ điều khiển khác (Bluetooth và Wi-Fi) và cho bạn biết chúng thuộc ứng dụng nào. Nếu có điều khiển hồng ngoại, hãy thêm dạng hồng ngoại và điều khiển mọi thứ từ đây.
+
+★ Tôn trọng quyền riêng tư
+Không tài khoản, không quảng cáo, không theo dõi. Mọi thứ đều ở trên điện thoại của bạn. Ứng dụng chạy không cần internet.
+
+Lưu ý: các thiết bị Wi-Fi bị nhà sản xuất khóa (Tuya / Smart Life) không thể được điều khiển bởi bất kỳ ứng dụng nào khác. Điều khiển dây đèn LED là ứng dụng độc lập, không liên kết với các nhà sản xuất của những bộ điều khiển này hay ứng dụng của họ.

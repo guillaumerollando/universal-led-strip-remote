@@ -1,0 +1,26 @@
+Tu ne sais plus quelle appli va avec quel ruban LED ? Télécommande Ruban LED les réunit tous dans une seule appli, simple. Gratuite, sans pub, sans compte.
+
+★ Rubans LED Bluetooth
+La plupart des contrôleurs Bluetooth bon marché vendus en ligne (nommés ELK-BLEDOM, ELK-BLEDOB ou MELK) marchent directement :
+• allumer et éteindre
+• toutes les couleurs, avec des couleurs rapides et un réglage du blanc
+• la luminosité
+• les effets intégrés (fondu, saut, arc-en-ciel, feu…) et leur vitesse
+
+★ Rubans à télécommande infrarouge
+Télécommande perdue ? Si ton téléphone a un émetteur infrarouge (beaucoup de Xiaomi, Redmi et POCO en ont un), il devient la télécommande. L'appli trouve toute seule les bons codes : touche l'écran dès que ton ruban réagit, c'est tout. Couleurs, luminosité et effets marchent ensuite comme sur la télécommande.
+Astuce : l'émetteur d'un téléphone porte bien moins loin qu'une télécommande. Approche le haut du téléphone à environ 30 cm du petit boîtier sur le câble du ruban.
+
+★ Pièces
+Range tes rubans par pièce, puis allume ou éteins toute une pièce d'un geste.
+
+★ Raccourcis
+Allume ou éteins une pièce depuis un raccourci sur l'écran d'accueil ou une appli d'automatisation, avec un simple lien.
+
+★ Autres contrôleurs
+L'appli reconnaît beaucoup d'autres contrôleurs (Bluetooth et Wi-Fi) et te dit de quelle appli ils viennent. S'il a une télécommande infrarouge, ajoute-le en infrarouge et pilote tout d'ici.
+
+★ Respect de ta vie privée
+Pas de compte, pas de pub, aucun pistage. Tout reste sur ton téléphone. L'appli marche sans internet.
+
+À savoir : les appareils Wi-Fi verrouillés par leur fabricant (Tuya / Smart Life) ne peuvent être pilotés par aucune autre appli. Télécommande Ruban LED est une appli indépendante, sans lien avec les fabricants de ces contrôleurs ni leurs applis.

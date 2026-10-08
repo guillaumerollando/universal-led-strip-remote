@@ -1,0 +1,26 @@
+Nu mai știi ce aplicație merge cu fiecare bandă LED? Telecomandă Bandă LED le adună pe toate într-o singură aplicație simplă. Gratuită, fără reclame, fără cont.
+
+★ Benzi LED Bluetooth
+Majoritatea controlerelor Bluetooth ieftine pentru benzi LED vândute online (numite ELK-BLEDOM, ELK-BLEDOB sau MELK) merg direct:
+• aprinde și stinge
+• orice culoare, cu culori rapide și un cursor pentru alb
+• luminozitate
+• efecte incluse (tranziție, salt, curcubeu, foc…) și viteza lor
+
+★ Benzi cu telecomandă cu infraroșu
+Ai pierdut telecomanda? Dacă telefonul tău are emițător infraroșu (multe Xiaomi, Redmi și POCO au), devine telecomanda. Aplicația găsește singură codurile potrivite: atinge ecranul imediat ce banda reacționează, și gata. Apoi culorile, luminozitatea și efectele merg ca pe telecomandă.
+Sfat: emițătorul infraroșu al unui telefon bate mult mai puțin decât o telecomandă. Ține partea de sus a telefonului la cel mult 30 cm de cutiuța de pe cablul benzii.
+
+★ Camere
+Grupează benzile pe camere, apoi aprinde sau stinge o cameră întreagă dintr-o atingere.
+
+★ Scurtături
+Aprinde sau stinge o cameră dintr-o scurtătură pe ecranul principal sau dintr-o aplicație de automatizare, cu un simplu link.
+
+★ Alte controlere
+Aplicația recunoaște multe alte controlere (Bluetooth și Wi-Fi) și îți spune din ce aplicație provin. Dacă unul are telecomandă cu infraroșu, adaugă-l ca infraroșu și controlează totul de aici.
+
+★ Confidențialitate de la bun început
+Fără cont, fără reclame, fără urmărire. Totul rămâne pe telefonul tău. Aplicația merge fără internet.
+
+Notă: dispozitivele Wi-Fi blocate de producător (Tuya / Smart Life) nu pot fi controlate de nicio altă aplicație. Telecomandă Bandă LED este o aplicație independentă, fără legătură cu producătorii acestor controlere sau cu aplicațiile lor.

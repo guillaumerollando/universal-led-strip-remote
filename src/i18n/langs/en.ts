@@ -1,4 +1,4 @@
-/** Traductions anglaises, indexées par le texte français écrit dans le code. Vérifiées par `__tests__/en.test.ts`. */
+/** Traductions anglaises, indexées par le texte français écrit dans le code. Modèle de toutes les autres langues ; vérifiées par `../__tests__/langs.test.ts`. */
 export const EN: Record<string, string> = {
   // ── Accueil, pièces ──
   'Ruban LED': 'LED Strip Remote',

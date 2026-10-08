@@ -1,7 +1,7 @@
 """Rendu photoréaliste de l'icône dans Blender (Cycles) : un néon LED flexible en silicone laiteux, courbé,
 qui diffuse un dégradé arc-en-ciel et se reflète sur un sol sombre et brillant.
 
-    blender -b -P tools/icon_blender.py -- <sortie.png> [échantillons] [focale]
+    blender -b -P tools/icon_blender.py -- <sortie.png> [échantillons] [focale] [largeur] [hauteur]
 
 Le halo (« bloom ») est ajouté ensuite par tools/make_icon.py (Pillow), plus simple et plus stable que le compositeur.
 """
@@ -15,6 +15,8 @@ argv = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
 OUT = argv[0] if argv else "/tmp/icon_raw.png"
 SAMPLES = int(argv[1]) if len(argv) > 1 else 256
 LENS = float(argv[2]) if len(argv) > 2 else 40.0  # plus petit = néon plus petit dans le cadre (icône ronde Android)
+WIDTH = int(argv[3]) if len(argv) > 3 else 1024  # 2048 × 1000 : bannière de la fiche Play Store
+HEIGHT = int(argv[4]) if len(argv) > 4 else 1024
 
 # ── Scène vide ──
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -138,7 +140,7 @@ for backend in ("OPTIX", "CUDA"):
         continue
 scene.cycles.samples = SAMPLES
 scene.cycles.use_denoising = True
-scene.render.resolution_x = scene.render.resolution_y = 1024
+scene.render.resolution_x, scene.render.resolution_y = WIDTH, HEIGHT
 scene.render.resolution_percentage = 100
 scene.view_settings.view_transform = "Standard"
 scene.render.image_settings.file_format = "PNG"

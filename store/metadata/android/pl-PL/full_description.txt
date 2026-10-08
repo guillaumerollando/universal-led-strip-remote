@@ -1,0 +1,26 @@
+Nie wiesz już, która aplikacja pasuje do której taśmy LED? Pilot do taśmy LED łączy je wszystkie w jednej prostej aplikacji. Za darmo, bez reklam, bez konta.
+
+★ Taśmy LED na Bluetooth
+Większość tanich sterowników Bluetooth do taśm LED kupowanych w internecie (o nazwach ELK-BLEDOM, ELK-BLEDOB lub MELK) działa od razu:
+• włączanie i wyłączanie
+• dowolny kolor, z szybkimi kolorami i suwakiem bieli
+• jasność
+• wbudowane efekty (przenikanie, skok, tęcza, ogień…) i ich szybkość
+
+★ Taśmy z pilotem na podczerwień
+Zgubiłeś pilota? Jeśli twój telefon ma nadajnik podczerwieni (ma go wiele telefonów Xiaomi, Redmi i POCO), staje się pilotem. Aplikacja sama znajdzie właściwe kody: dotknij ekranu, gdy tylko taśma zareaguje, i gotowe. Kolory, jasność i efekty działają potem jak na pilocie.
+Wskazówka: nadajnik podczerwieni w telefonie ma dużo mniejszy zasięg niż pilot. Trzymaj górę telefonu najwyżej około 30 cm od małego pudełka na kablu taśmy.
+
+★ Pokoje
+Pogrupuj taśmy według pokoi i włączaj lub wyłączaj cały pokój jednym dotknięciem.
+
+★ Skróty
+Włączaj lub wyłączaj pokój skrótem na ekranie głównym albo z aplikacji do automatyzacji, za pomocą prostego linku.
+
+★ Inne sterowniki
+Aplikacja rozpoznaje wiele innych sterowników (Bluetooth i Wi-Fi) i mówi, z jakiej aplikacji pochodzą. Jeśli któryś ma pilota na podczerwień, dodaj go przez podczerwień i steruj wszystkim stąd.
+
+★ Prywatność przede wszystkim
+Bez konta, bez reklam, bez śledzenia. Wszystko zostaje w twoim telefonie. Aplikacja działa bez internetu.
+
+Warto wiedzieć: urządzeń Wi-Fi zablokowanych przez producenta (Tuya / Smart Life) nie może obsługiwać żadna inna aplikacja. Pilot do taśmy LED to niezależna aplikacja, niezwiązana z producentami tych sterowników ani ich aplikacjami.

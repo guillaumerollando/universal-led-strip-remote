@@ -1,0 +1,26 @@
+Du weißt nicht mehr, welche App zu welchem LED-Streifen gehört? LED-Streifen-Fernbedienung bringt sie alle in einer einfachen App zusammen. Kostenlos, ohne Werbung, ohne Konto.
+
+★ Bluetooth-LED-Streifen
+Die meisten günstigen Bluetooth-Controller für LED-Streifen aus dem Onlinehandel (mit Namen wie ELK-BLEDOM, ELK-BLEDOB oder MELK) funktionieren direkt:
+• ein- und ausschalten
+• jede Farbe, mit schnellen Farben und einem Regler für Weiß
+• Helligkeit
+• eingebaute Effekte (Übergang, Sprung, Regenbogen, Feuer…) und ihr Tempo
+
+★ Streifen mit Infrarot-Fernbedienung
+Fernbedienung verloren? Wenn dein Handy einen IR-Sender hat (viele Handys von Xiaomi, Redmi und POCO haben einen), wird es zur Fernbedienung. Die App findet die richtigen Codes von selbst: Tippe auf den Bildschirm, sobald dein Streifen reagiert, das war's. Farben, Helligkeit und Effekte funktionieren dann wie auf der Fernbedienung.
+Tipp: Der IR-Sender eines Handys reicht viel weniger weit als eine Fernbedienung. Halte die Oberseite des Handys höchstens etwa 30 cm vor das kleine Kästchen am Kabel des Streifens.
+
+★ Räume
+Ordne deine Streifen nach Räumen und schalte einen ganzen Raum mit einem Tipp ein oder aus.
+
+★ Verknüpfungen
+Schalte einen Raum über eine Verknüpfung auf dem Startbildschirm oder eine Automatisierungs-App ein oder aus, mit einem einfachen Link.
+
+★ Andere Controller
+Die App erkennt viele andere Controller (Bluetooth und Wi-Fi) und sagt dir, aus welcher App sie stammen. Hat einer eine Infrarot-Fernbedienung, füge ihn per Infrarot hinzu und steuere alles von hier.
+
+★ Deine Privatsphäre zählt
+Kein Konto, keine Werbung, kein Tracking. Alles bleibt auf deinem Handy. Die App funktioniert ohne Internet.
+
+Hinweis: Wi-Fi-Geräte, die vom Hersteller gesperrt sind (Tuya / Smart Life), lassen sich von keiner anderen App steuern. LED-Streifen-Fernbedienung ist eine unabhängige App und steht in keiner Verbindung zu den Herstellern dieser Controller oder ihren Apps.

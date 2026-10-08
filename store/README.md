@@ -9,7 +9,9 @@ Tout ce qu'il faut pour la fiche Play Store de **Universal LED Strip Remote** (�
   les autres sont traduites depuis `en-US`
 - `icon-512.png` : icône haute résolution (512 × 512) ; `feature-graphic.png` : bannière (1024 × 500), sans texte.
   Régénérées par `python3 tools/make_icon.py`
-- `privacy-policy.md` : politique de confidentialité (anglais + français), à héberger à une adresse publique
+- Pages légales : dans le site public `~/Dev/site/led-strip-remote/` →
+  https://guillaumerollando.github.io/led-strip-remote/privacy (URL pour la Console)
+- Plan de publication et réponses aux formulaires : vault `Rubanix/06-publication/` (skill `publier-sur-le-play-store`)
 
 ## Réglages de la console Play
 
@@ -26,7 +28,7 @@ Tout ce qu'il faut pour la fiche Play Store de **Universal LED Strip Remote** (�
 
 ## Encore à faire avant la publication
 
-1. Héberger `privacy-policy.md` (GitHub Pages ou le site) et remplacer `CONTACT_EMAIL`
+1. Pousser le site (`~/Dev/site`) pour mettre les pages légales en ligne (contact : `guija35@gmail.com`, dans `_config.yml`)
 2. Choisir l'identifiant définitif du paquet (il apparaît dans l'adresse Play Store et ne peut plus changer ensuite)
 3. Clé de signature de publication (upload key) + Play App Signing ; build `.aab` (`./gradlew bundleRelease`)
 4. Captures d'écran (au moins 2, idéalement 4 à 8, format téléphone) : accueil avec pièces, fiche Bluetooth (couleurs,

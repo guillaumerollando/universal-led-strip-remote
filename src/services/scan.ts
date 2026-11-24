@@ -25,6 +25,12 @@ export function foundDevice(key: string): DetectedDevice | undefined {
   return state.found.find((d) => d.key === key);
 }
 
+/** Développement seulement (`ledstrip://dev-seed?scan=1`) : affiche des résultats de recherche de démonstration. */
+export function showDemoScan(found: DetectedDevice[]): void {
+  if (!__DEV__) return;
+  set({ scanning: false, found, warnings: [] });
+}
+
 /** Lance un scan Bluetooth + Wi-Fi ; les appareils arrivent au fil de l'eau. */
 export async function startScan(): Promise<void> {
   if (state.scanning) return;

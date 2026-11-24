@@ -1,30 +1,57 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 
+import { lang } from '../i18n';
+import { showDemoScan } from '../services/scan';
 import { addRoom, getRooms, saveDevice } from '../services/store';
 import { styles } from '../ui/kit';
 
+/** Noms de démonstration (données de l'utilisateur, pas des textes de l'interface : pas de `t()`). */
+const NAMES = {
+  fr: { salon: 'Salon', chambre: 'Chambre', neon: 'Néon canapé', tv: 'Derrière la télé', ir: 'Néon 220 V', tuya: 'Ruban Wi-Fi', lit: 'Tête de lit', bureau: 'Bureau' },
+  en: { salon: 'Living room', chambre: 'Bedroom', neon: 'Sofa neon', tv: 'Behind the TV', ir: 'Ceiling strip', tuya: 'Wi-Fi strip', lit: 'Headboard', bureau: 'Desk' },
+};
+
 /**
- * Développement seulement : remplit l'appli d'une pièce et de rubans de démonstration (allumés, en couleur),
- * pour vérifier l'interface sur l'émulateur, qui n'a ni Bluetooth ni infrarouge. `ledstrip://dev-seed`
+ * Développement seulement : remplit l'appli de pièces et de rubans de démonstration (allumés, en couleur),
+ * pour vérifier l'interface sur l'émulateur, qui n'a ni Bluetooth ni infrarouge, et faire les captures du store.
+ * `ledstrip://dev-seed` ; `ledstrip://dev-seed?scan=1` ouvre aussi la recherche avec des résultats de démonstration.
+ * Noms en français si le téléphone est en français, en anglais sinon.
  */
 export default function DevSeed() {
+  const { scan } = useLocalSearchParams<{ scan?: string }>();
   useEffect(() => {
     if (!__DEV__) {
       router.replace('/');
       return;
     }
     void (async () => {
-      const salon = getRooms().find((r) => r.name === 'Salon') ?? (await addRoom('Salon'));
+      const n = lang === 'fr' ? NAMES.fr : NAMES.en;
+      const salon = getRooms().find((r) => r.name === n.salon) ?? (await addRoom(n.salon));
+      const chambre = getRooms().find((r) => r.name === n.chambre) ?? (await addRoom(n.chambre));
       const now = Date.now();
-      await saveDevice({ key: 'demo:neon', name: 'Néon canapé', family: 'elk-bledom', transport: 'ble', rawName: 'MELK-OA21   92', address: 'demo', roomId: salon.id, state: { on: true, rgb: { r: 255, g: 0, b: 140 } }, addedAt: now });
-      await saveDevice({ key: 'demo:tv', name: 'Derrière la télé', family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLEDOB', address: 'demo2', roomId: salon.id, state: { on: true, rgb: { r: 0, g: 200, b: 255 } }, addedAt: now + 1 });
-      await saveDevice({ key: 'demo:ir', name: 'Néon 220 V', family: 'ir-nec', transport: 'ir', rawName: 'Infrarouge', address: 'ir', ir: { power: { address: [0x00, 0xff], on: 0x07, off: 0x06 }, layout: 'full44' }, roomId: salon.id, state: { on: true, rgb: { r: 255, g: 128, b: 0 } }, addedAt: now + 2 });
-      await saveDevice({ key: 'demo:tuya', name: 'Ruban Wi-Fi', family: 'tuya', transport: 'wifi', rawName: 'Appareil Tuya', address: '192.168.1.78', addedAt: now + 3 });
+      await saveDevice({ key: 'demo:neon', name: n.neon, family: 'elk-bledom', transport: 'ble', rawName: 'MELK-OA21   92', address: 'demo', roomId: salon.id, state: { on: true, rgb: { r: 255, g: 0, b: 140 }, brightness: 80 }, addedAt: now });
+      await saveDevice({ key: 'demo:tv', name: n.tv, family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLEDOB', address: 'demo2', roomId: salon.id, state: { on: true, rgb: { r: 0, g: 200, b: 255 }, brightness: 70 }, addedAt: now + 1 });
+      await saveDevice({ key: 'demo:ir', name: n.ir, family: 'ir-nec', transport: 'ir', rawName: 'Infrarouge', address: 'ir', ir: { power: { address: [0x00, 0xff], on: 0x07, off: 0x06 }, layout: 'full44' }, roomId: salon.id, state: { on: true, rgb: { r: 255, g: 128, b: 0 } }, addedAt: now + 2 });
+      await saveDevice({ key: 'demo:lit', name: n.lit, family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLEDOM   ', address: 'demo3', roomId: chambre.id, state: { on: true, rgb: { r: 140, g: 60, b: 255 }, brightness: 60 }, addedAt: now + 3 });
+      await saveDevice({ key: 'demo:bureau', name: n.bureau, family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLE', address: 'demo4', roomId: chambre.id, state: { on: false, rgb: { r: 255, g: 220, b: 180 } }, addedAt: now + 4 });
+      await saveDevice({ key: 'demo:tuya', name: n.tuya, family: 'tuya', transport: 'wifi', rawName: 'Appareil Tuya', address: '192.168.1.78', addedAt: now + 5 });
+      if (scan) {
+        showDemoScan([
+          { key: 'ble:BE:16:F8:22:0A:31', family: 'elk-bledom', confidence: 'sure', transport: 'ble', rawName: 'ELK-BLEDOM', address: 'BE:16:F8:22:0A:31', rssi: -58 },
+          { key: 'ble:demo', family: 'elk-bledom', confidence: 'sure', transport: 'ble', rawName: 'MELK-OA21   92', address: 'demo', rssi: -62 },
+          { key: 'ble:FF:FF:10:4C:7E:02', family: 'triones', confidence: 'sure', transport: 'ble', rawName: 'Triones-FF104C7E', address: 'FF:FF:10:4C:7E:02', rssi: -74 },
+          { key: 'wifi:192.168.1.42', family: 'magichome-wifi', confidence: 'sure', transport: 'wifi', rawName: 'AK001-ZJ2101', address: '192.168.1.42' },
+          { key: 'wifi:192.168.1.78', family: 'tuya', confidence: 'probable', transport: 'wifi', rawName: 'Tuya 3.3', address: '192.168.1.78' },
+        ]);
+        router.replace('/');
+        router.push('/add');
+        return;
+      }
       router.replace('/');
     })();
-  }, []);
+  }, [scan]);
   return (
     <View style={[styles.screen, { alignItems: 'center', justifyContent: 'center' }]}>
       <Text style={styles.text}>Démo…</Text>

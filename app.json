@@ -79,6 +79,16 @@
           }
         }
       ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "extraProguardRules": "# Bluetooth (react-native-ble-plx, RxAndroidBle, RxJava) et UDP (react-native-udp) : modules natifs appelés depuis JS, gardés tels quels par prudence\n-keep class com.bleplx.** { *; }\n-keep class com.polidea.rxandroidble2.** { *; }\n-dontwarn com.polidea.rxandroidble2.**\n-keep class com.tradle.react.** { *; }\n# Worklets (Reanimated 4)\n-keep class com.swmansion.worklets.** { *; }"
+          }
+        }
+      ],
       "./plugins/withReleaseSigning"
     ]
   }

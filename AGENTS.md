@@ -85,6 +85,9 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 
 - Expo SDK 57 : vérifier la doc versionnée (`https://docs.expo.dev/versions/v57.0.0/`), ne pas se fier à sa mémoire
 - `android/` est généré (CNG) : on configure par `app.json` et les plugins, jamais à la main
+- Version de publication optimisée par R8 et réduction des ressources (`expo-build-properties` dans `app.json`, règles
+  `extraProguardRules`). Nouveau paquet natif : tester l'APK release (pas seulement le dev build), R8 casse la réflexion.
+  Taille téléchargée : `java -jar ~/Dev/Utils/bundletool/bundletool-all-*.jar build-apks` puis `get-size total`
 - Nouvelle famille ou nouveau protocole : d'abord `src/core` + un test avec un vrai nom ou une vraie trame, puis le service
 - Tout protocole non vérifié sur un vrai appareil est marqué « à confirmer » (commentaire + vault `03-technique/protocoles.md`)
 - Paquet natif : vérifier la compatibilité New Architecture sur reactnative.directory

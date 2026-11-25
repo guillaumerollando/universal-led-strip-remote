@@ -44,5 +44,6 @@
     "check-types": "tsc --noEmit",
     "prebuild": "expo prebuild --clean --platform android"
   },
-  "private": true
+  "private": true,
+  "license": "GPL-3.0-only"
 }

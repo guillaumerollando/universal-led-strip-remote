@@ -32,14 +32,19 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
   - `elk.ts` : trames ELK-BLEDOM (variantes `elk`, `bledob`, `melk`), effets et vitesse
   - `color.ts` : conversions teinte / RVB (barres arc-en-ciel)
   - `tuya/` : lecture des annonces UDP Tuya, pour **reconnaître** ces appareils (Rubanix ne pilote pas Tuya : système fermé)
+  - `naming.ts` : nom proposé à l'ajout (`nextFreeName` : « Ruban 1 », « Ruban 2 »… sans doublon), force du signal en mots
   - `irSetup.ts` : **assistant d'ajout infrarouge** — `burstPlan(état)` (rafales de 16 codes avec silences, adaptées à
     l'état allumé / éteint), `suspectBursts`, `leadsFrom` (pistes), `verifySteps`, réduction par moitiés, `remoteFromSetup`
   - `ir.ts` : encodage NEC et 7 télécommandes (24 / 44 touches, et 5 autres connues seulement pour marche/arrêt)
 - `src/services/` : accès au matériel — `ble.ts` (react-native-ble-plx), `lan.ts` (react-native-udp), `ir.ts`,
   `scan.ts` (état du scan), `store.ts` (appareils enregistrés, AsyncStorage)
-- `src/app/` : écrans Expo Router — `index` (pièces et rubans), `add` (recherche Bluetooth / Wi-Fi), `device/[key]` (fiche :
-  marche/arrêt, couleurs, effets, pièce, nom), `room/[id]` (créer / modifier une pièce), `ir-new` (**assistant plein écran** d'ajout d'un
-  ruban à télécommande), `power` (lien profond), `dev-seed`
+- `src/app/` : écrans Expo Router — `index` (pièces et rubans, petit ⓘ → `about`), `add` (recherche Bluetooth / Wi-Fi, lancée
+  toute seule ; on touche un ruban pour l'ajouter), `new/[key]` (**ajout d'un ruban trouvé** : nom déjà proposé, pièce, « Faire
+  clignoter », « Ajouter à mes rubans »), `device/[key]` (fiche d'un ruban enregistré : marche/arrêt, couleurs, effets, pièce, nom ;
+  pour un appareil non géré, seulement quoi faire), `room/[id]` (créer / modifier une pièce), `ir-new` (**assistant plein écran**
+  d'ajout d'un ruban à télécommande), `about` (À propos), `power` (lien profond), `dev-seed`
+- Parcours d'ajout (v1.1, demande de Guillaume : « simple, efficace, qualité ») : jamais de réglage de lumière pendant l'ajout ;
+  les deux ajouts (Bluetooth et télécommande) finissent sur le même formulaire `ui/AddForm` (nom proposé + pièce + bouton toujours visible)
 - `src/services/control.ts` : **une seule porte d'entrée** pour piloter un ruban quelle que soit sa famille (`setPower`,
   `setColor`, `setEffect`, `setGroupPower`…) ; retient l'état envoyé (ces contrôleurs ne le renvoient pas)
 - `src/i18n/` : `t()` et la langue (`expo-localization`) ; `dicts.ts` (26 langues, `pickLang`) ; `langs/*.ts` (une
@@ -47,7 +52,7 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
 - `store/` : fiche Play Store (`metadata/android/<langue>/`, format fastlane), icône 512, bannière, politique de
   confidentialité, liste des étapes de publication (`store/README.md`)
 - `src/ui/` : `theme.ts` (DA « la lumière d'abord »), `kit.tsx` (Screen avec clavier, Button, Card…), `light.tsx` (Glow,
-  LightStrip, PowerButton, SignatureStrip, Swatch, Chip), `DeviceTile`, `RoomSection`, `RoomPicker`, `ElkControls`, `EffectsPanel`, `IrControls` (fiche infrarouge dans le
+  LightStrip avec halo / bloom / LED, PowerButton, SignatureStrip avec sa lueur, Swatch, Chip), `AddForm`, `labels.ts` (« Ruban Bluetooth »…), `DeviceTile`, `RoomSection`, `RoomPicker`, `ElkControls`, `EffectsPanel`, `IrControls` (fiche infrarouge dans le
   style Bluetooth), `LedRow` (LED illuminées à la fin de l'ajout)
 - `modules/rubanix-native/` : module Expo local en Kotlin — émetteur infrarouge (`ConsumerIrManager`) et verrou
   multicast Wi-Fi. Autolinké ; `null` hors Android
@@ -82,9 +87,15 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
   une. Les libellés de `src/core` (effets, couleurs) se traduisent à l'affichage : `t(effet.label)`. Nom sous l'icône :
   `locales/<langue>.json`. Arabe et hébreu : texte traduit, mise en page encore de gauche à droite
 - Après un ajout de ruban : retour à l'accueil (`router.dismissAll()`), avec choix de la pièce pendant l'ajout
+- Gestes (v1.1, comme Google Home) : **toucher = agir** (pièce : un seul interrupteur ; ruban : ses commandes ; bouton rond :
+  marche/arrêt), **appui long = réglages** (menu du bas `ui/Sheet` : renommer, pièce, supprimer). Pas de bouton « Modifier »
 
 - Expo SDK 57 : vérifier la doc versionnée (`https://docs.expo.dev/versions/v57.0.0/`), ne pas se fier à sa mémoire
 - `android/` est généré (CNG) : on configure par `app.json` et les plugins, jamais à la main
+- Taille (v1.1) : `@expo/ui` (Jetpack Compose) et `expo-symbols`, tirés par expo-router mais inutilisés, sont exclus de
+  l'autolinking (`package.json` › `expo.autolinking.exclude`) et remplacés côté JS par `stubs/native-ui-absent.js`
+  (`metro.config.js`) ; décodeurs GIF / WebP de Fresco coupés (`plugins/withLeanImages.js`). Si expo-router se met à
+  utiliser ces paquets pour une pile simple, l'écran concerné n'affichera rien : tester l'APK release après chaque mise à jour d'Expo
 - Version de publication optimisée par R8 et réduction des ressources (`expo-build-properties` dans `app.json`, règles
   `extraProguardRules`). Nouveau paquet natif : tester l'APK release (pas seulement le dev build), R8 casse la réflexion.
   Taille téléchargée : `java -jar ~/Dev/Utils/bundletool/bundletool-all-*.jar build-apks` puis `get-size total`
@@ -93,7 +104,7 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - Paquet natif : vérifier la compatibilité New Architecture sur reactnative.directory
 - Une seule connexion Bluetooth à la fois sur ces contrôleurs : toujours libérer la connexion (`ble.ts` coupe après 20 s)
 - Pas de backend, pas de compte, pas de collecte : tout reste sur le téléphone
-- Dépôt git privé : `github.com/guillaumerollando/universal-led-strip-remote` (branche `main`). Pas de commit sans
+- Dépôt git **public** (open source, GPL-3.0) : `github.com/guillaumerollando/universal-led-strip-remote` (branche `main`). Pas de commit sans
   demande explicite de Guillaume
 
 ## Tester sans téléphone

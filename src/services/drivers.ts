@@ -91,6 +91,8 @@ export interface Driver {
 const WHITE: Rgb = { r: 255, g: 255, b: 255 };
 /** La couleur actuelle, ramenée à une luminosité : pour les contrôleurs qui n'ont pas de commande de luminosité. */
 const dimmed = (t: DriverTarget, percent: number): Rgb => dim(t.state?.rgb ?? WHITE, percent);
+/** Une nouvelle couleur garde la luminosité choisie (contrôleurs sans commande de luminosité). */
+const keepLevel = (t: DriverTarget, rgb: Rgb): Rgb => dim(rgb, t.state?.brightness ?? 100);
 const currentEffect = (t: DriverTarget, list: Effect[]): Effect | undefined => list.find((e) => e.id === t.state?.effect);
 
 // ── Bluetooth ──────────────────────────────────────────────────────────────────────
@@ -107,7 +109,7 @@ const elk: Driver = {
 
 const triones: Driver = {
   power: (t, on) => sendBle(t.address, TRIONES, trionesPower(on)),
-  color: (t, rgb) => sendBle(t.address, TRIONES, trionesColor(rgb)),
+  color: (t, rgb) => sendBle(t.address, TRIONES, trionesColor(keepLevel(t, rgb))),
   brightness: (t, p) => sendBle(t.address, TRIONES, trionesColor(dimmed(t, p))),
   effects: () => LEDNET_PRESETS,
   effect: (t, e, s) => sendBle(t.address, TRIONES, trionesEffect(e.code, s)),
@@ -123,7 +125,7 @@ const zengge = (t: DriverTarget, ...inner: number[][]): Promise<void> =>
 const zenggeBle: Driver = {
   power: (t, on) => zengge(t, mhPower(on)),
   // Deux formes de couleur : les anciens modèles comprennent 0x31, les récents 0x3B (à confirmer).
-  color: (t, rgb) => zengge(t, mhColor(rgb), zenggeHsv(rgb)),
+  color: (t, rgb) => zengge(t, mhColor(keepLevel(t, rgb)), zenggeHsv(keepLevel(t, rgb))),
   brightness: (t, p) => zengge(t, mhColor(dimmed(t, p)), zenggeHsv(dimmed(t, p))),
   effects: () => LEDNET_PRESETS,
   effect: (t, e, s) => zengge(t, mhEffect(e.code, s)),
@@ -159,7 +161,7 @@ async function mhNine(t: DriverTarget): Promise<boolean> {
 const mh = (t: DriverTarget, bytes: number[]): Promise<unknown> => tcp(t.address, MAGIC_HOME_TCP_PORT, bytes);
 const magicHome: Driver = {
   power: async (t, on) => void (await mh(t, mhPower(on))),
-  color: async (t, rgb) => void (await mh(t, mhColor(rgb, await mhNine(t)))),
+  color: async (t, rgb) => void (await mh(t, mhColor(keepLevel(t, rgb), await mhNine(t)))),
   brightness: async (t, p) => void (await mh(t, mhColor(dimmed(t, p), await mhNine(t)))),
   effects: () => LEDNET_PRESETS,
   effect: async (t, e, s) => void (await mh(t, mhEffect(e.code, s))),
@@ -242,7 +244,7 @@ const yeelight: Driver = {
 const lifxMac = (t: DriverTarget): number[] => macBytes(t.meta?.mac ?? '');
 const lifx: Driver = {
   power: (t, on) => udpSend(t.address, LIFX_PORT, lifxPower(lifxMac(t), on)),
-  color: (t, rgb) => udpSend(t.address, LIFX_PORT, lifxColor(lifxMac(t), rgb)),
+  color: (t, rgb) => udpSend(t.address, LIFX_PORT, lifxColor(lifxMac(t), rgb, t.state?.brightness)),
   brightness: (t, p) => udpSend(t.address, LIFX_PORT, lifxColor(lifxMac(t), t.state?.rgb ?? WHITE, p)),
 };
 

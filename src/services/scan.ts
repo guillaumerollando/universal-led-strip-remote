@@ -75,6 +75,18 @@ export async function startScan(): Promise<void> {
   setTimeout(() => set({ scanning: false }), SCAN_MS);
 }
 
+/**
+ * Au démarrage, s'il y a des rubans Wi-Fi enregistrés : une recherche Wi-Fi discrète (pas de Bluetooth, aucune
+ * autorisation demandée) pour suivre leurs nouvelles adresses IP. Rien ne s'affiche.
+ */
+export function refreshWifiAddresses(hasWifi: boolean): void {
+  if (!hasWifi || state.scanning) return;
+  scanLan((d) => {
+    const saved = getDevice(d.key);
+    if (saved && saved.address !== d.address) void updateDevice(d.key, { address: d.address });
+  }, 6000);
+}
+
 export function useScan(): ScanState & { start: () => void } {
   const snapshot = useSyncExternalStore(
     (l) => {

@@ -3,14 +3,18 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
-import { loadDevices } from '../services/store';
+import { refreshWifiAddresses } from '../services/scan';
+import { getDevices, loadDevices } from '../services/store';
 import { startWidgetSync } from '../services/widget';
 import { colors } from '../ui/theme';
 import { t } from '../i18n';
 
 export default function RootLayout() {
   useEffect(() => {
-    void loadDevices().then(startWidgetSync);
+    void loadDevices().then(() => {
+      startWidgetSync();
+      refreshWifiAddresses(getDevices().some((d) => d.transport === 'wifi' && d.family !== 'tuya'));
+    });
   }, []);
 
   return (

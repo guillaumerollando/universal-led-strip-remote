@@ -1,1 +1,1 @@
-Egy ingyenes app Bluetooth-os és infrás LED szalagokhoz. Reklám és fiók nélkül.
+Bluetooth és IR LED szalag távirányító: színek, effektek, szobák. Reklám nélkül.

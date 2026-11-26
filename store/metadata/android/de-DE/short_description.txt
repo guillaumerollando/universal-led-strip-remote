@@ -1,1 +1,1 @@
-Eine kostenlose App für Bluetooth- und Infrarot-LED-Streifen. Ohne Werbung.
+Bluetooth- & IR-Fernbedienung für RGB-LED-Streifen: Farben, Effekte, Räume

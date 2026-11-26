@@ -1,26 +1,33 @@
-Vet du inte längre vilken app som hör till vilken LED-list? Fjärrkontroll för LED-list samlar dem alla i en enkel app. Gratis, utan reklam, utan konto.
+Styr dina RGB LED-lister från en enkel app: LED-lister med Bluetooth och lister med infraröd (IR) fjärrkontroll. Gratis, ingen reklam, inget konto, fungerar offline.
 
-★ LED-lister med Bluetooth
-De flesta billiga Bluetooth-styrenheter för LED-lister som säljs på nätet (med namn som ELK-BLEDOM, ELK-BLEDOB eller MELK) fungerar direkt:
+Vet du inte längre vilken app som hör till vilken LED-list? Har den lilla fjärrkontrollen försvunnit? Fjärrkontroll för LED-list samlar all din LED-belysning på ett ställe: sovrummet, skrivbordet, bakgrundsbelysningen bakom tv:n, gaminghörnan, köket eller taket.
+
+★ Bluetooth-styrenhet för LED-lister
+De flesta billiga Bluetooth-styrenheter för LED-lister och LED-slingor som säljs på nätet (visas som ELK-BLEDOM, ELK-BLEDOB eller MELK när du söker) fungerar direkt, utan parkopplingskod:
 • slå på och stänga av
 • alla färger, med snabbfärger och ett reglage för vitt
 • ljusstyrka
 • inbyggda effekter (toning, hopp, regnbåge, eld…) och deras hastighet
 
-★ Lister med IR-fjärrkontroll
-Tappat bort fjärrkontrollen? Om din telefon har en IR-sändare (många telefoner från Xiaomi, Redmi och POCO har det) blir den fjärrkontrollen. Appen hittar rätt koder själv: tryck på skärmen så fort listen reagerar, det är allt. Färger, ljusstyrka och effekter fungerar sedan som på fjärrkontrollen.
+★ IR-fjärrkontroll för LED-list
+Har fjärrkontrollen försvunnit eller gått sönder? Om din telefon har en IR-sändare (många telefoner från Xiaomi, Redmi och POCO har det) blir den din LED-fjärrkontroll. Appen hittar rätt IR-koder själv: tryck på skärmen så fort listen reagerar, det är allt. Färger, ljusstyrka och effekter fungerar sedan som på originalfjärrkontrollen med 24 eller 44 knappar.
 Tips: en telefons IR-sändare når mycket kortare än en fjärrkontroll. Håll telefonens överkant högst cirka 30 cm från den lilla dosan på listens sladd.
 
 ★ Rum
-Sortera dina lister efter rum och slå på eller stäng av ett helt rum med ett tryck.
+Sortera dina LED-lister efter rum och slå på eller stäng av ett helt rum med ett tryck.
 
-★ Genvägar
+★ Genvägar och automation
 Slå på eller stäng av ett rum från en genväg på hemskärmen eller en automationsapp, med en enkel länk.
 
 ★ Andra styrenheter
-Appen känner igen många andra styrenheter (Bluetooth och Wi-Fi) och berättar vilken app de kommer från. Om en har en IR-fjärrkontroll kan du lägga till den som IR och styra allt härifrån.
+Appen känner igen många andra LED-styrenheter (Bluetooth och Wi-Fi) och berättar vilken app de kommer från. Om en kom med en IR-fjärrkontroll kan du lägga till den som IR och styra allt härifrån.
 
 ★ Integritet från början
-Inget konto, ingen reklam, ingen spårning. Allt stannar på din telefon. Appen fungerar utan internet.
+Inget konto, ingen reklam, ingen spårning, inget internet behövs. Allt stannar på din telefon.
 
-Bra att veta: Wi-Fi-enheter som är låsta av tillverkaren (Tuya / Smart Life) kan inte styras av någon annan app. Fjärrkontroll för LED-list är en fristående app utan koppling till tillverkarna av dessa styrenheter eller deras appar.
+Frågor
+• Fungerar appen med min LED-list? Ja, om listen visas som ELK-BLEDOM, ELK-BLEDOB eller MELK när du söker efter Bluetooth-enheter, eller om den kom med en liten IR-fjärrkontroll.
+• Min telefon saknar IR-sändare? Då går det inte att styra IR-lister (ingen app klarar det utan sändare), men Bluetooth-lister fungerar på alla telefoner.
+• Wi-Fi-lister? Enheter som är låsta av tillverkaren (Tuya / Smart Life) kan inte styras av någon annan app.
+
+Fjärrkontroll för LED-list är en fristående app utan koppling till tillverkarna av dessa styrenheter eller deras appar.

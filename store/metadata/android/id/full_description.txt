@@ -1,26 +1,33 @@
-Bingung aplikasi mana untuk lampu LED strip yang mana? Remote Strip LED Universal menyatukan semuanya dalam satu aplikasi sederhana. Gratis, tanpa iklan, tanpa akun.
+Atur lampu LED strip RGB-mu dari satu aplikasi sederhana: LED strip Bluetooth maupun strip dengan remote inframerah (IR). Gratis, tanpa iklan, tanpa akun, bisa dipakai offline.
 
-★ Strip LED Bluetooth
-Sebagian besar pengontrol LED strip Bluetooth murah yang dijual online (bernama ELK-BLEDOM, ELK-BLEDOB, atau MELK) langsung bisa dipakai:
+Bingung aplikasi mana untuk lampu LED strip yang mana? Remote kecilnya hilang? Remote Strip LED Universal menyatukan semua lampu LED-mu: kamar tidur, meja, lampu belakang TV, setup gaming, dapur, atau plafon.
+
+★ Pengontrol LED strip Bluetooth
+Sebagian besar pengontrol LED strip Bluetooth murah yang dijual online (muncul dengan nama ELK-BLEDOM, ELK-BLEDOB, atau MELK saat dipindai) langsung bisa dipakai, tanpa kode pairing:
 • nyalakan dan matikan
 • warna apa saja, dengan warna cepat dan pengatur warna putih
 • kecerahan
 • efek bawaan (pudar, lompat, pelangi, api…) dan kecepatannya
 
-★ Strip dengan remote inframerah
-Remote hilang? Jika HP-mu punya pemancar IR (banyak HP Xiaomi, Redmi, dan POCO punya), HP-mu jadi remotenya. Aplikasi mencari kode yang tepat sendiri: sentuh layar begitu strip-mu bereaksi, selesai. Setelah itu warna, kecerahan, dan efek bekerja seperti di remote.
+★ Remote IR untuk LED strip
+Remote hilang atau rusak? Jika HP-mu punya pemancar IR (banyak HP Xiaomi, Redmi, dan POCO punya), HP-mu jadi remote LED. Aplikasi mencari sendiri kode inframerah yang tepat: sentuh layar begitu strip-mu bereaksi, selesai. Setelah itu warna, kecerahan, dan efek bekerja seperti di remote aslinya yang 24 atau 44 tombol.
 Tips: pemancar IR di HP jangkauannya jauh lebih pendek daripada remote. Dekatkan bagian atas HP sekitar 30 cm dari kotak kecil di kabel strip.
 
 ★ Ruangan
-Kelompokkan strip per ruangan, lalu nyalakan atau matikan satu ruangan penuh dengan sekali sentuh.
+Kelompokkan LED strip per ruangan, lalu nyalakan atau matikan satu ruangan penuh dengan sekali sentuh.
 
-★ Pintasan
+★ Pintasan dan otomatisasi
 Nyalakan atau matikan satu ruangan dari pintasan di layar utama atau aplikasi otomatisasi, cukup dengan tautan sederhana.
 
 ★ Pengontrol lain
-Aplikasi mengenali banyak pengontrol lain (Bluetooth dan Wi-Fi) dan memberi tahu dari aplikasi mana asalnya. Jika ada remote inframerahnya, tambahkan sebagai inframerah dan atur semuanya dari sini.
+Aplikasi mengenali banyak pengontrol LED lain (Bluetooth dan Wi-Fi) dan memberi tahu dari aplikasi mana asalnya. Jika ada remote inframerahnya, tambahkan sebagai inframerah dan atur semuanya dari sini.
 
 ★ Privasi terjaga
-Tanpa akun, tanpa iklan, tanpa pelacakan. Semua tetap di HP-mu. Aplikasi bekerja tanpa internet.
+Tanpa akun, tanpa iklan, tanpa pelacakan, tanpa internet. Semua tetap di HP-mu.
 
-Catatan: perangkat Wi-Fi yang dikunci oleh pembuatnya (Tuya / Smart Life) tidak bisa dikendalikan aplikasi lain mana pun. Remote Strip LED Universal adalah aplikasi independen, tidak berafiliasi dengan pembuat pengontrol tersebut maupun aplikasinya.
+Pertanyaan
+• Apakah bisa untuk LED strip-ku? Jika strip-mu muncul sebagai ELK-BLEDOM, ELK-BLEDOB, atau MELK saat pemindaian Bluetooth, atau datang dengan remote inframerah kecil, bisa.
+• HP-ku tidak punya pemancar IR? Berarti strip inframerah tidak bisa dikendalikan (tidak ada aplikasi yang bisa tanpa pemancar IR), tapi strip Bluetooth bisa di HP apa pun.
+• Strip Wi-Fi? Perangkat yang dikunci oleh pembuatnya (Tuya / Smart Life) tidak bisa dikendalikan aplikasi lain mana pun.
+
+Remote Strip LED Universal adalah aplikasi independen, tidak berafiliasi dengan pembuat pengontrol tersebut maupun aplikasinya.

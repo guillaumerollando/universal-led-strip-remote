@@ -1,26 +1,33 @@
-Não sabe mais qual app vai com cada fita LED? O Controle Remoto Fita LED reúne todas elas em um só app, simples. Grátis, sem anúncios e sem conta.
+Controle suas fitas LED RGB em um só app simples: fitas LED Bluetooth e fitas com controle remoto infravermelho (IR). Grátis, sem anúncios, sem conta e funciona sem internet.
 
-★ Fitas LED Bluetooth
-A maioria dos controladores Bluetooth baratos para fita LED vendidos na internet (chamados ELK-BLEDOM, ELK-BLEDOB ou MELK) funciona direto:
+Não sabe mais qual app vai com cada fita LED? Perdeu o controlezinho? O Controle Remoto Fita LED reúne todas as suas luzes LED: quarto, escrivaninha, LED atrás da TV, setup gamer, cozinha ou teto.
+
+★ Controlador de fita LED Bluetooth
+A maioria dos controladores Bluetooth baratos para fita LED vendidos na internet (que aparecem como ELK-BLEDOM, ELK-BLEDOB ou MELK na busca) funciona direto, sem código de pareamento:
 • ligar e desligar
 • qualquer cor, com cores rápidas e um controle de branco
 • brilho
 • efeitos prontos (transição, salto, arco-íris, fogo…) e a velocidade deles
 
-★ Fitas com controle remoto infravermelho
-Perdeu o controle? Se o seu celular tem emissor infravermelho (muitos Xiaomi, Redmi e POCO têm), ele vira o controle. O app encontra sozinho os códigos certos: toque na tela assim que sua fita reagir, e pronto. Depois, cores, brilho e efeitos funcionam como no controle.
+★ Controle remoto IR para fita LED
+Perdeu ou quebrou o controle? Se o seu celular tem emissor infravermelho (muitos Xiaomi, Redmi e POCO têm), ele vira o controle da sua fita LED. O app encontra sozinho os códigos infravermelhos certos: toque na tela assim que sua fita reagir, e pronto. Depois, cores, brilho e efeitos funcionam como no controle original de 24 ou 44 teclas.
 Dica: o emissor infravermelho de um celular alcança bem menos que um controle remoto. Aproxime a parte de cima do celular a uns 30 cm da caixinha que fica no fio da fita.
 
 ★ Cômodos
-Agrupe suas fitas por cômodo e ligue ou desligue um cômodo inteiro com um toque.
+Agrupe suas fitas LED por cômodo e ligue ou desligue um cômodo inteiro com um toque.
 
-★ Atalhos
+★ Atalhos e automação
 Ligue ou desligue um cômodo por um atalho na tela inicial ou por um app de automação, com um simples link.
 
 ★ Outros controladores
-O app reconhece muitos outros controladores (Bluetooth e Wi-Fi) e diz de qual app eles vêm. Se algum tiver controle remoto infravermelho, adicione como infravermelho e controle tudo por aqui.
+O app reconhece muitos outros controladores de LED (Bluetooth e Wi-Fi) e diz de qual app eles vêm. Se algum veio com controle remoto infravermelho, adicione como infravermelho e controle tudo por aqui.
 
 ★ Privacidade em primeiro lugar
-Sem conta, sem anúncios, sem rastreamento. Tudo fica no seu celular. O app funciona sem internet.
+Sem conta, sem anúncios, sem rastreamento, sem precisar de internet. Tudo fica no seu celular.
 
-Observação: aparelhos Wi-Fi bloqueados pelo fabricante (Tuya / Smart Life) não podem ser controlados por nenhum outro app. O Controle Remoto Fita LED é um app independente, sem ligação com os fabricantes desses controladores nem com os apps deles.
+Perguntas
+• Funciona com a minha fita LED? Sim, se a sua fita aparece como ELK-BLEDOM, ELK-BLEDOB ou MELK numa busca Bluetooth, ou se veio com um controlezinho infravermelho.
+• Meu celular não tem emissor infravermelho? Então as fitas com infravermelho não podem ser controladas (nenhum app consegue sem ele), mas as fitas Bluetooth funcionam em qualquer celular.
+• Fitas Wi-Fi? Aparelhos bloqueados pelo fabricante (Tuya / Smart Life) não podem ser controlados por nenhum outro app.
+
+O Controle Remoto Fita LED é um app independente, sem ligação com os fabricantes desses controladores nem com os apps deles.

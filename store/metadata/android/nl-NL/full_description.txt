@@ -1,26 +1,33 @@
-Weet je niet meer welke app bij welke ledstrip hoort? Ledstrip afstandsbediening brengt ze allemaal samen in één simpele app. Gratis, zonder reclame, zonder account.
+Bedien je RGB-ledstrips vanuit één simpele app: Bluetooth-ledstrips en ledstrips met een infrarood-afstandsbediening (IR). Gratis, zonder reclame, zonder account, werkt offline.
 
-★ Bluetooth-ledstrips
-De meeste goedkope Bluetooth-controllers voor ledstrips die online worden verkocht (met namen als ELK-BLEDOM, ELK-BLEDOB of MELK) werken meteen:
+Weet je niet meer welke app bij welke ledstrip hoort? Het kleine afstandsbedieninkje kwijt? Ledstrip afstandsbediening brengt al je ledverlichting samen: slaapkamer, bureau, tv-achtergrondverlichting, gamingsetup, keuken of plafond.
+
+★ Bluetooth-ledcontroller
+De meeste goedkope Bluetooth-controllers voor ledstrips die online worden verkocht (bij het zoeken te zien als ELK-BLEDOM, ELK-BLEDOB of MELK) werken meteen, zonder koppelcode:
 • aan- en uitzetten
 • elke kleur, met snelle kleuren en een schuif voor wit
 • helderheid
 • ingebouwde effecten (overgang, sprong, regenboog, vuur…) en hun snelheid
 
-★ Strips met een infrarood-afstandsbediening
-Afstandsbediening kwijt? Als je telefoon een infraroodzender heeft (veel telefoons van Xiaomi, Redmi en POCO hebben er een), wordt hij de afstandsbediening. De app vindt zelf de juiste codes: tik op het scherm zodra je strip reageert, dat is alles. Kleuren, helderheid en effecten werken daarna net als op de afstandsbediening.
+★ IR-afstandsbediening voor ledstrips
+Afstandsbediening kwijt of kapot? Als je telefoon een infraroodzender heeft (veel telefoons van Xiaomi, Redmi en POCO hebben er een), wordt hij je led-afstandsbediening. De app vindt zelf de juiste infraroodcodes: tik op het scherm zodra je strip reageert, dat is alles. Kleuren, helderheid en effecten werken daarna net als op de originele afstandsbediening met 24 of 44 toetsen.
 Tip: de infraroodzender van een telefoon reikt veel minder ver dan een afstandsbediening. Houd de bovenkant van je telefoon op hooguit zo'n 30 cm van het kastje aan de kabel van de strip.
 
 ★ Kamers
-Deel je strips in per kamer en zet een hele kamer met één tik aan of uit.
+Deel je ledstrips in per kamer en zet een hele kamer met één tik aan of uit.
 
-★ Snelkoppelingen
+★ Snelkoppelingen en automatisering
 Zet een kamer aan of uit vanaf een snelkoppeling op je startscherm of vanuit een automatiseringsapp, met een simpele link.
 
 ★ Andere controllers
-De app herkent veel andere controllers (Bluetooth en Wi-Fi) en vertelt je bij welke app ze horen. Heeft er een een infrarood-afstandsbediening? Voeg hem dan toe via infrarood en bedien alles hiervandaan.
+De app herkent veel andere ledcontrollers (Bluetooth en Wi-Fi) en vertelt je bij welke app ze horen. Zat er bij een ervan een infrarood-afstandsbediening? Voeg hem dan toe via infrarood en bedien alles hiervandaan.
 
 ★ Privacy voorop
-Geen account, geen reclame, geen tracking. Alles blijft op je telefoon. De app werkt zonder internet.
+Geen account, geen reclame, geen tracking, geen internet nodig. Alles blijft op je telefoon.
 
-Goed om te weten: Wi-Fi-apparaten die door hun fabrikant zijn vergrendeld (Tuya / Smart Life) kunnen door geen enkele andere app worden bediend. Ledstrip afstandsbediening is een onafhankelijke app, niet verbonden aan de fabrikanten van deze controllers of hun apps.
+Vragen
+• Werkt het met mijn ledstrip? Ja, als je strip bij een Bluetooth-scan verschijnt als ELK-BLEDOM, ELK-BLEDOB of MELK, of als er een kleine infrarood-afstandsbediening bij zat.
+• Heeft mijn telefoon geen infraroodzender? Dan kun je infraroodstrips niet bedienen (geen enkele app kan dat zonder), maar Bluetooth-strips werken op elke telefoon.
+• Wi-Fi-strips? Apparaten die door hun fabrikant zijn vergrendeld (Tuya / Smart Life) kunnen door geen enkele andere app worden bediend.
+
+Ledstrip afstandsbediening is een onafhankelijke app, niet verbonden aan de fabrikanten van deze controllers of hun apps.

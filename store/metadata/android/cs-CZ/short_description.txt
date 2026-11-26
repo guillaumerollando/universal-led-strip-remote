@@ -1,1 +1,1 @@
-Jedna aplikace zdarma pro LED pásky s Bluetooth i IR. Bez reklam a bez účtu.
+Ovladač LED pásků přes Bluetooth i IR: barvy, efekty, místnosti. Bez reklam.

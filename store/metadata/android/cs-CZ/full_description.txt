@@ -1,26 +1,33 @@
-Nevíte, která aplikace patří ke kterému LED pásku? Univerzální ovladač LED pásků je spojí všechny v jedné jednoduché aplikaci. Zdarma, bez reklam a bez účtu.
+Ovládejte své RGB LED pásky v jedné jednoduché aplikaci: LED pásky s Bluetooth i pásky s infračerveným (IR) dálkovým ovladačem. Zdarma, bez reklam, bez účtu, funguje offline.
 
-★ LED pásky s Bluetooth
-Většina levných Bluetooth ovladačů pásků z e-shopů (s názvy ELK-BLEDOM, ELK-BLEDOB nebo MELK) funguje hned:
+Nevíte, která aplikace patří ke kterému LED pásku? Ztratili jste malý ovladač? Univerzální ovladač LED pásků spojí všechna vaše LED světla: ložnice, pracovní stůl, podsvícení televize, herní koutek, kuchyň nebo strop.
+
+★ Bluetooth ovladač LED pásků
+Většina levných Bluetooth ovladačů LED pásků z e-shopů (při vyhledávání se zobrazí jako ELK-BLEDOM, ELK-BLEDOB nebo MELK) funguje hned, bez párovacího kódu:
 • zapnutí a vypnutí
-• jakákoli barva, rychlé barvy a nastavení bílé
+• jakákoli barva, rychlé barvy a posuvník bílé
 • jas
 • vestavěné efekty (prolínání, skoky, duha, oheň…) a jejich rychlost
 
-★ Pásky s infračerveným ovladačem
-Ztratili jste ovladač? Pokud má váš telefon IR vysílač (mají ho mnohé telefony Xiaomi, Redmi a POCO), stane se z něj ovladač. Aplikace sama najde správné kódy: stačí klepnout na obrazovku, jakmile pásek zareaguje. Barvy, jas a efekty pak fungují stejně jako na ovladači.
+★ IR ovladač pro LED pásek
+Ztracený nebo rozbitý ovladač? Pokud má váš telefon IR vysílač (mají ho mnohé telefony Xiaomi, Redmi a POCO), stane se z něj dálkový ovladač LED pásku. Aplikace sama najde správné infračervené kódy: stačí klepnout na obrazovku, jakmile pásek zareaguje. Barvy, jas a efekty pak fungují stejně jako na původním ovladači s 24 nebo 44 tlačítky.
 Tip: IR vysílač telefonu má mnohem kratší dosah než ovladač. Držte horní část telefonu asi do 30 cm od malé krabičky na kabelu pásku.
 
 ★ Místnosti
-Rozdělte pásky podle místností a celou místnost zapněte nebo vypněte jedním klepnutím.
+Rozdělte LED pásky podle místností a celou místnost zapněte nebo vypněte jedním klepnutím.
 
-★ Zkratky
+★ Zkratky a automatizace
 Zapněte nebo vypněte místnost zkratkou na ploše nebo z aplikace pro automatizaci, pomocí jednoduchého odkazu.
 
 ★ Další ovladače
-Aplikace pozná spoustu dalších typů pásků (Bluetooth i Wi-Fi) a řekne vám, ze které aplikace pocházejí. Pokud má pásek infračervený ovladač, přidejte ho jako infračervený a ovládejte vše odsud.
+Aplikace pozná spoustu dalších LED ovladačů (Bluetooth i Wi-Fi) a řekne vám, ze které aplikace pocházejí. Pokud k některému patří infračervený ovladač, přidejte ho jako infračervený a ovládejte vše odsud.
 
 ★ Soukromí na prvním místě
-Žádný účet, žádné reklamy, žádné sledování. Vše zůstává ve vašem telefonu. Aplikace funguje i bez internetu.
+Žádný účet, žádné reklamy, žádné sledování, internet není potřeba. Vše zůstává ve vašem telefonu.
 
-Upozornění: zařízení Wi-Fi zamčená výrobcem (Tuya / Smart Life) nemůže ovládat žádná jiná aplikace. Univerzální ovladač LED pásků je nezávislá aplikace bez vazby na výrobce těchto ovladačů nebo jejich aplikace.
+Otázky
+• Funguje to s mým LED páskem? Pokud se váš pásek při hledání Bluetooth zařízení zobrazí jako ELK-BLEDOM, ELK-BLEDOB nebo MELK, nebo k němu patří malý infračervený ovladač, ano.
+• Můj telefon nemá IR vysílač? Pak pásky s infračerveným ovladačem ovládat nelze (bez vysílače to nedokáže žádná aplikace), ale pásky s Bluetooth fungují na každém telefonu.
+• Pásky s Wi-Fi? Zařízení zamčená výrobcem (Tuya / Smart Life) nemůže ovládat žádná jiná aplikace.
+
+Univerzální ovladač LED pásků je nezávislá aplikace bez vazby na výrobce těchto ovladačů nebo jejich aplikace.

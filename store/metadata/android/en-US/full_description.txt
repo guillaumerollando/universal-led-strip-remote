@@ -1,26 +1,33 @@
-Lost track of which app goes with which LED strip? Universal LED Strip Remote brings them all together in one simple app. Free, no ads, no account.
+Control your RGB LED strip lights from one simple app: Bluetooth LED strips and strips with an infrared (IR) remote. Free, no ads, no account, works offline.
 
-★ Bluetooth LED strips
-Most cheap Bluetooth LED strip controllers sold online (named ELK-BLEDOM, ELK-BLEDOB or MELK) work directly:
+Lost track of which app goes with which LED strip? Lost the little remote? Universal LED Strip Remote brings all your LED lights together: bedroom, desk, TV backlight, gaming setup, kitchen or ceiling.
+
+★ Bluetooth LED strip controller
+Most cheap Bluetooth LED strip controllers sold online (named ELK-BLEDOM, ELK-BLEDOB or MELK when you scan) work directly, no pairing code needed:
 • turn on and off
 • any color, with quick colors and a white slider
 • brightness
 • built-in effects (fade, jump, rainbow, fire…) and their speed
 
-★ Strips with an infrared remote
-Lost the remote? If your phone has an IR blaster (many Xiaomi, Redmi and POCO phones do), it becomes the remote. The app finds the right codes by itself: tap the screen as soon as your strip reacts, that's it. Colors, brightness and effects then work like on the remote.
+★ LED strip IR remote
+Lost or broken remote? If your phone has an IR blaster (many Xiaomi, Redmi and POCO phones do), it becomes your LED remote control. The app finds the right infrared codes by itself: tap the screen as soon as your strip reacts, that's it. Colors, brightness and effects then work like on the original 24 or 44 key remote.
 Tip: a phone's IR blaster reaches much less far than a remote. Hold the top of the phone within about 30 cm (1 ft) of the small box on the strip's cable.
 
 ★ Rooms
-Group your strips by room, then turn a whole room on or off in one tap.
+Group your LED strips by room, then turn a whole room on or off in one tap.
 
-★ Shortcuts
+★ Shortcuts and automation
 Turn a room on or off from a home screen shortcut or an automation app, with a simple link.
 
 ★ Other controllers
-The app recognizes many other controllers (Bluetooth and Wi-Fi) and tells you which app they come from. If one has an infrared remote, add it as infrared and control everything from here.
+The app recognizes many other LED controllers (Bluetooth and Wi-Fi) and tells you which app they come from. If one came with an infrared remote, add it as infrared and control everything from here.
 
 ★ Private by design
-No account, no ads, no tracking. Everything stays on your phone. The app works without internet.
+No account, no ads, no tracking, no internet needed. Everything stays on your phone.
 
-Note: Wi-Fi devices locked by their maker (Tuya / Smart Life) can't be controlled by any other app. Universal LED Strip Remote is an independent app, not affiliated with the makers of these controllers or their apps.
+Questions
+• Does it work with my LED strip? If your strip shows up as ELK-BLEDOM, ELK-BLEDOB or MELK in a Bluetooth scan, or came with a small infrared remote, yes.
+• My phone has no IR blaster? Then infrared strips can't be controlled (no app can do it without one), but Bluetooth strips work on any phone.
+• Wi-Fi strips? Devices locked by their maker (Tuya / Smart Life) can't be controlled by any other app.
+
+Universal LED Strip Remote is an independent app, not affiliated with the makers of these controllers or their apps.

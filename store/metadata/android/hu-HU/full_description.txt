@@ -1,26 +1,33 @@
-Már nem tudod, melyik app melyik LED szalaghoz tartozik? A LED szalag távirányító mindet összegyűjti egyetlen egyszerű appban. Ingyenes, reklám és fiók nélkül.
+Irányítsd az RGB LED szalagjaidat egyetlen egyszerű appból: Bluetooth-os LED szalagokat és infravörös (IR) távirányítós szalagokat is. Ingyenes, reklám és fiók nélkül, internet nélkül is működik.
 
-★ Bluetooth-os LED szalagok
-A legtöbb olcsó, netről rendelt Bluetooth-os szalagvezérlő (ELK-BLEDOM, ELK-BLEDOB vagy MELK néven) azonnal működik:
+Már nem tudod, melyik app melyik LED szalaghoz tartozik? Elveszett a kis távirányító? A LED szalag távirányító egy helyre gyűjti az összes LED világításodat: hálószoba, íróasztal, TV háttérvilágítás, gamer sarok, konyha vagy mennyezet.
+
+★ Bluetooth-os LED szalag vezérlő
+A legtöbb olcsó, netről rendelt Bluetooth-os LED szalag vezérlő (kereséskor ELK-BLEDOM, ELK-BLEDOB vagy MELK néven látszik) azonnal működik, párosítási kód nélkül:
 • be- és kikapcsolás
 • bármilyen szín, gyors színek és fehérszabályzó
 • fényerő
 • beépített effektek (átmenet, ugrás, szivárvány, tűz…) és a sebességük
 
-★ Infravörös távirányítós szalagok
-Elveszett a távirányító? Ha a telefonodban van infravörös adó (sok Xiaomi, Redmi és POCO telefonban van), a telefonod lesz a távirányító. Az app magától megtalálja a megfelelő kódokat: csak koppints a képernyőre, amint a szalag reagál. Ezután a színek, a fényerő és az effektek ugyanúgy működnek, mint a távirányítón.
+★ Infravörös távirányító LED szalaghoz
+Elveszett vagy elromlott a távirányító? Ha a telefonodban van infravörös adó (sok Xiaomi, Redmi és POCO telefonban van), a telefonod lesz a LED távirányító. Az app magától megtalálja a megfelelő infravörös kódokat: csak koppints a képernyőre, amint a szalag reagál, és kész. Ezután a színek, a fényerő és az effektek ugyanúgy működnek, mint az eredeti 24 vagy 44 gombos távirányítón.
 Tipp: a telefon infravörös adója sokkal kisebb távolságra ér el, mint egy távirányító. Tartsd a telefon tetejét kb. 30 cm-en belül a szalag kábelén lévő kis dobozkától.
 
 ★ Szobák
-Rendezd szobákba a szalagjaidat, és kapcsolj be vagy ki egy egész szobát egyetlen koppintással.
+Rendezd szobákba a LED szalagjaidat, és kapcsolj be vagy ki egy egész szobát egyetlen koppintással.
 
-★ Parancsikonok
+★ Parancsikonok és automatizálás
 Kapcsolj be vagy ki egy szobát a kezdőképernyő parancsikonjáról vagy egy automatizáló appból, egy egyszerű linkkel.
 
 ★ Más vezérlők
-Az app sok más vezérlőt is felismer (Bluetooth és Wi-Fi), és megmondja, melyik appból valók. Ha van infravörös távirányítója, add hozzá infravörösként, és innen irányíts mindent.
+Az app sok más LED vezérlőt is felismer (Bluetooth és Wi-Fi), és megmondja, melyik appból valók. Ha valamelyikhez infravörös távirányító is járt, add hozzá infravörösként, és innen irányíts mindent.
 
 ★ Adataid nálad maradnak
-Nincs fiók, nincs reklám, nincs követés. Minden a telefonodon marad. Az app internet nélkül is működik.
+Nincs fiók, nincs reklám, nincs követés, és internet sem kell. Minden a telefonodon marad.
 
-Jó tudni: a gyártójuk által lezárt Wi-Fi-s eszközöket (Tuya / Smart Life) semmilyen más app nem tudja vezérelni. A LED szalag távirányító független app, nincs kapcsolatban ezeknek a vezérlőknek és appjaiknak a gyártóival.
+Kérdések
+• Működik az én LED szalagommal? Ha a szalagod Bluetooth-keresésnél ELK-BLEDOM, ELK-BLEDOB vagy MELK néven jelenik meg, vagy kis infravörös távirányító járt hozzá, akkor igen.
+• Nincs infravörös adó a telefonomban? Akkor az infravörös szalagokat nem lehet vezérelni (adó nélkül egyetlen app sem képes rá), de a Bluetooth-os szalagok bármilyen telefonon működnek.
+• Wi-Fi-s szalagok? A gyártójuk által lezárt eszközöket (Tuya / Smart Life) semmilyen más app nem tudja vezérelni.
+
+A LED szalag távirányító független app, nincs kapcsolatban ezeknek a vezérlőknek és appjaiknak a gyártóival.

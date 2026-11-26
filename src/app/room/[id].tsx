@@ -2,9 +2,9 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Pressable, Text, TextInput, View } from 'react-native';
 
-import { FAMILIES } from '../../core/families';
 import { addRoom, removeRoom, renameRoom, updateDevice, useRooms, useSavedDevices } from '../../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
+import { kindLabel } from '../../ui/labels';
 import { colors, radius, space } from '../../ui/theme';
 import { t } from '../../i18n';
 
@@ -118,7 +118,7 @@ export default function RoomScreen() {
                 <View style={{ flex: 1 }}>
                   <Text style={styles.title}>{d.name}</Text>
                   <Muted>
-                    {t(FAMILIES[d.family].label)}
+                    {kindLabel(d.transport)}
                     {elsewhere ? t(' · actuellement : {room}', { room: elsewhere }) : ''}
                   </Muted>
                 </View>

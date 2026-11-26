@@ -14,9 +14,6 @@ export const TH: Record<string, string> = {
   'Aucun ruban pour l’instant': 'ยังไม่มีไฟเส้น',
   '{lit} allumé sur {total}': 'เปิดอยู่ {lit} จาก {total}',
   '{lit} allumés sur {total}': 'เปิดอยู่ {lit} จาก {total}',
-  Modifier: 'แก้ไข',
-  'Tout allumer': 'เปิดทั้งหมด',
-  'Tout éteindre': 'ปิดทั้งหมด',
   'Pas de réponse : {names}': 'ไม่ตอบสนอง: {names}',
   'Cette pièce n’existe plus.': 'ห้องนี้ไม่มีแล้ว',
   'Supprimer « {name} » ?': 'ลบ “{name}” ไหม?',
@@ -68,7 +65,6 @@ export const TH: Record<string, string> = {
   Lumière: 'แสงไฟ',
   Effets: 'เอฟเฟกต์',
   'Ex. Néon du salon': 'เช่น ไฟนีออนห้องนั่งเล่น',
-  'Enregistrer le nom': 'บันทึกชื่อ',
   'Ajouter à mes rubans': 'เพิ่มในไฟเส้นของฉัน',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const TH: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'เข้าใกล้ไฟเส้นและปิดแอปอื่นของมัน',
   'Ruban Bluetooth': 'ไฟเส้นบลูทูธ',
   'Ruban Wi-Fi': 'ไฟเส้น Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'กดค้าง: การตั้งค่า',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'เคล็ดลับ: กดค้างที่ห้องหรือไฟเส้นเพื่อเปิดการตั้งค่า',
+  'Changer de pièce': 'เปลี่ยนห้อง',
+  'Compris': 'เข้าใจแล้ว',
+  'Réglages': 'การตั้งค่า',
 };

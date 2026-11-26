@@ -1,16 +1,21 @@
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, Text, View } from 'react-native';
 
 import type { Rgb } from '../core/elk';
 import { canPower, setGroupPower } from '../services/control';
-import type { Room, SavedDevice } from '../services/store';
+import { markLongPressSeen } from '../services/hints';
+import { removeRoom, renameRoom, type Room, type SavedDevice } from '../services/store';
 import { DeviceTile } from './DeviceTile';
 import { styles as kit } from './kit';
-import { Glow } from './light';
+import { Glow, PowerButton } from './light';
+import { RenameField, Sheet } from './Sheet';
 import { colors, radius, space, WARM_WHITE } from './theme';
 import { t } from '../i18n';
+
+/** Couleur de l'interrupteur d'une pièce : le filament chaud de l'interface (`colors.accent`). */
+const ACCENT: Rgb = { r: 255, g: 181, b: 71 };
 
 /** Moyenne des couleurs des rubans allumés : la « teinte » de la pièce. */
 function roomTint(devices: SavedDevice[]): Rgb | null {
@@ -26,80 +31,114 @@ function roomTint(devices: SavedDevice[]): Rgb | null {
   return { r: sum.r / lit.length, g: sum.g / lit.length, b: sum.b / lit.length };
 }
 
-/** Une pièce : son nom, combien de rubans brillent, et tout allumer / tout éteindre en un geste. */
+/**
+ * Une pièce : son nom, combien de rubans brillent, et un seul interrupteur pour toute la pièce.
+ * Toucher = tout allumer / tout éteindre ; appui long = ses réglages (renommer, ses rubans, supprimer).
+ */
 export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; devices: SavedDevice[]; nearbyKeys: Set<string> }) {
-  const [busy, setBusy] = useState<'on' | 'off' | null>(null);
+  const [busy, setBusy] = useState(false);
   const [report, setReport] = useState<string | null>(null);
+  const [menu, setMenu] = useState<'menu' | 'rename' | null>(null);
   const controllable = devices.filter(canPower);
   const litCount = devices.filter((d) => d.state?.on).length;
   const tint = roomTint(devices);
+  const on = controllable.some((d) => d.state?.on);
+  const name = room?.name ?? t('Sans pièce');
 
-  const all = (on: boolean): void => {
+  const toggle = (): void => {
+    if (controllable.length === 0 || busy) return;
     void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    setBusy(on ? 'on' : 'off');
+    setBusy(true);
     setReport(null);
-    setGroupPower(controllable, on)
+    setGroupPower(controllable, !on)
       .then((r) => {
         if (r.failed.length > 0) {
           const names = r.failed.map((f) => devices.find((d) => d.key === f.key)?.name ?? f.key);
           setReport(t('Pas de réponse : {names}', { names: names.join(', ') }));
         }
       })
-      .finally(() => setBusy(null));
+      .finally(() => setBusy(false));
+  };
+
+  const remove = (): void => {
+    setMenu(null);
+    if (!room) return;
+    Alert.alert(t('Supprimer « {name} » ?', { name: room.name }), t('Les rubans restent, ils passent dans « Sans pièce ».'), [
+      { text: t('Annuler'), style: 'cancel' },
+      { text: t('Supprimer'), style: 'destructive', onPress: () => void removeRoom(room.id) },
+    ]);
   };
 
   return (
     <View style={{ gap: space.sm, marginTop: space.lg }}>
-      <View style={{ borderRadius: radius.lg, overflow: 'hidden', padding: space.lg, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, gap: space.md }}>
+      <Pressable
+        onPress={toggle}
+        onLongPress={
+          room
+            ? () => {
+                markLongPressSeen();
+                setMenu('menu');
+              }
+            : undefined
+        }
+        accessibilityHint={room ? t('Appui long : réglages') : undefined}
+        style={({ pressed }) => ({
+          borderRadius: radius.lg,
+          overflow: 'hidden',
+          padding: space.lg,
+          backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
+          borderWidth: 1,
+          borderColor: colors.border,
+          gap: space.sm,
+        })}
+      >
         {tint && <Glow rgb={tint} intensity={0.35} style={{ top: -60, left: -40, right: -40, bottom: -20 }} />}
-        <Pressable
-          disabled={!room}
-          onPress={() => room && router.push({ pathname: '/room/[id]', params: { id: room.id } })}
-          style={kit.row}
-        >
+        <View style={kit.row}>
           <View style={{ flex: 1 }}>
-            <Text style={kit.big}>{room?.name ?? t('Sans pièce')}</Text>
+            <Text style={kit.big}>{name}</Text>
             <Text style={kit.muted}>
               {devices.length === 0
                 ? t('Aucun ruban pour l’instant')
                 : t(litCount > 1 ? '{lit} allumés sur {total}' : '{lit} allumé sur {total}', { lit: litCount, total: devices.length })}
             </Text>
           </View>
-          {room && <Text style={[kit.muted, { color: colors.accent }]}>{t('Modifier')}</Text>}
-        </Pressable>
-        {room && controllable.length > 0 && (
-          <View style={kit.row}>
-            <GroupButton label={t('Tout allumer')} lit onPress={() => all(true)} busy={busy === 'on'} disabled={!!busy} />
-            <GroupButton label={t('Tout éteindre')} onPress={() => all(false)} busy={busy === 'off'} disabled={!!busy} />
-          </View>
-        )}
+          {controllable.length > 0 && (
+            <PowerButton on={on} rgb={ACCENT} onPress={toggle} busy={busy} size={56} label={t(on ? '{name} : éteindre' : '{name} : allumer', { name })} />
+          )}
+        </View>
         {report && <Text style={[kit.muted, { color: colors.danger }]}>{report}</Text>}
-      </View>
+      </Pressable>
       {devices.map((d) => (
         <DeviceTile key={d.key} device={d} nearby={nearbyKeys.has(d.key)} />
       ))}
+      {room && (
+        <Sheet
+          visible={menu !== null}
+          title={room.name}
+          onClose={() => setMenu(null)}
+          items={[
+            { label: t('Renommer'), onPress: () => setMenu('rename') },
+            {
+              label: t('Rubans de la pièce'),
+              onPress: () => {
+                setMenu(null);
+                router.push({ pathname: '/room/[id]', params: { id: room.id } });
+              },
+            },
+            { label: t('Supprimer la pièce'), onPress: remove, danger: true },
+          ]}
+        >
+          {menu === 'rename' ? (
+            <RenameField
+              initial={room.name}
+              onDone={(n) => {
+                void renameRoom(room.id, n);
+                setMenu(null);
+              }}
+            />
+          ) : undefined}
+        </Sheet>
+      )}
     </View>
-  );
-}
-
-function GroupButton({ label, lit, onPress, busy, disabled }: { label: string; lit?: boolean; onPress: () => void; busy?: boolean; disabled?: boolean }) {
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      style={({ pressed }) => ({
-        flex: 1,
-        minHeight: 46,
-        borderRadius: radius.pill,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: lit ? colors.accent : colors.surfaceHigh,
-        borderWidth: 1,
-        borderColor: lit ? colors.accent : colors.border,
-        opacity: pressed || (disabled && !busy) ? 0.6 : 1,
-      })}
-    >
-      <Text style={{ fontWeight: '700', color: lit ? colors.accentText : colors.text }}>{busy ? '…' : label}</Text>
-    </Pressable>
   );
 }

@@ -14,9 +14,6 @@ export const AR: Record<string, string> = {
   'Aucun ruban pour l’instant': 'لا توجد أشرطة بعد',
   '{lit} allumé sur {total}': 'قيد التشغيل: {lit} من {total}',
   '{lit} allumés sur {total}': 'قيد التشغيل: {lit} من {total}',
-  Modifier: 'تعديل',
-  'Tout allumer': 'تشغيل الكل',
-  'Tout éteindre': 'إطفاء الكل',
   'Pas de réponse : {names}': 'لا استجابة: {names}',
   'Cette pièce n’existe plus.': 'هذه الغرفة لم تعد موجودة.',
   'Supprimer « {name} » ?': 'حذف «{name}»؟',
@@ -72,7 +69,6 @@ export const AR: Record<string, string> = {
   Lumière: 'الإضاءة',
   Effets: 'التأثيرات',
   'Ex. Néon du salon': 'مثال: نيون غرفة الجلوس',
-  'Enregistrer le nom': 'حفظ الاسم',
   'Ajouter à mes rubans': 'إضافة إلى أشرطتي',
 
   // ── Couleurs, luminosité, effets ──
@@ -221,4 +217,10 @@ export const AR: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'اقترب من الشريط وأغلق تطبيقاته الأخرى.',
   'Ruban Bluetooth': 'شريط بلوتوث',
   'Ruban Wi-Fi': 'شريط واي فاي',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'اضغط مطولًا: الإعدادات',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'نصيحة: اضغط مطولًا على غرفة أو شريط لفتح إعداداته.',
+  'Changer de pièce': 'تغيير الغرفة',
+  'Compris': 'فهمت',
+  'Réglages': 'الإعدادات',
 };

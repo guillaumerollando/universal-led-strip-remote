@@ -14,9 +14,6 @@ export const ES: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Aún no hay tiras',
   '{lit} allumé sur {total}': '{lit} de {total} encendida',
   '{lit} allumés sur {total}': '{lit} de {total} encendidas',
-  Modifier: 'Editar',
-  'Tout allumer': 'Encender todo',
-  'Tout éteindre': 'Apagar todo',
   'Pas de réponse : {names}': 'Sin respuesta: {names}',
   'Cette pièce n’existe plus.': 'Esta habitación ya no existe.',
   'Supprimer « {name} » ?': '¿Eliminar «{name}»?',
@@ -68,7 +65,6 @@ export const ES: Record<string, string> = {
   Lumière: 'Luz',
   Effets: 'Efectos',
   'Ex. Néon du salon': 'Ej. Neón del salón',
-  'Enregistrer le nom': 'Guardar nombre',
   'Ajouter à mes rubans': 'Añadir a mis tiras',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const ES: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Acércate a la tira y cierra sus otras apps.',
   'Ruban Bluetooth': 'Tira Bluetooth',
   'Ruban Wi-Fi': 'Tira Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Mantén pulsado: ajustes',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Consejo: mantén pulsada una habitación o una tira para ver sus ajustes.',
+  'Changer de pièce': 'Cambiar de habitación',
+  'Compris': 'Entendido',
+  'Réglages': 'Ajustes',
 };

@@ -4,7 +4,9 @@ import { Pressable, Text, View } from 'react-native';
 
 import { FAMILIES } from '../core/families';
 import { canPower, setPower } from '../services/control';
+import { markLongPressSeen } from '../services/hints';
 import type { SavedDevice } from '../services/store';
+import { DeviceOptions } from './DeviceOptions';
 import { styles as kit } from './kit';
 import { LightStrip, PowerButton } from './light';
 import { colors, radius, space } from './theme';
@@ -12,10 +14,14 @@ import { t } from '../i18n';
 
 const TRANSPORT = { ble: 'Bluetooth', wifi: 'Wi-Fi', ir: t('Infrarouge') };
 
-/** Un ruban dans une liste : son nom, sa lumière, et le bouton marche/arrêt à portée de pouce. */
+/**
+ * Un ruban dans une liste : son nom, sa lumière, et le bouton marche/arrêt à portée de pouce.
+ * Toucher = ses commandes (couleurs, effets) ; appui long = ses réglages (nom, pièce, oublier).
+ */
 export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [options, setOptions] = useState(false);
   const on = device.state?.on ?? false;
   const family = FAMILIES[device.family];
   const controllable = canPower(device);
@@ -31,6 +37,10 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
   return (
     <Pressable
       onPress={() => router.push({ pathname: '/device/[key]', params: { key: device.key } })}
+      onLongPress={() => {
+        markLongPressSeen();
+        setOptions(true);
+      }}
       style={({ pressed }) => ({
         backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
         borderRadius: radius.md,
@@ -61,6 +71,7 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
       </View>
       {controllable && <LightStrip on={on} rgb={device.state?.rgb} height={6} />}
       {error && <Text style={[kit.muted, { color: colors.danger }]}>{error}</Text>}
+      <DeviceOptions device={device} visible={options} onClose={() => setOptions(false)} />
     </Pressable>
   );
 }

@@ -14,9 +14,6 @@ export const PL: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Na razie brak taśm',
   '{lit} allumé sur {total}': 'Włączone: {lit} z {total}',
   '{lit} allumés sur {total}': 'Włączone: {lit} z {total}',
-  Modifier: 'Edytuj',
-  'Tout allumer': 'Włącz wszystko',
-  'Tout éteindre': 'Wyłącz wszystko',
   'Pas de réponse : {names}': 'Brak odpowiedzi: {names}',
   'Cette pièce n’existe plus.': 'Ten pokój już nie istnieje.',
   'Supprimer « {name} » ?': 'Usunąć „{name}”?',
@@ -68,7 +65,6 @@ export const PL: Record<string, string> = {
   Lumière: 'Światło',
   Effets: 'Efekty',
   'Ex. Néon du salon': 'Np. Neon w salonie',
-  'Enregistrer le nom': 'Zapisz nazwę',
   'Ajouter à mes rubans': 'Dodaj do moich taśm',
 
   // ── Couleurs, luminosité, effets ──
@@ -214,4 +210,10 @@ export const PL: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Podejdź bliżej taśmy i zamknij jej inne aplikacje.',
   'Ruban Bluetooth': 'Taśma Bluetooth',
   'Ruban Wi-Fi': 'Taśma Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Przytrzymaj: ustawienia',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Wskazówka: przytrzymaj pokój lub taśmę, aby zobaczyć ustawienia.',
+  'Changer de pièce': 'Zmień pokój',
+  'Compris': 'Rozumiem',
+  'Réglages': 'Ustawienia',
 };

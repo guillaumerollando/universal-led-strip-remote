@@ -14,9 +14,6 @@ export const RO: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Încă nicio bandă',
   '{lit} allumé sur {total}': '{lit} din {total} aprinsă',
   '{lit} allumés sur {total}': '{lit} din {total} aprinse',
-  Modifier: 'Editează',
-  'Tout allumer': 'Aprinde tot',
-  'Tout éteindre': 'Stinge tot',
   'Pas de réponse : {names}': 'Niciun răspuns: {names}',
   'Cette pièce n’existe plus.': 'Camera aceasta nu mai există.',
   'Supprimer « {name} » ?': 'Ștergi „{name}”?',
@@ -68,7 +65,6 @@ export const RO: Record<string, string> = {
   Lumière: 'Lumină',
   Effets: 'Efecte',
   'Ex. Néon du salon': 'Ex. Neonul din sufragerie',
-  'Enregistrer le nom': 'Salvează numele',
   'Ajouter à mes rubans': 'Adaugă la benzile mele',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const RO: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Apropie-te de bandă și închide celelalte aplicații ale ei.',
   'Ruban Bluetooth': 'Bandă Bluetooth',
   'Ruban Wi-Fi': 'Bandă Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Apasă lung: setări',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Sfat: apasă lung pe o cameră sau o bandă pentru setări.',
+  'Changer de pièce': 'Schimbă camera',
+  'Compris': 'Am înțeles',
+  'Réglages': 'Setări',
 };

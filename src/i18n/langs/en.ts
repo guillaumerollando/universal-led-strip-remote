@@ -14,9 +14,6 @@ export const EN: Record<string, string> = {
   'Aucun ruban pour l’instant': 'No strips yet',
   '{lit} allumé sur {total}': '{lit} of {total} on',
   '{lit} allumés sur {total}': '{lit} of {total} on',
-  Modifier: 'Edit',
-  'Tout allumer': 'All on',
-  'Tout éteindre': 'All off',
   'Pas de réponse : {names}': 'No response: {names}',
   'Cette pièce n’existe plus.': 'This room no longer exists.',
   'Supprimer « {name} » ?': 'Delete “{name}”?',
@@ -68,7 +65,6 @@ export const EN: Record<string, string> = {
   Lumière: 'Light',
   Effets: 'Effects',
   'Ex. Néon du salon': 'E.g. Living room neon',
-  'Enregistrer le nom': 'Save name',
   'Ajouter à mes rubans': 'Add to my strips',
 
   // ── Couleurs, luminosité, effets ──
@@ -214,4 +210,10 @@ export const EN: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Move closer to the strip and close its other apps.',
   'Ruban Bluetooth': 'Bluetooth strip',
   'Ruban Wi-Fi': 'Wi-Fi strip',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Long-press: settings',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tip: long-press a room or a strip for its settings.',
+  'Changer de pièce': 'Change room',
+  'Compris': 'Got it',
+  'Réglages': 'Settings',
 };

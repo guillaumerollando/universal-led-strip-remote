@@ -14,9 +14,6 @@ export const HU: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Még nincs szalag',
   '{lit} allumé sur {total}': 'Bekapcsolva: {lit}/{total}',
   '{lit} allumés sur {total}': 'Bekapcsolva: {lit}/{total}',
-  Modifier: 'Szerkesztés',
-  'Tout allumer': 'Mind be',
-  'Tout éteindre': 'Mind ki',
   'Pas de réponse : {names}': 'Nem válaszol: {names}',
   'Cette pièce n’existe plus.': 'Ez a szoba már nem létezik.',
   'Supprimer « {name} » ?': 'Törlöd: „{name}”?',
@@ -68,7 +65,6 @@ export const HU: Record<string, string> = {
   Lumière: 'Fény',
   Effets: 'Effektek',
   'Ex. Néon du salon': 'Pl. Nappali neon',
-  'Enregistrer le nom': 'Név mentése',
   'Ajouter à mes rubans': 'Hozzáadás a szalagjaimhoz',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const HU: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Menj közelebb a szalaghoz, és zárd be a többi appját.',
   'Ruban Bluetooth': 'Bluetooth-szalag',
   'Ruban Wi-Fi': 'Wi-Fi-szalag',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Hosszan nyomva: beállítások',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tipp: nyomj hosszan egy helyiségre vagy szalagra a beállításaihoz.',
+  'Changer de pièce': 'Helyiség módosítása',
+  'Compris': 'Értem',
+  'Réglages': 'Beállítások',
 };

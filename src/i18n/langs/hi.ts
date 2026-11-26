@@ -14,9 +14,6 @@ export const HI: Record<string, string> = {
   'Aucun ruban pour l’instant': 'अभी कोई स्ट्रिप नहीं',
   '{lit} allumé sur {total}': '{total} में से {lit} चालू',
   '{lit} allumés sur {total}': '{total} में से {lit} चालू',
-  Modifier: 'बदलें',
-  'Tout allumer': 'सब चालू',
-  'Tout éteindre': 'सब बंद',
   'Pas de réponse : {names}': 'जवाब नहीं: {names}',
   'Cette pièce n’existe plus.': 'यह कमरा अब नहीं है।',
   'Supprimer « {name} » ?': '“{name}” हटाएँ?',
@@ -68,7 +65,6 @@ export const HI: Record<string, string> = {
   Lumière: 'रोशनी',
   Effets: 'इफ़ेक्ट',
   'Ex. Néon du salon': 'जैसे लिविंग रूम नियॉन',
-  'Enregistrer le nom': 'नाम सेव करें',
   'Ajouter à mes rubans': 'मेरी स्ट्रिप में जोड़ें',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const HI: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'स्ट्रिप के पास जाएँ और उसके दूसरे ऐप बंद करें।',
   'Ruban Bluetooth': 'ब्लूटूथ स्ट्रिप',
   'Ruban Wi-Fi': 'वाई-फ़ाई स्ट्रिप',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'देर तक दबाएँ: सेटिंग',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'सुझाव: सेटिंग के लिए किसी कमरे या स्ट्रिप को देर तक दबाएँ।',
+  'Changer de pièce': 'कमरा बदलें',
+  'Compris': 'समझ गया',
+  'Réglages': 'सेटिंग',
 };

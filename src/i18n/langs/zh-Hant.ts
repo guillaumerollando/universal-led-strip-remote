@@ -14,9 +14,6 @@ export const ZH_HANT: Record<string, string> = {
   'Aucun ruban pour l’instant': '還沒有燈條',
   '{lit} allumé sur {total}': '已開 {lit}/{total}',
   '{lit} allumés sur {total}': '已開 {lit}/{total}',
-  Modifier: '編輯',
-  'Tout allumer': '全部開啟',
-  'Tout éteindre': '全部關閉',
   'Pas de réponse : {names}': '沒有回應：{names}',
   'Cette pièce n’existe plus.': '這個房間已不存在。',
   'Supprimer « {name} » ?': '刪除「{name}」？',
@@ -68,7 +65,6 @@ export const ZH_HANT: Record<string, string> = {
   Lumière: '燈光',
   Effets: '效果',
   'Ex. Néon du salon': '例如：客廳霓虹燈',
-  'Enregistrer le nom': '儲存名稱',
   'Ajouter à mes rubans': '新增到我的燈條',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const ZH_HANT: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': '靠近燈條，並關閉它的其他應用程式。',
   'Ruban Bluetooth': '藍牙燈條',
   'Ruban Wi-Fi': 'Wi-Fi 燈條',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': '長按：設定',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': '提示：長按房間或燈條即可開啟設定。',
+  'Changer de pièce': '更換房間',
+  'Compris': '知道了',
+  'Réglages': '設定',
 };

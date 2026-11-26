@@ -14,9 +14,6 @@ export const CS: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Zatím žádné pásky',
   '{lit} allumé sur {total}': 'Zapnuto: {lit} z {total}',
   '{lit} allumés sur {total}': 'Zapnuto: {lit} z {total}',
-  Modifier: 'Upravit',
-  'Tout allumer': 'Zapnout vše',
-  'Tout éteindre': 'Vypnout vše',
   'Pas de réponse : {names}': 'Bez odezvy: {names}',
   'Cette pièce n’existe plus.': 'Tato místnost už neexistuje.',
   'Supprimer « {name} » ?': 'Smazat „{name}“?',
@@ -68,7 +65,6 @@ export const CS: Record<string, string> = {
   Lumière: 'Světlo',
   Effets: 'Efekty',
   'Ex. Néon du salon': 'Např. Neon v obýváku',
-  'Enregistrer le nom': 'Uložit název',
   'Ajouter à mes rubans': 'Přidat do mých pásků',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const CS: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Přibliž se k pásku a zavři jeho další aplikace.',
   'Ruban Bluetooth': 'Bluetooth pásek',
   'Ruban Wi-Fi': 'Wi-Fi pásek',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Podržet: nastavení',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tip: podrž místnost nebo pásek pro jeho nastavení.',
+  'Changer de pièce': 'Změnit místnost',
+  'Compris': 'Rozumím',
+  'Réglages': 'Nastavení',
 };

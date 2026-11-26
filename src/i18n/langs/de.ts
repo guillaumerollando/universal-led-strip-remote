@@ -14,9 +14,6 @@ export const DE: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Noch keine Streifen',
   '{lit} allumé sur {total}': '{lit} von {total} an',
   '{lit} allumés sur {total}': '{lit} von {total} an',
-  Modifier: 'Bearbeiten',
-  'Tout allumer': 'Alle an',
-  'Tout éteindre': 'Alle aus',
   'Pas de réponse : {names}': 'Keine Antwort: {names}',
   'Cette pièce n’existe plus.': 'Dieser Raum existiert nicht mehr.',
   'Supprimer « {name} » ?': '„{name}“ löschen?',
@@ -68,7 +65,6 @@ export const DE: Record<string, string> = {
   Lumière: 'Licht',
   Effets: 'Effekte',
   'Ex. Néon du salon': 'z. B. Neon im Wohnzimmer',
-  'Enregistrer le nom': 'Name speichern',
   'Ajouter à mes rubans': 'Zu meinen Streifen hinzufügen',
 
   // ── Couleurs, luminosité, effets ──
@@ -214,4 +210,10 @@ export const DE: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Geh näher an den Streifen und schließe seine anderen Apps.',
   'Ruban Bluetooth': 'Bluetooth-Streifen',
   'Ruban Wi-Fi': 'WLAN-Streifen',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Lange drücken: Einstellungen',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tipp: Halte einen Raum oder Streifen gedrückt für seine Einstellungen.',
+  'Changer de pièce': 'Raum ändern',
+  'Compris': 'Verstanden',
+  'Réglages': 'Einstellungen',
 };

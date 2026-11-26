@@ -14,9 +14,6 @@ export const SV: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Inga lister än',
   '{lit} allumé sur {total}': '{lit} av {total} på',
   '{lit} allumés sur {total}': '{lit} av {total} på',
-  Modifier: 'Redigera',
-  'Tout allumer': 'Alla på',
-  'Tout éteindre': 'Alla av',
   'Pas de réponse : {names}': 'Inget svar: {names}',
   'Cette pièce n’existe plus.': 'Det här rummet finns inte längre.',
   'Supprimer « {name} » ?': 'Ta bort ”{name}”?',
@@ -68,7 +65,6 @@ export const SV: Record<string, string> = {
   Lumière: 'Ljus',
   Effets: 'Effekter',
   'Ex. Néon du salon': 'T.ex. Neon i vardagsrummet',
-  'Enregistrer le nom': 'Spara namn',
   'Ajouter à mes rubans': 'Lägg till i mina lister',
 
   // ── Couleurs, luminosité, effets ──
@@ -214,4 +210,10 @@ export const SV: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Gå närmare listen och stäng dess andra appar.',
   'Ruban Bluetooth': 'Bluetooth-list',
   'Ruban Wi-Fi': 'Wifi-list',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Håll in: inställningar',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tips: håll in ett rum eller en list för dess inställningar.',
+  'Changer de pièce': 'Byt rum',
+  'Compris': 'Uppfattat',
+  'Réglages': 'Inställningar',
 };

@@ -14,9 +14,6 @@ export const IT: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Ancora nessuna striscia',
   '{lit} allumé sur {total}': '{lit} accesa su {total}',
   '{lit} allumés sur {total}': '{lit} accese su {total}',
-  Modifier: 'Modifica',
-  'Tout allumer': 'Accendi tutto',
-  'Tout éteindre': 'Spegni tutto',
   'Pas de réponse : {names}': 'Nessuna risposta: {names}',
   'Cette pièce n’existe plus.': 'Questa stanza non esiste più.',
   'Supprimer « {name} » ?': 'Eliminare «{name}»?',
@@ -68,7 +65,6 @@ export const IT: Record<string, string> = {
   Lumière: 'Luce',
   Effets: 'Effetti',
   'Ex. Néon du salon': 'Es. Neon del soggiorno',
-  'Enregistrer le nom': 'Salva nome',
   'Ajouter à mes rubans': 'Aggiungi alle mie strisce',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const IT: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Avvicinati alla striscia e chiudi le sue altre app.',
   'Ruban Bluetooth': 'Striscia Bluetooth',
   'Ruban Wi-Fi': 'Striscia Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Tieni premuto: impostazioni',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Suggerimento: tieni premuta una stanza o una striscia per le sue impostazioni.',
+  'Changer de pièce': 'Cambia stanza',
+  'Compris': 'Capito',
+  'Réglages': 'Impostazioni',
 };

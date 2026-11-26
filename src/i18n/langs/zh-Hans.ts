@@ -14,9 +14,6 @@ export const ZH_HANS: Record<string, string> = {
   'Aucun ruban pour l’instant': '还没有灯带',
   '{lit} allumé sur {total}': '已开 {lit}/{total}',
   '{lit} allumés sur {total}': '已开 {lit}/{total}',
-  Modifier: '编辑',
-  'Tout allumer': '全部打开',
-  'Tout éteindre': '全部关闭',
   'Pas de réponse : {names}': '无响应：{names}',
   'Cette pièce n’existe plus.': '这个房间已不存在。',
   'Supprimer « {name} » ?': '删除“{name}”？',
@@ -68,7 +65,6 @@ export const ZH_HANS: Record<string, string> = {
   Lumière: '灯光',
   Effets: '效果',
   'Ex. Néon du salon': '例如：客厅霓虹灯',
-  'Enregistrer le nom': '保存名称',
   'Ajouter à mes rubans': '添加到我的灯带',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const ZH_HANS: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': '靠近灯带，并关闭它的其他应用。',
   'Ruban Bluetooth': '蓝牙灯带',
   'Ruban Wi-Fi': 'Wi-Fi 灯带',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': '长按：设置',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': '提示：长按房间或灯带即可打开设置。',
+  'Changer de pièce': '更换房间',
+  'Compris': '知道了',
+  'Réglages': '设置',
 };

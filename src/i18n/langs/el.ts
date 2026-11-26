@@ -14,9 +14,6 @@ export const EL: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Καμία ταινία ακόμα',
   '{lit} allumé sur {total}': 'Αναμμένες: {lit} από {total}',
   '{lit} allumés sur {total}': 'Αναμμένες: {lit} από {total}',
-  Modifier: 'Επεξεργασία',
-  'Tout allumer': 'Άναμμα όλων',
-  'Tout éteindre': 'Σβήσιμο όλων',
   'Pas de réponse : {names}': 'Χωρίς απόκριση: {names}',
   'Cette pièce n’existe plus.': 'Αυτό το δωμάτιο δεν υπάρχει πια.',
   'Supprimer « {name} » ?': 'Διαγραφή «{name}»;',
@@ -73,7 +70,6 @@ export const EL: Record<string, string> = {
   Lumière: 'Φως',
   Effets: 'Εφέ',
   'Ex. Néon du salon': 'Π.χ. Νέον σαλονιού',
-  'Enregistrer le nom': 'Αποθήκευση ονόματος',
   'Ajouter à mes rubans': 'Προσθήκη στις ταινίες μου',
 
   // ── Couleurs, luminosité, effets ──
@@ -223,4 +219,10 @@ export const EL: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Πλησίασε την ταινία και κλείσε τις άλλες εφαρμογές της.',
   'Ruban Bluetooth': 'Ταινία Bluetooth',
   'Ruban Wi-Fi': 'Ταινία Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Παρατεταμένο πάτημα: ρυθμίσεις',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Συμβουλή: πάτα παρατεταμένα ένα δωμάτιο ή μια ταινία για τις ρυθμίσεις του.',
+  'Changer de pièce': 'Αλλαγή δωματίου',
+  'Compris': 'Κατάλαβα',
+  'Réglages': 'Ρυθμίσεις',
 };

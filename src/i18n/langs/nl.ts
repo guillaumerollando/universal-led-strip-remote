@@ -14,9 +14,6 @@ export const NL: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Nog geen strips',
   '{lit} allumé sur {total}': '{lit} van {total} aan',
   '{lit} allumés sur {total}': '{lit} van {total} aan',
-  Modifier: 'Bewerken',
-  'Tout allumer': 'Alles aan',
-  'Tout éteindre': 'Alles uit',
   'Pas de réponse : {names}': 'Geen reactie: {names}',
   'Cette pièce n’existe plus.': 'Deze kamer bestaat niet meer.',
   'Supprimer « {name} » ?': '“{name}” verwijderen?',
@@ -68,7 +65,6 @@ export const NL: Record<string, string> = {
   Lumière: 'Licht',
   Effets: 'Effecten',
   'Ex. Néon du salon': 'Bijv. Neon woonkamer',
-  'Enregistrer le nom': 'Naam opslaan',
   'Ajouter à mes rubans': 'Toevoegen aan mijn strips',
 
   // ── Couleurs, luminosité, effets ──
@@ -214,4 +210,10 @@ export const NL: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Kom dichter bij de strip en sluit zijn andere apps.',
   'Ruban Bluetooth': 'Bluetooth-strip',
   'Ruban Wi-Fi': 'Wifi-strip',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Lang indrukken: instellingen',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tip: houd een kamer of strip ingedrukt voor de instellingen.',
+  'Changer de pièce': 'Andere kamer',
+  'Compris': 'Begrepen',
+  'Réglages': 'Instellingen',
 };

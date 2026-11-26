@@ -14,9 +14,6 @@ export const PT: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Nenhuma fita ainda',
   '{lit} allumé sur {total}': '{lit} de {total} ligada',
   '{lit} allumés sur {total}': '{lit} de {total} ligadas',
-  Modifier: 'Editar',
-  'Tout allumer': 'Ligar tudo',
-  'Tout éteindre': 'Desligar tudo',
   'Pas de réponse : {names}': 'Sem resposta: {names}',
   'Cette pièce n’existe plus.': 'Este cômodo não existe mais.',
   'Supprimer « {name} » ?': 'Excluir “{name}”?',
@@ -68,7 +65,6 @@ export const PT: Record<string, string> = {
   Lumière: 'Luz',
   Effets: 'Efeitos',
   'Ex. Néon du salon': 'Ex.: Neon da sala',
-  'Enregistrer le nom': 'Salvar nome',
   'Ajouter à mes rubans': 'Adicionar às minhas fitas',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const PT: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Chegue mais perto da fita e feche os outros apps dela.',
   'Ruban Bluetooth': 'Fita Bluetooth',
   'Ruban Wi-Fi': 'Fita Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Toque e segure: ajustes',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Dica: toque e segure um cômodo ou uma fita para ver os ajustes.',
+  'Changer de pièce': 'Mudar de cômodo',
+  'Compris': 'Entendi',
+  'Réglages': 'Ajustes',
 };

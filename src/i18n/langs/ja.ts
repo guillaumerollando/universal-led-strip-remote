@@ -14,9 +14,6 @@ export const JA: Record<string, string> = {
   'Aucun ruban pour l’instant': 'まだLEDテープがありません',
   '{lit} allumé sur {total}': '{lit}/{total} 点灯中',
   '{lit} allumés sur {total}': '{lit}/{total} 点灯中',
-  Modifier: '編集',
-  'Tout allumer': 'すべてオン',
-  'Tout éteindre': 'すべてオフ',
   'Pas de réponse : {names}': '応答なし：{names}',
   'Cette pièce n’existe plus.': 'この部屋はもうありません。',
   'Supprimer « {name} » ?': '「{name}」を削除しますか？',
@@ -68,7 +65,6 @@ export const JA: Record<string, string> = {
   Lumière: 'ライト',
   Effets: 'エフェクト',
   'Ex. Néon du salon': '例：リビングのネオン',
-  'Enregistrer le nom': '名前を保存',
   'Ajouter à mes rubans': 'マイLEDテープに追加',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const JA: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'LEDテープに近づき、ほかのアプリを閉じてください。',
   'Ruban Bluetooth': 'Bluetooth LEDテープ',
   'Ruban Wi-Fi': 'Wi-Fi LEDテープ',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': '長押し：設定',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'ヒント：部屋やLEDテープを長押しすると設定が開きます。',
+  'Changer de pièce': '部屋を変更',
+  'Compris': 'OK',
+  'Réglages': '設定',
 };

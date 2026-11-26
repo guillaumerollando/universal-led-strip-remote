@@ -14,9 +14,6 @@ export const HE: Record<string, string> = {
   'Aucun ruban pour l’instant': 'עדיין אין פסים',
   '{lit} allumé sur {total}': 'דולקים: {lit} מתוך {total}',
   '{lit} allumés sur {total}': 'דולקים: {lit} מתוך {total}',
-  Modifier: 'עריכה',
-  'Tout allumer': 'להדליק הכול',
-  'Tout éteindre': 'לכבות הכול',
   'Pas de réponse : {names}': 'אין תגובה: {names}',
   'Cette pièce n’existe plus.': 'החדר הזה כבר לא קיים.',
   'Supprimer « {name} » ?': 'למחוק את “{name}”?',
@@ -71,7 +68,6 @@ export const HE: Record<string, string> = {
   Lumière: 'אור',
   Effets: 'אפקטים',
   'Ex. Néon du salon': 'לדוגמה: ניאון בסלון',
-  'Enregistrer le nom': 'שמירת השם',
   'Ajouter à mes rubans': 'הוספה לפסים שלי',
 
   // ── Couleurs, luminosité, effets ──
@@ -220,4 +216,10 @@ export const HE: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'התקרב לפס וסגור את האפליקציות האחרות שלו.',
   'Ruban Bluetooth': 'פס בלוטות׳',
   'Ruban Wi-Fi': 'פס Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'לחיצה ארוכה: הגדרות',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'טיפ: לחיצה ארוכה על חדר או פס פותחת את ההגדרות שלו.',
+  'Changer de pièce': 'החלפת חדר',
+  'Compris': 'הבנתי',
+  'Réglages': 'הגדרות',
 };

@@ -14,9 +14,6 @@ export const KO: Record<string, string> = {
   'Aucun ruban pour l’instant': '아직 스트립이 없어요',
   '{lit} allumé sur {total}': '{lit}/{total}개 켜짐',
   '{lit} allumés sur {total}': '{lit}/{total}개 켜짐',
-  Modifier: '편집',
-  'Tout allumer': '모두 켜기',
-  'Tout éteindre': '모두 끄기',
   'Pas de réponse : {names}': '응답 없음: {names}',
   'Cette pièce n’existe plus.': '이 방은 더 이상 없어요.',
   'Supprimer « {name} » ?': '‘{name}’ 삭제할까요?',
@@ -68,7 +65,6 @@ export const KO: Record<string, string> = {
   Lumière: '조명',
   Effets: '효과',
   'Ex. Néon du salon': '예: 거실 네온',
-  'Enregistrer le nom': '이름 저장',
   'Ajouter à mes rubans': '내 스트립에 추가',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const KO: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': '스트립에 가까이 가서 다른 앱을 닫으세요.',
   'Ruban Bluetooth': '블루투스 스트립',
   'Ruban Wi-Fi': 'Wi-Fi 스트립',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': '길게 누르기: 설정',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': '팁: 방이나 스트립을 길게 누르면 설정이 열려요.',
+  'Changer de pièce': '방 변경',
+  'Compris': '알겠어요',
+  'Réglages': '설정',
 };

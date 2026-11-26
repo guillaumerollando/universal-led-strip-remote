@@ -14,9 +14,6 @@ export const ID: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Belum ada strip LED',
   '{lit} allumé sur {total}': '{lit} dari {total} menyala',
   '{lit} allumés sur {total}': '{lit} dari {total} menyala',
-  Modifier: 'Ubah',
-  'Tout allumer': 'Nyalakan semua',
-  'Tout éteindre': 'Matikan semua',
   'Pas de réponse : {names}': 'Tidak merespons: {names}',
   'Cette pièce n’existe plus.': 'Ruangan ini sudah tidak ada.',
   'Supprimer « {name} » ?': 'Hapus “{name}”?',
@@ -68,7 +65,6 @@ export const ID: Record<string, string> = {
   Lumière: 'Cahaya',
   Effets: 'Efek',
   'Ex. Néon du salon': 'Mis. Neon ruang tamu',
-  'Enregistrer le nom': 'Simpan nama',
   'Ajouter à mes rubans': 'Tambah ke strip-ku',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const ID: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Dekati strip dan tutup aplikasi lainnya.',
   'Ruban Bluetooth': 'Strip Bluetooth',
   'Ruban Wi-Fi': 'Strip Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Tekan lama: pengaturan',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Tips: tekan lama ruangan atau strip untuk pengaturannya.',
+  'Changer de pièce': 'Ganti ruangan',
+  'Compris': 'Mengerti',
+  'Réglages': 'Pengaturan',
 };

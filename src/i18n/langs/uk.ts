@@ -14,9 +14,6 @@ export const UK: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Поки немає стрічок',
   '{lit} allumé sur {total}': 'Увімкнено: {lit} з {total}',
   '{lit} allumés sur {total}': 'Увімкнено: {lit} з {total}',
-  Modifier: 'Змінити',
-  'Tout allumer': 'Увімкнути всі',
-  'Tout éteindre': 'Вимкнути всі',
   'Pas de réponse : {names}': 'Немає відповіді: {names}',
   'Cette pièce n’existe plus.': 'Цієї кімнати більше немає.',
   'Supprimer « {name} » ?': 'Видалити «{name}»?',
@@ -68,7 +65,6 @@ export const UK: Record<string, string> = {
   Lumière: 'Світло',
   Effets: 'Ефекти',
   'Ex. Néon du salon': 'Напр., Неон у вітальні',
-  'Enregistrer le nom': 'Зберегти назву',
   'Ajouter à mes rubans': 'Додати до моїх стрічок',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const UK: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Підійди ближче до стрічки й закрий її інші застосунки.',
   'Ruban Bluetooth': 'Bluetooth-стрічка',
   'Ruban Wi-Fi': 'Wi-Fi-стрічка',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Утримуй: налаштування',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Порада: утримуй кімнату або стрічку, щоб відкрити налаштування.',
+  'Changer de pièce': 'Змінити кімнату',
+  'Compris': 'Зрозуміло',
+  'Réglages': 'Налаштування',
 };

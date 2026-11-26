@@ -14,9 +14,6 @@ export const RU: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Пока нет лент',
   '{lit} allumé sur {total}': 'Включено: {lit} из {total}',
   '{lit} allumés sur {total}': 'Включено: {lit} из {total}',
-  Modifier: 'Изменить',
-  'Tout allumer': 'Включить все',
-  'Tout éteindre': 'Выключить все',
   'Pas de réponse : {names}': 'Нет ответа: {names}',
   'Cette pièce n’existe plus.': 'Этой комнаты больше нет.',
   'Supprimer « {name} » ?': 'Удалить «{name}»?',
@@ -68,7 +65,6 @@ export const RU: Record<string, string> = {
   Lumière: 'Свет',
   Effets: 'Эффекты',
   'Ex. Néon du salon': 'Например, Неон в гостиной',
-  'Enregistrer le nom': 'Сохранить название',
   'Ajouter à mes rubans': 'Добавить в мои ленты',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const RU: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Подойди ближе к ленте и закрой её другие приложения.',
   'Ruban Bluetooth': 'Bluetooth-лента',
   'Ruban Wi-Fi': 'Wi-Fi-лента',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Удерживай: настройки',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Совет: удерживай комнату или ленту, чтобы открыть настройки.',
+  'Changer de pièce': 'Сменить комнату',
+  'Compris': 'Понятно',
+  'Réglages': 'Настройки',
 };

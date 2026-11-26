@@ -1,23 +1,23 @@
 import { Redirect, router, Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Linking, Text, TextInput, View } from 'react-native';
+import { Linking, Pressable, Text, View } from 'react-native';
 
 import { FAMILIES, playStoreUrl } from '../../core/families';
 import { canPower, irRemoteOf, setPower, type Target } from '../../services/control';
 import { foundDevice } from '../../services/scan';
-import { rememberState, removeDevice, updateDevice, useSavedDevice } from '../../services/store';
+import { rememberState, useSavedDevice } from '../../services/store';
+import { DeviceOptions } from '../../ui/DeviceOptions';
 import { EffectsPanel } from '../../ui/EffectsPanel';
 import { ElkControls } from '../../ui/ElkControls';
 import { IrControls } from '../../ui/IrControls';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { LightStrip, PowerButton } from '../../ui/light';
 import { kindLabel } from '../../ui/labels';
-import { RoomPicker } from '../../ui/RoomPicker';
 import { colors, radius, space } from '../../ui/theme';
 import { t } from '../../i18n';
 
 /**
- * Fiche d'un ruban enregistré : sa lumière, ses commandes, puis sa pièce et son nom.
+ * Fiche d'un ruban enregistré : sa lumière et ses commandes. Nom, pièce, oublier : « ⋯ » en haut (ou appui long sur la tuile).
  * Un appareil trouvé mais pas encore géré (Tuya…) y montre seulement quoi faire.
  */
 export default function DeviceScreen() {
@@ -25,7 +25,7 @@ export default function DeviceScreen() {
   const saved = useSavedDevice(key);
   const detected = key ? foundDevice(key) : undefined;
   const device: Target | undefined = saved ?? detected;
-  const [name, setName] = useState(saved?.name ?? '');
+  const [options, setOptions] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,27 +54,20 @@ export default function DeviceScreen() {
       .finally(() => setBusy(false));
   };
 
-  const rename = (): void => {
-    const trimmed = name.trim();
-    if (saved && trimmed) void updateDevice(saved.key, { name: trimmed });
-  };
-
-  const forget = (): void =>
-    Alert.alert(t('Oublier cet appareil ?'), title, [
-      { text: t('Annuler'), style: 'cancel' },
-      {
-        text: t('Oublier'),
-        style: 'destructive',
-        onPress: () => {
-          void removeDevice(source.key);
-          router.back();
-        },
-      },
-    ]);
-
   return (
     <Screen>
-      <Stack.Screen options={{ title }} />
+      <Stack.Screen
+        options={{
+          title,
+          headerRight: saved
+            ? () => (
+                <Pressable accessibilityRole="button" accessibilityLabel={t('Réglages')} hitSlop={12} onPress={() => setOptions(true)}>
+                  <Text style={{ color: colors.text, fontSize: 26, fontWeight: '700', paddingHorizontal: space.sm }}>⋯</Text>
+                </Pressable>
+              )
+            : undefined,
+        }}
+      />
 
       {canPower(device) && (
         <View style={{ backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: space.lg, gap: space.md, overflow: 'hidden' }}>
@@ -131,29 +124,10 @@ export default function DeviceScreen() {
         </>
       )}
 
-      {saved && (
-        <>
-          <SectionTitle>{t('Pièce')}</SectionTitle>
-          <RoomPicker value={saved.roomId} onChange={(roomId) => void updateDevice(saved.key, { roomId })} />
-
-          <SectionTitle>{t('Nom')}</SectionTitle>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder={t('Ex. Néon du salon')}
-            placeholderTextColor={colors.textDim}
-            returnKeyType="done"
-            onSubmitEditing={rename}
-          />
-          {!!name.trim() && name.trim() !== saved.name && <Button label={t('Enregistrer le nom')} onPress={rename} />}
-
-          {canPower(device) && family.apps[0] && (
-            <Button label={t('Ouvrir avec {app}', { app: family.apps[0].name })} variant="ghost" onPress={() => void Linking.openURL(playStoreUrl(family.apps[0]))} />
-          )}
-          <Button label={t('Oublier ce ruban')} variant="ghost" onPress={forget} />
-        </>
+      {saved && canPower(device) && family.apps[0] && (
+        <Button label={t('Ouvrir avec {app}', { app: family.apps[0].name })} variant="ghost" onPress={() => void Linking.openURL(playStoreUrl(family.apps[0]))} />
       )}
+      {saved && <DeviceOptions device={saved} visible={options} onClose={() => setOptions(false)} onForgotten={() => router.back()} />}
     </Screen>
   );
 }

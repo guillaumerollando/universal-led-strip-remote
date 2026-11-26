@@ -14,9 +14,6 @@ export const TR: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Henüz şerit yok',
   '{lit} allumé sur {total}': '{lit}/{total} açık',
   '{lit} allumés sur {total}': '{lit}/{total} açık',
-  Modifier: 'Düzenle',
-  'Tout allumer': 'Hepsini aç',
-  'Tout éteindre': 'Hepsini kapat',
   'Pas de réponse : {names}': 'Yanıt yok: {names}',
   'Cette pièce n’existe plus.': 'Bu oda artık yok.',
   'Supprimer « {name} » ?': '“{name}” silinsin mi?',
@@ -72,7 +69,6 @@ export const TR: Record<string, string> = {
   Lumière: 'Işık',
   Effets: 'Efektler',
   'Ex. Néon du salon': 'Örn. Salon neonu',
-  'Enregistrer le nom': 'Adı kaydet',
   'Ajouter à mes rubans': 'Şeritlerime ekle',
 
   // ── Couleurs, luminosité, effets ──
@@ -222,4 +218,10 @@ export const TR: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Şeride yaklaş ve diğer uygulamalarını kapat.',
   'Ruban Bluetooth': 'Bluetooth şerit',
   'Ruban Wi-Fi': 'Wi-Fi şerit',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Basılı tut: ayarlar',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'İpucu: ayarları için bir odaya veya şeride basılı tut.',
+  'Changer de pièce': 'Odayı değiştir',
+  'Compris': 'Anladım',
+  'Réglages': 'Ayarlar',
 };

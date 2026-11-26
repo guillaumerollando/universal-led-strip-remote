@@ -14,9 +14,6 @@ export const VI: Record<string, string> = {
   'Aucun ruban pour l’instant': 'Chưa có dây đèn nào',
   '{lit} allumé sur {total}': '{lit}/{total} đang bật',
   '{lit} allumés sur {total}': '{lit}/{total} đang bật',
-  Modifier: 'Sửa',
-  'Tout allumer': 'Bật tất cả',
-  'Tout éteindre': 'Tắt tất cả',
   'Pas de réponse : {names}': 'Không phản hồi: {names}',
   'Cette pièce n’existe plus.': 'Phòng này không còn nữa.',
   'Supprimer « {name} » ?': 'Xóa “{name}”?',
@@ -68,7 +65,6 @@ export const VI: Record<string, string> = {
   Lumière: 'Ánh sáng',
   Effets: 'Hiệu ứng',
   'Ex. Néon du salon': 'VD: Đèn neon phòng khách',
-  'Enregistrer le nom': 'Lưu tên',
   'Ajouter à mes rubans': 'Thêm vào danh sách',
 
   // ── Couleurs, luminosité, effets ──
@@ -213,4 +209,10 @@ export const VI: Record<string, string> = {
   'Rapproche-toi du ruban et ferme ses autres applis.': 'Lại gần dây đèn và đóng các ứng dụng khác của nó.',
   'Ruban Bluetooth': 'Dây đèn Bluetooth',
   'Ruban Wi-Fi': 'Dây đèn Wi-Fi',
+  // Accueil : toucher = agir, appui long = réglages
+  'Appui long : réglages': 'Nhấn giữ: cài đặt',
+  'Astuce : appui long sur une pièce ou un ruban pour ses réglages.': 'Mẹo: nhấn giữ một phòng hoặc dây đèn để mở cài đặt.',
+  'Changer de pièce': 'Đổi phòng',
+  'Compris': 'Đã hiểu',
+  'Réglages': 'Cài đặt',
 };

@@ -10,7 +10,7 @@ import { pairHue, pairNanoleaf } from '../../services/pairing';
 import { putFound, useScan } from '../../services/scan';
 import { saveDevice } from '../../services/store';
 import { AddForm } from '../../ui/AddForm';
-import { Button, Muted, styles } from '../../ui/kit';
+import { Button, Muted, Screen, styles } from '../../ui/kit';
 import { defaultStripName, kindLabel, signalText } from '../../ui/labels';
 import { LedRow } from '../../ui/LedRow';
 import { colors, radius, space, WARM_WHITE } from '../../ui/theme';
@@ -42,10 +42,10 @@ export default function NewDeviceScreen() {
 
   if (!device) {
     return (
-      <View style={[styles.screen, styles.content]}>
+      <Screen safeTop>
         <Muted>{t('Cet appareil n’est plus dans la liste. Relance une recherche.')}</Muted>
         <Button label={t('Retour')} variant="secondary" onPress={() => router.back()} />
-      </View>
+      </Screen>
     );
   }
 
@@ -159,8 +159,9 @@ function PairStep({ device, product }: { device: NonNullable<ReturnType<typeof u
   };
 
   return (
-    <View style={[styles.screen, styles.content, { justifyContent: 'center' }]}>
-      <LedRow mode={busy ? 'chase' : 'lit'} rgb={WARM_WHITE} count={9} size={18} />
+    <View style={[styles.screen, styles.content, { justifyContent: 'center', gap: space.xl }]}>
+      {/* Les LED restent éteintes tant que l'appareil n'est pas relié ; elles défilent pendant l'essai. */}
+      <LedRow mode={busy ? 'chase' : 'off'} rgb={WARM_WHITE} count={9} size={18} />
       <Text style={[styles.big, { textAlign: 'center' }]}>{product}</Text>
       <Text style={[styles.text, { textAlign: 'center' }]}>
         {hue ? t('Appuie sur le bouton rond du pont, puis touche « Relier ».') : t('Tiens le bouton marche 5 secondes, puis touche « Relier ».')}

@@ -25,9 +25,9 @@ export async function http(ip: string, call: HttpCall, timeoutMs = 4000): Promis
     } catch {
       return text;
     }
-  } catch (e) {
-    if ((e as Error).name === 'AbortError' || /Network request failed/i.test((e as Error).message)) throw noAnswer();
-    throw e;
+  } catch {
+    // Délai dépassé, appareil absent, réponse illisible : les messages bruts sont techniques et en anglais.
+    throw noAnswer();
   } finally {
     clearTimeout(timer);
   }

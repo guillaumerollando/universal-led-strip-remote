@@ -36,8 +36,16 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
   - `irSetup.ts` : **assistant d'ajout infrarouge** — `burstPlan(état)` (rafales de 16 codes avec silences, adaptées à
     l'état allumé / éteint), `suspectBursts`, `leadsFrom` (pistes), `verifySteps`, réduction par moitiés, `remoteFromSetup`
   - `ir.ts` : encodage NEC et 7 télécommandes (24 / 44 touches, et 5 autres connues seulement pour marche/arrêt)
-- `src/services/` : accès au matériel — `ble.ts` (react-native-ble-plx), `lan.ts` (react-native-udp), `ir.ts`,
-  `scan.ts` (état du scan), `store.ts` (appareils enregistrés, AsyncStorage)
+  - `protocols/` : **protocoles ouverts** (v1.2, tous « à confirmer » sur un vrai appareil) — `ble.ts` (Triones, Zengge,
+    SP110E, Hue Bluetooth), `magicHome.ts` (TCP 5577), `wifi.ts` (WLED, Govee LAN, Shelly, Tasmota, ESPHome, Nanoleaf,
+    Elgato, pont Hue), `udp.ts` (Yeelight, LIFX), `presets.ts` (effets communs Magic Home / Triones)
+  - `mdns.ts` (questions et réponses DNS-SD), `discover.ts` (mDNS / Yeelight / LIFX → appareil), `probe.ts` (ajout par IP)
+  - `describe.ts` : ce qu'on affiche d'un appareil trouvé — nom du produit de marque (« Govee H6159 »), jamais de nom de puce
+  - `widget.ts` : pièces montrées par le widget Android
+- `src/services/` : accès au matériel — `ble.ts` (react-native-ble-plx, `sendBle` pour toutes les familles), `lan.ts`
+  (découverte UDP : Magic Home, Tuya, Govee, mDNS, Yeelight, LIFX), `net.ts` (HTTP local, TCP natif, UDP), `ir.ts`,
+  `scan.ts` (état du scan), `store.ts` (appareils enregistrés, AsyncStorage), `drivers.ts` (**un pilote par famille**),
+  `pairing.ts` (clés « par bouton » du pont Hue et de Nanoleaf), `probe.ts` (ajout par IP), `widget.ts` (synchro du widget)
 - `src/app/` : écrans Expo Router — `index` (pièces et rubans, petit ⓘ → `about`), `add` (recherche Bluetooth / Wi-Fi, lancée
   toute seule ; on touche un ruban pour l'ajouter), `new/[key]` (**ajout d'un ruban trouvé** : nom déjà proposé, pièce, « Faire
   clignoter », « Ajouter à mes rubans »), `device/[key]` (fiche d'un ruban enregistré : marche/arrêt, couleurs, effets, pièce, nom ;
@@ -46,7 +54,9 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
 - Parcours d'ajout (v1.1, demande de Guillaume : « simple, efficace, qualité ») : jamais de réglage de lumière pendant l'ajout ;
   les deux ajouts (Bluetooth et télécommande) finissent sur le même formulaire `ui/AddForm` (nom proposé + pièce + bouton toujours visible)
 - `src/services/control.ts` : **une seule porte d'entrée** pour piloter un ruban quelle que soit sa famille (`setPower`,
-  `setColor`, `setEffect`, `setGroupPower`…) ; retient l'état envoyé (ces contrôleurs ne le renvoient pas)
+  `setColor`, `setEffect`, `setGroupPower`, `canColor`, `canDim`…) ; délègue à `drivers.ts` ; retient l'état envoyé
+- Nouvelle famille : `core/families.ts` (marque, `pairing`, `closed`) → trames dans `core/protocols/` + test → découverte
+  (`core/discover.ts` / `services/lan.ts`) → pilote dans `services/drivers.ts`. L'interface suit toute seule
 - `src/i18n/` : `t()` et la langue (`expo-localization`) ; `dicts.ts` (26 langues, `pickLang`) ; `langs/*.ts` (une
   traduction par langue, indexée par le texte français ; `en.ts` sert de modèle)
 - `store/` : fiche Play Store (`metadata/android/<langue>/`, format fastlane), icône 512, bannière, politique de
@@ -54,8 +64,10 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
 - `src/ui/` : `theme.ts` (DA « la lumière d'abord »), `kit.tsx` (Screen avec clavier, Button, Card…), `light.tsx` (Glow,
   LightStrip avec halo / bloom / LED, PowerButton, SignatureStrip avec sa lueur, Swatch, Chip), `AddForm`, `labels.ts` (« Ruban Bluetooth »…), `DeviceTile`, `RoomSection`, `RoomPicker`, `ElkControls`, `EffectsPanel`, `IrControls` (fiche infrarouge dans le
   style Bluetooth), `LedRow` (LED illuminées à la fin de l'ajout)
-- `modules/rubanix-native/` : module Expo local en Kotlin — émetteur infrarouge (`ConsumerIrManager`) et verrou
-  multicast Wi-Fi. Autolinké ; `null` hors Android
+- `modules/rubanix-native/` : module Expo local en Kotlin — émetteur infrarouge (`ConsumerIrManager`), verrou
+  multicast Wi-Fi, requête TCP courte (`tcpRequest`), widget « Pièces » (`LedStripWidget.kt`, ressources `res/`,
+  `setWidgetRooms`, `moveToBack`). Autolinké ; `null` hors Android
+- `src/ui/StripSlider.tsx` : le ruban dessiné sert de **curseur de luminosité** (accueil et fiche)
 
 ## Commandes
 
@@ -111,7 +123,11 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 
 - **Pas d'émulateur sans l'accord de Guillaume** (2026-10-08 : la RAM sature et les sessions Kipo plantent). Tester sur son
   téléphone (`adb -d`) quand il est branché, sinon Vitest et les sondes `tools/`
-- Émulateur dédié, seulement si Guillaume l'accepte : AVD `rubanix` (`emulator -avd rubanix -port 5560`), Metro sur le port 8088 (`adb -s emulator-5560 reverse tcp:8088 tcp:8088`).
+- Émulateur dédié, seulement si Guillaume l'accepte : AVD `rubanix`, Metro sur le port 8088 (`adb -s emulator-5560 reverse tcp:8088 tcp:8088`).
+  Lancer **avec** `-gpu host -memory 4096` (`emulator -avd rubanix -port 5560 -no-snapshot -no-window -no-audio -gpu host -memory 4096`) :
+  avec les réglages de l'AVD (2 Go, GPU auto / swiftshader), l'émulateur plante (qemu, code 139) dès que l'appli s'affiche (2026-11-27)
+- Bulle d'outils du dev build : la masquer pour les captures (menu de dev › « Tools button »)
+- Tester un contrôleur Wi-Fi sans matériel : un faux serveur sur le PC (ex. Magic Home TCP 5577) et « Ajouter par adresse IP » `10.0.2.2`
   Ne jamais toucher aux émulateurs `tiiz-*` / `contrechamp*` (autres sessions) : toujours `adb -s emulator-5560`
 - Lancer Metro **sans** `CI=1` (`npx expo start --dev-client --port 8088 < /dev/null`) : en mode CI, Metro ne surveille pas
   les fichiers et l'appli garde l'ancienne version
@@ -120,6 +136,7 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - `ledstrip://dev-seed` (développement seulement) : remplit l'appli d'une pièce « Salon » et de rubans allumés en couleur,
   pour voir l'interface sur l'émulateur
 - Liens profonds : `ledstrip://power?room=Salon&on=1`, `ledstrip://power?device=<nom>&on=0`, `ledstrip://power?all=1&on=0`
+  (`&from=widget` : l'appli se remet en arrière-plan après l'action) ; `ledstrip://device/<clé>` ouvre une fiche
 
 - L'émulateur Android n'a ni vrai Bluetooth ni émetteur infrarouge, et son réseau est isolé (NAT) : il ne sert qu'à
   l'interface. Les protocoles se vérifient avec `src/core` (Vitest) et avec les sondes Python de `tools/`

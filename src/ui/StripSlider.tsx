@@ -1,10 +1,11 @@
 import * as Haptics from 'expo-haptics';
 import { useMemo, useRef, useState } from 'react';
-import { PanResponder, View, type LayoutChangeEvent } from 'react-native';
+import { PanResponder, Text, View, type LayoutChangeEvent } from 'react-native';
 
 import type { Rgb } from '../core/elk';
 import { latestWins, previewBrightness, setBrightness, type Target } from '../services/control';
 import { LightStrip } from './light';
+import { colors, radius } from './theme';
 import { t } from '../i18n';
 
 const STEP = 5;
@@ -69,7 +70,8 @@ export function StripSlider({
           const next = snap(start.current / 100 + g.dx / width.current);
           setDrag((prev) => {
             if (prev !== next) {
-              if (next === 100 || next === MIN) void Haptics.selectionAsync();
+              // Un petit cran tous les 10 %, comme une molette.
+              if (prev === null || Math.floor(prev / 10) !== Math.floor(next / 10) || next === MIN) void Haptics.selectionAsync();
               live(next);
             }
             return next;
@@ -112,6 +114,14 @@ export function StripSlider({
       hitSlop={{ top: 10, bottom: 10 }}
     >
       <LightStrip on={on} rgb={rgb} height={height} level={level / 100} />
+      {drag !== null && (
+        // Le pourcentage suit le doigt pendant le geste, au-dessus du bout allumé du ruban.
+        <View pointerEvents="none" style={{ position: 'absolute', bottom: '100%', left: `${Math.min(88, Math.max(0, drag - 6))}%` }}>
+          <Text style={{ color: colors.text, backgroundColor: colors.surfaceHigh, borderRadius: radius.sm, paddingHorizontal: 8, paddingVertical: 2, fontWeight: '700', fontSize: 13, overflow: 'hidden' }}>
+            {drag} %
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

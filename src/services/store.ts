@@ -130,6 +130,9 @@ export async function removeRoom(id: string): Promise<void> {
   await persist();
 }
 
+/** S'abonner aux changements (hors React : widget). */
+export const subscribeStore = (listener: () => void): (() => void) => subscribe(listener);
+
 function subscribe(listener: () => void): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);

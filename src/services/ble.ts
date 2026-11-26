@@ -5,6 +5,7 @@ import { BleManager, State } from 'react-native-ble-plx';
 import { ELK_SERVICE, ELK_WRITE_CHAR, elkInit, type ElkModel } from '../core/elk';
 import { identifyBle, type DetectedDevice } from '../core/identify';
 import type { BleProfile } from '../core/protocols/types';
+import { t } from '../i18n';
 
 let manager: BleManager | null = null;
 const getManager = (): BleManager => (manager ??= new BleManager());
@@ -98,11 +99,13 @@ export async function sendBle(address: string, profile: BleProfile, ...frames: n
   }
   try {
     await session.ready;
-  } catch (e) {
+    for (const f of frames) await writeRaw(address, profile, f);
+  } catch {
+    // Les messages de la pile Bluetooth sont techniques et en anglais : on dit simplement quoi faire.
     sessions.delete(address);
-    throw e;
+    void getManager().cancelDeviceConnection(address).catch(() => undefined);
+    throw new Error(t('Rapproche-toi du ruban et ferme ses autres applis.'));
   }
-  for (const f of frames) await writeRaw(address, profile, f);
   scheduleDisconnect(address);
 }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget « Pièces » : jusqu'à 4 pièces, un toucher = allumer / éteindre toute la pièce. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/ledstrip_root"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/ledstrip_widget_bg"
+    android:orientation="vertical" android:padding="10dp">
+  <LinearLayout android:id="@+id/ledstrip_row0" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:layout_marginTop="0dp" android:background="@drawable/ledstrip_widget_row" android:gravity="center_vertical"
+      android:orientation="horizontal" android:paddingStart="14dp" android:paddingEnd="8dp" android:visibility="gone">
+    <TextView android:id="@+id/ledstrip_name0" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:ellipsize="end" android:maxLines="1" android:textColor="#F4F1EA" android:textSize="15sp" android:textStyle="bold" />
+    <ImageView android:id="@+id/ledstrip_power0" android:layout_width="36dp" android:layout_height="36dp" android:importantForAccessibility="no"
+        android:src="@drawable/ledstrip_power_off" />
+  </LinearLayout>
+  <LinearLayout android:id="@+id/ledstrip_row1" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:layout_marginTop="6dp" android:background="@drawable/ledstrip_widget_row" android:gravity="center_vertical"
+      android:orientation="horizontal" android:paddingStart="14dp" android:paddingEnd="8dp" android:visibility="gone">
+    <TextView android:id="@+id/ledstrip_name1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:ellipsize="end" android:maxLines="1" android:textColor="#F4F1EA" android:textSize="15sp" android:textStyle="bold" />
+    <ImageView android:id="@+id/ledstrip_power1" android:layout_width="36dp" android:layout_height="36dp" android:importantForAccessibility="no"
+        android:src="@drawable/ledstrip_power_off" />
+  </LinearLayout>
+  <LinearLayout android:id="@+id/ledstrip_row2" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:layout_marginTop="6dp" android:background="@drawable/ledstrip_widget_row" android:gravity="center_vertical"
+      android:orientation="horizontal" android:paddingStart="14dp" android:paddingEnd="8dp" android:visibility="gone">
+    <TextView android:id="@+id/ledstrip_name2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:ellipsize="end" android:maxLines="1" android:textColor="#F4F1EA" android:textSize="15sp" android:textStyle="bold" />
+    <ImageView android:id="@+id/ledstrip_power2" android:layout_width="36dp" android:layout_height="36dp" android:importantForAccessibility="no"
+        android:src="@drawable/ledstrip_power_off" />
+  </LinearLayout>
+  <LinearLayout android:id="@+id/ledstrip_row3" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:layout_marginTop="6dp" android:background="@drawable/ledstrip_widget_row" android:gravity="center_vertical"
+      android:orientation="horizontal" android:paddingStart="14dp" android:paddingEnd="8dp" android:visibility="gone">
+    <TextView android:id="@+id/ledstrip_name3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:ellipsize="end" android:maxLines="1" android:textColor="#F4F1EA" android:textSize="15sp" android:textStyle="bold" />
+    <ImageView android:id="@+id/ledstrip_power3" android:layout_width="36dp" android:layout_height="36dp" android:importantForAccessibility="no"
+        android:src="@drawable/ledstrip_power_off" />
+  </LinearLayout>
+  <TextView android:id="@+id/ledstrip_empty" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center"
+      android:textColor="#8E93A3" android:textSize="14sp" android:visibility="gone" />
+</LinearLayout>

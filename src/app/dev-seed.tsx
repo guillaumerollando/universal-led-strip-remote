@@ -40,9 +40,11 @@ export default function DevSeed() {
       if (scan) {
         showDemoScan([
           { key: 'ble:BE:16:F8:22:0A:31', family: 'elk-bledom', confidence: 'sure', transport: 'ble', rawName: 'ELK-BLEDOM', address: 'BE:16:F8:22:0A:31', rssi: -58 },
-          { key: 'ble:demo', family: 'elk-bledom', confidence: 'sure', transport: 'ble', rawName: 'MELK-OA21   92', address: 'demo', rssi: -62 },
-          { key: 'ble:FF:FF:10:4C:7E:02', family: 'triones', confidence: 'sure', transport: 'ble', rawName: 'Triones-FF104C7E', address: 'FF:FF:10:4C:7E:02', rssi: -74 },
-          { key: 'wifi:192.168.1.42', family: 'magichome-wifi', confidence: 'sure', transport: 'wifi', rawName: 'AK001-ZJ2101', address: '192.168.1.42' },
+          { key: 'wifi:govee:demo', family: 'govee-lan', confidence: 'sure', transport: 'wifi', rawName: 'Govee H6159', address: '192.168.1.31', model: 'H6159' },
+          { key: 'wifi:wled:demo', family: 'wled', confidence: 'sure', transport: 'wifi', rawName: 'WLED-Bureau', address: '192.168.1.40' },
+          { key: 'hue-bridge:demo', family: 'hue-bridge', confidence: 'sure', transport: 'wifi', rawName: 'Philips Hue', address: '192.168.1.20', meta: { bridge: 'DEMO' } },
+          { key: 'wifi:nanoleaf:demo', family: 'nanoleaf', confidence: 'sure', transport: 'wifi', rawName: 'Shapes 4A1B', address: '192.168.1.50', model: 'NL42' },
+          { key: 'ble:FF:FF:10:4C:7E:02', family: 'sp110e', confidence: 'sure', transport: 'ble', rawName: 'SP110E', address: 'FF:FF:10:4C:7E:02', rssi: -74 },
           { key: 'wifi:192.168.1.78', family: 'tuya', confidence: 'probable', transport: 'wifi', rawName: 'Tuya 3.3', address: '192.168.1.78' },
         ]);
         router.replace('/');

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fond du widget : la nuit de l'appli, bord à peine visible. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+  <solid android:color="#F014161D" />
+  <stroke android:width="1dp" android:color="#262A35" />
+  <corners android:radius="24dp" />
+</shape>

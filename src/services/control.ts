@@ -109,6 +109,11 @@ export async function setBrightness(t: Target, percent: number): Promise<void> {
   await rememberState(t.key, { brightness: percent });
 }
 
+/** Envoie une luminosité sans la retenir : pendant qu'on fait glisser le doigt le long du ruban. */
+export async function previewBrightness(t: Target, percent: number): Promise<void> {
+  await driverOf(t)?.brightness?.(t, percent);
+}
+
 export async function setEffect(t: Target, effect: ElkEffect): Promise<void> {
   await need(t, 'effect', tr('L’appli ne sait pas encore allumer cet appareil.'))(t, effect, t.state?.speed ?? 55);
   await rememberState(t.key, { effect: effect.id, on: true });

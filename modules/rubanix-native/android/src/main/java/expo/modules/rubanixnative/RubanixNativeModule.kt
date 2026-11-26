@@ -101,6 +101,18 @@ class RubanixNativeModule : Module() {
       }
     }
 
+    /** Pousse les pièces (JSON : [{name, on, link, label}]) et le texte « aucune pièce » au widget, puis le redessine. */
+    Function("setWidgetRooms") { rooms: String, empty: String ->
+      context.getSharedPreferences(LedStripWidget.PREFS, Context.MODE_PRIVATE).edit()
+        .putString("rooms", rooms).putString("empty", empty).apply()
+      LedStripWidget.refresh(context)
+    }
+
+    /** Remet l'appli en arrière-plan (après une action lancée depuis le widget). */
+    Function("moveToBack") {
+      appContext.currentActivity?.moveTaskToBack(true) ?: false
+    }
+
     Function("acquireMulticastLock") {
       if (multicastLock == null) {
         val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager

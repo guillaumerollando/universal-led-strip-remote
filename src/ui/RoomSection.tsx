@@ -81,6 +81,9 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
               }
             : undefined
         }
+        accessibilityRole={controllable.length > 0 ? 'switch' : 'button'}
+        accessibilityState={controllable.length > 0 ? { checked: on, busy } : undefined}
+        accessibilityLabel={name}
         accessibilityHint={room ? t('Appui long : réglages') : undefined}
         style={({ pressed }) => ({
           borderRadius: radius.lg,

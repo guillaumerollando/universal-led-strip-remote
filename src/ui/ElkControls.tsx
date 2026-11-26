@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { hsvToRgb, rgbToHsv } from '../core/color';
 import type { Rgb } from '../core/elk';
-import { FAMILIES, type FamilyId } from '../core/families';
 import { canColor, canDim, latestWins, previewColor, setBrightness, setColor, type Target } from '../services/control';
 import { ColorSlider, HUE_STOPS } from './ColorSlider';
 import { Muted, styles as kit } from './kit';
@@ -52,9 +51,7 @@ export function ElkControls({ target }: { target: Target }) {
   const run = (action: Promise<void>): void => {
     action
       .then(() => setError(null))
-      .catch((e: Error) =>
-        setError(FAMILIES[target.family as FamilyId]?.transport === 'ble' ? `${e.message}. ${t('Rapproche-toi du ruban et ferme ses autres applis.')}` : e.message),
-      );
+      .catch((e: Error) => setError(e.message));
   };
 
   const color = canColor(target);

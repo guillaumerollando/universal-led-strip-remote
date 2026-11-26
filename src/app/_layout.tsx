@@ -4,12 +4,13 @@ import { useEffect } from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 import { loadDevices } from '../services/store';
+import { startWidgetSync } from '../services/widget';
 import { colors } from '../ui/theme';
 import { t } from '../i18n';
 
 export default function RootLayout() {
   useEffect(() => {
-    void loadDevices();
+    void loadDevices().then(startWidgetSync);
   }, []);
 
   return (

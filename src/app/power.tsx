@@ -2,6 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
+import native from '../../modules/rubanix-native/src';
 import { setGroupPower } from '../services/control';
 import { getDevices, getRooms, loadDevices } from '../services/store';
 import { styles } from '../ui/kit';
@@ -15,7 +16,7 @@ const norm = (s: string): string => s.normalize('NFD').replace(/[̀-ͯ]/g, '').t
  * `ledstrip://power?room=Salon&on=1`, `ledstrip://power?device=<nom>&on=0`, `ledstrip://power?all=1&on=0`.
  */
 export default function PowerLink() {
-  const { room, device, all, on } = useLocalSearchParams<{ room?: string; device?: string; all?: string; on?: string }>();
+  const { room, device, all, on, from } = useLocalSearchParams<{ room?: string; device?: string; all?: string; on?: string; from?: string }>();
   const [text, setText] = useState('…');
 
   useEffect(() => {
@@ -42,7 +43,11 @@ export default function PowerLink() {
             (result.failed.length ? t(' ({n} sans réponse)', { n: result.failed.length }) : ''),
         );
       }
-      setTimeout(() => router.replace('/'), 1200);
+      setTimeout(() => {
+        router.replace('/');
+        // Lancé depuis le widget : on rend la main à l'écran d'accueil du téléphone.
+        if (from === 'widget') native?.moveToBack();
+      }, from === 'widget' ? 700 : 1200);
     })();
     return () => {
       done = true;

@@ -91,7 +91,7 @@ function LedDots({ height, on, id }: { height: number; on: boolean; id: string }
  * (le halo déborde un peu plus vers le bas : la lumière qui tombe sur la surface). Éteint : un trait mat aux LED grises.
  * Seules l'opacité et la position s'animent (thread UI, sans re-rendu) ; rien ne bouge si l'animation est réduite.
  */
-export function LightStrip({ on, rgb, height = 8 }: { on: boolean; rgb?: Rgb; height?: number }) {
+export function LightStrip({ on, rgb, height = 8, level = 1 }: { on: boolean; rgb?: Rgb; height?: number; /** Luminosité 0-1 : seule cette part du ruban brille, le reste s'éteint (curseur de l'accueil). */ level?: number }) {
   const color = rgb ?? WARM_WHITE;
   const reduced = useReducedMotion();
   const shimmer = useSharedValue(0);
@@ -123,11 +123,11 @@ export function LightStrip({ on, rgb, height = 8 }: { on: boolean; rgb?: Rgb; he
         <>
           {/* Halo large, qui respire. */}
           <Animated.View pointerEvents="none" style={[{ position: 'absolute', left: -space.lg, right: -space.lg, top: -height * 2.5, bottom: -height * 3.2 }, breathStyle]}>
-            <Glow rgb={color} intensity={0.4} />
+            <Glow rgb={color} intensity={0.4 * (0.35 + 0.65 * level)} />
           </Animated.View>
           {/* Bloom serré le long de la bande. */}
-          <View pointerEvents="none" style={{ position: 'absolute', left: -height, right: -height, top: box / 2 - height * 2, height: height * 4 }}>
-            <Bloom rgb={color} intensity={0.7} id={id} />
+          <View pointerEvents="none" style={{ position: 'absolute', left: -height, right: level < 1 ? `${(1 - level) * 100}%` : -height, top: box / 2 - height * 2, height: height * 4 }}>
+            <Bloom rgb={color} intensity={0.7 * (0.35 + 0.65 * level)} id={id} />
           </View>
           {/* Tache de lumière qui suit le reflet. */}
           <Animated.View pointerEvents="none" style={[{ position: 'absolute', width: '40%', top: -height * 1.5, bottom: -height * 1.5 }, spotStyle]}>
@@ -153,6 +153,15 @@ export function LightStrip({ on, rgb, height = 8 }: { on: boolean; rgb?: Rgb; he
             style={StyleSheet.absoluteFill}
           />
         </Animated.View>
+        {on && level < 1 && (
+          // Au-delà de la luminosité choisie, les LED sont éteintes : le ruban montre le niveau sans chiffre.
+          <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(1 - level) * 100}%`, backgroundColor: colors.off, overflow: 'hidden' }}>
+            {/* Calque à la largeur du ruban entier, collé à droite : les LED éteintes tombent pile sur la grille. */}
+            <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: `${100 / Math.max(0.01, 1 - level)}%` }}>
+              <LedDots height={height} on={false} id={`${id}off`} />
+            </View>
+          </View>
+        )}
       </View>
     </View>
   );

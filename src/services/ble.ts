@@ -4,6 +4,7 @@ import { BleManager, State } from 'react-native-ble-plx';
 
 import { ELK_SERVICE, ELK_WRITE_CHAR, elkInit, type ElkModel } from '../core/elk';
 import { identifyBle, type DetectedDevice } from '../core/identify';
+import type { BleProfile } from '../core/protocols/types';
 
 let manager: BleManager | null = null;
 const getManager = (): BleManager => (manager ??= new BleManager());
@@ -40,7 +41,7 @@ export function scanBle(onDevice: (device: DetectedDevice) => void, durationMs: 
         return;
       }
       if (!device) return;
-      const found = identifyBle({ id: device.id, name: device.localName ?? device.name, rssi: device.rssi });
+      const found = identifyBle({ id: device.id, name: device.localName ?? device.name, rssi: device.rssi, serviceUUIDs: device.serviceUUIDs });
       if (found && !seen.has(found.key)) {
         seen.add(found.key);
         onDevice(found);
@@ -54,7 +55,7 @@ export function scanBle(onDevice: (device: DetectedDevice) => void, durationMs: 
   };
 }
 
-// ── Contrôle ELK-BLEDOM ──────────────────────────────────────────────────
+// ── Envoi de trames (toutes familles) ────────────────────────────────────────────
 
 /** Connexions ouvertes, gardées un moment pour enchaîner les réglages sans se reconnecter. */
 const sessions = new Map<string, { ready: Promise<void>; idle?: ReturnType<typeof setTimeout> }>();
@@ -70,31 +71,29 @@ function scheduleDisconnect(address: string): void {
   }, IDLE_MS);
 }
 
-async function writeRaw(address: string, bytes: number[]): Promise<void> {
-  await getManager().writeCharacteristicWithoutResponseForDevice(
-    address,
-    ELK_SERVICE,
-    ELK_WRITE_CHAR,
-    Buffer.from(bytes).toString('base64'),
-  );
+async function writeRaw(address: string, profile: BleProfile, bytes: number[]): Promise<void> {
+  const data = Buffer.from(bytes).toString('base64');
+  const ble = getManager();
+  if (profile.withResponse) await ble.writeCharacteristicWithResponseForDevice(address, profile.service, profile.write, data);
+  else await ble.writeCharacteristicWithoutResponseForDevice(address, profile.service, profile.write, data);
 }
 
-async function connect(address: string, model: ElkModel): Promise<void> {
+async function connect(address: string, profile: BleProfile): Promise<void> {
   const ble = getManager();
   await ble.connectToDevice(address, { timeout: 10_000 });
   await ble.discoverAllServicesAndCharacteristicsForDevice(address);
-  for (const frame of elkInit(model)) await writeRaw(address, frame);
+  for (const frame of profile.init ?? []) await writeRaw(address, profile, frame);
   ble.onDeviceDisconnected(address, () => sessions.delete(address));
 }
 
 /**
- * Envoie une trame à un contrôleur ELK, en se connectant si besoin.
+ * Envoie des trames à un contrôleur Bluetooth, en se connectant si besoin.
  * Ces contrôleurs n'acceptent qu'une connexion : si l'appli d'origine est ouverte, ça échoue.
  */
-export async function sendElk(address: string, model: ElkModel, bytes: number[]): Promise<void> {
+export async function sendBle(address: string, profile: BleProfile, ...frames: number[][]): Promise<void> {
   let session = sessions.get(address);
   if (!session) {
-    session = { ready: connect(address, model) };
+    session = { ready: connect(address, profile) };
     sessions.set(address, session);
   }
   try {
@@ -103,6 +102,11 @@ export async function sendElk(address: string, model: ElkModel, bytes: number[])
     sessions.delete(address);
     throw e;
   }
-  await writeRaw(address, bytes);
+  for (const f of frames) await writeRaw(address, profile, f);
   scheduleDisconnect(address);
 }
+
+/** Profil d'un contrôleur ELK-BLEDOM (service FFF0, trames d'ouverture selon la variante). */
+export const elkProfile = (model: ElkModel): BleProfile => ({ service: ELK_SERVICE, write: ELK_WRITE_CHAR, init: elkInit(model) });
+
+export const sendElk = (address: string, model: ElkModel, bytes: number[]): Promise<void> => sendBle(address, elkProfile(model), bytes);

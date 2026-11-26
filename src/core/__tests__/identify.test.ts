@@ -44,7 +44,7 @@ describe('identification Wi-Fi', () => {
 
   it('lit une réponse Govee', () => {
     const text = JSON.stringify({ msg: { cmd: 'scan', data: { ip: '192.168.1.30', device: '1F:80:C5:32', sku: 'H6159' } } });
-    expect(parseGoveeReply(text, '192.168.1.30')).toMatchObject({ family: 'govee', rawName: 'Govee H6159' });
+    expect(parseGoveeReply(text, '192.168.1.30')).toMatchObject({ family: 'govee-lan', rawName: 'Govee H6159' });
     expect(parseGoveeReply('{', '1.2.3.4')).toBeNull();
   });
 

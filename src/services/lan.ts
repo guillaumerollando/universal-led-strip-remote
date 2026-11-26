@@ -15,6 +15,20 @@ import {
   type DetectedDevice,
 } from '../core/identify';
 import { decodeBroadcast } from '../core/tuya/local';
+import { fromLifx, fromMdns, fromYeelight } from '../core/discover';
+import { MDNS_ADDRESS, MDNS_PORT, MDNS_SERVICES, mdnsDevices, mdnsQuery, parseMdns } from '../core/mdns';
+import {
+  LIFX_PORT,
+  LIFX_TYPE,
+  lifxFrame,
+  lifxLabel,
+  parseLifx,
+  parseYeelight,
+  YEELIGHT_DISCOVERY_PORT,
+  YEELIGHT_MULTICAST,
+  YEELIGHT_PROBE,
+} from '../core/protocols/udp';
+import { Buffer } from 'buffer';
 import native from '../../modules/rubanix-native/src';
 
 type UdpSocket = ReturnType<typeof dgram.createSocket>;
@@ -54,7 +68,8 @@ function open(port: number, onMessage: (text: string, from: RemoteInfo) => void,
 
 /**
  * Cherche les contrôleurs Wi-Fi du réseau local pendant `durationMs` :
- * Magic Home (sonde UDP 48899), Tuya (écoute 6666/6667), Govee (multicast 4001 → 4002).
+ * Magic Home (sonde UDP 48899), Tuya (écoute 6666/6667), Govee (multicast 4001 → 4002), mDNS (WLED, Hue,
+ * Nanoleaf, Elgato, Shelly, ESPHome, Tasmota), Yeelight (multicast 1982), LIFX (broadcast 56700).
  * Renvoie une fonction d'arrêt anticipé.
  */
 export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: number): () => void {
@@ -104,6 +119,55 @@ export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: 
       sender.on('error', () => undefined);
       sender.bind(0, () => sender.send(GOVEE_PROBE, undefined, undefined, GOVEE_SCAN_PORT, GOVEE_MULTICAST));
     }),
+  );
+
+  // mDNS : questions « réponse en direct » depuis un port quelconque, plus écoute du 5353 (réponses en multicast).
+  const onMdns = (bytes: Uint8Array, from: RemoteInfo): void => {
+    for (const d of mdnsDevices(parseMdns(bytes), from.address)) report(fromMdns(d));
+  };
+  sockets.push(openRaw(MDNS_PORT, onMdns));
+  const query = Buffer.from(mdnsQuery(Object.keys(MDNS_SERVICES)));
+  const mdns = openRaw(0, onMdns);
+  sockets.push(mdns);
+  for (const delay of [200, 1500, 4000]) {
+    timers.push(setTimeout(() => mdns.send(query, undefined, undefined, MDNS_PORT, MDNS_ADDRESS), delay));
+  }
+
+  // Yeelight : M-SEARCH sur 1982, réponses en direct ; les lampes s'annoncent aussi d'elles-mêmes.
+  const yee = open(0, (text) => {
+    const info = parseYeelight(text);
+    if (info) report(fromYeelight(info));
+  });
+  sockets.push(yee);
+  for (const delay of [300, 2000]) {
+    timers.push(setTimeout(() => yee.send(YEELIGHT_PROBE, undefined, undefined, YEELIGHT_DISCOVERY_PORT, YEELIGHT_MULTICAST), delay));
+  }
+
+  // LIFX : GetService en broadcast ; à chaque lampe qui répond, on demande son nom.
+  const lifxNames = new Map<string, string>();
+  const lifx = openRaw(0, (bytes, from) => {
+    const reply = parseLifx([...bytes]);
+    if (!reply) return;
+    if (reply.type === LIFX_TYPE.StateService) {
+      lifx.send(Buffer.from(lifxFrame(LIFX_TYPE.GetLabel, [], reply.mac)), undefined, undefined, LIFX_PORT, from.address);
+      // Sans réponse à la demande de nom, on l'ajoute quand même.
+      timers.push(setTimeout(() => report(fromLifx(reply, from.address, lifxNames.get(from.address))), 800));
+    } else if (reply.type === LIFX_TYPE.StateLabel) {
+      lifxNames.set(from.address, lifxLabel(reply.payload));
+      seen.delete(fromLifx(reply, from.address).key);
+      report(fromLifx(reply, from.address, lifxLabel(reply.payload)));
+    }
+  });
+  sockets.push(lifx);
+  timers.push(
+    setTimeout(() => {
+      try {
+        lifx.setBroadcast(true);
+      } catch {
+        // pas encore liée
+      }
+      lifx.send(Buffer.from(lifxFrame(LIFX_TYPE.GetService)), undefined, undefined, LIFX_PORT, '255.255.255.255');
+    }, 400),
   );
 
   const stop = (): void => {

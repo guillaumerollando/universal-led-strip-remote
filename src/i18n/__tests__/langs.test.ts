@@ -37,6 +37,7 @@ function dataKeys(): string[] {
   const irKeys = [...IR_REMOTES.flatMap((r) => r.keys), ...Object.values(LAYOUTS).flatMap((l) => l.keys)];
   return [
     FAMILIES['ir-nec'].label,
+    'Ruban à pixels',
     ...(['elk', 'melk'] as const).flatMap((m) => elkEffects(m).map((e) => e.label)),
     ...irKeys.filter((k) => k.kind === 'color' || k.kind === 'effect').map((k) => k.label),
   ];

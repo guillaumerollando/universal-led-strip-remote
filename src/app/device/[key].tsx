@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Linking, Pressable, Text, View } from 'react-native';
 
 import { FAMILIES, playStoreUrl } from '../../core/families';
-import { canPower, irRemoteOf, setPower, type Target } from '../../services/control';
+import { canColor, canDim, canPower, effectsFor, irRemoteOf, setPower, type Target } from '../../services/control';
 import { foundDevice } from '../../services/scan';
 import { rememberState, useSavedDevice } from '../../services/store';
 import { DeviceOptions } from '../../ui/DeviceOptions';
@@ -94,9 +94,9 @@ export default function DeviceScreen() {
 
       {!canPower(device) && (
         <View style={{ backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: space.lg, gap: space.sm }}>
-          <Text style={styles.title}>{source.family === 'tuya' ? t('Système fermé') : t('Pas encore géré')}</Text>
+          <Text style={styles.title}>{family.closed ? t('Système fermé') : t('Pas encore géré')}</Text>
           <Muted>
-            {source.family === 'tuya' ? t('Verrouillé par son fabricant.') : t('L’appli ne sait pas encore le piloter.')}{' '}
+            {family.closed ? t('Impossible de le piloter ici.') : source.family === 'govee' ? t('Active « Contrôle LAN » dans Govee Home : l’appli le pilotera en Wi-Fi.') : t('L’appli ne sait pas encore le piloter.')}{' '}
             {t('Il a une télécommande ? Ajoute-le en infrarouge.')}
           </Muted>
           <View style={styles.row}>
@@ -108,10 +108,14 @@ export default function DeviceScreen() {
         </View>
       )}
 
-      {saved && source.family === 'elk-bledom' && (
+      {saved && (canColor(device) || canDim(device)) && (
         <>
           <SectionTitle>{t('Lumière')}</SectionTitle>
           <ElkControls target={device} />
+        </>
+      )}
+      {saved && effectsFor(device).length > 0 && (
+        <>
           <SectionTitle>{t('Effets')}</SectionTitle>
           <EffectsPanel target={device} />
         </>

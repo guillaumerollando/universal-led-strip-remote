@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import type { DetectedDevice } from '../core/identify';
+import { productName, ownName, stripKind } from '../core/describe';
 import { FAMILIES } from '../core/families';
 import { canPower } from '../services/control';
 import { hasIrEmitter } from '../services/ir';
@@ -29,8 +30,12 @@ export default function AddScreen() {
   }, []);
 
   const savedOf = (d: DetectedDevice): SavedDevice | undefined => saved.find((s) => s.key === d.key);
-  const ready = found.filter((d) => canPower(d));
-  const others = found.filter((d) => !canPower(d));
+  // Un pont Hue dont les lampes sont déjà listées n'a plus besoin d'apparaître.
+  const linked = new Set(found.filter((d) => d.family === 'hue').map((d) => d.key.split(':')[1]));
+  const visible = found.filter((d) => !(d.family === 'hue-bridge' && linked.has(d.meta?.bridge ?? '')));
+  const pairable = (d: DetectedDevice): boolean => !!FAMILIES[d.family].pairing && !canPower(d);
+  const ready = visible.filter((d) => canPower(d) || pairable(d));
+  const others = visible.filter((d) => !canPower(d) && !pairable(d));
 
   return (
     <Screen>
@@ -66,6 +71,11 @@ export default function AddScreen() {
           <Button label={t('Ajouter un ruban à télécommande')} variant="secondary" onPress={() => router.push('/ir-new')} />
         </>
       )}
+
+      {/* Pour les bricoleurs (Tasmota, WLED sans mDNS…) : discret, en bas, jamais sur le chemin. */}
+      <Pressable accessibilityRole="link" hitSlop={10} onPress={() => router.push('/add-ip')} style={{ alignSelf: 'center', paddingVertical: space.md }}>
+        <Text style={[styles.muted, { textDecorationLine: 'underline' }]}>{t('Ajouter par adresse IP')}</Text>
+      </Pressable>
     </Screen>
   );
 }
@@ -73,12 +83,19 @@ export default function AddScreen() {
 /** Un appareil trouvé : ce que c'est, à quelle distance, et ce qu'on peut faire en le touchant. */
 function FoundRow({ device, saved, quiet }: { device: DetectedDevice; saved?: SavedDevice; quiet?: boolean }) {
   const signal = signalText(device.rssi);
-  const app = FAMILIES[device.family].apps[0];
+  const family = FAMILIES[device.family];
+  const app = family.apps[0];
+  const product = productName(device);
+  const kind = stripKind(device);
+  // Marque connue : son nom ; sinon ce que c'est (« Ruban à pixels », « Ruban Bluetooth »). Le nom propre de
+  // l'appareil (« WLED-Bureau », « ELK-BLEDOM ») reste en petit pour distinguer deux appareils pareils.
+  const title = saved?.name ?? product ?? (kind ? t(kind) : kindLabel(device.transport));
+  const detail = [signal, family.closed ? t('Système fermé') : ownName(device)].filter(Boolean).join(' · ');
   const open = (): void => {
     if (saved || quiet) router.push({ pathname: '/device/[key]', params: { key: device.key } });
     else router.push({ pathname: '/new/[key]', params: { key: device.key } });
   };
-  const action = saved ? t('déjà ajouté') : quiet ? (app ? t('Via {app}', { app: app.name }) : '') : t('Ajouter');
+  const action = saved ? t('déjà ajouté') : quiet ? (app ? t('Via {app}', { app: app.name }) : '') : family.pairing && !canPower(device) ? t('Relier') : t('Ajouter');
 
   return (
     <Pressable
@@ -97,11 +114,13 @@ function FoundRow({ device, saved, quiet }: { device: DetectedDevice; saved?: Sa
     >
       <View style={{ flex: 1, gap: 2 }}>
         <Text style={quiet ? styles.text : styles.title} numberOfLines={1}>
-          {saved?.name ?? kindLabel(device.transport)}
+          {title}
         </Text>
-        <Text style={styles.muted} numberOfLines={1}>
-          {[signal, device.rawName.replace(/\s+/g, ' ').trim()].filter(Boolean).join(' · ')}
-        </Text>
+        {!!detail && (
+          <Text style={styles.muted} numberOfLines={1}>
+            {detail}
+          </Text>
+        )}
       </View>
       {!!action && <Text style={[styles.muted, !quiet && !saved && { color: colors.accent, fontWeight: '700', fontSize: 15 }]}>{action}</Text>}
     </Pressable>

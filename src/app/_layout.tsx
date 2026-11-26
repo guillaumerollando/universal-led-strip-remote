@@ -26,6 +26,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="add" options={{ title: t('Ajouter un ruban') }} />
+        <Stack.Screen name="add-ip" options={{ title: t('Ajouter par adresse IP') }} />
         <Stack.Screen name="device/[key]" options={{ title: t('Ruban') }} />
         <Stack.Screen name="room/[id]" options={{ title: t('Pièce') }} />
         <Stack.Screen name="new/[key]" options={{ headerShown: false, animation: 'fade_from_bottom' }} />

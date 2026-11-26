@@ -29,7 +29,7 @@ export interface PowerCodes {
 
 export type LayoutId = 'classic24' | 'full44' | 'ff24' | 'bulb24';
 
-/** Ce que Rubanix retient d'un ruban infrarouge. */
+/** Ce que l'appli retient d'un ruban infrarouge. */
 export interface IrSetup {
   power: PowerCodes;
   layout?: LayoutId;
@@ -41,7 +41,7 @@ const notPower = (k: IrKey): boolean => !k.kind.startsWith('power');
 const c = (id: string, label: string, command: number, r: number, g: number, b: number): IrKey => ({ id, label, command, kind: 'color', rgb: { r, g, b } });
 const fx = (id: string, label: string, command: number): IrKey => ({ id, label, command, kind: 'effect' });
 
-/** Les jeux de touches (luminosité, couleurs, effets) que Rubanix sait piloter. */
+/** Les jeux de touches (luminosité, couleurs, effets) que l'appli sait piloter. */
 export const LAYOUTS: Record<LayoutId, { address: Address; keys: IrKey[] }> = {
   classic24: { address: REMOTE_24.address, keys: REMOTE_24.keys.filter(notPower) },
   full44: { address: REMOTE_44.address, keys: REMOTE_44.keys.filter(notPower) },

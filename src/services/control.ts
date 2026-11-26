@@ -1,8 +1,7 @@
-import { elkBrightness, elkColor, elkEffect, elkEffects, elkPower, elkSpeed, type ElkEffect, type ElkModel, type Rgb } from '../core/elk';
-import { elkModel } from '../core/identify';
+import type { ElkEffect, Rgb } from '../core/elk';
 import { remoteById, type IrKey, type IrRemote, type IrRemoteId } from '../core/ir';
 import { remoteFromSetup, type IrSetup } from '../core/irSetup';
-import { sendElk } from './ble';
+import { driverOf, type Driver } from './drivers';
 import { sendIrKey } from './ir';
 import { rememberState, type LightState } from './store';
 import { t as tr } from '../i18n';
@@ -17,6 +16,8 @@ export interface Target {
   irRemote?: IrRemoteId;
   ir?: IrSetup;
   state?: LightState;
+  /** Ce que le pilote doit retenir (jeton, numéro de lampe, port…). */
+  meta?: Record<string, string>;
 }
 
 /** La télécommande d'un ruban infrarouge (configuré par l'assistant, ou ancien format). */
@@ -26,20 +27,32 @@ export function irRemoteOf(t: Target): IrRemote | undefined {
   return undefined;
 }
 
-const modelOf = (t: Target): ElkModel => elkModel(t.rawName);
-
 function irKey(t: Target, kinds: IrKey['kind'][]): IrKey | undefined {
   return irRemoteOf(t)?.keys.find((k) => kinds.includes(k.kind));
 }
 
-/** Rubanix sait-il allumer et éteindre cet appareil lui-même ? */
+/** l'appli sait-il allumer et éteindre cet appareil lui-même ? */
 export function canPower(t: Target): boolean {
-  return t.family === 'elk-bledom' || (t.family === 'ir-nec' && !!irRemoteOf(t));
+  return !!driverOf(t) || (t.family === 'ir-nec' && !!irRemoteOf(t));
+}
+
+/** Couleur et luminosité pilotables directement (rubans Bluetooth et Wi-Fi ; l'infrarouge a ses touches). */
+export function canColor(t: Target): boolean {
+  const d = driverOf(t);
+  return !!d?.color && (d.hasColor?.(t) ?? true);
+}
+export const canDim = (t: Target): boolean => !!driverOf(t)?.brightness;
+
+function need<K extends keyof Driver>(t: Target, what: K, message: string): NonNullable<Driver[K]> {
+  const fn = driverOf(t)?.[what];
+  if (!fn) throw new Error(message);
+  return fn as NonNullable<Driver[K]>;
 }
 
 export async function setPower(t: Target, on: boolean): Promise<void> {
-  if (t.family === 'elk-bledom') {
-    await sendElk(t.address, modelOf(t), elkPower(modelOf(t), on));
+  const driver = driverOf(t);
+  if (driver) {
+    await driver.power(t, on);
   } else if (t.family === 'ir-nec' && irRemoteOf(t)) {
     const remote = irRemoteOf(t)!;
     const direct = irKey(t, [on ? 'power-on' : 'power-off']);
@@ -56,15 +69,13 @@ export async function setPower(t: Target, on: boolean): Promise<void> {
 }
 
 export async function setColor(t: Target, rgb: Rgb): Promise<void> {
-  if (t.family !== 'elk-bledom') throw new Error(tr('Couleur non gérée pour cet appareil.'));
-  await sendElk(t.address, modelOf(t), elkColor(modelOf(t), rgb));
+  await need(t, 'color', tr('Couleur non gérée pour cet appareil.'))(t, rgb);
   await rememberState(t.key, { rgb, on: true, effect: undefined });
 }
 
 /** Envoie une couleur sans la retenir : pendant qu'on fait glisser le doigt sur l'arc-en-ciel. */
 export async function previewColor(t: Target, rgb: Rgb): Promise<void> {
-  if (t.family !== 'elk-bledom') return;
-  await sendElk(t.address, modelOf(t), elkColor(modelOf(t), rgb));
+  await driverOf(t)?.color?.(t, rgb);
 }
 
 /**
@@ -94,22 +105,21 @@ export function latestWins<T>(send: (value: T) => Promise<void>): (value: T) => 
 }
 
 export async function setBrightness(t: Target, percent: number): Promise<void> {
-  if (t.family !== 'elk-bledom') throw new Error(tr('Luminosité non gérée pour cet appareil.'));
-  await sendElk(t.address, modelOf(t), elkBrightness(modelOf(t), percent));
+  await need(t, 'brightness', tr('Luminosité non gérée pour cet appareil.'))(t, percent);
   await rememberState(t.key, { brightness: percent });
 }
 
 export async function setEffect(t: Target, effect: ElkEffect): Promise<void> {
-  await sendElk(t.address, modelOf(t), elkEffect(modelOf(t), effect.code));
+  await need(t, 'effect', tr('L’appli ne sait pas encore allumer cet appareil.'))(t, effect, t.state?.speed ?? 55);
   await rememberState(t.key, { effect: effect.id, on: true });
 }
 
 export async function setSpeed(t: Target, percent: number): Promise<void> {
-  await sendElk(t.address, modelOf(t), elkSpeed(modelOf(t), percent));
+  await driverOf(t)?.speed?.(t, percent);
   await rememberState(t.key, { speed: percent });
 }
 
-export const effectsFor = (t: Target): ElkEffect[] => (t.family === 'elk-bledom' ? elkEffects(modelOf(t)) : []);
+export const effectsFor = (t: Target): ElkEffect[] => driverOf(t)?.effects?.(t) ?? [];
 
 /** Appuie sur une touche d'un ruban infrarouge (couleur, luminosité, effet) et retient ce que ça change. */
 export async function pressIrKey(t: Target, key: IrKey): Promise<void> {

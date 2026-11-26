@@ -1,6 +1,6 @@
 /**
  * Trames Tuya, seulement ce qu'il faut pour **reconnaître** un appareil Tuya pendant la recherche (ses annonces UDP).
- * Rubanix ne pilote pas Tuya : système fermé, clé secrète par appareil donnée par le cloud Tuya (ADR-005, ADR-008).
+ * l'appli ne pilote pas Tuya : système fermé, clé secrète par appareil donnée par le cloud Tuya (ADR-005, ADR-008).
  * Format traduit de tinytuya (core/message_helper.py, udp_helper.py) ; trames vérifiées octet pour octet contre tinytuya.
  * Le pilotage local complet (3.3 / 3.4 / 3.5) a été écrit puis retiré le 2026-10-08 : voir l'historique et le vault (tuya-spec).
  */

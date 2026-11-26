@@ -3,6 +3,10 @@ package expo.modules.rubanixnative
 import android.content.Context
 import android.hardware.ConsumerIrManager
 import android.net.wifi.WifiManager
+import java.io.ByteArrayOutputStream
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.net.SocketTimeoutException
 import expo.modules.kotlin.exception.CodedException
 import expo.modules.kotlin.exception.Exceptions
 import expo.modules.kotlin.modules.Module
@@ -12,7 +16,7 @@ internal class NoIrEmitterException :
   CodedException("Ce téléphone n'a pas d'émetteur infrarouge")
 
 /**
- * Accès natif dont Rubanix a besoin et qu'Expo ne fournit pas :
+ * Accès natif dont l'appli a besoin et qu'Expo ne fournit pas :
  * l'émetteur infrarouge (ConsumerIrManager) et le verrou multicast Wi-Fi,
  * sans lequel Android jette les paquets de découverte (Govee, mDNS).
  */
@@ -66,10 +70,41 @@ class RubanixNativeModule : Module() {
       durations
     }
 
+    /**
+     * Requête TCP courte (Magic Home 5577, Yeelight 55443) : se connecte, envoie `payload`, puis lit la réponse
+     * jusqu'à `replyBytes` octets (0 = ne rien lire, -1 = jusqu'au premier saut de ligne) ou `timeoutMs`.
+     * Renvoie les octets lus (peut-être aucun si l'appareil ne répond pas).
+     */
+    AsyncFunction("tcpRequest") { host: String, port: Int, payload: List<Int>, replyBytes: Int, timeoutMs: Int ->
+      Socket().use { socket ->
+        socket.connect(InetSocketAddress(host, port), timeoutMs)
+        socket.soTimeout = timeoutMs
+        val out = socket.getOutputStream()
+        out.write(ByteArray(payload.size) { payload[it].toByte() })
+        out.flush()
+        val received = ByteArrayOutputStream()
+        if (replyBytes != 0) {
+          val input = socket.getInputStream()
+          val buf = ByteArray(256)
+          try {
+            while (replyBytes < 0 || received.size() < replyBytes) {
+              val n = input.read(buf)
+              if (n <= 0) break
+              received.write(buf, 0, n)
+              if (replyBytes < 0 && buf.take(n).contains('\n'.code.toByte())) break
+            }
+          } catch (_: SocketTimeoutException) {
+            // L'appareil a répondu moins que prévu : on renvoie ce qu'on a.
+          }
+        }
+        received.toByteArray().map { it.toInt() and 0xff }
+      }
+    }
+
     Function("acquireMulticastLock") {
       if (multicastLock == null) {
         val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        multicastLock = wifi.createMulticastLock("rubanix-discovery").apply { setReferenceCounted(false) }
+        multicastLock = wifi.createMulticastLock("ledstrip-discovery").apply { setReferenceCounted(false) }
       }
       multicastLock?.acquire()
     }

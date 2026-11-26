@@ -1,5 +1,6 @@
 import type { ElkModel } from './elk';
 import type { FamilyId, Transport } from './families';
+import { HUE_BLE_ADVERT } from './protocols/ble';
 
 export type Confidence = 'sure' | 'probable';
 
@@ -19,6 +20,11 @@ export interface DetectedDevice {
   model?: string;
   /** Identifiant Tuya (gwId), lu dans l'annonce UDP. */
   tuyaId?: string;
+  /**
+   * Ce que le pilote doit retenir pour joindre l'appareil : port, jeton d'un pont Hue / Nanoleaf, numéro de lampe,
+   * type de Shelly, MAC LIFX… (chaînes seulement : enregistré tel quel avec l'appareil).
+   */
+  meta?: Record<string, string>;
 }
 
 /** Ce que le scanner Bluetooth nous donne d'une annonce. */
@@ -60,6 +66,18 @@ export function elkModel(name: string): ElkModel {
 /** Rattache une annonce Bluetooth à une famille connue, ou `null` si ce n'est pas un contrôleur LED connu. */
 export function identifyBle(adv: BleAdvert): DetectedDevice | null {
   const name = adv.name?.trim();
+  // Lampes Philips Hue récentes : reconnues au service Bluetooth de Signify (FE0F), quel que soit leur nom.
+  if (adv.serviceUUIDs?.some((u) => u.toLowerCase() === HUE_BLE_ADVERT || u.toLowerCase() === 'fe0f')) {
+    return {
+      key: `ble:${adv.id}`,
+      family: 'hue-ble',
+      confidence: 'sure',
+      transport: 'ble',
+      rawName: name || 'Philips Hue',
+      address: adv.id,
+      rssi: adv.rssi ?? undefined,
+    };
+  }
   if (!name) return null;
   const rule = NAME_RULES.find((r) => r.pattern.test(name));
   if (!rule) return null;
@@ -129,7 +147,7 @@ export function parseGoveeReply(text: string, fromIp: string): DetectedDevice | 
     if (!data?.device) return null;
     return {
       key: `wifi:${data.device}`,
-      family: 'govee',
+      family: 'govee-lan',
       confidence: 'sure',
       transport: 'wifi',
       rawName: data.sku ? `Govee ${data.sku}` : 'Govee',

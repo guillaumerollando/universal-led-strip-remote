@@ -3,7 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { hsvToRgb, rgbToHsv } from '../core/color';
 import type { Rgb } from '../core/elk';
-import { latestWins, previewColor, setBrightness, setColor, type Target } from '../services/control';
+import { FAMILIES, type FamilyId } from '../core/families';
+import { canColor, canDim, latestWins, previewColor, setBrightness, setColor, type Target } from '../services/control';
 import { ColorSlider, HUE_STOPS } from './ColorSlider';
 import { Muted, styles as kit } from './kit';
 import { Swatch } from './light';
@@ -25,7 +26,7 @@ const SWATCHES: { rgb: Rgb; label: string }[] = [
 const LEVELS = [10, 25, 50, 75, 100];
 const same = (a?: Rgb, b?: Rgb): boolean => !!a && !!b && a.r === b.r && a.g === b.g && a.b === b.b;
 
-/** Couleur et luminosité d'un contrôleur ELK-BLEDOM, sans passer par son appli. */
+/** Couleur et luminosité d'un ruban Bluetooth ou Wi-Fi (chaque partie seulement si l'appareil la gère). */
 export function ElkControls({ target }: { target: Target }) {
   const [error, setError] = useState<string | null>(null);
   const start = rgbToHsv(target.state?.rgb ?? { r: 255, g: 0, b: 0 });
@@ -52,49 +53,58 @@ export function ElkControls({ target }: { target: Target }) {
     action
       .then(() => setError(null))
       .catch((e: Error) =>
-        setError(`${e.message}. ${t('Rapproche-toi du ruban et ferme ses autres applis.')}`),
+        setError(FAMILIES[target.family as FamilyId]?.transport === 'ble' ? `${e.message}. ${t('Rapproche-toi du ruban et ferme ses autres applis.')}` : e.message),
       );
   };
 
+  const color = canColor(target);
   return (
     <View style={{ gap: space.md }}>
-      <Muted>{t('Couleur')}</Muted>
-      <ColorSlider
-        label={t('Teinte')}
-        stops={HUE_STOPS}
-        value={hue / 360}
-        thumbColor={pure}
-        onChange={(v) => slide(v * 360, white)}
-        onRelease={(v) => commit(v * 360, white)}
-      />
-      <ColorSlider
-        label={t('Blancheur')}
-        stops={[`rgb(${pure.r},${pure.g},${pure.b})`, '#FFFFFF']}
-        value={white}
-        thumbColor={current}
-        onChange={(v) => slide(hue, v)}
-        onRelease={(v) => commit(hue, v)}
-      />
-      <Muted>{t('Couleurs rapides')}</Muted>
-      <View style={ctl.swatches}>
-        {SWATCHES.map((s) => (
-          <View key={s.label} style={{ width: '20%', alignItems: 'center' }}>
-            <Swatch label={s.label} rgb={s.rgb} selected={same(s.rgb, target.state?.rgb)} onPress={() => pick(s.rgb)} />
+      {color && (
+        <>
+          <Muted>{t('Couleur')}</Muted>
+          <ColorSlider
+            label={t('Teinte')}
+            stops={HUE_STOPS}
+            value={hue / 360}
+            thumbColor={pure}
+            onChange={(v) => slide(v * 360, white)}
+            onRelease={(v) => commit(v * 360, white)}
+          />
+          <ColorSlider
+            label={t('Blancheur')}
+            stops={[`rgb(${pure.r},${pure.g},${pure.b})`, '#FFFFFF']}
+            value={white}
+            thumbColor={current}
+            onChange={(v) => slide(hue, v)}
+            onRelease={(v) => commit(hue, v)}
+          />
+          <Muted>{t('Couleurs rapides')}</Muted>
+          <View style={ctl.swatches}>
+            {SWATCHES.map((s) => (
+              <View key={s.label} style={{ width: '20%', alignItems: 'center' }}>
+                <Swatch label={s.label} rgb={s.rgb} selected={same(s.rgb, target.state?.rgb)} onPress={() => pick(s.rgb)} />
+              </View>
+            ))}
           </View>
-        ))}
-      </View>
-      <Muted>{t('Luminosité')}</Muted>
-      <View style={kit.row}>
-        {LEVELS.map((p) => {
-          const active = target.state?.brightness === p;
-          return (
-            <Pressable key={p} onPress={() => run(setBrightness(target, p))} style={[ctl.level, active && ctl.levelActive]}>
-              <View style={[ctl.levelFill, { height: `${p}%` }]} />
-              <Text style={[kit.text, { fontWeight: '700' }]}>{p} %</Text>
-            </Pressable>
-          );
-        })}
-      </View>
+        </>
+      )}
+      {canDim(target) && (
+        <>
+          <Muted>{t('Luminosité')}</Muted>
+          <View style={kit.row}>
+            {LEVELS.map((p) => {
+              const active = target.state?.brightness === p;
+              return (
+                <Pressable key={p} onPress={() => run(setBrightness(target, p))} style={[ctl.level, active && ctl.levelActive]}>
+                  <View style={[ctl.levelFill, { height: `${p}%` }]} />
+                  <Text style={[kit.text, { fontWeight: '700' }]}>{p} %</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </>
+      )}
       {error && <Text style={[kit.muted, { color: colors.danger }]}>{error}</Text>}
     </View>
   );

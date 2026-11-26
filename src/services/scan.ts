@@ -3,6 +3,7 @@ import { useCallback, useSyncExternalStore } from 'react';
 import type { DetectedDevice } from '../core/identify';
 import { ensureBlePermissions, isBluetoothOn, scanBle } from './ble';
 import { scanLan } from './lan';
+import { hueLightsOf, knownBridge } from './pairing';
 import { t } from '../i18n';
 
 export const SCAN_MS = 12_000;
@@ -33,11 +34,26 @@ export function showDemoScan(found: DetectedDevice[]): void {
   set({ scanning: false, found, warnings: [], demo: true });
 }
 
+/** Ajoute ou remplace des appareils dans la liste (lampes d'un pont Hue autorisé, Nanoleaf avec son jeton). */
+export function putFound(devices: DetectedDevice[]): void {
+  const keys = new Set(devices.map((d) => d.key));
+  set({ found: [...state.found.filter((f) => !keys.has(f.key)), ...devices] });
+}
+
 /** Lance un scan Bluetooth + Wi-Fi ; les appareils arrivent au fil de l'eau. */
 export async function startScan(): Promise<void> {
   if (state.scanning) return;
   set({ scanning: true, found: [], warnings: [], demo: false });
-  const add = (d: DetectedDevice): void => set({ found: [...state.found.filter((f) => f.key !== d.key), d] });
+  const add = (d: DetectedDevice): void => {
+    set({ found: [...state.found.filter((f) => f.key !== d.key), d] });
+    // Pont Hue déjà autorisé : ses lampes apparaissent directement.
+    if (d.family === 'hue-bridge') {
+      void knownBridge(d.key)
+        .then((auth) => (auth ? hueLightsOf(d, auth.user) : []))
+        .then((lights) => lights.length && putFound(lights))
+        .catch(() => undefined);
+    }
+  };
   const warn = (w: string): void => set({ warnings: state.warnings.includes(w) ? state.warnings : [...state.warnings, w] });
 
   if (!(await ensureBlePermissions())) warn(t('Bluetooth non autorisé : seuls les appareils Wi-Fi seront cherchés.'));

@@ -6,7 +6,7 @@ import type { FamilyId, Transport } from '../core/families';
 import type { IrRemoteId } from '../core/ir';
 import type { IrSetup } from '../core/irSetup';
 
-/** Dernier état connu d'un appareil (ce que Rubanix lui a envoyé : ces contrôleurs ne répondent pas). */
+/** Dernier état connu d'un appareil (ce que l'appli lui a envoyé : ces contrôleurs ne répondent pas). */
 export interface LightState {
   on?: boolean;
   rgb?: Rgb;
@@ -34,6 +34,8 @@ export interface SavedDevice {
   irRemote?: IrRemoteId;
   roomId?: string;
   state?: LightState;
+  /** Ce que le pilote doit retenir pour joindre l'appareil (jeton d'un pont, numéro de lampe, port…). */
+  meta?: Record<string, string>;
   addedAt: number;
 }
 

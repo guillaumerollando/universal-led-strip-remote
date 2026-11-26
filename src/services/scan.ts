@@ -4,6 +4,7 @@ import type { DetectedDevice } from '../core/identify';
 import { ensureBlePermissions, isBluetoothOn, scanBle } from './ble';
 import { scanLan } from './lan';
 import { hueLightsOf, knownBridge } from './pairing';
+import { getDevice, updateDevice } from './store';
 import { t } from '../i18n';
 
 export const SCAN_MS = 12_000;
@@ -46,11 +47,21 @@ export async function startScan(): Promise<void> {
   set({ scanning: true, found: [], warnings: [], demo: false });
   const add = (d: DetectedDevice): void => {
     set({ found: [...state.found.filter((f) => f.key !== d.key), d] });
+    // La box peut redonner une autre adresse IP à un ruban Wi-Fi : on suit sa nouvelle adresse (clé = MAC ou identifiant).
+    const saved = getDevice(d.key);
+    if (saved && d.transport === 'wifi' && saved.address !== d.address) void updateDevice(d.key, { address: d.address });
     // Pont Hue déjà autorisé : ses lampes apparaissent directement.
     if (d.family === 'hue-bridge') {
       void knownBridge(d.key)
         .then((auth) => (auth ? hueLightsOf(d, auth.user) : []))
-        .then((lights) => lights.length && putFound(lights))
+        .then((lights) => {
+          if (!lights.length) return;
+          putFound(lights);
+          for (const l of lights) {
+            const saved = getDevice(l.key);
+            if (saved && saved.address !== l.address) void updateDevice(l.key, { address: l.address });
+          }
+        })
         .catch(() => undefined);
     }
   };

@@ -1,14 +1,14 @@
-# AGENTS.md — Rubanix (« Universal LED Strip Remote »)
+# AGENTS.md — Universal LED Strip Remote
 
 Guide de référence pour tout agent IA (Claude Code, Codex…). À lire **en priorité** avant chaque session.
 `CLAUDE.md` importe ce fichier : **ce fichier fait foi**. Conversation et documentation en français.
 
 ## Projet
 
-**Rubanix** (nom de code ; publié sous « **Universal LED Strip Remote** », « Télécommande Ruban LED » en français,
+**Universal LED Strip Remote** (publié sous ce nom, « Télécommande Ruban LED » en français,
 « LED Strip Remote » sous l'icône — ADR-009) : une seule appli Android pour tous les rubans LED d'AliExpress. Chaque contrôleur chinois a sa propre
 appli (duoCo Strip, Lotus Lamp, HappyLighting, Magic Home, Smart Life…) et on ne sait plus laquelle va avec quel ruban.
-Rubanix scanne le Bluetooth et le Wi-Fi, reconnaît la famille du contrôleur, dit quelle appli d'origine l'accompagne,
+LED Strip Remote scanne le Bluetooth et le Wi-Fi, reconnaît la famille du contrôleur, dit quelle appli d'origine l'accompagne,
 et pilote directement ce qu'il sait piloter (ELK-BLEDOM en Bluetooth, rubans infrarouges via l'émetteur IR du téléphone).
 
 **Cap (Guillaume, 2026-10-08)** : une appli simple et rapide qui ne s'appuie que sur des protocoles **ouverts**. Jamais de
@@ -16,7 +16,7 @@ lien avec un compte ou une appli d'origine (Smart Life…), jamais de kit propri
 un lien vers son appli et l'astuce « ajoute-le en infrarouge ».
 
 Identifiant Android : `com.rollandostudio.ledstripremote` (définitif dès la création dans la Play Console) ; liens
-`ledstrip://`. « Rubanix » ne reste que dans les noms internes (dossier, module natif, clés de stockage).
+`ledstrip://`. « LED Strip Remote » ne reste que dans les noms internes (dossier, module natif, clés de stockage).
 Publication : vault `06-publication/` (plan, réponses aux formulaires), `store/`, skill `publier-sur-le-play-store`.
 `versionCode` (app.json) à augmenter à chaque envoi.
 
@@ -24,14 +24,14 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
 
 ## Où trouver quoi
 
-- Vault Obsidian : `~/Dev/Gestion de projet/Rubanix/` — lire son `CLAUDE.md`, `00-vision/vision.md`,
+- Vault Obsidian : `~/Dev/Gestion de projet/LED Strip Remote/` — lire son `CLAUDE.md`, `00-vision/vision.md`,
   `03-technique/decisions.md` et `01-sprints/kanban.md` avant de commencer
 - `src/core/` : **TypeScript pur, sans React Native**, testé avec Vitest. Toute la connaissance des protocoles vit ici
   - `families.ts` : familles de contrôleurs, applis d'origine, capacités
   - `identify.ts` : nom Bluetooth / réponse Wi-Fi → famille (`identifyBle`, `parseMagicHomeReply`, `parseGoveeReply`…)
   - `elk.ts` : trames ELK-BLEDOM (variantes `elk`, `bledob`, `melk`), effets et vitesse
   - `color.ts` : conversions teinte / RVB (barres arc-en-ciel)
-  - `tuya/` : lecture des annonces UDP Tuya, pour **reconnaître** ces appareils (Rubanix ne pilote pas Tuya : système fermé)
+  - `tuya/` : lecture des annonces UDP Tuya, pour **reconnaître** ces appareils (LED Strip Remote ne pilote pas Tuya : système fermé)
   - `naming.ts` : nom proposé à l'ajout (`nextFreeName` : « Ruban 1 », « Ruban 2 »… sans doublon), force du signal en mots
   - `irSetup.ts` : **assistant d'ajout infrarouge** — `burstPlan(état)` (rafales de 16 codes avec silences, adaptées à
     l'état allumé / éteint), `suspectBursts`, `leadsFrom` (pistes), `verifySteps`, réduction par moitiés, `remoteFromSetup`
@@ -79,7 +79,7 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
   Jamais une trame seule sans queue ; rafales de 15 codes max (limite Android de 2 s)
 - **Aucun jargon pour l'utilisateur** (Guillaume, 2026-10-08) : jamais de nom de télécommande (« 24 / 44 touches »), de
   fréquence, de protocole ou de famille de contrôleur à l'écran. L'utilisateur veut que ça marche, vite, automatiquement
-- Dans l'interface, ne jamais écrire « Rubanix » : dire « l'appli » (nom sous l'icône : « LED Strip Remote », « Ruban LED »
+- Dans l'interface, ne jamais écrire « LED Strip Remote » : dire « l'appli » (nom sous l'icône : « LED Strip Remote », « Ruban LED »
   sur un téléphone en français, traduit dans chaque langue — `locales/`)
 - **Traduction (26 langues, automatique)** : l'appli prend la première langue du téléphone qu'elle connaît, anglais sinon.
   Tout texte affiché passe par `t('texte en français', { variables })` (`src/i18n`). Nouveau texte : sa traduction dans

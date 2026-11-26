@@ -11,7 +11,7 @@ Tout ce qu'il faut pour la fiche Play Store de **Universal LED Strip Remote** (�
   Régénérées par `python3 tools/make_icon.py`
 - Pages légales : dans le site public `~/Dev/site/led-strip-remote/` →
   https://guillaumerollando.github.io/led-strip-remote/privacy (URL pour la Console)
-- Plan de publication et réponses aux formulaires : vault `Rubanix/06-publication/` (skill `publier-sur-le-play-store`)
+- Plan de publication et réponses aux formulaires : vault `LED Strip Remote/06-publication/` (skill `publier-sur-le-play-store`)
 
 ## Réglages de la console Play
 

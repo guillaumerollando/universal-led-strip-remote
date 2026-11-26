@@ -1,73 +1,109 @@
 import { router } from 'expo-router';
-import { Text, View } from 'react-native';
+import { useEffect } from 'react';
+import { Pressable, Text, View } from 'react-native';
 
-import { FAMILIES, type Transport } from '../core/families';
+import type { DetectedDevice } from '../core/identify';
+import { FAMILIES } from '../core/families';
+import { canPower } from '../services/control';
 import { hasIrEmitter } from '../services/ir';
-import { SCAN_MS, useScan } from '../services/scan';
-import { useSavedDevices } from '../services/store';
-import { Badge, Button, Card, Muted, Screen, SectionTitle, styles } from '../ui/kit';
-import { colors } from '../ui/theme';
+import { useScan } from '../services/scan';
+import { useSavedDevices, type SavedDevice } from '../services/store';
+import { Button, Muted, Screen, SectionTitle, styles } from '../ui/kit';
+import { kindLabel, signalText } from '../ui/labels';
+import { LedRow } from '../ui/LedRow';
+import { colors, radius, space } from '../ui/theme';
 import { t } from '../i18n';
 
-const TRANSPORT_LABEL: Record<Transport, string> = { ble: 'Bluetooth', wifi: 'Wi-Fi', ir: t('Infrarouge') };
-
-/** Force du signal Bluetooth en mots (le RSSI ne parle à personne). */
-function signalLabel(rssi?: number): string | null {
-  if (rssi === undefined) return null;
-  if (rssi > -65) return t('tout près');
-  if (rssi > -80) return t('à portée');
-  return t('loin');
-}
-
-/** Ajouter un ruban : scanner Bluetooth + Wi-Fi, ou déclarer un ruban infrarouge. */
+/**
+ * Ajouter un ruban : la recherche démarre toute seule ; on touche un ruban trouvé pour l'ajouter.
+ * Les appareils que l'appli ne sait pas piloter passent en dessous, en petit.
+ */
 export default function AddScreen() {
   const saved = useSavedDevices();
-  const { scanning, found, warnings, start } = useScan();
-  const savedKeys = new Set(saved.map((d) => d.key));
+  const { scanning, found, warnings, demo, start } = useScan();
+
+  useEffect(() => {
+    if (!scanning && !demo) start();
+    // Une seule recherche à l'ouverture de l'écran.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const savedOf = (d: DetectedDevice): SavedDevice | undefined => saved.find((s) => s.key === d.key);
+  const ready = found.filter((d) => canPower(d));
+  const others = found.filter((d) => !canPower(d));
 
   return (
     <Screen>
-      <SectionTitle>{t('Bluetooth et Wi-Fi')}</SectionTitle>
-      <Muted>{t('Allume les rubans et reste à quelques mètres. L’appli reconnaît le contrôleur et l’appli qui va avec.')}</Muted>
-      <Button label={scanning ? t('Recherche en cours…') : t('Chercher autour de moi')} onPress={start} busy={scanning} />
-      {scanning && <Muted>{t('Environ {s} secondes.', { s: Math.round(SCAN_MS / 1000) })}</Muted>}
+      <View style={{ alignItems: 'center', gap: space.xs }}>
+        <LedRow mode={scanning ? 'chase' : found.length ? 'lit' : 'off'} count={9} size={14} />
+        <Text style={[styles.title, { textAlign: 'center' }]}>{scanning ? t('Recherche en cours…') : found.length ? t('Touche un ruban pour l’ajouter') : t('Rien trouvé pour l’instant.')}</Text>
+        <Muted>{t('Allume tes rubans et approche-toi.')}</Muted>
+      </View>
       {warnings.map((w) => (
         <Text key={w} style={[styles.muted, { color: colors.warn }]}>
           {w}
         </Text>
       ))}
-      {found.map((d) => {
-        const family = FAMILIES[d.family];
-        const signal = signalLabel(d.rssi);
-        const known = savedKeys.has(d.key);
-        return (
-          <Card key={d.key} onPress={() => router.push({ pathname: '/device/[key]', params: { key: d.key } })}>
-            <View style={[styles.row, { justifyContent: 'space-between' }]}>
-              <Text style={styles.title}>{known ? saved.find((s) => s.key === d.key)?.name : t(family.label)}</Text>
-              {known ? (
-                <Badge label={t('déjà ajouté')} />
-              ) : (
-                <Badge label={d.confidence === 'sure' ? t('sûr') : t('probable')} tone={d.confidence === 'sure' ? 'ok' : 'warn'} />
-              )}
-            </View>
-            <Muted>
-              « {d.rawName} » · {TRANSPORT_LABEL[d.transport]}
-              {signal ? ` · ${signal}` : ''}
-              {d.transport === 'wifi' ? ` · ${d.address}` : ''}
-            </Muted>
-            {family.apps[0] && <Text style={styles.text}>{t('Appli d’origine : {apps}', { apps: family.apps.map((a) => a.name).join(', ') })}</Text>}
-          </Card>
-        );
-      })}
-      {!scanning && found.length === 0 && <Muted>{t('Rien trouvé pour l’instant.')}</Muted>}
+
+      {ready.map((d) => (
+        <FoundRow key={d.key} device={d} saved={savedOf(d)} />
+      ))}
+
+      {!scanning && <Button label={t('Chercher encore')} variant="secondary" onPress={start} />}
+
+      {others.length > 0 && (
+        <>
+          <SectionTitle>{t('Autres appareils')}</SectionTitle>
+          {others.map((d) => (
+            <FoundRow key={d.key} device={d} saved={savedOf(d)} quiet />
+          ))}
+        </>
+      )}
 
       {hasIrEmitter() && (
         <>
           <SectionTitle>{t('Ruban à télécommande')}</SectionTitle>
-          <Muted>{t('Ton téléphone peut remplacer sa télécommande infrarouge.')}</Muted>
           <Button label={t('Ajouter un ruban à télécommande')} variant="secondary" onPress={() => router.push('/ir-new')} />
         </>
       )}
     </Screen>
+  );
+}
+
+/** Un appareil trouvé : ce que c'est, à quelle distance, et ce qu'on peut faire en le touchant. */
+function FoundRow({ device, saved, quiet }: { device: DetectedDevice; saved?: SavedDevice; quiet?: boolean }) {
+  const signal = signalText(device.rssi);
+  const app = FAMILIES[device.family].apps[0];
+  const open = (): void => {
+    if (saved || quiet) router.push({ pathname: '/device/[key]', params: { key: device.key } });
+    else router.push({ pathname: '/new/[key]', params: { key: device.key } });
+  };
+  const action = saved ? t('déjà ajouté') : quiet ? (app ? t('Via {app}', { app: app.name }) : '') : t('Ajouter');
+
+  return (
+    <Pressable
+      onPress={open}
+      style={({ pressed }) => ({
+        backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
+        borderRadius: radius.md,
+        borderWidth: 1,
+        borderColor: !quiet && !saved ? colors.accent : colors.border,
+        paddingHorizontal: space.lg,
+        paddingVertical: quiet ? space.sm : space.md,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: space.md,
+      })}
+    >
+      <View style={{ flex: 1, gap: 2 }}>
+        <Text style={quiet ? styles.text : styles.title} numberOfLines={1}>
+          {saved?.name ?? kindLabel(device.transport)}
+        </Text>
+        <Text style={styles.muted} numberOfLines={1}>
+          {[signal, device.rawName.replace(/\s+/g, ' ').trim()].filter(Boolean).join(' · ')}
+        </Text>
+      </View>
+      {!!action && <Text style={[styles.muted, !quiet && !saved && { color: colors.accent, fontWeight: '700', fontSize: 15 }]}>{action}</Text>}
+    </Pressable>
   );
 }

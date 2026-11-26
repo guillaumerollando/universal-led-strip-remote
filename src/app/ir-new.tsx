@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { Rgb } from '../core/elk';
@@ -20,11 +20,12 @@ import {
   type StripState,
 } from '../core/irSetup';
 import { hasIrEmitter, irAimHint, sendIrBatch } from '../services/ir';
-import { getDevices, saveDevice } from '../services/store';
+import { saveDevice } from '../services/store';
+import { AddForm } from '../ui/AddForm';
 import { Button, Muted, Screen, styles } from '../ui/kit';
 import { LedRow, type LedMode } from '../ui/LedRow';
 import { LightStrip } from '../ui/light';
-import { RoomPicker } from '../ui/RoomPicker';
+import { defaultStripName } from '../ui/labels';
 import { colors, radius, space, WARM_WHITE } from '../ui/theme';
 import { t } from '../i18n';
 
@@ -171,7 +172,7 @@ export default function IrWizard() {
 
   const accept = (setup: IrSetup, rgb?: Rgb): void => {
     run.current++;
-    setName((n) => n || t('Ruban {n}', { n: getDevices().filter((d) => d.transport === 'ir').length + 1 }));
+    setName((n) => n || defaultStripName());
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setPhase({ kind: 'done', setup, rgb });
   };
@@ -251,27 +252,20 @@ export default function IrWizard() {
 
   if (phase.kind === 'done') {
     return (
-      <View style={styles.screen}>
-        {close}
-        <Screen>
-          <LedRow mode="lit" rgb={phase.rgb ?? WARM_WHITE} />
-          <Text style={[styles.big, { textAlign: 'center' }]}>{t('C’est trouvé !')}</Text>
-          <Muted>{t('Donne-lui un nom :')}</Muted>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder={t('Ex. Néon du salon')}
-            placeholderTextColor={colors.textDim}
-            selectTextOnFocus
-            returnKeyType="done"
-            onSubmitEditing={save}
-          />
-          <Muted>{t('Dans quelle pièce ?')}</Muted>
-          <RoomPicker value={roomId} onChange={setRoomId} />
-          <Button label={t('Ajouter')} onPress={save} disabled={!name.trim()} busy={saving} style={{ minHeight: 56 }} />
-        </Screen>
-      </View>
+      <AddForm
+        name={name}
+        onName={setName}
+        roomId={roomId}
+        onRoom={setRoomId}
+        onSave={save}
+        saving={saving}
+        top={
+          <>
+            <LedRow mode="lit" rgb={phase.rgb ?? WARM_WHITE} count={9} size={18} />
+            <Text style={[styles.big, { textAlign: 'center' }]}>{t('C’est trouvé !')}</Text>
+          </>
+        }
+      />
     );
   }
 

@@ -3,8 +3,6 @@ export const HE: Record<string, string> = {
   // ── Accueil, pièces ──
   'Ruban LED': 'פס לד',
   'Tous tes rubans, une seule appli.': 'כל פסי הלד שלך, באפליקציה אחת.',
-  'L’appli trouve tes rubans Bluetooth et Wi-Fi, te dit de quelle appli ils viennent, et les pilote quand elle sait le faire. Les rubans à télécommande infrarouge aussi, si ton téléphone a un émetteur.':
-    'האפליקציה מוצאת את פסי ה-Bluetooth וה-Wi-Fi שלך, אומרת לך מאיזו אפליקציה הם מגיעים ושולטת בהם כשהיא יודעת איך. גם פסים עם שלט אינפרא אדום, אם בטלפון שלך יש משדר אינפרא אדום.',
   'Ajouter un ruban': 'הוספת פס',
   'Nouvelle pièce': 'חדר חדש',
   '+ Nouvelle pièce': '+ חדר חדש',
@@ -39,23 +37,13 @@ export const HE: Record<string, string> = {
   Annuler: 'ביטול',
 
   // ── Recherche ──
-  'Bluetooth et Wi-Fi': 'Bluetooth ו-Wi-Fi',
-  'Allume les rubans et reste à quelques mètres. L’appli reconnaît le contrôleur et l’appli qui va avec.':
-    'מדליקים את הפסים ונשארים במרחק של כמה מטרים. האפליקציה מזהה את הבקר ואת האפליקציה שמתאימה לו.',
   'Recherche en cours…': 'מחפש…',
-  'Chercher autour de moi': 'חיפוש סביבי',
-  'Environ {s} secondes.': 'בערך {s} שניות.',
   'tout près': 'קרוב מאוד',
   'à portée': 'בטווח',
   loin: 'רחוק',
   'déjà ajouté': 'כבר נוסף',
-  sûr: 'בטוח',
-  probable: 'סביר',
-  'Appli d’origine : {apps}': 'האפליקציה המקורית: {apps}',
   'Rien trouvé pour l’instant.': 'עדיין לא נמצא כלום.',
   'Ruban à télécommande': 'פס עם שלט',
-  'Ton téléphone peut remplacer sa télécommande infrarouge.':
-    'הטלפון שלך יכול להחליף את השלט האינפרא אדום שלו.',
   'Ajouter un ruban à télécommande': 'הוספת פס עם שלט',
   'Bluetooth non autorisé : seuls les appareils Wi-Fi seront cherchés.':
     'אין הרשאת Bluetooth: יחופשו רק מכשירי Wi-Fi.',
@@ -75,22 +63,13 @@ export const HE: Record<string, string> = {
   Éteindre: 'כיבוי',
   '{name} : allumer': '{name}: הדלקה',
   '{name} : éteindre': '{name}: כיבוי',
-  'Si l’appli se trompe (allumé / éteint), appui long sur le bouton pour corriger.':
-    'אם האפליקציה טועה (דולק / כבוי), לחיצה ארוכה על הכפתור מתקנת את זה.',
   'Système fermé': 'מערכת סגורה',
   'Pas encore géré': 'עדיין לא נתמך',
-  'Les appareils Tuya sont verrouillés par leur fabricant : l’appli ne peut pas les piloter.':
-    'מכשירי Tuya נעולים על ידי היצרן שלהם: האפליקציה לא יכולה לשלוט בהם.',
-  'L’appli reconnaît ce contrôleur mais ne sait pas encore le piloter.':
-    'האפליקציה מזהה את הבקר הזה, אבל עדיין לא יודעת לשלוט בו.',
-  'S’il a une télécommande infrarouge, ajoute-le en infrarouge : tout se pilotera d’ici.':
-    'אם יש לו שלט אינפרא אדום, אפשר להוסיף אותו כאינפרא אדום: הכול יישלט מכאן.',
   'Ajouter en infrarouge': 'הוספה כאינפרא אדום',
   'Ouvrir avec {app}': 'פתיחה עם {app}',
   'Via {app}': 'דרך {app}',
   Lumière: 'אור',
   Effets: 'אפקטים',
-  'Garder dans mes rubans': 'לשמור בפסים שלי',
   'Ex. Néon du salon': 'לדוגמה: ניאון בסלון',
   'Enregistrer le nom': 'שמירת השם',
   'Ajouter à mes rubans': 'הוספה לפסים שלי',
@@ -110,8 +89,6 @@ export const HE: Record<string, string> = {
   Rapide: 'מהיר',
   'Plus lent': 'לאט יותר',
   'Plus rapide': 'מהר יותר',
-  'Ferme l’appli d’origine (une seule connexion à la fois) et rapproche-toi du ruban.':
-    'סוגרים את האפליקציה המקורית (חיבור אחד בכל פעם) ומתקרבים לפס.',
   'Blanc chaud': 'לבן חם',
   Blanc: 'לבן',
   Rouge: 'אדום',
@@ -183,7 +160,6 @@ export const HE: Record<string, string> = {
   Fermer: 'סגירה',
   'Ton ruban est…': 'הפס שלך עכשיו…',
   'C’est trouvé !': 'נמצא!',
-  'Donne-lui un nom :': 'איך לקרוא לו?',
   'Dans quelle pièce ?': 'באיזה חדר?',
   Ajouter: 'הוספה',
   'Touche l’écran dès que ton ruban réagit': 'נוגעים במסך ברגע שהפס מגיב',
@@ -219,4 +195,29 @@ export const HE: Record<string, string> = {
   'Signal infrarouge trop long.': 'אות האינפרא אדום ארוך מדי.',
   'L’infrarouge n’est disponible que sur Android.': 'אינפרא אדום זמין רק ב-Android.',
   'Ce téléphone n’a pas d’émetteur infrarouge.': 'בטלפון הזה אין משדר אינפרא אדום.',
+
+  // ── Version 1.1 : ajout simplifié, À propos ──
+  'À propos': 'אודות',
+  'Une appli pour les gouverner tous': 'אפליקציה אחת לשלוט בכולם',
+  'Version {v}': 'גרסה {v}',
+  'Gratuite, sans pub, sans compte.': 'חינם, בלי פרסומות, בלי חשבון.',
+  'Open source': 'קוד פתוח',
+  'Fait par {studio}': 'נוצר על ידי {studio}',
+  'Politique de confidentialité': 'מדיניות פרטיות',
+  'Crédits': 'תודות',
+  'Touche un ruban pour l’ajouter': 'הקש על פס כדי להוסיף אותו',
+  'Allume tes rubans et approche-toi.': 'הדלק את הפסים שלך והתקרב.',
+  'Chercher encore': 'חפש שוב',
+  'Autres appareils': 'מכשירים אחרים',
+  'Allumé et éteint inversés ? Appui long pour corriger.': 'דלוק וכבוי הפוכים? לחיצה ארוכה לתיקון.',
+  'Verrouillé par son fabricant.': 'נעול על ידי היצרן.',
+  'L’appli ne sait pas encore le piloter.': 'האפליקציה עדיין לא יודעת לשלוט בו.',
+  'Il a une télécommande ? Ajoute-le en infrarouge.': 'יש לו שלט? הוסף אותו כאינפרא אדום.',
+  'Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.': 'בלוטות׳, Wi-Fi או שלט: הוסף את הפס הראשון שלך.',
+  'Pas de réponse : rapproche-toi du ruban.': 'אין תגובה: התקרב לפס.',
+  'C’est bien lui ?': 'זה הוא?',
+  'Faire clignoter': 'להבהב',
+  'Rapproche-toi du ruban et ferme ses autres applis.': 'התקרב לפס וסגור את האפליקציות האחרות שלו.',
+  'Ruban Bluetooth': 'פס בלוטות׳',
+  'Ruban Wi-Fi': 'פס Wi-Fi',
 };

@@ -3,8 +3,6 @@ export const TR: Record<string, string> = {
   // ── Accueil, pièces ──
   'Ruban LED': 'LED Şerit',
   'Tous tes rubans, une seule appli.': 'Tüm LED şeritleriniz tek uygulamada.',
-  'L’appli trouve tes rubans Bluetooth et Wi-Fi, te dit de quelle appli ils viennent, et les pilote quand elle sait le faire. Les rubans à télécommande infrarouge aussi, si ton téléphone a un émetteur.':
-    'Uygulama Bluetooth ve Wi-Fi şeritlerinizi bulur, hangi uygulamaya ait olduklarını söyler ve yapabildiğinde onları kontrol eder. Telefonunuzda kızılötesi verici varsa, kumandalı şeritleri de.',
   'Ajouter un ruban': 'Şerit ekle',
   'Nouvelle pièce': 'Yeni oda',
   '+ Nouvelle pièce': '+ Yeni oda',
@@ -39,23 +37,13 @@ export const TR: Record<string, string> = {
   Annuler: 'İptal',
 
   // ── Recherche ──
-  'Bluetooth et Wi-Fi': 'Bluetooth ve Wi-Fi',
-  'Allume les rubans et reste à quelques mètres. L’appli reconnaît le contrôleur et l’appli qui va avec.':
-    'Şeritlerinizi açın ve birkaç metre yakınında kalın. Uygulama kontrol kutusunu ve ona ait uygulamayı tanır.',
   'Recherche en cours…': 'Aranıyor…',
-  'Chercher autour de moi': 'Çevremde ara',
-  'Environ {s} secondes.': 'Yaklaşık {s} saniye.',
   'tout près': 'çok yakın',
   'à portée': 'menzilde',
   loin: 'uzak',
   'déjà ajouté': 'zaten ekli',
-  sûr: 'kesin',
-  probable: 'muhtemel',
-  'Appli d’origine : {apps}': 'Asıl uygulama: {apps}',
   'Rien trouvé pour l’instant.': 'Henüz bir şey bulunamadı.',
   'Ruban à télécommande': 'Kumandalı şerit',
-  'Ton téléphone peut remplacer sa télécommande infrarouge.':
-    'Telefonunuz kızılötesi kumandasının yerini alabilir.',
   'Ajouter un ruban à télécommande': 'Kumandalı şerit ekle',
   'Bluetooth non autorisé : seuls les appareils Wi-Fi seront cherchés.':
     'Bluetooth izni yok: yalnızca Wi-Fi cihazlar aranacak.',
@@ -76,22 +64,13 @@ export const TR: Record<string, string> = {
   Éteindre: 'Kapat',
   '{name} : allumer': '{name}: aç',
   '{name} : éteindre': '{name}: kapat',
-  'Si l’appli se trompe (allumé / éteint), appui long sur le bouton pour corriger.':
-    'Uygulama yanılırsa (açık / kapalı), düzeltmek için düğmeye uzun basın.',
   'Système fermé': 'Kapalı sistem',
   'Pas encore géré': 'Henüz desteklenmiyor',
-  'Les appareils Tuya sont verrouillés par leur fabricant : l’appli ne peut pas les piloter.':
-    'Tuya cihazları üreticileri tarafından kilitlenmiştir: uygulama bunları kontrol edemez.',
-  'L’appli reconnaît ce contrôleur mais ne sait pas encore le piloter.':
-    'Uygulama bu kontrol kutusunu tanıyor ama henüz kontrol edemiyor.',
-  'S’il a une télécommande infrarouge, ajoute-le en infrarouge : tout se pilotera d’ici.':
-    'Kızılötesi kumandası varsa kızılötesi olarak ekleyin: her şeyi buradan kontrol edersiniz.',
   'Ajouter en infrarouge': 'Kızılötesi olarak ekle',
   'Ouvrir avec {app}': '{app} ile aç',
   'Via {app}': '{app} üzerinden',
   Lumière: 'Işık',
   Effets: 'Efektler',
-  'Garder dans mes rubans': 'Şeritlerimde tut',
   'Ex. Néon du salon': 'Örn. Salon neonu',
   'Enregistrer le nom': 'Adı kaydet',
   'Ajouter à mes rubans': 'Şeritlerime ekle',
@@ -111,8 +90,6 @@ export const TR: Record<string, string> = {
   Rapide: 'Hızlı',
   'Plus lent': 'Daha yavaş',
   'Plus rapide': 'Daha hızlı',
-  'Ferme l’appli d’origine (une seule connexion à la fois) et rapproche-toi du ruban.':
-    'Asıl uygulamayı kapatın (aynı anda tek bağlantı olabilir) ve şeride yaklaşın.',
   'Blanc chaud': 'Sıcak beyaz',
   Blanc: 'Beyaz',
   Rouge: 'Kırmızı',
@@ -184,7 +161,6 @@ export const TR: Record<string, string> = {
   Fermer: 'Kapat',
   'Ton ruban est…': 'Şeridiniz şu an…',
   'C’est trouvé !': 'Buldum!',
-  'Donne-lui un nom :': 'Bir ad verin:',
   'Dans quelle pièce ?': 'Hangi odada?',
   Ajouter: 'Ekle',
   'Touche l’écran dès que ton ruban réagit': 'Şeridiniz tepki verir vermez ekrana dokunun',
@@ -221,4 +197,29 @@ export const TR: Record<string, string> = {
   'Signal infrarouge trop long.': 'Kızılötesi sinyal çok uzun.',
   'L’infrarouge n’est disponible que sur Android.': 'Kızılötesi yalnızca Android\'de kullanılabilir.',
   'Ce téléphone n’a pas d’émetteur infrarouge.': 'Bu telefonda kızılötesi verici yok.',
+
+  // ── Version 1.1 : ajout simplifié, À propos ──
+  'À propos': 'Hakkında',
+  'Une appli pour les gouverner tous': 'Hepsine hükmedecek tek uygulama',
+  'Version {v}': 'Sürüm {v}',
+  'Gratuite, sans pub, sans compte.': 'Ücretsiz, reklamsız, hesapsız.',
+  'Open source': 'Açık kaynak',
+  'Fait par {studio}': '{studio} tarafından yapıldı',
+  'Politique de confidentialité': 'Gizlilik politikası',
+  'Crédits': 'Teşekkürler',
+  'Touche un ruban pour l’ajouter': 'Eklemek için bir şeride dokun',
+  'Allume tes rubans et approche-toi.': 'Şeritlerini aç ve yaklaş.',
+  'Chercher encore': 'Tekrar ara',
+  'Autres appareils': 'Diğer cihazlar',
+  'Allumé et éteint inversés ? Appui long pour corriger.': 'Açık ve kapalı ters mi? Düzeltmek için basılı tut.',
+  'Verrouillé par son fabricant.': 'Üreticisi tarafından kilitli.',
+  'L’appli ne sait pas encore le piloter.': 'Uygulama bunu henüz kontrol edemiyor.',
+  'Il a une télécommande ? Ajoute-le en infrarouge.': 'Kumandası var mı? Kızılötesi olarak ekle.',
+  'Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.': 'Bluetooth, Wi-Fi veya kumanda: ilk şeridini ekle.',
+  'Pas de réponse : rapproche-toi du ruban.': 'Yanıt yok: şeride yaklaş.',
+  'C’est bien lui ?': 'Bu mu?',
+  'Faire clignoter': 'Yanıp söndür',
+  'Rapproche-toi du ruban et ferme ses autres applis.': 'Şeride yaklaş ve diğer uygulamalarını kapat.',
+  'Ruban Bluetooth': 'Bluetooth şerit',
+  'Ruban Wi-Fi': 'Wi-Fi şerit',
 };

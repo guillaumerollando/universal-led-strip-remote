@@ -3,8 +3,6 @@ export const EL: Record<string, string> = {
   // ── Accueil, pièces ──
   'Ruban LED': 'Ταινία LED',
   'Tous tes rubans, une seule appli.': 'Όλες οι ταινίες LED σας, μία εφαρμογή.',
-  'L’appli trouve tes rubans Bluetooth et Wi-Fi, te dit de quelle appli ils viennent, et les pilote quand elle sait le faire. Les rubans à télécommande infrarouge aussi, si ton téléphone a un émetteur.':
-    'Η εφαρμογή βρίσκει τις ταινίες σας Bluetooth και Wi-Fi, σας λέει από ποια εφαρμογή προέρχονται και τις ελέγχει όταν μπορεί. Και τις ταινίες με τηλεκοντρόλ υπερύθρων, αν το τηλέφωνό σας έχει πομπό υπερύθρων.',
   'Ajouter un ruban': 'Προσθήκη ταινίας',
   'Nouvelle pièce': 'Νέο δωμάτιο',
   '+ Nouvelle pièce': '+ Νέο δωμάτιο',
@@ -40,23 +38,13 @@ export const EL: Record<string, string> = {
   Annuler: 'Ακύρωση',
 
   // ── Recherche ──
-  'Bluetooth et Wi-Fi': 'Bluetooth και Wi-Fi',
-  'Allume les rubans et reste à quelques mètres. L’appli reconnaît le contrôleur et l’appli qui va avec.':
-    'Ανάψτε τις ταινίες και μείνετε σε απόσταση λίγων μέτρων. Η εφαρμογή αναγνωρίζει τον ελεγκτή και την εφαρμογή που τον συνοδεύει.',
   'Recherche en cours…': 'Αναζήτηση…',
-  'Chercher autour de moi': 'Αναζήτηση γύρω μου',
-  'Environ {s} secondes.': 'Περίπου {s} δευτερόλεπτα.',
   'tout près': 'πολύ κοντά',
   'à portée': 'σε εμβέλεια',
   loin: 'μακριά',
   'déjà ajouté': 'έχει ήδη προστεθεί',
-  sûr: 'σίγουρο',
-  probable: 'πιθανό',
-  'Appli d’origine : {apps}': 'Αρχική εφαρμογή: {apps}',
   'Rien trouvé pour l’instant.': 'Δεν βρέθηκε τίποτα ακόμα.',
   'Ruban à télécommande': 'Ταινία με τηλεκοντρόλ',
-  'Ton téléphone peut remplacer sa télécommande infrarouge.':
-    'Το τηλέφωνό σας μπορεί να αντικαταστήσει το τηλεκοντρόλ υπερύθρων της.',
   'Ajouter un ruban à télécommande': 'Προσθήκη ταινίας με τηλεκοντρόλ',
   'Bluetooth non autorisé : seuls les appareils Wi-Fi seront cherchés.':
     'Δεν επιτρέπεται το Bluetooth: θα αναζητηθούν μόνο συσκευές Wi-Fi.',
@@ -77,22 +65,13 @@ export const EL: Record<string, string> = {
   Éteindre: 'Σβήσιμο',
   '{name} : allumer': '{name}: άναμμα',
   '{name} : éteindre': '{name}: σβήσιμο',
-  'Si l’appli se trompe (allumé / éteint), appui long sur le bouton pour corriger.':
-    'Αν η εφαρμογή κάνει λάθος (αναμμένη / σβηστή), πατήστε παρατεταμένα το κουμπί για να το διορθώσετε.',
   'Système fermé': 'Κλειστό σύστημα',
   'Pas encore géré': 'Δεν υποστηρίζεται ακόμα',
-  'Les appareils Tuya sont verrouillés par leur fabricant : l’appli ne peut pas les piloter.':
-    'Οι συσκευές Tuya είναι κλειδωμένες από τον κατασκευαστή τους: η εφαρμογή δεν μπορεί να τις ελέγξει.',
-  'L’appli reconnaît ce contrôleur mais ne sait pas encore le piloter.':
-    'Η εφαρμογή αναγνωρίζει αυτόν τον ελεγκτή αλλά δεν μπορεί ακόμα να τον ελέγξει.',
-  'S’il a une télécommande infrarouge, ajoute-le en infrarouge : tout se pilotera d’ici.':
-    'Αν έχει τηλεκοντρόλ υπερύθρων, προσθέστε τον με υπέρυθρες: θα ελέγχετε τα πάντα από εδώ.',
   'Ajouter en infrarouge': 'Προσθήκη με υπέρυθρες',
   'Ouvrir avec {app}': 'Άνοιγμα με {app}',
   'Via {app}': 'Μέσω {app}',
   Lumière: 'Φως',
   Effets: 'Εφέ',
-  'Garder dans mes rubans': 'Κράτηση στις ταινίες μου',
   'Ex. Néon du salon': 'Π.χ. Νέον σαλονιού',
   'Enregistrer le nom': 'Αποθήκευση ονόματος',
   'Ajouter à mes rubans': 'Προσθήκη στις ταινίες μου',
@@ -112,8 +91,6 @@ export const EL: Record<string, string> = {
   Rapide: 'Γρήγορη',
   'Plus lent': 'Πιο αργά',
   'Plus rapide': 'Πιο γρήγορα',
-  'Ferme l’appli d’origine (une seule connexion à la fois) et rapproche-toi du ruban.':
-    'Κλείστε την αρχική εφαρμογή (μόνο μία σύνδεση τη φορά) και πλησιάστε την ταινία.',
   'Blanc chaud': 'Θερμό λευκό',
   Blanc: 'Λευκό',
   Rouge: 'Κόκκινο',
@@ -185,7 +162,6 @@ export const EL: Record<string, string> = {
   Fermer: 'Κλείσιμο',
   'Ton ruban est…': 'Η ταινία σας είναι…',
   'C’est trouvé !': 'Βρέθηκε!',
-  'Donne-lui un nom :': 'Δώστε της ένα όνομα:',
   'Dans quelle pièce ?': 'Σε ποιο δωμάτιο;',
   Ajouter: 'Προσθήκη',
   'Touche l’écran dès que ton ruban réagit': 'Αγγίξτε την οθόνη μόλις αντιδράσει η ταινία σας',
@@ -222,4 +198,29 @@ export const EL: Record<string, string> = {
   'Signal infrarouge trop long.': 'Πολύ μεγάλο σήμα υπερύθρων.',
   'L’infrarouge n’est disponible que sur Android.': 'Οι υπέρυθρες είναι διαθέσιμες μόνο σε Android.',
   'Ce téléphone n’a pas d’émetteur infrarouge.': 'Αυτό το τηλέφωνο δεν έχει πομπό υπερύθρων.',
+
+  // ── Version 1.1 : ajout simplifié, À propos ──
+  'À propos': 'Σχετικά',
+  'Une appli pour les gouverner tous': 'Μία εφαρμογή να τους κυβερνά όλους',
+  'Version {v}': 'Έκδοση {v}',
+  'Gratuite, sans pub, sans compte.': 'Δωρεάν, χωρίς διαφημίσεις, χωρίς λογαριασμό.',
+  'Open source': 'Ανοιχτός κώδικας',
+  'Fait par {studio}': 'Από το {studio}',
+  'Politique de confidentialité': 'Πολιτική απορρήτου',
+  'Crédits': 'Ευχαριστίες',
+  'Touche un ruban pour l’ajouter': 'Πάτησε μια ταινία για να την προσθέσεις',
+  'Allume tes rubans et approche-toi.': 'Άναψε τις ταινίες σου και πλησίασε.',
+  'Chercher encore': 'Αναζήτηση ξανά',
+  'Autres appareils': 'Άλλες συσκευές',
+  'Allumé et éteint inversés ? Appui long pour corriger.': 'Αναμμένο και σβηστό ανάποδα; Πάτα παρατεταμένα για διόρθωση.',
+  'Verrouillé par son fabricant.': 'Κλειδωμένο από τον κατασκευαστή.',
+  'L’appli ne sait pas encore le piloter.': 'Η εφαρμογή δεν μπορεί ακόμα να το ελέγξει.',
+  'Il a une télécommande ? Ajoute-le en infrarouge.': 'Έχει τηλεκοντρόλ; Πρόσθεσέ το με υπέρυθρες.',
+  'Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.': 'Bluetooth, Wi-Fi ή τηλεκοντρόλ: πρόσθεσε την πρώτη σου ταινία.',
+  'Pas de réponse : rapproche-toi du ruban.': 'Καμία απόκριση: πλησίασε την ταινία.',
+  'C’est bien lui ?': 'Αυτή είναι;',
+  'Faire clignoter': 'Να αναβοσβήσει',
+  'Rapproche-toi du ruban et ferme ses autres applis.': 'Πλησίασε την ταινία και κλείσε τις άλλες εφαρμογές της.',
+  'Ruban Bluetooth': 'Ταινία Bluetooth',
+  'Ruban Wi-Fi': 'Ταινία Wi-Fi',
 };

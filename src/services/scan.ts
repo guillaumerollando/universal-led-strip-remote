@@ -11,6 +11,8 @@ interface ScanState {
   scanning: boolean;
   found: DetectedDevice[];
   warnings: string[];
+  /** Résultats de démonstration affichés (développement) : la recherche automatique ne les efface pas. */
+  demo?: boolean;
 }
 
 let state: ScanState = { scanning: false, found: [], warnings: [] };
@@ -28,13 +30,13 @@ export function foundDevice(key: string): DetectedDevice | undefined {
 /** Développement seulement (`ledstrip://dev-seed?scan=1`) : affiche des résultats de recherche de démonstration. */
 export function showDemoScan(found: DetectedDevice[]): void {
   if (!__DEV__) return;
-  set({ scanning: false, found, warnings: [] });
+  set({ scanning: false, found, warnings: [], demo: true });
 }
 
 /** Lance un scan Bluetooth + Wi-Fi ; les appareils arrivent au fil de l'eau. */
 export async function startScan(): Promise<void> {
   if (state.scanning) return;
-  set({ scanning: true, found: [], warnings: [] });
+  set({ scanning: true, found: [], warnings: [], demo: false });
   const add = (d: DetectedDevice): void => set({ found: [...state.found.filter((f) => f.key !== d.key), d] });
   const warn = (w: string): void => set({ warnings: state.warnings.includes(w) ? state.warnings : [...state.warnings, w] });
 

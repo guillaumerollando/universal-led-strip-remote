@@ -3,8 +3,6 @@ export const AR: Record<string, string> = {
   // ── Accueil, pièces ──
   'Ruban LED': 'شريط LED',
   'Tous tes rubans, une seule appli.': 'كل أشرطة LED في تطبيق واحد.',
-  'L’appli trouve tes rubans Bluetooth et Wi-Fi, te dit de quelle appli ils viennent, et les pilote quand elle sait le faire. Les rubans à télécommande infrarouge aussi, si ton téléphone a un émetteur.':
-    'يعثر التطبيق على أشرطة Bluetooth وWi-Fi لديك، ويخبرك بالتطبيق الذي تتبع له، ويتحكم بها متى استطاع. وكذلك الأشرطة ذات جهاز التحكم بالأشعة تحت الحمراء، إن كان في هاتفك باعث أشعة تحت الحمراء.',
   'Ajouter un ruban': 'إضافة شريط',
   'Nouvelle pièce': 'غرفة جديدة',
   '+ Nouvelle pièce': '+ غرفة جديدة',
@@ -39,23 +37,13 @@ export const AR: Record<string, string> = {
   Annuler: 'إلغاء',
 
   // ── Recherche ──
-  'Bluetooth et Wi-Fi': 'Bluetooth وWi-Fi',
-  'Allume les rubans et reste à quelques mètres. L’appli reconnaît le contrôleur et l’appli qui va avec.':
-    'شغّل الأشرطة وابقَ على بُعد أمتار قليلة. يتعرّف التطبيق على وحدة التحكم والتطبيق الخاص بها.',
   'Recherche en cours…': 'جارٍ البحث…',
-  'Chercher autour de moi': 'البحث حولي',
-  'Environ {s} secondes.': 'حوالي {s} ثانية.',
   'tout près': 'قريب جدًا',
   'à portée': 'في النطاق',
   loin: 'بعيد',
   'déjà ajouté': 'مُضاف مسبقًا',
-  sûr: 'مؤكد',
-  probable: 'محتمل',
-  'Appli d’origine : {apps}': 'التطبيق الأصلي: {apps}',
   'Rien trouvé pour l’instant.': 'لم يُعثر على شيء بعد.',
   'Ruban à télécommande': 'شريط بجهاز تحكم',
-  'Ton téléphone peut remplacer sa télécommande infrarouge.':
-    'يمكن لهاتفك أن يحل محل جهاز التحكم بالأشعة تحت الحمراء.',
   'Ajouter un ruban à télécommande': 'إضافة شريط بجهاز تحكم',
   'Bluetooth non autorisé : seuls les appareils Wi-Fi seront cherchés.':
     'Bluetooth غير مسموح: سيتم البحث عن أجهزة Wi-Fi فقط.',
@@ -76,22 +64,13 @@ export const AR: Record<string, string> = {
   Éteindre: 'إطفاء',
   '{name} : allumer': '{name}: تشغيل',
   '{name} : éteindre': '{name}: إطفاء',
-  'Si l’appli se trompe (allumé / éteint), appui long sur le bouton pour corriger.':
-    'إذا أخطأ التطبيق (مُشغَّل / مُطفأ)، اضغط مطولًا على الزر لتصحيحه.',
   'Système fermé': 'نظام مغلق',
   'Pas encore géré': 'غير مدعوم بعد',
-  'Les appareils Tuya sont verrouillés par leur fabricant : l’appli ne peut pas les piloter.':
-    'أجهزة Tuya مقفلة من الشركة المصنّعة: لا يستطيع التطبيق التحكم بها.',
-  'L’appli reconnaît ce contrôleur mais ne sait pas encore le piloter.':
-    'يتعرّف التطبيق على وحدة التحكم هذه لكنه لا يستطيع التحكم بها بعد.',
-  'S’il a une télécommande infrarouge, ajoute-le en infrarouge : tout se pilotera d’ici.':
-    'إن كان لها جهاز تحكم بالأشعة تحت الحمراء، فأضفها بالأشعة تحت الحمراء: ستتحكم بكل شيء من هنا.',
   'Ajouter en infrarouge': 'إضافة بالأشعة تحت الحمراء',
   'Ouvrir avec {app}': 'فتح باستخدام {app}',
   'Via {app}': 'عبر {app}',
   Lumière: 'الإضاءة',
   Effets: 'التأثيرات',
-  'Garder dans mes rubans': 'الإبقاء في أشرطتي',
   'Ex. Néon du salon': 'مثال: نيون غرفة الجلوس',
   'Enregistrer le nom': 'حفظ الاسم',
   'Ajouter à mes rubans': 'إضافة إلى أشرطتي',
@@ -111,8 +90,6 @@ export const AR: Record<string, string> = {
   Rapide: 'سريع',
   'Plus lent': 'أبطأ',
   'Plus rapide': 'أسرع',
-  'Ferme l’appli d’origine (une seule connexion à la fois) et rapproche-toi du ruban.':
-    'أغلق التطبيق الأصلي (اتصال واحد فقط في كل مرة) واقترب من الشريط.',
   'Blanc chaud': 'أبيض دافئ',
   Blanc: 'أبيض',
   Rouge: 'أحمر',
@@ -184,7 +161,6 @@ export const AR: Record<string, string> = {
   Fermer: 'إغلاق',
   'Ton ruban est…': 'شريطك الآن…',
   'C’est trouvé !': 'تم العثور عليه!',
-  'Donne-lui un nom :': 'أعطه اسمًا:',
   'Dans quelle pièce ?': 'في أي غرفة؟',
   Ajouter: 'إضافة',
   'Touche l’écran dès que ton ruban réagit': 'المس الشاشة بمجرد أن يستجيب شريطك',
@@ -220,4 +196,29 @@ export const AR: Record<string, string> = {
   'Signal infrarouge trop long.': 'إشارة الأشعة تحت الحمراء طويلة جدًا.',
   'L’infrarouge n’est disponible que sur Android.': 'الأشعة تحت الحمراء متاحة على Android فقط.',
   'Ce téléphone n’a pas d’émetteur infrarouge.': 'لا يحتوي هذا الهاتف على باعث أشعة تحت الحمراء.',
+
+  // ── Version 1.1 : ajout simplifié, À propos ──
+  'À propos': 'حول التطبيق',
+  'Une appli pour les gouverner tous': 'تطبيق واحد ليحكمها جميعًا',
+  'Version {v}': 'الإصدار {v}',
+  'Gratuite, sans pub, sans compte.': 'مجاني، بلا إعلانات، بلا حساب.',
+  'Open source': 'مفتوح المصدر',
+  'Fait par {studio}': 'من صنع {studio}',
+  'Politique de confidentialité': 'سياسة الخصوصية',
+  'Crédits': 'شكر وتقدير',
+  'Touche un ruban pour l’ajouter': 'المس شريطًا لإضافته',
+  'Allume tes rubans et approche-toi.': 'شغّل أشرطتك واقترب.',
+  'Chercher encore': 'ابحث مجددًا',
+  'Autres appareils': 'أجهزة أخرى',
+  'Allumé et éteint inversés ? Appui long pour corriger.': 'التشغيل والإطفاء معكوسان؟ اضغط مطولًا للتصحيح.',
+  'Verrouillé par son fabricant.': 'مقفل من الشركة المصنعة.',
+  'L’appli ne sait pas encore le piloter.': 'لا يعرف التطبيق التحكم به بعد.',
+  'Il a une télécommande ? Ajoute-le en infrarouge.': 'هل له جهاز تحكم؟ أضفه بالأشعة تحت الحمراء.',
+  'Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.': 'بلوتوث أو واي فاي أو جهاز تحكم: أضف شريطك الأول.',
+  'Pas de réponse : rapproche-toi du ruban.': 'لا استجابة: اقترب من الشريط.',
+  'C’est bien lui ?': 'هل هو هذا؟',
+  'Faire clignoter': 'اجعله يومض',
+  'Rapproche-toi du ruban et ferme ses autres applis.': 'اقترب من الشريط وأغلق تطبيقاته الأخرى.',
+  'Ruban Bluetooth': 'شريط بلوتوث',
+  'Ruban Wi-Fi': 'شريط واي فاي',
 };

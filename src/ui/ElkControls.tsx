@@ -52,7 +52,7 @@ export function ElkControls({ target }: { target: Target }) {
     action
       .then(() => setError(null))
       .catch((e: Error) =>
-        setError(`${e.message}. ${t('Ferme l’appli d’origine (une seule connexion à la fois) et rapproche-toi du ruban.')}`),
+        setError(`${e.message}. ${t('Rapproche-toi du ruban et ferme ses autres applis.')}`),
       );
   };
 

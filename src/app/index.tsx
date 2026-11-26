@@ -42,7 +42,8 @@ export default function HomeScreen() {
                 on={allOn}
                 onPress={toggleAll}
                 busy={busy}
-                size={38}
+                size={30}
+                quiet
                 label={t(allOn ? '{name} : éteindre' : '{name} : allumer', { name: t('Tous les rubans') })}
               />
             )}

@@ -167,6 +167,7 @@ export function PowerButton({
   busy,
   label,
   onLongPress,
+  quiet,
 }: {
   on: boolean;
   rgb?: Rgb;
@@ -176,6 +177,8 @@ export function PowerButton({
   label: string;
   /** Appui long : corriger l'état retenu sans rien envoyer (télécommandes à touche unique). */
   onLongPress?: () => void;
+  /** Version discrète (interrupteur général) : un anneau qui s'éclaire à peine, sans aplat ni bouffée. */
+  quiet?: boolean;
 }) {
   const color = rgb ?? WARM_WHITE;
   const bloom = useSharedValue(0);
@@ -186,7 +189,7 @@ export function PowerButton({
 
   const press = (): void => {
     void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (!on) bloom.value = withSequence(withTiming(0, { duration: 0 }), withTiming(1, { duration: 650, easing: Easing.out(Easing.cubic) }));
+    if (!on && !quiet) bloom.value = withSequence(withTiming(0, { duration: 0 }), withTiming(1, { duration: 650, easing: Easing.out(Easing.cubic) }));
     onPress();
   };
 
@@ -214,28 +217,32 @@ export function PowerButton({
           bloomStyle,
         ]}
       />
-      {on && <Glow rgb={color} intensity={0.6} style={{ margin: -size * 0.45 }} />}
+      {on && <Glow rgb={color} intensity={quiet ? 0.18 : 0.6} style={{ margin: -size * (quiet ? 0.25 : 0.45) }} />}
       <View
         style={{
           width: size,
           height: size,
           borderRadius: size / 2,
-          backgroundColor: on ? rgbCss(color) : colors.surfaceHigh,
-          borderWidth: 1,
-          borderColor: on ? rgbCss(color) : colors.border,
+          backgroundColor: on && !quiet ? rgbCss(color) : quiet ? 'transparent' : colors.surfaceHigh,
+          borderWidth: quiet ? 1.5 : 1,
+          borderColor: on ? rgbCss(color, quiet ? 0.8 : 1) : colors.border,
           alignItems: 'center',
           justifyContent: 'center',
           opacity: busy ? 0.5 : 1,
         }}
       >
-        <PowerIcon color={on ? (luminance(color) > 150 ? colors.bg : colors.text) : colors.textDim} size={size * 0.42} />
+        <PowerIcon
+          color={on ? (quiet ? rgbCss(color) : luminance(color) > 150 ? colors.bg : colors.text) : colors.textDim}
+          size={size * (quiet ? 0.46 : 0.42)}
+          thin={quiet}
+        />
       </View>
     </Pressable>
   );
 }
 
 /** Pictogramme marche/arrêt dessiné (le caractère ⏻ manque aux polices Android). */
-function PowerIcon({ color, size }: { color: string; size: number }) {
+function PowerIcon({ color, size, thin }: { color: string; size: number; thin?: boolean }) {
   return (
     <View style={{ width: size, height: size, alignItems: 'center' }}>
       <View
@@ -245,12 +252,12 @@ function PowerIcon({ color, size }: { color: string; size: number }) {
           width: size,
           height: size * 0.88,
           borderRadius: size,
-          borderWidth: 2.2,
+          borderWidth: thin ? 1.6 : 2.2,
           borderColor: color,
           borderTopColor: 'transparent',
         }}
       />
-      <View style={{ width: 2.4, height: size * 0.5, borderRadius: 2, backgroundColor: color }} />
+      <View style={{ width: thin ? 1.8 : 2.4, height: size * 0.5, borderRadius: 2, backgroundColor: color }} />
     </View>
   );
 }
@@ -282,9 +289,13 @@ export function SignatureStrip({ children }: { children?: ReactNode }) {
   const run = useSharedValue(0);
   const breath = useSharedValue(1);
   useEffect(() => {
-    if (reduced) return;
+    if (reduced) {
+      breath.value = 0.4;
+      return;
+    }
+    breath.value = 0.45;
     run.value = withRepeat(withTiming(1, { duration: 5200, easing: Easing.linear }), -1, false);
-    breath.value = withRepeat(withTiming(0.65, { duration: 2400, easing: Easing.inOut(Easing.sin) }), -1, true);
+    breath.value = withRepeat(withTiming(0.3, { duration: 3200, easing: Easing.inOut(Easing.sin) }), -1, true);
   }, [run, breath, reduced]);
   const move = useAnimatedStyle(() => ({ transform: [{ translateX: `${-50 + run.value * 50}%` }] }));
   const glow = useAnimatedStyle(() => ({ opacity: breath.value }));
@@ -302,18 +313,17 @@ export function SignatureStrip({ children }: { children?: ReactNode }) {
   return (
     <View>
       {/* Halo : lueur autour du ruban (au-dessus et en dessous) et reflet plus large sur le fond. */}
-      <View pointerEvents="none" style={{ position: 'absolute', left: -space.lg, right: -space.lg, bottom: -44, height: 72, overflow: 'hidden' }}>
+      {/* Version 1.1.1 (retour de Guillaume : « trop de lumière ») : halo bas et doux, sans éblouissement. */}
+      <View pointerEvents="none" style={{ position: 'absolute', left: 0, right: 0, bottom: -18, height: 30, overflow: 'hidden' }}>
         <Animated.View style={[StyleSheet.absoluteFill, glow]}>
           <RainbowRun style={move} />
         </Animated.View>
-        {fade([colors.bg, BG_CLEAR, BG_CLEAR, rgbCss({ r: 10, g: 11, b: 15 }, 0.55), colors.bg], [0, 0.36, 0.42, 0.62, 1])}
-        {fade([colors.bg, BG_CLEAR, BG_CLEAR, colors.bg], [0, 0.18, 0.82, 1], true)}
+        {fade([colors.bg, rgbCss({ r: 10, g: 11, b: 15 }, 0.6), rgbCss({ r: 10, g: 11, b: 15 }, 0.75), colors.bg], [0, 0.42, 0.6, 1])}
+        {fade([colors.bg, BG_CLEAR, BG_CLEAR, colors.bg], [0, 0.25, 0.75, 1], true)}
       </View>
       {children}
-      <View style={{ height: 4, borderRadius: 2, overflow: 'hidden', marginTop: space.xs }}>
+      <View style={{ height: 2, borderRadius: 1, overflow: 'hidden', marginTop: space.xs, opacity: 0.75 }}>
         <RainbowRun style={move} />
-        {/* Cœur blanc : la lumière la plus intense, au centre de la bande. */}
-        <View style={{ position: 'absolute', left: 0, right: 0, top: 1.5, height: 1, backgroundColor: 'rgba(255,255,255,0.55)' }} />
       </View>
     </View>
   );

@@ -12,6 +12,7 @@ import { ElkControls } from '../../ui/ElkControls';
 import { IrControls } from '../../ui/IrControls';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { LightStrip, PowerButton } from '../../ui/light';
+import { StripSlider } from '../../ui/StripSlider';
 import { kindLabel } from '../../ui/labels';
 import { colors, radius, space } from '../../ui/theme';
 import { t } from '../../i18n';
@@ -86,7 +87,11 @@ export default function DeviceScreen() {
               label={on ? t('Éteindre') : t('Allumer')}
             />
           </View>
-          <LightStrip on={on} rgb={saved?.state?.rgb} height={10} />
+          {saved && on && canDim(device) ? (
+            <StripSlider target={saved} on={on} rgb={saved.state?.rgb} height={10} onTap={() => undefined} onLongPress={() => undefined} onError={setError} />
+          ) : (
+            <LightStrip on={on} rgb={saved?.state?.rgb} height={10} />
+          )}
           {toggleOnly && <Muted>{t('Allumé et éteint inversés ? Appui long pour corriger.')}</Muted>}
           {error && <Text style={[styles.muted, { color: colors.danger }]}>{error}</Text>}
         </View>

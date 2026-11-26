@@ -226,7 +226,7 @@ export function PowerButton({
           bloomStyle,
         ]}
       />
-      {on && <Glow rgb={color} intensity={quiet ? 0.18 : 0.6} style={{ margin: -size * (quiet ? 0.25 : 0.45) }} />}
+      {on && !quiet && <Glow rgb={color} intensity={0.6} style={{ margin: -size * 0.45 }} />}
       <View
         style={{
           width: size,

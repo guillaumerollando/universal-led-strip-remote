@@ -34,7 +34,7 @@ export default function DevSeed() {
       await saveDevice({ key: 'demo:neon', name: n.neon, family: 'elk-bledom', transport: 'ble', rawName: 'MELK-OA21   92', address: 'demo', roomId: salon.id, state: { on: true, rgb: { r: 255, g: 0, b: 140 }, brightness: 80 }, addedAt: now });
       await saveDevice({ key: 'demo:tv', name: n.tv, family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLEDOB', address: 'demo2', roomId: salon.id, state: { on: true, rgb: { r: 0, g: 200, b: 255 }, brightness: 70 }, addedAt: now + 1 });
       await saveDevice({ key: 'demo:ir', name: n.ir, family: 'ir-nec', transport: 'ir', rawName: 'Infrarouge', address: 'ir', ir: { power: { address: [0x00, 0xff], on: 0x07, off: 0x06 }, layout: 'full44' }, roomId: salon.id, state: { on: true, rgb: { r: 255, g: 128, b: 0 } }, addedAt: now + 2 });
-      await saveDevice({ key: 'demo:lit', name: n.lit, family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLEDOM   ', address: 'demo3', roomId: chambre.id, state: { on: true, rgb: { r: 140, g: 60, b: 255 }, brightness: 60 }, addedAt: now + 3 });
+      await saveDevice({ key: 'demo:lit', name: n.lit, family: 'wled', transport: 'wifi', rawName: 'WLED-Lit', address: '10.0.2.99', roomId: chambre.id, state: { on: true, rgb: { r: 140, g: 60, b: 255 }, brightness: 60 }, addedAt: now + 3 });
       await saveDevice({ key: 'demo:bureau', name: n.bureau, family: 'elk-bledom', transport: 'ble', rawName: 'ELK-BLE', address: 'demo4', roomId: chambre.id, state: { on: false, rgb: { r: 255, g: 220, b: 180 } }, addedAt: now + 4 });
       await saveDevice({ key: 'demo:tuya', name: n.tuya, family: 'tuya', transport: 'wifi', rawName: 'Appareil Tuya', address: '192.168.1.78', addedAt: now + 5 });
       if (scan) {

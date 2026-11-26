@@ -58,7 +58,7 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
       onPress={open}
       onLongPress={settings}
       accessibilityRole="button"
-      accessibilityLabel={`${device.name}, ${controllable ? stateText(device) : t('Pas encore géré')}`}
+      accessibilityLabel={`${device.name}, ${controllable ? stateText(device) : family.closed ? t('Système fermé') : t('Pas encore géré')}`}
       accessibilityHint={t('Appui long : réglages')}
       style={({ pressed }) => ({
         backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
@@ -76,7 +76,7 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
             {device.name}
           </Text>
           <Text style={kit.muted} numberOfLines={1}>
-            {controllable ? stateText(device) : t('Pas encore géré')}
+            {controllable ? stateText(device) : family.closed ? t('Système fermé') : t('Pas encore géré')}
             {nearby && !on ? ` · ${t('à portée')}` : ''}
           </Text>
         </View>

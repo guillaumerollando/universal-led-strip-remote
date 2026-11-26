@@ -42,14 +42,18 @@ export function Button({ label, onPress, variant = 'primary', busy, disabled, st
 export function Screen({ children, safeTop }: { children: ReactNode; safeTop?: boolean }): ReactNode {
   const insets = useSafeAreaInsets();
   return (
-    <KeyboardAwareScrollView
-      style={styles.screen}
-      contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + space.xxl }, safeTop && { paddingTop: insets.top + space.lg }]}
-      bottomOffset={96}
-      keyboardShouldPersistTaps="handled"
-    >
-      {children}
-    </KeyboardAwareScrollView>
+    <View style={styles.screen}>
+      <KeyboardAwareScrollView
+        style={styles.screen}
+        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + space.xxl }, safeTop && { paddingTop: insets.top + space.lg }]}
+        bottomOffset={96}
+        keyboardShouldPersistTaps="handled"
+      >
+        {children}
+      </KeyboardAwareScrollView>
+      {/* Sans en-tête, la liste défilerait sous l'heure et la batterie : un voile couleur de nuit les protège. */}
+      {safeTop && <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: insets.top, backgroundColor: colors.bg, opacity: 0.94 }} />}
+    </View>
   );
 }
 

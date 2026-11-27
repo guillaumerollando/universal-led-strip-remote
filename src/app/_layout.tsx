@@ -13,7 +13,11 @@ export default function RootLayout() {
   useEffect(() => {
     void loadDevices().then(() => {
       startWidgetSync();
-      refreshWifiAddresses(getDevices().some((d) => d.transport === 'wifi' && d.family !== 'tuya'));
+      const devices = getDevices();
+      refreshWifiAddresses(
+        devices.some((d) => d.transport === 'wifi' && d.family !== 'tuya'),
+        devices.some((d) => d.family === 'openbeken'),
+      );
     });
   }, []);
 
@@ -34,10 +38,13 @@ export default function RootLayout() {
         <Stack.Screen name="add-ip" options={{ title: t('Ajouter par adresse IP') }} />
         <Stack.Screen name="device/[key]" options={{ title: t('Ruban') }} />
         <Stack.Screen name="room/[id]" options={{ title: t('Pièce') }} />
+        <Stack.Screen name="motif/[key]" options={{ title: t('Créer mon ambiance') }} />
+        <Stack.Screen name="calibrate/[key]" options={{ title: t('Caler le dessin sur le ruban') }} />
         <Stack.Screen name="new/[key]" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="about" options={{ title: t('À propos') }} />
         <Stack.Screen name="ir-new" options={{ headerShown: false, presentation: 'fullScreenModal', animation: 'fade' }} />
         <Stack.Screen name="power" options={{ headerShown: false, animation: 'fade' }} />
+        <Stack.Screen name="scene" options={{ headerShown: false, animation: 'fade' }} />
       </Stack>
     </KeyboardProvider>
   );

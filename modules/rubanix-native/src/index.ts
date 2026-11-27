@@ -11,6 +11,13 @@ interface RubanixNativeModule {
   tcpRequest(host: string, port: number, payload: number[], replyBytes: number, timeoutMs: number): Promise<number[]>;
   /** Widget « Pièces » : pièces en JSON [{name, on, link, label}] et texte quand il n'y en a aucune. */
   setWidgetRooms(rooms: string, empty: string): void;
+  /** Widgets « Pièce » et « Ambiance » : pièces en JSON [{id, name, on, link, label, scenes}] et texte d'un widget non réglé. */
+  setWidgetPlaces?(places: string, empty: string): void;
+  /**
+   * Propose de poser un widget sur l'écran d'accueil (Android 8+, si le lanceur le permet) : `room` = une pièce,
+   * `ambiance` = une ambiance de cette pièce. Renvoie false si le lanceur ne sait pas le faire.
+   */
+  pinWidget?(kind: 'room' | 'ambiance', roomId: string, sceneId: string): boolean;
   /** Remet l'appli en arrière-plan. */
   moveToBack(): boolean;
   acquireMulticastLock(): void;

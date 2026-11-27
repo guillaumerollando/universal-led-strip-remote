@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget « Pièce » : le nom et l'interrupteur de la pièce, puis ses ambiances à leurs couleurs. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/ledstrip_room_root"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/ledstrip_widget_bg"
+    android:orientation="vertical" android:padding="10dp">
+  <LinearLayout android:id="@+id/ledstrip_room_header" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:background="@drawable/ledstrip_widget_row" android:gravity="center_vertical" android:orientation="horizontal"
+      android:paddingStart="14dp" android:paddingEnd="8dp">
+    <TextView android:id="@+id/ledstrip_room_name" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:ellipsize="end" android:maxLines="1" android:textColor="#F4F1EA" android:textSize="15sp" android:textStyle="bold" />
+    <ImageView android:id="@+id/ledstrip_room_power" android:layout_width="36dp" android:layout_height="36dp" android:importantForAccessibility="no"
+        android:src="@drawable/ledstrip_power_off" />
+  </LinearLayout>
+  <LinearLayout android:id="@+id/ledstrip_room_scenes" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:layout_marginTop="6dp" android:orientation="horizontal">
+    <FrameLayout android:id="@+id/ledstrip_room_scene0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+        android:layout_marginStart="0dp" android:visibility="gone">
+      <ImageView android:id="@+id/ledstrip_room_scene0_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+          android:scaleType="fitXY" android:importantForAccessibility="no" />
+      <TextView android:id="@+id/ledstrip_room_scene0_name" android:layout_width="match_parent" android:layout_height="match_parent"
+          android:gravity="center" android:paddingStart="6dp" android:paddingEnd="6dp" android:ellipsize="end" android:maxLines="2"
+          android:textColor="#FFFFFF" android:textSize="13sp" android:textStyle="bold" android:shadowColor="#99000000" android:shadowRadius="4" />
+    </FrameLayout>
+    <FrameLayout android:id="@+id/ledstrip_room_scene1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+        android:layout_marginStart="6dp" android:visibility="gone">
+      <ImageView android:id="@+id/ledstrip_room_scene1_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+          android:scaleType="fitXY" android:importantForAccessibility="no" />
+      <TextView android:id="@+id/ledstrip_room_scene1_name" android:layout_width="match_parent" android:layout_height="match_parent"
+          android:gravity="center" android:paddingStart="6dp" android:paddingEnd="6dp" android:ellipsize="end" android:maxLines="2"
+          android:textColor="#FFFFFF" android:textSize="13sp" android:textStyle="bold" android:shadowColor="#99000000" android:shadowRadius="4" />
+    </FrameLayout>
+    <FrameLayout android:id="@+id/ledstrip_room_scene2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+        android:layout_marginStart="6dp" android:visibility="gone">
+      <ImageView android:id="@+id/ledstrip_room_scene2_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+          android:scaleType="fitXY" android:importantForAccessibility="no" />
+      <TextView android:id="@+id/ledstrip_room_scene2_name" android:layout_width="match_parent" android:layout_height="match_parent"
+          android:gravity="center" android:paddingStart="6dp" android:paddingEnd="6dp" android:ellipsize="end" android:maxLines="2"
+          android:textColor="#FFFFFF" android:textSize="13sp" android:textStyle="bold" android:shadowColor="#99000000" android:shadowRadius="4" />
+    </FrameLayout>
+  </LinearLayout>
+  <TextView android:id="@+id/ledstrip_room_empty" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center"
+      android:padding="8dp" android:textColor="#8E93A3" android:textSize="13sp" android:visibility="gone" />
+</LinearLayout>

@@ -39,17 +39,24 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
   - `protocols/` : **protocoles ouverts** (v1.2, tous « à confirmer » sur un vrai appareil) — `ble.ts` (Triones, Zengge,
     SP110E, Hue Bluetooth), `magicHome.ts` (TCP 5577), `wifi.ts` (WLED, Govee LAN, Shelly, Tasmota, ESPHome, Nanoleaf,
     Elgato, pont Hue), `udp.ts` (Yeelight, LIFX), `presets.ts` (effets communs Magic Home / Triones)
+  - `protocols/openbeken.ts` : **rubans Tuya libérés** (OpenBeken, ✅ vérifié 2026-11-27) — reconnaissance (`Status 0`),
+    6 animations intégrées, **motifs** pixel par pixel (script exécuté dans le ruban, coupé en fichiers chaînés d'un bloc),
+    effet gardé au démarrage (bloc de l'appli dans `autoexec.bat`)
+  - `ambiances.ts` : ambiances livrées (serpent arc-en-ciel, Noël, Automne, Océan, Halloween, Aurore)
   - `mdns.ts` (questions et réponses DNS-SD), `discover.ts` (mDNS / Yeelight / LIFX → appareil), `probe.ts` (ajout par IP)
   - `describe.ts` : ce qu'on affiche d'un appareil trouvé — nom du produit de marque (« Govee H6159 »), jamais de nom de puce
   - `widget.ts` : pièces montrées par le widget Android
 - `src/services/` : accès au matériel — `ble.ts` (react-native-ble-plx, `sendBle` pour toutes les familles), `lan.ts`
   (découverte UDP : Magic Home, Tuya, Govee, mDNS, Yeelight, LIFX), `net.ts` (HTTP local, TCP natif, UDP), `ir.ts`,
   `scan.ts` (état du scan), `store.ts` (appareils enregistrés, AsyncStorage), `drivers.ts` (**un pilote par famille**),
-  `pairing.ts` (clés « par bouton » du pont Hue et de Nanoleaf), `probe.ts` (ajout par IP), `widget.ts` (synchro du widget)
+  `pairing.ts` (clés « par bouton » du pont Hue et de Nanoleaf), `probe.ts` (ajout par IP), `widget.ts` (synchro du widget),
+  `sweep.ts` (balayage HTTP du /24 : OpenBeken et Tasmota ne s'annoncent pas), `openbeken.ts` (fichiers et démarrage
+  d'un ruban OpenBeken), `ambiances.ts` (ambiances enregistrées par l'utilisateur, sur le téléphone)
 - `src/app/` : écrans Expo Router — `index` (pièces et rubans, petit ⓘ → `about`), `add` (recherche Bluetooth / Wi-Fi, lancée
   toute seule ; on touche un ruban pour l'ajouter), `new/[key]` (**ajout d'un ruban trouvé** : nom déjà proposé, pièce, « Faire
   clignoter », « Ajouter à mes rubans »), `device/[key]` (fiche d'un ruban enregistré : marche/arrêt, couleurs, effets, pièce, nom ;
-  pour un appareil non géré, seulement quoi faire), `room/[id]` (créer / modifier une pièce), `ir-new` (**assistant plein écran**
+  pour un appareil non géré, seulement quoi faire), `room/[id]` (créer / modifier une pièce), `motif/[key]` (dessin d'un motif pixel par pixel : serpent ou répété tout le long, enregistrable comme ambiance),
+  `ir-new` (**assistant plein écran**
   d'ajout d'un ruban à télécommande), `about` (À propos), `power` (lien profond), `dev-seed`
 - Parcours d'ajout (v1.1, demande de Guillaume : « simple, efficace, qualité ») : jamais de réglage de lumière pendant l'ajout ;
   les deux ajouts (Bluetooth et télécommande) finissent sur le même formulaire `ui/AddForm` (nom proposé + pièce + bouton toujours visible)
@@ -98,6 +105,11 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
   `langs/en.ts` **et dans toutes les autres langues** de `langs/` ; `src/i18n/__tests__/langs.test.ts` échoue s'il en manque
   une. Les libellés de `src/core` (effets, couleurs) se traduisent à l'affichage : `t(effet.label)`. Nom sous l'icône :
   `locales/<langue>.json`. Arabe et hébreu : texte traduit, mise en page encore de gauche à droite
+- **États visibles** (Guillaume, 2026-11-27) : un bouton qui ne peut plus agir se grise (`Chip disabled` : « − » au
+  minimum, « + » au maximum) ; pendant un envoi au ruban, le contour de la case devient un petit ruban de lumière qui
+  tourne (`ui/LoadingBorder`, par-dessus : la mise en page ne bouge pas) et un second toucher est ignoré ;
+  les envois sont suivis par ruban (`services/sending` : `useSending`) ; un contour orange de sélection a sa petite
+  lueur (`SelectionGlow`)
 - Après un ajout de ruban : retour à l'accueil (`router.dismissAll()`), avec choix de la pièce pendant l'ajout
 - Gestes (v1.1, comme Google Home) : **toucher = agir** (pièce : un seul interrupteur ; ruban : ses commandes ; bouton rond :
   marche/arrêt), **appui long = réglages** (menu du bas `ui/Sheet` : renommer, pièce, supprimer). Pas de bouton « Modifier »
@@ -114,6 +126,14 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - Nouvelle famille ou nouveau protocole : d'abord `src/core` + un test avec un vrai nom ou une vraie trame, puis le service
 - Tout protocole non vérifié sur un vrai appareil est marqué « à confirmer » (commentaire + vault `03-technique/protocoles.md`)
 - Paquet natif : vérifier la compatibilité New Architecture sur reactnative.directory
+- **Scripts OpenBeken** (`core/obkScripts.ts`, règles testées sur le vrai ruban, détail dans le vault `protocoles.md`) :
+  un seul fichier court qui boucle, pause ≥ 40 ms (sinon mode sécurité), démarrage différé de 5 s, couper PixelAnim,
+  `Power On`, `loglevel 1` ; ne jamais réécrire `autoexec.bat` sans y avoir lu `SM16703P_Init`. Mise au point visuelle :
+  séries de tests numérotés devant le ruban (n LED blanches = test n)
+- **OpenBeken** : réponses HTTP à fin de ligne `\n` seule (OkHttp l'accepte, Node `fetch` non : tester depuis le PC avec
+  `curl`) ; mémoire de fichiers de 32 Ko (blocs de 4 Ko, pleine = fichier écrit vide) ; 512 caractères max par ligne de
+  script ; `SM16703P_SetRaw` ignore son décalage et ne vérifie pas la taille : ne pas l'utiliser. Lire la position du
+  motif : `/cm?cmnd=GetChannel 30`
 - Une seule connexion Bluetooth à la fois sur ces contrôleurs : toujours libérer la connexion (`ble.ts` coupe après 20 s)
 - Pas de backend, pas de compte, pas de collecte : tout reste sur le téléphone
 - Dépôt git **public** (open source, GPL-3.0) : `github.com/guillaumerollando/universal-led-strip-remote` (branche `main`). Pas de commit sans
@@ -141,7 +161,7 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - L'émulateur Android n'a ni vrai Bluetooth ni émetteur infrarouge, et son réseau est isolé (NAT) : il ne sert qu'à
   l'interface. Les protocoles se vérifient avec `src/core` (Vitest) et avec les sondes Python de `tools/`
   depuis le PC, sur le même Wi-Fi que les rubans
-- `python3 tools/make_icon.py [échantillons]` : régénère l'icône dans `assets/` — néon LED photoréaliste rendu par Blender
+- `python3 tools/make_icon.py [échantillons]` : régénère l'icône dans `assets/` — néon LED photoréaliste à la forme de la vague du néon du salon de Guillaume (forme « extrait », 2026-11-27), rendu par Blender
   (`tools/icon_blender.py`, Cycles GPU, `blender` dans le PATH) puis halo et teinte de nuit (Pillow), et l'écran de démarrage
   (`splash-icon.png`, plugin `expo-splash-screen`, fond `#0A0B0F`) ; ensuite `pnpm prebuild`
 - `tools/probe_lan.py` : cherche Magic Home, Tuya, Govee, mDNS, SSDP sur le réseau

@@ -56,11 +56,12 @@ def finish(raw: Image.Image) -> Image.Image:
 def main() -> None:
     ASSETS.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
-        raw_big = render(Path(tmp) / "icon.png", 40)
+        # Forme « extrait » (vague du salon) : un peu plus petite dans le cadre que l'ancienne vague (36 au lieu de 40).
+        raw_big = render(Path(tmp) / "icon.png", 36)
         big = finish(raw_big)
         # Bannière Play Store (1024 × 500) : le même néon, cadré large, rendu en double définition puis réduit.
-        banner = finish(render(Path(tmp) / "banner.png", 24, (2048, 1000)))
-        small = finish(render(Path(tmp) / "adaptive.png", 27))
+        banner = finish(render(Path(tmp) / "banner.png", 22, (2048, 1000)))
+        small = finish(render(Path(tmp) / "adaptive.png", 24))
     big.save(ASSETS / "icon.png")
     big.resize((48, 48), Image.LANCZOS).save(ASSETS / "favicon.png")
 

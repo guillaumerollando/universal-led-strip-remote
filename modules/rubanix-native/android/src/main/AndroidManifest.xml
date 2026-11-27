@@ -9,5 +9,17 @@
       </intent-filter>
       <meta-data android:name="android.appwidget.provider" android:resource="@xml/ledstrip_widget_info" />
     </receiver>
+    <receiver android:name="expo.modules.rubanixnative.RoomWidget" android:exported="false" android:label="@string/ledstrip_room_widget_label">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/ledstrip_room_widget_info" />
+    </receiver>
+    <receiver android:name="expo.modules.rubanixnative.AmbianceWidget" android:exported="false" android:label="@string/ledstrip_ambiance_widget_label">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@xml/ledstrip_ambiance_widget_info" />
+    </receiver>
   </application>
 </manifest>

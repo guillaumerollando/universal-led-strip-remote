@@ -93,6 +93,8 @@ async function connect(address: string, profile: BleProfile): Promise<void> {
  */
 export async function sendBle(address: string, profile: BleProfile, ...frames: number[][]): Promise<void> {
   let session = sessions.get(address);
+  // Un envoi commence : la déconnexion pour inactivité ne doit pas tomber au milieu.
+  if (session?.idle) clearTimeout(session.idle);
   if (!session) {
     session = { ready: connect(address, profile) };
     sessions.set(address, session);

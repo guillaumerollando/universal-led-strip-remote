@@ -26,7 +26,12 @@ import {
   zenggeWrap,
 } from '../core/protocols/ble';
 import { MAGIC_HOME_TCP_PORT, MH_QUERY, mhColor, mhEffect, mhNineBytes, mhPower, parseMhState } from '../core/protocols/magicHome';
+import { BUILTIN_AMBIANCES } from '../core/ambiances';
+import { motifScript } from '../core/obkScripts';
+import { creationScript, decodeCreation, type Creation } from '../core/creations';
+import { AMBIANCE_EFFECT_PREFIX, CREATION_EFFECT_ID, COLORED_ANIMS, decodeMotif, MOTIF_EFFECT_ID, OBK_ANIMS, OBK_START_MOTIF, type Motif } from '../core/protocols/openbeken';
 import { LEDNET_PRESETS } from '../core/protocols/presets';
+import { ELK_CATALOG, LEDNET_CATALOG, MELK_CATALOG } from '../core/effectCatalog';
 import { dim, type Effect, type Rgb } from '../core/protocols/types';
 import { LIFX_PORT, lifxColor, lifxPower, macBytes, yeelightBrightness, yeelightColor, yeelightOk, yeelightPower } from '../core/protocols/udp';
 import {
@@ -62,6 +67,7 @@ import {
 } from '../core/protocols/wifi';
 import type { HttpCall } from '../core/protocols/types';
 import { sendBle, sendElk } from './ble';
+import { obkAnim, obkRun, obkScript, obkStopEffects } from './openbeken';
 import { bytesToText, http, readEvents, tcp, udpSend } from './net';
 import type { LightState } from './store';
 import { t as tr } from '../i18n';
@@ -82,7 +88,21 @@ export interface Driver {
   color?(t: DriverTarget, rgb: Rgb): Promise<void>;
   brightness?(t: DriverTarget, percent: number): Promise<void>;
   effects?(t: DriverTarget): Effect[];
-  effect?(t: DriverTarget, effect: Effect, speedPercent: number): Promise<void>;
+  /** Tous les effets intégrés du contrôleur (section « Tous les effets », pour les bidouilleurs). */
+  catalog?(t: DriverTarget): Effect[];
+  /** `rgb` : couleur des animations qui en prennent une (comète, étoile filante, poursuite d'OpenBeken). */
+  effect?(t: DriverTarget, effect: Effect, speedPercent: number, rgb?: Rgb): Promise<void>;
+  /** Motif dessiné pixel par pixel qui défile le long du ruban (rubans à pixels OpenBeken). */
+  motif?(t: DriverTarget, motif: Motif, speedPercent: number): Promise<void>;
+  /** Création de l'utilisateur (« Créer mon ambiance »), jouée par le ruban lui-même. */
+  creation?(t: DriverTarget, c: Creation): Promise<void>;
+  /** Ambiance de l'appli (identifiant de `BUILTIN_AMBIANCES`), jouée par le ruban lui-même. */
+  ambiance?(t: DriverTarget, id: string): Promise<void>;
+  /** La luminosité peut-elle suivre le doigt en direct ? (absent : oui) */
+  liveBrightness?(t: DriverTarget): boolean;
+  /** Les ambiances de l'appli que ce ruban sait jouer (identifiants de `BUILTIN_AMBIANCES`). */
+  ambiances?(t: DriverTarget): string[];
+  hasMotif?(t: DriverTarget): boolean;
   speed?(t: DriverTarget, percent: number): Promise<void>;
   /** Le réglage de couleur est-il disponible ? (par défaut oui si `color` existe) */
   hasColor?(t: DriverTarget): boolean;
@@ -103,8 +123,18 @@ const elk: Driver = {
   color: (t, rgb) => sendElk(t.address, elkOf(t), elkColor(elkOf(t), rgb)),
   brightness: (t, p) => sendElk(t.address, elkOf(t), elkBrightness(elkOf(t), p)),
   effects: (t) => elkEffects(elkOf(t)),
+  catalog: (t) => (elkOf(t) === 'melk' ? MELK_CATALOG : ELK_CATALOG),
   effect: (t, e) => sendElk(t.address, elkOf(t), elkEffect(elkOf(t), e.code)),
   speed: (t, p) => sendElk(t.address, elkOf(t), elkSpeed(elkOf(t), p)),
+  // MELK : les ambiances choisies parmi ses effets intégrés (couleurs fixes) ; les ELK classiques n'en ont pas.
+  ambiances: (t) => (elkOf(t) === 'melk' ? BUILTIN_AMBIANCES.filter((a) => a.melk).map((a) => a.id) : []),
+  ambiance: async (t, id) => {
+    const m = elkOf(t) === 'melk' ? BUILTIN_AMBIANCES.find((a) => a.id === id)?.melk : undefined;
+    if (!m) return;
+    if ('color' in m) return sendElk(t.address, 'melk', elkColor('melk', m.color));
+    await sendElk(t.address, 'melk', elkSpeed('melk', m.speed));
+    await sendElk(t.address, 'melk', elkEffect('melk', m.effect));
+  },
 };
 
 const triones: Driver = {
@@ -112,9 +142,10 @@ const triones: Driver = {
   color: (t, rgb) => sendBle(t.address, TRIONES, trionesColor(keepLevel(t, rgb))),
   brightness: (t, p) => sendBle(t.address, TRIONES, trionesColor(dimmed(t, p))),
   effects: () => LEDNET_PRESETS,
+  catalog: () => LEDNET_CATALOG,
   effect: (t, e, s) => sendBle(t.address, TRIONES, trionesEffect(e.code, s)),
   speed: async (t, p) => {
-    const e = currentEffect(t, LEDNET_PRESETS);
+    const e = currentEffect(t, [...LEDNET_PRESETS, ...LEDNET_CATALOG]);
     if (e) await sendBle(t.address, TRIONES, trionesEffect(e.code, p));
   },
 };
@@ -128,9 +159,10 @@ const zenggeBle: Driver = {
   color: (t, rgb) => zengge(t, mhColor(keepLevel(t, rgb)), zenggeHsv(keepLevel(t, rgb))),
   brightness: (t, p) => zengge(t, mhColor(dimmed(t, p)), zenggeHsv(dimmed(t, p))),
   effects: () => LEDNET_PRESETS,
+  catalog: () => LEDNET_CATALOG,
   effect: (t, e, s) => zengge(t, mhEffect(e.code, s)),
   speed: async (t, p) => {
-    const e = currentEffect(t, LEDNET_PRESETS);
+    const e = currentEffect(t, [...LEDNET_PRESETS, ...LEDNET_CATALOG]);
     if (e) await zengge(t, mhEffect(e.code, p));
   },
 };
@@ -164,9 +196,10 @@ const magicHome: Driver = {
   color: async (t, rgb) => void (await mh(t, mhColor(keepLevel(t, rgb), await mhNine(t)))),
   brightness: async (t, p) => void (await mh(t, mhColor(dimmed(t, p), await mhNine(t)))),
   effects: () => LEDNET_PRESETS,
+  catalog: () => LEDNET_CATALOG,
   effect: async (t, e, s) => void (await mh(t, mhEffect(e.code, s))),
   speed: async (t, p) => {
-    const e = currentEffect(t, LEDNET_PRESETS);
+    const e = currentEffect(t, [...LEDNET_PRESETS, ...LEDNET_CATALOG]);
     if (e) await mh(t, mhEffect(e.code, p));
   },
 };
@@ -212,6 +245,76 @@ const tasmota: Driver = {
   power: (t, on) => call(t, tasmotaPower(on)),
   color: (t, rgb) => call(t, tasmotaColor(rgb)),
   brightness: (t, p) => call(t, tasmotaBrightness(p)),
+};
+
+/**
+ * OpenBeken (ruban Tuya libéré) : commandes Tasmota, plus, pour un ruban à pixels, les animations intégrées et un
+ * motif qui défile grâce à un petit script exécuté dans le ruban (il continue téléphone éteint).
+ */
+const pixelsOf = (t: DriverTarget): number => Number(t.meta?.pixels ?? 0);
+const ctxOf = (t: DriverTarget, level = t.state?.brightness ?? 100) => ({ n: pixelsOf(t) || 100, level });
+/**
+ * Longueur réelle du ruban (`meta.length`, réglée dans « Créer mon ambiance ») : la configuration peut annoncer plus de
+ * LED qu'il n'y en a (Guillaume : 200 annoncées, 84 réelles). Les dessins s'y calent ; les ambiances livrées gardent
+ * la longueur de la configuration, avec laquelle elles ont été validées.
+ */
+export const stripLength = (t: { meta?: Record<string, string> }): number => Number(t.meta?.length) || Number(t.meta?.pixels) || 100;
+const drawCtx = (t: DriverTarget, level = t.state?.brightness ?? 100) => ({ n: stripLength(t), level });
+/** Ce qui tourne en ce moment dans le ruban : un motif dessiné ou une ambiance de l'appli (à reconstruire si la luminosité change). */
+function runningScript(t: DriverTarget, level?: number, speed = t.state?.speed ?? 55): string[] | undefined {
+  const effect = t.state?.effect ?? '';
+  if (effect === MOTIF_EFFECT_ID) {
+    const motif = decodeMotif(t.meta?.motif);
+    return motif ? motifScript(motif, ctxOf(t, level), speed) : undefined;
+  }
+  if (effect === CREATION_EFFECT_ID) {
+    const c = decodeCreation(t.meta?.creation);
+    // La création garde sa propre vitesse (choisie dans l'éditeur).
+    return c ? creationScript(c, drawCtx(t, level)) : undefined;
+  }
+  if (effect.startsWith(AMBIANCE_EFFECT_PREFIX)) {
+    return BUILTIN_AMBIANCES.find((a) => a.id === effect.slice(AMBIANCE_EFFECT_PREFIX.length))?.build?.(ctxOf(t, level));
+  }
+  return undefined;
+}
+const openbeken: Driver = {
+  power: async (t, on) => {
+    const running = !!runningScript(t);
+    // Le script redessine les pixels : il faut l'arrêter pour éteindre, le relancer pour rallumer.
+    if (!on && running) await obkRun(t.address, ['stopAllScripts']);
+    await call(t, tasmotaPower(on));
+    if (on && running) await obkRun(t.address, OBK_START_MOTIF);
+  },
+  color: async (t, rgb) => {
+    if (t.state?.effect && pixelsOf(t)) await obkStopEffects(t.address);
+    await call(t, tasmotaColor(rgb));
+  },
+  brightness: async (t, p) => {
+    const script = runningScript(t, p);
+    // Les pixels d'un script sont posés un à un : la luminosité est dans le script, on le réécrit.
+    if (script) await obkScript(t.address, script);
+    else await call(t, tasmotaBrightness(p));
+  },
+  // Script en cours (ambiance, dessin) : changer la luminosité réécrit tout le script (~1 s) ; seulement au lâcher.
+  liveBrightness: (t) => !runningScript(t),
+  effects: (t) => (pixelsOf(t) ? OBK_ANIMS : []),
+  effect: (t, e, s, rgb) => obkAnim(t.address, e.code, s, COLORED_ANIMS.includes(e.id) ? (rgb ?? t.state?.rgb) : undefined),
+  speed: async (t, p) => {
+    if (t.state?.effect === MOTIF_EFFECT_ID) {
+      const script = runningScript(t, undefined, p);
+      if (script) return obkScript(t.address, script);
+    }
+    const anim = currentEffect(t, OBK_ANIMS);
+    if (anim) await obkAnim(t.address, anim.code, p, COLORED_ANIMS.includes(anim.id) ? t.state?.rgb : undefined);
+  },
+  motif: (t, motif, s) => obkScript(t.address, motifScript(motif, ctxOf(t), s)),
+  creation: (t, c) => obkScript(t.address, creationScript(c, drawCtx(t))),
+  ambiance: async (t, id) => {
+    const lines = BUILTIN_AMBIANCES.find((a) => a.id === id)?.build?.(ctxOf(t));
+    if (lines) await obkScript(t.address, lines);
+  },
+  hasMotif: (t) => pixelsOf(t) > 0,
+  ambiances: (t) => (pixelsOf(t) > 0 ? BUILTIN_AMBIANCES.filter((a) => a.build).map((a) => a.id) : []),
 };
 
 /** ESPHome : le nom de la lumière se lit une fois dans le flux `/events`. */
@@ -282,6 +385,7 @@ const DRIVERS: Partial<Record<FamilyId, Driver>> = {
   wled,
   shelly,
   tasmota,
+  openbeken,
   esphome,
   yeelight,
   lifx,

@@ -5,6 +5,7 @@ import { ensureBlePermissions, isBluetoothOn, scanBle } from './ble';
 import { scanLan } from './lan';
 import { hueLightsOf, knownBridge } from './pairing';
 import { getDevice, updateDevice } from './store';
+import { sweepSubnet } from './sweep';
 import { t } from '../i18n';
 
 export const SCAN_MS = 12_000;
@@ -18,6 +19,7 @@ const LAN_LISTEN_MS = 60_000;
 const RECENT_MS = 10 * 60_000;
 const recentWifi = new Map<string, { device: DetectedDevice; at: number }>();
 let stopLan: (() => void) | null = null;
+let stopSweep: (() => void) | null = null;
 
 interface ScanState {
   scanning: boolean;
@@ -86,6 +88,9 @@ export async function startScan(): Promise<void> {
 
   stopLan?.();
   stopLan = scanLan(add, LAN_LISTEN_MS);
+  // Rubans libérés (OpenBeken) et Tasmota : ils ne s'annoncent pas, on frappe à chaque adresse du réseau.
+  stopSweep?.();
+  stopSweep = sweepSubnet(add);
   setTimeout(() => set({ scanning: false }), SCAN_MS);
 }
 
@@ -93,18 +98,23 @@ export async function startScan(): Promise<void> {
 export function stopScan(): void {
   stopLan?.();
   stopLan = null;
+  stopSweep?.();
+  stopSweep = null;
 }
 
 /**
  * Au démarrage, s'il y a des rubans Wi-Fi enregistrés : une recherche Wi-Fi discrète (pas de Bluetooth, aucune
  * autorisation demandée) pour suivre leurs nouvelles adresses IP. Rien ne s'affiche.
  */
-export function refreshWifiAddresses(hasWifi: boolean): void {
+export function refreshWifiAddresses(hasWifi: boolean, hasSilent = false): void {
   if (!hasWifi || state.scanning) return;
-  scanLan((d) => {
+  const follow = (d: DetectedDevice): void => {
     const saved = getDevice(d.key);
     if (saved && saved.address !== d.address) void updateDevice(d.key, { address: d.address });
-  }, 6000);
+  };
+  scanLan(follow, 6000);
+  // Seulement s'il y a un ruban qui ne s'annonce pas (OpenBeken) : sinon, inutile de frapper à 254 portes.
+  if (hasSilent) sweepSubnet(follow);
 }
 
 export function useScan(): ScanState & { start: () => void } {

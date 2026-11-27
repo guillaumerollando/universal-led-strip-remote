@@ -4,6 +4,7 @@ import { PanResponder, View, type LayoutChangeEvent } from 'react-native';
 
 import type { Rgb } from '../core/elk';
 import { Glow } from './light';
+import { LoadingBorder } from './LoadingBorder';
 import { colors, radius, rgbCss } from './theme';
 
 const HEIGHT = 40;
@@ -20,6 +21,7 @@ export function ColorSlider({
   onChange,
   onRelease,
   label,
+  busy,
 }: {
   stops: string[];
   value: number;
@@ -27,6 +29,8 @@ export function ColorSlider({
   onChange: (v: number) => void;
   onRelease: (v: number) => void;
   label: string;
+  /** Envoi en cours : le contour de la barre tourne. */
+  busy?: boolean;
 }) {
   const [width, setWidth] = useState(0);
   const widthRef = useRef(0);
@@ -75,6 +79,7 @@ export function ColorSlider({
     >
       <View pointerEvents="none" style={{ height: HEIGHT, borderRadius: radius.pill, overflow: 'hidden', borderWidth: 1, borderColor: colors.border }}>
         <LinearGradient colors={stops as [string, string, ...string[]]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={{ flex: 1 }} />
+        <LoadingBorder active={!!busy} radius={HEIGHT / 2} />
       </View>
       <View pointerEvents="none" style={{ position: 'absolute', left, width: THUMB, height: THUMB, alignItems: 'center', justifyContent: 'center' }}>
         <Glow rgb={thumbColor} intensity={0.7} style={{ margin: -16 }} />

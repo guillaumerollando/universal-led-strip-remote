@@ -6,10 +6,12 @@ import { Alert, Pressable, Text, View } from 'react-native';
 import type { Rgb } from '../core/elk';
 import { canPower, setGroupPower } from '../services/control';
 import { markLongPressSeen } from '../services/hints';
+import { pinWidget } from '../services/pinWidget';
 import { removeRoom, renameRoom, roomNamed, type Room, type SavedDevice } from '../services/store';
 import { DeviceTile } from './DeviceTile';
 import { styles as kit } from './kit';
 import { Glow, PowerButton } from './light';
+import { SceneRow } from './SceneRow';
 import { RenameField, Sheet } from './Sheet';
 import { colors, radius, space, WARM_WHITE } from './theme';
 import { t } from '../i18n';
@@ -111,6 +113,7 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
         </View>
         {report && <Text style={[kit.muted, { color: colors.danger }]}>{report}</Text>}
       </Pressable>
+      {room && <SceneRow room={room} devices={devices} />}
       {devices.map((d) => (
         <DeviceTile key={d.key} device={d} nearby={nearbyKeys.has(d.key)} />
       ))}
@@ -126,6 +129,13 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
               onPress: () => {
                 setMenu(null);
                 router.push({ pathname: '/room/[id]', params: { id: room.id } });
+              },
+            },
+            {
+              label: t('Ajouter à l’écran d’accueil'),
+              onPress: () => {
+                setMenu(null);
+                pinWidget('room', room.id);
               },
             },
             { label: t('Supprimer la pièce'), onPress: remove, danger: true },

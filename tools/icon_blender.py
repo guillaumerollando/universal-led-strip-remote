@@ -1,4 +1,5 @@
-"""Rendu photoréaliste de l'icône dans Blender (Cycles) : un néon LED flexible en silicone laiteux, courbé,
+"""Rendu photoréaliste de l'icône dans Blender (Cycles) : un néon LED flexible en silicone laiteux, à la forme du néon
+du salon de Guillaume (forme « extrait », adoptée le 2026-11-27 : « ça me ressemble »), courbé,
 qui diffuse un dégradé arc-en-ciel et se reflète sur un sol sombre et brillant.
 
     blender -b -P tools/icon_blender.py -- <sortie.png> [échantillons] [focale] [largeur] [hauteur]
@@ -7,6 +8,7 @@ Le halo (« bloom ») est ajouté ensuite par tools/make_icon.py (Pillow), plus 
 """
 
 import math
+import os
 import sys
 
 import bpy
@@ -22,16 +24,36 @@ HEIGHT = int(argv[4]) if len(argv) > 4 else 1024
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
 
+# Forme du néon : « vague » (S d'origine) ou « salon » (relevée sur la photo du néon du salon de Guillaume, 2026-11-27 :
+# il part en bas à gauche, monte en se creusant, fait une boucle en haut à gauche, puis une longue vague qui monte en
+# pic et redescend à droite).
+SHAPE = os.environ.get("ICON_SHAPE", "extrait")
+SALON_PX = [
+    (370, 1595), (395, 1470), (465, 1330), (455, 1200), (385, 1080), (372, 1005), (430, 945), (540, 930),
+    (660, 958), (780, 935), (880, 860), (965, 785), (1010, 778), (1050, 830), (1095, 895), (1140, 920),
+]
+# Pixels de la photo → plan du sol (centré, ~4,3 unités de large) ; y vers le haut.
+SALON = [((x - 755) / 180, -(y - 1180) / 180) for x, y in SALON_PX]
+# « extrait » : seulement la fin du néon du salon (la vague qui creuse, monte en pic irrégulier puis retombe), à
+# l'horizontale, un peu étirée en hauteur : une vague « humaine », clin d'œil au salon (souhait de Guillaume).
+EXTRAIT_PX = SALON_PX[5:]
+# Plus de hauteur (creux et pic plus marqués) pour garder de la présence en petit (rond Android, 64 px).
+EXTRAIT = [((x - 756) / 175, -(y - 880) / 175 * 2.2) for x, y in EXTRAIT_PX]
+
 # ── Courbe du néon : une vague douce en S, posée sur le sol ──
 curve_data = bpy.data.curves.new("neon", type="CURVE")
 curve_data.dimensions = "3D"
 curve_data.resolution_u = 48
 curve_data.bevel_mode = "ROUND"
-curve_data.bevel_depth = 0.21
+curve_data.bevel_depth = {"salon": 0.17, "extrait": 0.27}.get(SHAPE, 0.21)
 curve_data.bevel_resolution = 8
 curve_data.use_fill_caps = True
 spline = curve_data.splines.new("BEZIER")
-pts = [(-2.2, -1.25, 0.21), (-0.8, 1.05, 0.21), (0.8, -1.05, 0.21), (2.2, 1.25, 0.21)]
+pts = {
+    "vague": [(-2.2, -1.25, 0.21), (-0.8, 1.05, 0.21), (0.8, -1.05, 0.21), (2.2, 1.25, 0.21)],
+    "salon": [(x, y, 0.17) for x, y in SALON],
+    "extrait": [(x, y, 0.27) for x, y in EXTRAIT],
+}[SHAPE]
 spline.bezier_points.add(len(pts) - 1)
 for bp, co in zip(spline.bezier_points, pts):
     bp.co = co
@@ -70,9 +92,19 @@ for pos, col in stops[1:-1]:
     e.color = (*col, 1)
 # X objet (-2.4 → 2.4) ramené à 0 → 1 : le dégradé suit la longueur du tube, du rouge au violet.
 xr = nodes.new("ShaderNodeMapRange")
-xr.inputs["From Min"].default_value = -2.4
-xr.inputs["From Max"].default_value = 2.4
-links.new(sep.outputs["X"], xr.inputs["Value"])
+if SHAPE != "salon":
+    xr.inputs["From Min"].default_value = -2.4
+    xr.inputs["From Max"].default_value = 2.4
+    links.new(sep.outputs["X"], xr.inputs["Value"])
+else:
+    # Le long du tube du « salon » : x + 0,6·y croît du départ (en bas à gauche) jusqu'au bout (à droite).
+    along = nodes.new("ShaderNodeVectorMath")
+    along.operation = "DOT_PRODUCT"
+    along.inputs[1].default_value = (1.0, 0.6, 0.0)
+    links.new(tex.outputs["Object"], along.inputs[0])
+    xr.inputs["From Min"].default_value = -3.55
+    xr.inputs["From Max"].default_value = 3.05
+    links.new(along.outputs["Value"], xr.inputs["Value"])
 links.new(xr.outputs["Result"], ramp.inputs["Fac"])
 # Légères pulsations le long du tube : on devine les LED derrière le diffuseur.
 wave = nodes.new("ShaderNodeTexWave")
@@ -115,12 +147,13 @@ world.node_tree.nodes["Background"].inputs["Color"].default_value = (0.010, 0.00
 world.node_tree.nodes["Background"].inputs["Strength"].default_value = 1.0
 
 # ── Caméra : plongée à ~40°, cadrage carré centré ──
-bpy.ops.object.camera_add(location=(0, -5.0, 5.6))
+# Le « salon » est presque carré : caméra plus haute (plongée plus forte) pour garder sa silhouette reconnaissable.
+bpy.ops.object.camera_add(location=(-0.05, -1.4, 9.2) if SHAPE == "salon" else (0, -5.0, 5.6))
 cam = bpy.context.active_object
 cam.data.lens = LENS
 from mathutils import Vector
 
-direction = Vector((-0.12, 0.05, 0)) - cam.location
+direction = (Vector((-0.05, 0.05, 0)) if SHAPE == "salon" else Vector((-0.12, 0.05, 0))) - cam.location
 cam.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
 scene.camera = cam
 

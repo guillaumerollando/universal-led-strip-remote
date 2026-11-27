@@ -28,9 +28,13 @@ export interface Rgb {
 const byte = (n: number): number => Math.max(0, Math.min(255, Math.round(n)));
 const pct = (n: number): number => Math.max(0, Math.min(100, Math.round(n)));
 
-/** Trames à envoyer juste après la connexion. */
+/**
+ * Trames à envoyer juste après la connexion. MELK : la seconde trame d'ouverture **éteint** le ruban (elkbledom renvoie
+ * « allumer » juste après) ; sans ça, une ambiance choisie après une reconnexion laissait le ruban éteint ou figé
+ * (vu par Guillaume, 2026-11-27).
+ */
 export function elkInit(model: ElkModel): number[][] {
-  return model === 'melk' ? [[0x7e, 0x07, 0x83], [0x7e, 0x04, 0x04]] : [];
+  return model === 'melk' ? [[0x7e, 0x07, 0x83], [0x7e, 0x04, 0x04], elkPower('melk', true)] : [];
 }
 
 export function elkPower(model: ElkModel, on: boolean): number[] {

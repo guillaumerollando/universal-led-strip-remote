@@ -4,6 +4,7 @@
  */
 import type { DetectedDevice } from './identify';
 import { parseMhState } from './protocols/magicHome';
+import { isOpenBeken, obkMac } from './protocols/openbeken';
 import { parseElgatoInfo, parseShellyInfo, parseTasmotaStatus, parseWledInfo } from './protocols/wifi';
 
 export interface ProbeAnswers {
@@ -24,6 +25,9 @@ export function classifyProbe(ip: string, a: ProbeAnswers): DetectedDevice | nul
   const shelly = parseShellyInfo(a.shelly);
   if (shelly) return { ...base, key: `wifi:shelly:${ip}`, family: 'shelly', rawName: shelly.model, model: shelly.model, meta: { shelly: shelly.kind } };
   const tasmota = parseTasmotaStatus(a.tasmota);
+  if (tasmota && isOpenBeken(a.tasmota)) {
+    return { ...base, key: `wifi:openbeken:${obkMac(a.tasmota) ?? ip}`, family: 'openbeken', rawName: tasmota.name };
+  }
   if (tasmota) return { ...base, key: `wifi:tasmota:${ip}`, family: 'tasmota', rawName: tasmota.name };
   const elgato = parseElgatoInfo(a.elgato);
   if (elgato) return { ...base, key: `wifi:elgato:${ip}`, family: 'elgato', rawName: elgato.name, model: elgato.name, meta: { color: elgato.color ? '1' : '0' } };

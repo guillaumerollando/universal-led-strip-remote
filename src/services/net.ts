@@ -14,8 +14,9 @@ export async function http(ip: string, call: HttpCall, timeoutMs = 4000): Promis
   try {
     const res = await fetch(`http://${ip}${call.port ? `:${call.port}` : ''}${call.path}`, {
       method: call.method,
-      headers: call.body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
-      body: call.body !== undefined ? JSON.stringify(call.body) : undefined,
+      // Un texte part tel quel (fichier écrit dans un ruban OpenBeken), le reste en JSON.
+      headers: call.body === undefined ? undefined : { 'Content-Type': typeof call.body === 'string' ? 'text/plain' : 'application/json' },
+      body: call.body === undefined ? undefined : typeof call.body === 'string' ? call.body : JSON.stringify(call.body),
       signal: controller.signal,
     });
     const text = await res.text();

@@ -8,6 +8,7 @@ import { ColorSlider, HUE_STOPS } from './ColorSlider';
 import { Muted, styles as kit } from './kit';
 import { Swatch } from './light';
 import { colors, radius, space } from './theme';
+import { LoadingBorder, SelectionGlow } from './LoadingBorder';
 import { t } from '../i18n';
 
 const SWATCHES: { rgb: Rgb; label: string }[] = [
@@ -23,11 +24,15 @@ const SWATCHES: { rgb: Rgb; label: string }[] = [
   { rgb: { r: 255, g: 0, b: 140 }, label: t('Rose') },
 ];
 const LEVELS = [10, 25, 50, 75, 100];
-const same = (a?: Rgb, b?: Rgb): boolean => !!a && !!b && a.r === b.r && a.g === b.g && a.b === b.b;
+/** À l'arrondi près : la couleur du nuancier repasse par teinte / blancheur (quelques unités d'écart). */
+const same = (a?: Rgb, b?: Rgb): boolean =>
+  !!a && !!b && Math.abs(a.r - b.r) <= 3 && Math.abs(a.g - b.g) <= 3 && Math.abs(a.b - b.b) <= 3;
 
 /** Couleur et luminosité d'un ruban Bluetooth ou Wi-Fi (chaque partie seulement si l'appareil la gère). */
 export function ElkControls({ target }: { target: Target }) {
   const [error, setError] = useState<string | null>(null);
+  /** Ce qui est en cours d'envoi : une pastille, un curseur, un niveau de luminosité (contour qui tourne). */
+  const [sending, setSending] = useState<string | null>(null);
   const start = rgbToHsv(target.state?.rgb ?? { r: 255, g: 0, b: 0 });
   const [hue, setHue] = useState(start.h);
   const [white, setWhite] = useState(1 - start.s);
@@ -40,16 +45,18 @@ export function ElkControls({ target }: { target: Target }) {
     setWhite(w);
     preview(hsvToRgb({ h, s: 1 - w, v: 1 }));
   };
-  const commit = (h: number, w: number): void => run(setColor(target, hsvToRgb({ h, s: 1 - w, v: 1 })));
-  const pick = (rgb: Rgb): void => {
+  const commit = (h: number, w: number, which: string): void => run(setColor(target, hsvToRgb({ h, s: 1 - w, v: 1 })), which);
+  const pick = (rgb: Rgb, which: string): void => {
     const hsv = rgbToHsv(rgb);
     setHue(hsv.h);
     setWhite(1 - hsv.s);
-    run(setColor(target, rgb));
+    run(setColor(target, rgb), which);
   };
 
-  const run = (action: Promise<void>): void => {
+  const run = (action: Promise<void>, which?: string): void => {
+    if (which) setSending(which);
     action
+      .finally(() => setSending((cur) => (cur === which ? null : cur)))
       .then(() => setError(null))
       .catch((e: Error) => setError(e.message));
   };
@@ -66,7 +73,8 @@ export function ElkControls({ target }: { target: Target }) {
             value={hue / 360}
             thumbColor={pure}
             onChange={(v) => slide(v * 360, white)}
-            onRelease={(v) => commit(v * 360, white)}
+            onRelease={(v) => commit(v * 360, white, 'hue')}
+            busy={sending === 'hue'}
           />
           <ColorSlider
             label={t('Blancheur')}
@@ -74,13 +82,16 @@ export function ElkControls({ target }: { target: Target }) {
             value={white}
             thumbColor={current}
             onChange={(v) => slide(hue, v)}
-            onRelease={(v) => commit(hue, v)}
+            onRelease={(v) => commit(hue, v, 'white')}
+            busy={sending === 'white'}
           />
           <Muted>{t('Couleurs rapides')}</Muted>
           <View style={ctl.swatches}>
             {SWATCHES.map((s) => (
               <View key={s.label} style={{ width: '20%', alignItems: 'center' }}>
-                <Swatch label={s.label} rgb={s.rgb} selected={same(s.rgb, target.state?.rgb)} onPress={() => pick(s.rgb)} />
+                {/* La pastille suit la couleur du nuancier en direct (pas la dernière enregistrée, qui ne change qu'au
+                    lâcher du doigt) ; rien d'allumé quand un effet ou une ambiance tourne. */}
+                <Swatch label={s.label} rgb={s.rgb} selected={!target.state?.effect && same(s.rgb, current)} onPress={() => pick(s.rgb, s.label)} busy={sending === s.label} />
               </View>
             ))}
           </View>
@@ -93,10 +104,15 @@ export function ElkControls({ target }: { target: Target }) {
             {LEVELS.map((p) => {
               const active = target.state?.brightness === p;
               return (
-                <Pressable key={p} onPress={() => run(setBrightness(target, p))} style={[ctl.level, active && ctl.levelActive]}>
-                  <View style={[ctl.levelFill, { height: `${p}%` }]} />
-                  <Text style={[kit.text, { fontWeight: '700' }]}>{p} %</Text>
-                </Pressable>
+                <View key={p} style={{ flex: 1 }}>
+                  <Pressable onPress={() => run(setBrightness(target, p), `level${p}`)} style={[ctl.level, active && ctl.levelActive]}>
+                    <View style={[ctl.levelFill, { height: `${p}%` }]} />
+                    <Text style={[kit.text, { fontWeight: '700' }]}>{p} %</Text>
+                  </Pressable>
+                  {/* Hors du bouton (qui coupe ce qui dépasse) : la lueur peut déborder. */}
+                  <SelectionGlow active={active} radius={radius.sm} outset={0} />
+                  <LoadingBorder active={sending === `level${p}`} selected={active} radius={radius.sm} outset={0} />
+                </View>
               );
             })}
           </View>

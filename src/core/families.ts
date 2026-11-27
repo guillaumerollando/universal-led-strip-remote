@@ -21,6 +21,7 @@ export type FamilyId =
   | 'wled'
   | 'shelly'
   | 'tasmota'
+  | 'openbeken'
   | 'esphome'
   | 'yeelight'
   | 'lifx'
@@ -185,6 +186,14 @@ export const FAMILIES: Record<FamilyId, Family> = {
     capabilities: FULL,
     note: 'Micrologiciel libre Tasmota : commandes HTTP /cm.',
     brand: 'Tasmota',
+  },
+  openbeken: {
+    id: 'openbeken',
+    label: 'OpenBeken',
+    transport: 'wifi',
+    apps: [],
+    capabilities: FULL,
+    note: 'Micrologiciel libre OpenBeken (puces Beken des appareils Tuya libérés) : commandes Tasmota, animations et scripts de pixels.',
   },
   esphome: {
     id: 'esphome',

@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { Linking, Pressable, Text, View } from 'react-native';
 
 import { FAMILIES, playStoreUrl } from '../../core/families';
-import { canColor, canDim, canPower, effectsFor, irRemoteOf, setPower, type Target } from '../../services/control';
+import { ambiancesFor, canColor, canDim, canPower, catalogFor, effectsFor, irRemoteOf, lightColors, setPower, type Target } from '../../services/control';
 import { foundDevice } from '../../services/scan';
 import { rememberState, useSavedDevice } from '../../services/store';
+import { AmbiancesPanel } from '../../ui/AmbiancesPanel';
+import { useFavorites } from '../../services/favorites';
 import { DeviceOptions } from '../../ui/DeviceOptions';
 import { EffectsPanel } from '../../ui/EffectsPanel';
 import { ElkControls } from '../../ui/ElkControls';
@@ -13,9 +15,14 @@ import { IrControls } from '../../ui/IrControls';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { LightStrip, PowerButton } from '../../ui/light';
 import { StripSlider } from '../../ui/StripSlider';
+import { LoadingBorder } from '../../ui/LoadingBorder';
+import { useSending } from '../../services/sending';
 import { kindLabel } from '../../ui/labels';
 import { colors, radius, space } from '../../ui/theme';
 import { t } from '../../i18n';
+
+/** Méthode libre pour remplacer le logiciel Tuya par Wi-Fi (projet open source, sa page explique tout). */
+const FREE_FIRMWARE_URL = 'https://github.com/tuya-cloudcutter/tuya-cloudcutter';
 
 /**
  * Fiche d'un ruban enregistré : sa lumière et ses commandes. Nom, pièce, oublier : « ⋯ » en haut (ou appui long sur la tuile).
@@ -27,6 +34,9 @@ export default function DeviceScreen() {
   const detected = key ? foundDevice(key) : undefined;
   const device: Target | undefined = saved ?? detected;
   const [options, setOptions] = useState(false);
+  const favs = useFavorites();
+  /** Allumer, éteindre, luminosité (ruban-curseur) : le contour de la carte du haut tourne pendant l'envoi. */
+  const heroSending = useSending(key, ['power', 'brightness']);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +56,10 @@ export default function DeviceScreen() {
   const family = FAMILIES[source.family];
   const title = saved?.name ?? kindLabel(source.transport);
   const on = saved?.state?.on ?? false;
+  const palette = saved ? lightColors(saved) : undefined;
+  // Favoris en tête de fiche : ambiances (si ce ruban en joue) et effets de son contrôleur.
+  const favAmb = !!saved && ambiancesFor(saved).length > 0 && favs.some((k) => k.startsWith('amb:'));
+  const favFx = !!saved && [...effectsFor(saved), ...catalogFor(saved)].some((e) => favs.includes(`fx:${e.code}`));
 
   const toggle = (): void => {
     setBusy(true);
@@ -80,6 +94,7 @@ export default function DeviceScreen() {
             <PowerButton
               on={on}
               rgb={saved?.state?.rgb}
+              palette={palette}
               onPress={toggle}
               onLongPress={toggleOnly && saved ? () => void rememberState(saved.key, { on: !on }) : undefined}
               busy={busy}
@@ -88,12 +103,13 @@ export default function DeviceScreen() {
             />
           </View>
           {saved && on && canDim(device) ? (
-            <StripSlider target={saved} on={on} rgb={saved.state?.rgb} height={10} onTap={() => undefined} onLongPress={() => undefined} onError={setError} />
+            <StripSlider target={saved} on={on} rgb={saved.state?.rgb} palette={palette} height={10} onTap={() => undefined} onLongPress={() => undefined} onError={setError} />
           ) : (
-            <LightStrip on={on} rgb={saved?.state?.rgb} height={10} />
+            <LightStrip on={on} rgb={saved?.state?.rgb} palette={palette} height={10} />
           )}
           {toggleOnly && <Muted>{t('Allumé et éteint inversés ? Appui long pour corriger.')}</Muted>}
           {error && <Text style={[styles.muted, { color: colors.danger }]}>{error}</Text>}
+          <LoadingBorder active={heroSending} radius={radius.lg} />
         </View>
       )}
 
@@ -113,25 +129,50 @@ export default function DeviceScreen() {
         </View>
       )}
 
+      {!canPower(device) && family.closed && (
+        <View style={{ borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, borderStyle: 'dashed', padding: space.lg, gap: space.sm }}>
+          <Text style={styles.title}>{t('Ce ruban est à toi')}</Text>
+          <Muted>
+            {t(
+              'Son fabricant le verrouille, mais beaucoup peuvent recevoir un logiciel libre, souvent par Wi-Fi, sans ouvrir le boîtier. L’appli le pilote alors directement, effets compris. Selon ton pays, la loi l’autorise ou non : renseigne-toi. C’est de la bidouille, à tes risques, et la garantie peut ne plus s’appliquer.',
+            )}
+          </Muted>
+          <Button label={t('En savoir plus')} variant="ghost" onPress={() => void Linking.openURL(FREE_FIRMWARE_URL)} />
+        </View>
+      )}
+
+      {saved && (favAmb || favFx) && (
+        <>
+          <SectionTitle>{t('Favoris')}</SectionTitle>
+          {favAmb && <AmbiancesPanel target={saved} favoritesOnly />}
+          {favFx && <EffectsPanel target={saved} favoritesOnly />}
+        </>
+      )}
       {saved && (canColor(device) || canDim(device)) && (
         <>
           <SectionTitle>{t('Lumière')}</SectionTitle>
           <ElkControls target={device} />
         </>
       )}
-      {saved && effectsFor(device).length > 0 && (
-        <>
-          <SectionTitle>{t('Effets')}</SectionTitle>
-          <EffectsPanel target={device} />
-        </>
-      )}
-
       {source.family === 'ir-nec' && saved && irRemote && (
         <>
           <SectionTitle>{t('Lumière')}</SectionTitle>
           <IrControls target={saved} />
         </>
       )}
+      {saved && ambiancesFor(device).length > 0 && (
+        <>
+          <SectionTitle>{t('Ambiances')}</SectionTitle>
+          <AmbiancesPanel target={saved} />
+        </>
+      )}
+      {saved && (effectsFor(device).length > 0 || catalogFor(device).length > 0) && (
+        <>
+          <SectionTitle>{t('Effets')}</SectionTitle>
+          <EffectsPanel target={device} />
+        </>
+      )}
+
 
       {saved && canPower(device) && family.apps[0] && (
         <Button label={t('Ouvrir avec {app}', { app: family.apps[0].name })} variant="ghost" onPress={() => void Linking.openURL(playStoreUrl(family.apps[0]))} />

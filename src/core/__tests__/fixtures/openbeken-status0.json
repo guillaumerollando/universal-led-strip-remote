@@ -1,0 +1,72 @@
+{
+ "Status": {
+  "Module": 0,
+  "DeviceName": "obkE187799A",
+  "FriendlyName": [
+   "OpenBK7231N_E187799A"
+  ],
+  "Topic": "obkE187799A",
+  "ButtonTopic": "0",
+  "Power": 1,
+  "PowerOnState": 3,
+  "LedState": 1,
+  "LedMask": "FFFF",
+  "SaveData": 1,
+  "SaveState": 1,
+  "SwitchTopic": "0",
+  "SwitchMode": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ButtonRetain": 0,
+  "SwitchRetain": 0,
+  "SensorRetain": 0,
+  "PowerRetain": 0,
+  "InfoRetain": 0,
+  "StateRetain": 0
+ },
+ "StatusFWR": {
+  "Version": "OpenBK7231N_1.18.219",
+  "BuildDateTime": "Nov 25 2025 18:05:58",
+  "Boot": 7,
+  "Core": "0.0",
+  "SDK": "obk",
+  "CpuFrequency": 80,
+  "Hardware": "BK7231N",
+  "CR": "465/699"
+ },
+ "StatusSTS": {
+  "Time": "1970-01-01T00:00:00",
+  "Uptime": "0T00:13:44",
+  "UptimeSec": 824,
+  "Heap": 55,
+  "SleepMode": "None",
+  "Sleep": 0,
+  "LoadAvg": 99,
+  "MqttCount": 23,
+  "Dimmer": 30,
+  "Fade": "OFF",
+  "Speed": 1,
+  "LedTable": "ON",
+  "Color": "0,0,0,0,0",
+  "HSBColor": "0,100,100",
+  "Channel": [
+   0,
+   0,
+   0
+  ],
+  "CT": 154,
+  "POWER": "ON"
+ },
+ "StatusNET": {
+  "Hostname": "obkE187799A",
+  "IPAddress": "192.168.1.78",
+  "Mac": "c4:82:e1:87:79:9a"
+ }
+}

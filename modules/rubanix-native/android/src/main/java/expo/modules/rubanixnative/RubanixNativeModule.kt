@@ -108,6 +108,17 @@ class RubanixNativeModule : Module() {
       LedStripWidget.refresh(context)
     }
 
+    /** Pousse les pièces et leurs ambiances (JSON) aux widgets « Pièce » et « Ambiance », puis les redessine. */
+    Function("setWidgetPlaces") { places: String, empty: String ->
+      PlaceWidgets.prefs(context).edit().putString("places", places).putString("empty", empty).apply()
+      PlaceWidgets.refreshAll(context)
+    }
+
+    /** Propose de poser un widget « Pièce » ou « Ambiance » sur l'écran d'accueil (false si le lanceur ne sait pas). */
+    Function("pinWidget") { kind: String, roomId: String, sceneId: String ->
+      PlaceWidgets.pin(context, kind, roomId, sceneId)
+    }
+
     /** Remet l'appli en arrière-plan (après une action lancée depuis le widget). */
     Function("moveToBack") {
       appContext.currentActivity?.moveTaskToBack(true) ?: false

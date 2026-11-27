@@ -39,10 +39,16 @@ export function Button({ label, onPress, variant = 'primary', busy, disabled, st
 }
 
 /** Écran défilant qui remonte le champ en cours de saisie au-dessus du clavier. */
-export function Screen({ children, safeTop }: { children: ReactNode; safeTop?: boolean }): ReactNode {
+export function Screen({ children, safeTop, header }: { children: ReactNode; safeTop?: boolean; header?: ReactNode }): ReactNode {
   const insets = useSafeAreaInsets();
   return (
     <View style={styles.screen}>
+      {/* En-tête qui reste en haut pendant qu'on fait défiler le reste (aperçu de « Créer mon ambiance »). */}
+      {header && (
+        <View style={{ paddingHorizontal: space.lg, paddingTop: space.sm, paddingBottom: space.sm, gap: space.sm, backgroundColor: colors.bg, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+          {header}
+        </View>
+      )}
       <KeyboardAwareScrollView
         style={styles.screen}
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + space.xxl }, safeTop && { paddingTop: insets.top + space.lg }]}

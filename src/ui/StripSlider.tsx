@@ -21,6 +21,7 @@ export function StripSlider({
   target,
   on,
   rgb,
+  palette,
   onTap,
   onLongPress,
   onError,
@@ -29,6 +30,7 @@ export function StripSlider({
   target: Target;
   on: boolean;
   rgb?: Rgb;
+  palette?: Rgb[];
   onTap: () => void;
   onLongPress: () => void;
   /** Le ruban n'a pas répondu : le curseur revient à la valeur connue, la tuile dit pourquoi. */
@@ -81,7 +83,9 @@ export function StripSlider({
           if (longTimer.current) clearTimeout(longTimer.current);
           if (dragging.current) {
             const final = snap(start.current / 100 + g.dx / width.current);
-            setBrightness(ref.current.target, final)
+            live
+              .idle()
+              .then(() => setBrightness(ref.current.target, final))
               .then(() => ref.current.onError?.(null))
               .catch((e: Error) => ref.current.onError?.(e.message))
               .finally(() => setDrag(null));
@@ -113,7 +117,7 @@ export function StripSlider({
       onAccessibilityAction={(e) => adjust(e.nativeEvent.actionName === 'increment' ? 10 : -10)}
       hitSlop={{ top: 10, bottom: 10 }}
     >
-      <LightStrip on={on} rgb={rgb} height={height} level={level / 100} />
+      <LightStrip on={on} rgb={rgb} palette={palette} height={height} level={level / 100} />
       {drag !== null && (
         // Le pourcentage suit le doigt pendant le geste, au-dessus du bout allumé du ruban.
         <View pointerEvents="none" style={{ position: 'absolute', bottom: '100%', left: `${Math.min(88, Math.max(0, drag - 6))}%` }}>

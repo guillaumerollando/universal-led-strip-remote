@@ -61,7 +61,8 @@ describe('identification Wi-Fi', () => {
 
 describe('protocole ELK', () => {
   it('reprend les trames validées sur le MELK-OA21', () => {
-    expect(elkInit('melk').map(hex)).toEqual(['7e0783', '7e0404']);
+    // La seconde trame éteint le ruban : on le rallume aussitôt.
+    expect(elkInit('melk').map(hex)).toEqual(['7e0783', '7e0404', '7e0404f00001ff00ef']);
     expect(hex(elkPower('melk', true))).toBe('7e0404f00001ff00ef');
     expect(hex(elkPower('melk', false))).toBe('7e0404000000ff00ef');
     expect(hex(elkPower('elk', true))).toBe('7e0004f00001ff00ef');

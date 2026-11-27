@@ -63,7 +63,23 @@ export function Sheet({ visible, title, items, onClose, children }: { visible: b
 }
 
 /** Saisie d'un nouveau nom, dans un `Sheet`. */
-export function RenameField({ initial, onDone, taken }: { initial: string; onDone: (name: string) => void; taken?: (name: string) => boolean }) {
+export function RenameField({
+  initial,
+  onDone,
+  taken,
+  action,
+  placeholder,
+  takenMessage,
+}: {
+  initial: string;
+  onDone: (name: string) => void;
+  taken?: (name: string) => boolean;
+  /** Libellé du bouton (« Renommer » par défaut). */
+  action?: string;
+  placeholder?: string;
+  /** Message quand le nom est déjà pris (par défaut : une pièce). */
+  takenMessage?: string;
+}) {
   const [name, setName] = useState(initial);
   const clash = !!name.trim() && !!taken?.(name);
   const done = (): void => {
@@ -79,10 +95,11 @@ export function RenameField({ initial, onDone, taken }: { initial: string; onDon
         selectTextOnFocus
         returnKeyType="done"
         onSubmitEditing={done}
+        placeholder={placeholder}
         placeholderTextColor={colors.textDim}
       />
-      {clash && <Text style={[styles.muted, { color: colors.warn }]}>{t('Une autre pièce porte déjà ce nom.')}</Text>}
-      <Button label={t('Renommer')} onPress={done} disabled={!name.trim() || clash} />
+      {clash && <Text style={[styles.muted, { color: colors.warn }]}>{takenMessage ?? t('Une autre pièce porte déjà ce nom.')}</Text>}
+      <Button label={action ?? t('Renommer')} onPress={done} disabled={!name.trim() || clash} />
     </View>
   );
 }

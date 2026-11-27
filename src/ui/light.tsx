@@ -15,6 +15,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Mask, Pattern, 
 
 import type { Rgb } from '../core/elk';
 import { colors, radius, rgbCss, space, WARM_WHITE } from './theme';
+import { LoadingBorder, SelectionGlow } from './LoadingBorder';
 
 /** Halo de lumière diffuse (dégradé radial), posé derrière un élément. */
 export function Glow({ rgb, intensity = 0.55, style }: { rgb: Rgb; intensity?: number; style?: ViewStyle }) {
@@ -37,6 +38,40 @@ export function Glow({ rgb, intensity = 0.55, style }: { rgb: Rgb; intensity?: n
 
 /** Mélange une couleur vers le blanc (0 = inchangée, 1 = blanc) : le cœur brûlant d'une LED. */
 const toWhite = ({ r, g, b }: Rgb, k: number): Rgb => ({ r: r + (255 - r) * k, g: g + (255 - g) * k, b: b + (255 - b) * k });
+
+/** Couleur qui résume une palette (moyenne ravivée) : pour le halo autour d'un ruban multicolore. */
+export function paletteGlow(palette: Rgb[]): Rgb {
+  const n = palette.length;
+  const avg = palette.reduce((a, c) => ({ r: a.r + c.r / n, g: a.g + c.g / n, b: a.b + c.b / n }), { r: 0, g: 0, b: 0 });
+  const k = 255 / Math.max(1, avg.r, avg.g, avg.b);
+  return { r: Math.round(avg.r * k), g: Math.round(avg.g * k), b: Math.round(avg.b * k) };
+}
+
+/**
+ * Le ruban aux couleurs d'un effet : la palette, deux fois de suite, glisse doucement en boucle (comme l'arc-en-ciel
+ * sur le vrai ruban). Immobile si l'animation est réduite.
+ */
+function FlowingPalette({ palette, on }: { palette: Rgb[]; on: boolean }) {
+  const reduced = useReducedMotion();
+  const x = useSharedValue(0);
+  useEffect(() => {
+    x.value = 0;
+    if (on && !reduced) x.value = withRepeat(withTiming(1, { duration: 1400 * palette.length, easing: Easing.linear }), -1, false);
+  }, [on, reduced, palette.length, x]);
+  const style = useAnimatedStyle(() => ({ transform: [{ translateX: `${-50 * x.value}%` }] }));
+  const stops = [...palette, ...palette, palette[0]].map((c) => rgbCss(c));
+  return (
+    <Animated.View style={[{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '200%' }, style]}>
+      <LinearGradient colors={stops as [string, string, ...string[]]} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }} style={StyleSheet.absoluteFill} />
+      <LinearGradient
+        colors={['rgba(255,255,255,0)', 'rgba(255,255,255,0.45)', 'rgba(255,255,255,0)']}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }}
+        style={StyleSheet.absoluteFill}
+      />
+    </Animated.View>
+  );
+}
 
 /**
  * Bande de lumière diffuse : uniforme sur la longueur, s'éteignant vers le haut, le bas et les deux bouts
@@ -69,6 +104,88 @@ function Bloom({ rgb, intensity, id }: { rgb: Rgb; intensity: number; id: string
   );
 }
 
+/**
+ * Couleurs adoucies le long du ruban (moyenne glissante) : la lumière qu'un bout de ruban projette sur le mur,
+ * de sa couleur à lui — une LED éteinte n'éclaire pas (Guillaume, 2026-11-27 : « la lueur devrait être de la couleur
+ * de l'endroit du néon »).
+ */
+function blurred(leds: Rgb[], stops = 28): Rgb[] {
+  const n = leds.length;
+  const win = Math.max(1, Math.round(n / 14));
+  return Array.from({ length: stops }, (_, s) => {
+    const center = ((s + 0.5) * n) / stops;
+    const near: Rgb[] = [];
+    for (let i = Math.floor(center - win); i <= Math.ceil(center + win); i += 1) near.push(leds[Math.min(n - 1, Math.max(0, i))]);
+    return mixLight(near, near.map(() => 1));
+  });
+}
+
+/**
+ * Moyenne de couleurs telle que l'œil la voit sur un écran : calculée en lumière (sRGB linéarisé), puis remise en
+ * sRGB. Rouge et vert se fondent en un jaune-olive doux au lieu d'un passage presque noir (moyenne brute), sans la
+ * bande jaune vif d'une somme de lumières (essai refusé par Guillaume, 2026-11-27).
+ */
+const toLin = (v: number): number => (v / 255) ** 2.2;
+const toSrgb = (v: number): number => Math.round(255 * v ** (1 / 2.2));
+function mixLight(cols: Rgb[], weights: number[]): Rgb {
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  let total = 0;
+  cols.forEach((c, i) => {
+    const w = weights[i] ?? 1;
+    r += toLin(c.r) * w;
+    g += toLin(c.g) * w;
+    b += toLin(c.b) * w;
+    total += w;
+  });
+  if (total <= 0) return { r: 0, g: 0, b: 0 };
+  return { r: toSrgb(r / total), g: toSrgb(g / total), b: toSrgb(b / total) };
+}
+
+/** Ce que l'œil voit à travers le diffuseur : chaque LED mêlée à ses voisines (1-2-1), un arrêt au centre de chaque LED. */
+function diffused(leds: Rgb[]): { colors: string[]; at: number[] } {
+  const n = leds.length;
+  const get = (i: number): Rgb => leds[Math.min(n - 1, Math.max(0, i))] ?? { r: 0, g: 0, b: 0 };
+  const colorsOut = leds.map((_, i) => rgbCss(mixLight([get(i - 1), get(i), get(i + 1)], [1, 2, 1])));
+  if (colorsOut.length < 2) return { colors: [colorsOut[0] ?? '#000', colorsOut[0] ?? '#000'], at: [0, 1] };
+  return { colors: colorsOut, at: leds.map((_, i) => (i + 0.5) / n) };
+}
+
+/**
+ * Lueur multicolore : une bande de lumière dont la couleur suit le ruban, qui s'éteint en douceur vers le haut, le
+ * bas et les deux bouts (même dessin que `Bloom`, mais une couleur par endroit).
+ */
+// Les deux bouts du dégradé s'éteignent en douceur : pas de bord net au-delà du ruban.
+function LocalBloom({ leds, intensity, id, profile }: { leds: Rgb[]; intensity: number; id: string; profile: [number, number][] }) {
+  const stops = blurred(leds);
+  return (
+    <Svg width="100%" height="100%">
+      <Defs>
+        <SvgLinearGradient id={`${id}c`} x1="0" y1="0" x2="1" y2="0">
+          {[
+            <Stop key="a" offset={0} stopColor={rgbCss(stops[0])} stopOpacity={0} />,
+            ...stops.map((c, i) => <Stop key={i} offset={0.04 + (0.92 * (i + 0.5)) / stops.length} stopColor={rgbCss(c)} stopOpacity={1} />),
+            <Stop key="z" offset={1} stopColor={rgbCss(stops[stops.length - 1])} stopOpacity={0} />,
+          ]}
+        </SvgLinearGradient>
+        <SvgLinearGradient id={`${id}v`} x1="0" y1="0" x2="0" y2="1">
+          {profile.map(([o, a]) => (
+            <Stop key={o} offset={o} stopColor="#fff" stopOpacity={a * intensity} />
+          ))}
+        </SvgLinearGradient>
+        <Mask id={`${id}m`}>
+          <Rect x="0" y="0" width="100%" height="100%" fill={`url(#${id}v)`} />
+        </Mask>
+      </Defs>
+      <Rect x="0" y="0" width="100%" height="100%" fill={`url(#${id}c)`} mask={`url(#${id}m)`} />
+    </Svg>
+  );
+}
+/** Lueur serrée autour de la bande, et halo large qui déborde un peu plus vers le bas (la lumière qui tombe). */
+const TIGHT: [number, number][] = [[0, 0], [0.3, 0.22], [0.5, 1], [0.7, 0.22], [1, 0]];
+const WIDE: [number, number][] = [[0, 0], [0.25, 0.25], [0.42, 0.85], [0.55, 0.75], [0.8, 0.2], [1, 0]];
+
 /** Rangée de LED dessinées sur le ruban : points brillants allumé, puces mates éteint. */
 function LedDots({ height, on, id }: { height: number; on: boolean; id: string }) {
   const step = Math.max(6, height * 1.7);
@@ -91,8 +208,27 @@ function LedDots({ height, on, id }: { height: number; on: boolean; id: string }
  * (le halo déborde un peu plus vers le bas : la lumière qui tombe sur la surface). Éteint : un trait mat aux LED grises.
  * Seules l'opacité et la position s'animent (thread UI, sans re-rendu) ; rien ne bouge si l'animation est réduite.
  */
-export function LightStrip({ on, rgb, height = 8, level = 1 }: { on: boolean; rgb?: Rgb; height?: number; /** Luminosité 0-1 : seule cette part du ruban brille, le reste s'éteint (curseur de l'accueil). */ level?: number }) {
-  const color = rgb ?? WARM_WHITE;
+export function LightStrip({
+  on,
+  rgb,
+  palette,
+  height = 8,
+  level = 1,
+  leds,
+}: {
+  on: boolean;
+  rgb?: Rgb;
+  /** Couleurs de l'effet en cours (arc-en-ciel, ambiance…) : le ruban les montre au lieu d'une couleur unie. */
+  palette?: Rgb[];
+  height?: number;
+  /** Luminosité 0-1 : seule cette part du ruban brille, le reste s'éteint (curseur de l'accueil). */
+  level?: number;
+  /** Couleur de chaque LED, telle quelle (aperçu de « Créer mon ambiance ») : la bande les montre à leur place. */
+  leds?: Rgb[];
+}) {
+  // Halo d'un dessin : arrondi, pour ne pas redessiner les lueurs à chaque image de l'aperçu.
+  const q = (c: Rgb): Rgb => ({ r: Math.round(c.r / 16) * 16, g: Math.round(c.g / 16) * 16, b: Math.round(c.b / 16) * 16 });
+  const color = leds ? q(paletteGlow(leds)) : palette ? paletteGlow(palette) : (rgb ?? WARM_WHITE);
   const reduced = useReducedMotion();
   const shimmer = useSharedValue(0);
   const breath = useSharedValue(1);
@@ -119,7 +255,19 @@ export function LightStrip({ on, rgb, height = 8, level = 1 }: { on: boolean; rg
   const box = height * 3.5;
   return (
     <View style={{ height: box, justifyContent: 'center' }}>
-      {on && (
+      {on && leds && leds.length > 0 && (
+        <>
+          {/* Halo large, qui respire : chaque endroit de la couleur de son bout de ruban. */}
+          <Animated.View pointerEvents="none" style={[{ position: 'absolute', left: -space.md, right: -space.md, top: -height * 2.5, bottom: -height * 3.2 }, breathStyle]}>
+            <LocalBloom leds={leds} intensity={0.55} id={`${id}w`} profile={WIDE} />
+          </Animated.View>
+          {/* Lueur serrée le long de la bande. */}
+          <View pointerEvents="none" style={{ position: 'absolute', left: -height / 2, right: -height / 2, top: box / 2 - height * 2, height: height * 4 }}>
+            <LocalBloom leds={leds} intensity={0.85} id={`${id}t`} profile={TIGHT} />
+          </View>
+        </>
+      )}
+      {on && !leds && (
         <>
           {/* Halo large, qui respire. */}
           <Animated.View pointerEvents="none" style={[{ position: 'absolute', left: -space.lg, right: -space.lg, top: -height * 2.5, bottom: -height * 3.2 }, breathStyle]}>
@@ -136,7 +284,19 @@ export function LightStrip({ on, rgb, height = 8, level = 1 }: { on: boolean; rg
         </>
       )}
       <View style={{ height, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: on ? rgbCss(color) : colors.off }}>
-        {on && (
+        {on && leds && leds.length > 0 && (
+          // Un arrêt au centre de chaque LED, couleurs à peine mêlées à leurs voisines : comme derrière un diffuseur,
+          // deux couleurs côte à côte se fondent sur une ou deux LED au lieu d'un bord net (Guillaume, 2026-11-27).
+          <LinearGradient
+            colors={diffused(leds).colors as [string, string, ...string[]]}
+            locations={diffused(leds).at as [number, number, ...number[]]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
+        {on && !leds && palette && <FlowingPalette palette={palette} on={on} />}
+        {on && !leds && !palette && (
           <LinearGradient
             colors={[rgbCss(color), rgbCss(toWhite(color, 0.7)), rgbCss(color)]}
             start={{ x: 0.5, y: 0 }}
@@ -171,6 +331,7 @@ export function LightStrip({ on, rgb, height = 8, level = 1 }: { on: boolean; rg
 export function PowerButton({
   on,
   rgb,
+  palette,
   onPress,
   size = 52,
   busy,
@@ -180,6 +341,8 @@ export function PowerButton({
 }: {
   on: boolean;
   rgb?: Rgb;
+  /** Couleurs de l'effet en cours : le bouton allumé les porte en dégradé. */
+  palette?: Rgb[];
   onPress: () => void;
   size?: number;
   busy?: boolean;
@@ -189,7 +352,7 @@ export function PowerButton({
   /** Version discrète (interrupteur général) : un anneau qui s'éclaire à peine, sans aplat ni bouffée. */
   quiet?: boolean;
 }) {
-  const color = rgb ?? WARM_WHITE;
+  const color = palette ? paletteGlow(palette) : (rgb ?? WARM_WHITE);
   const bloom = useSharedValue(0);
   const bloomStyle = useAnimatedStyle(() => ({
     opacity: (1 - bloom.value) * 0.6,
@@ -238,8 +401,17 @@ export function PowerButton({
           alignItems: 'center',
           justifyContent: 'center',
           opacity: busy ? 0.5 : 1,
+          overflow: 'hidden',
         }}
       >
+        {on && !quiet && palette && (
+          <LinearGradient
+            colors={palette.map((c) => rgbCss(c)) as [string, string, ...string[]]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
         <PowerIcon
           color={on ? (quiet ? rgbCss(color) : luminance(color) > 150 ? colors.bg : colors.text) : colors.textDim}
           size={size * (quiet ? 0.46 : 0.42)}
@@ -339,7 +511,7 @@ export function SignatureStrip({ children }: { children?: ReactNode }) {
 }
 
 /** Pastille de couleur lumineuse. */
-export function Swatch({ rgb, selected, onPress, label }: { rgb: Rgb; selected?: boolean; onPress: () => void; label: string }): ReactNode {
+export function Swatch({ rgb, selected, onPress, label, busy }: { rgb: Rgb; selected?: boolean; onPress: () => void; label: string; busy?: boolean }): ReactNode {
   return (
     <Pressable accessibilityLabel={label} onPress={onPress} style={{ width: 52, height: 52, alignItems: 'center', justifyContent: 'center' }}>
       {selected && <Glow rgb={rgb} intensity={0.7} style={{ margin: -14 }} />}
@@ -353,15 +525,24 @@ export function Swatch({ rgb, selected, onPress, label }: { rgb: Rgb; selected?:
           borderColor: selected ? colors.text : 'rgba(255,255,255,0.15)',
         }}
       />
+      {/* Envoi en cours : le contour qui tourne, autour de la pastille. */}
+      <View pointerEvents="none" style={{ position: 'absolute', width: 46, height: 46 }}>
+        <LoadingBorder active={!!busy} radius={23} outset={0} />
+      </View>
     </Pressable>
   );
 }
 
-export function Chip({ label, selected, onPress }: { label: string; selected?: boolean; onPress: () => void }) {
+/** Pastille de choix. `disabled` : grisée et sans effet (ex. « − » déjà au minimum), pour que la limite se voie. */
+export function Chip({ label, selected, onPress, disabled }: { label: string; selected?: boolean; onPress: () => void; disabled?: boolean }) {
   return (
     <Pressable
       onPress={onPress}
+      disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ selected, disabled }}
       style={{
+        opacity: disabled ? 0.35 : 1,
         paddingHorizontal: space.md,
         minHeight: 38,
         justifyContent: 'center',
@@ -372,6 +553,7 @@ export function Chip({ label, selected, onPress }: { label: string; selected?: b
       }}
     >
       <Text style={{ color: selected ? colors.accent : colors.text, fontWeight: '600' }}>{label}</Text>
+      <SelectionGlow active={!!selected && !disabled} radius={radius.pill} />
     </Pressable>
   );
 }

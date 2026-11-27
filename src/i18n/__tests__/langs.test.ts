@@ -7,6 +7,10 @@ import { elkEffects } from '../../core/elk';
 import { FAMILIES } from '../../core/families';
 import { IR_REMOTES } from '../../core/ir';
 import { LAYOUTS } from '../../core/irSetup';
+import { BUILTIN_AMBIANCES } from '../../core/ambiances';
+import { PRESET_SCENES } from '../../core/scenes';
+import { ELK_CATALOG, LEDNET_CATALOG, MELK_CATALOG } from '../../core/effectCatalog';
+import { OBK_ANIMS } from '../../core/protocols/openbeken';
 import { DICTS, pickLang } from '../dicts';
 import { EN } from '../langs/en';
 
@@ -39,6 +43,10 @@ function dataKeys(): string[] {
     FAMILIES['ir-nec'].label,
     'Ruban à pixels',
     ...(['elk', 'melk'] as const).flatMap((m) => elkEffects(m).map((e) => e.label)),
+    ...OBK_ANIMS.map((e) => e.label),
+    ...BUILTIN_AMBIANCES.map((a) => a.label),
+    ...PRESET_SCENES.map((p) => p.name),
+    ...[...MELK_CATALOG, ...ELK_CATALOG, ...LEDNET_CATALOG].flatMap((e) => e.parts),
     ...irKeys.filter((k) => k.kind === 'color' || k.kind === 'effect').map((k) => k.label),
   ];
 }

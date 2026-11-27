@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="ledstrip_widget_label">部屋</string>
+  <string name="ledstrip_room_widget_label">部屋</string>
+  <string name="ledstrip_ambiance_widget_label">ムード</string>
 </resources>

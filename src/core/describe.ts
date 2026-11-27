@@ -38,7 +38,7 @@ export function productName(d: Describable): string | undefined {
  * ou undefined quand on ne sait rien de plus que « ruban ».
  */
 export function stripKind(d: Describable): 'Ruban à pixels' | undefined {
-  return d.family === 'sp110e' ? 'Ruban à pixels' : undefined;
+  return d.family === 'sp110e' || (d.family === 'openbeken' && !!d.meta?.pixels) ? 'Ruban à pixels' : undefined;
 }
 
 /** Le nom propre de l'appareil s'il en a un (donné par son propriétaire dans son appli : « Salon », « WLED-Bureau »). */

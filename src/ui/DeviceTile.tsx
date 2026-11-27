@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { FAMILIES } from '../core/families';
-import { canDim, canPower, effectsFor, setPower } from '../services/control';
+import { canDim, canPower, effectsFor, lightColors, setPower } from '../services/control';
 import { markLongPressSeen } from '../services/hints';
 import type { SavedDevice } from '../services/store';
 import { DeviceOptions } from './DeviceOptions';
 import { styles as kit } from './kit';
 import { LightStrip, PowerButton } from './light';
 import { StripSlider } from './StripSlider';
+import { LoadingBorder } from './LoadingBorder';
+import { useSending } from '../services/sending';
 import { colors, radius, space } from './theme';
 import { t } from '../i18n';
 
@@ -28,6 +30,8 @@ function stateText(device: SavedDevice): string {
  */
 export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: boolean }) {
   const [busy, setBusy] = useState(false);
+  /** Un envoi vers ce ruban (marche/arrêt, luminosité du ruban-curseur, ambiance de pièce…) : le contour tourne. */
+  const sending = useSending(device.key);
   const [error, setError] = useState<string | null>(null);
   const [options, setOptions] = useState(false);
   // Un message d'échec s'efface tout seul : la tuile ne reste pas en erreur.
@@ -37,6 +41,7 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
     return () => clearTimeout(timer);
   }, [error]);
   const on = device.state?.on ?? false;
+  const palette = lightColors(device);
   const family = FAMILIES[device.family];
   const controllable = canPower(device);
 
@@ -81,7 +86,7 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
           </Text>
         </View>
         {controllable ? (
-          <PowerButton on={on} rgb={device.state?.rgb} onPress={toggle} busy={busy} label={t(on ? '{name} : éteindre' : '{name} : allumer', { name: device.name })} />
+          <PowerButton on={on} rgb={device.state?.rgb} palette={palette} onPress={toggle} busy={busy} label={t(on ? '{name} : éteindre' : '{name} : allumer', { name: device.name })} />
         ) : (
           <Text style={[kit.muted, { maxWidth: 110, textAlign: 'right' }]}>
             {family.apps[0] ? t('Via {app}', { app: family.apps[0].name }) : ''}
@@ -90,12 +95,13 @@ export function DeviceTile({ device, nearby }: { device: SavedDevice; nearby?: b
       </View>
       {controllable &&
         (on && canDim(device) ? (
-          <StripSlider target={device} on={on} rgb={device.state?.rgb} onTap={open} onLongPress={settings} onError={setError} />
+          <StripSlider target={device} on={on} rgb={device.state?.rgb} palette={palette} onTap={open} onLongPress={settings} onError={setError} />
         ) : (
-          <LightStrip on={on} rgb={device.state?.rgb} height={6} />
+          <LightStrip on={on} rgb={device.state?.rgb} palette={palette} height={6} />
         ))}
       {error && <Text style={[kit.muted, { color: colors.danger }]}>{error}</Text>}
       <DeviceOptions device={device} visible={options} onClose={() => setOptions(false)} />
+      <LoadingBorder active={sending} radius={radius.md} />
     </Pressable>
   );
 }

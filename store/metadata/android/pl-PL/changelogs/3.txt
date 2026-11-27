@@ -1,0 +1,6 @@
+Duża aktualizacja!
+• Światła Wi-Fi i inteligentne żarówki (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Animowane nastroje: Boże Narodzenie, Halloween, Jesień, Zorza polarna…
+• Twórz własne nastroje: maluj taśmę dioda po diodzie
+• Biele od ciepłego do zimnego, nastroje pokoi i widżety
+• Prostsze dodawanie, lżejsza aplikacja, mnóstwo dopracowań

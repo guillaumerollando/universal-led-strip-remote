@@ -1,0 +1,6 @@
+¡Gran actualización!
+• Luces Wi-Fi y focos inteligentes (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Ambientes animados: Navidad, Halloween, Otoño, Aurora…
+• Crea tus ambientes: pinta tu tira LED por LED
+• Blancos del cálido al frío, ambientes de habitación y widgets
+• Agregar luces más fácil, app más ligera, muchos detalles pulidos

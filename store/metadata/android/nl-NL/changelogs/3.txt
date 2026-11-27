@@ -1,0 +1,6 @@
+Grote update!
+• Wi-Fi-lampen en slimme lampen (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Geanimeerde sferen: Kerst, Halloween, Herfst, Noorderlicht…
+• Maak je eigen sferen: schilder je strip led voor led
+• Wit van warm tot koel, kamersferen en widgets
+• Makkelijker toevoegen, lichtere app, veel afwerking

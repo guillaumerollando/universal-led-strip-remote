@@ -1,1 +1,1 @@
-Control remoto Bluetooth e IR para tiras de luces LED RGB: colores y efectos
+Una app para gobernarlos a todos: tiras LED y focos. Gratis, sin anuncios.

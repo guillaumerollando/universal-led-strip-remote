@@ -1,0 +1,6 @@
+Big update!
+• Wi-Fi lights and smart bulbs (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Animated moods: Christmas, Halloween, Autumn, Aurora…
+• Create your own moods: paint your strip LED by LED
+• Warm to cool whites, room moods and widgets
+• Easier setup, lighter app, lots of polish

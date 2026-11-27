@@ -1,33 +1,32 @@
-Controle as suas fitas LED RGB numa só aplicação simples: fitas LED Bluetooth e fitas com comando por infravermelhos (IR). Grátis, sem anúncios, sem conta e funciona sem internet.
+Uma aplicação para a todos governar. Cansado de ter uma aplicação diferente para cada fita LED? O Controle Remoto Fita LED controla as suas fitas LED e as suas lâmpadas inteligentes, por Bluetooth, Wi-Fi ou infravermelhos, a partir de uma só aplicação simples.
 
-Já não sabe que aplicação serve para cada fita LED? Perdeu o pequeno comando? O Controle Remoto Fita LED reúne todas as suas luzes LED: quarto, secretária, retroiluminação da TV, setup de gaming, cozinha ou teto.
+Grátis. Sem anúncios. Sem conta. Código aberto. Quer mais?
 
-★ Controlador de fita LED Bluetooth
-A maioria dos controladores Bluetooth baratos para fitas LED vendidos online (que aparecem como ELK-BLEDOM, ELK-BLEDOB ou MELK na pesquisa) funciona logo, sem código de emparelhamento:
-• ligar e desligar
-• qualquer cor, com cores rápidas e um controlo de branco
-• brilho
-• efeitos incluídos (transição, salto, arco-íris, fogo…) e a respetiva velocidade
+★ Toda a sua iluminação, uma só aplicação
+• Fitas LED Bluetooth: a maioria dos controladores baratos (ELK-BLEDOM, ELK-BLEDOB, MELK…) funciona logo, sem código de emparelhamento
+• Luzes Wi-Fi com protocolo aberto: Philips Hue, Yeelight, LIFX, WLED, Govee (controlo local), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
+• Fitas LED com comando por infravermelhos (IR): se o seu telemóvel tem emissor de infravermelhos, passa a ser o comando, e a aplicação encontra sozinha os códigos certos
+A aplicação procura sozinha à sua volta: toque numa luz para a adicionar.
 
-★ Comando IR para fita LED
-Perdeu ou partiu o comando? Se o seu telemóvel tem emissor de infravermelhos (muitos Xiaomi, Redmi e POCO têm), passa a ser o comando da sua fita LED. A aplicação encontra sozinha os códigos de infravermelhos certos: toque no ecrã assim que a fita reagir, e já está. Depois, as cores, o brilho e os efeitos funcionam como no comando original de 24 ou 44 teclas.
-Dica: o emissor de infravermelhos de um telemóvel alcança muito menos do que um comando. Aproxime a parte de cima do telemóvel a cerca de 30 cm da caixinha que está no cabo da fita.
+★ Cores, brancos e efeitos
+Qualquer cor, brancos do mais quente (vela) ao mais frio (luz do dia), brilho deslizando o dedo pela fita, e os efeitos incluídos do seu controlador com a respetiva velocidade.
 
-★ Divisões
-Agrupe as suas fitas LED por divisão e ligue ou desligue uma divisão inteira com um toque.
+★ Ambientes prontos a usar
+Natal, Halloween, Outono, Aurora, Romântico, Oceano, Miami, Floresta: um toque e a sua luz muda de ambiente. Numa fita de píxeis ganham vida a sério (grinaldas que cintilam, aurora que ondula, folhas que caem) e continuam com o telemóvel desligado.
 
-★ Atalhos e automatização
-Ligue ou desligue uma divisão a partir de um atalho no ecrã principal ou de uma aplicação de automatização, com uma simples ligação.
+★ Crie os seus próprios ambientes
+Pinte a sua fita LED por LED numa fita desenhada em S, ou escolha um estilo (faixas, brilhos, grinalda, folhas…). Experimente em direto na sua fita e depois guarde. Qualquer ambiente da aplicação pode servir de ponto de partida.
 
-★ Outros controladores
-A aplicação reconhece muitos outros controladores LED (Bluetooth e Wi-Fi) e indica de que aplicação vêm. Se algum veio com um comando por infravermelhos, adicione-o como infravermelhos e controle tudo a partir daqui.
+★ Divisões e widgets
+Organize as suas luzes por divisão, ligue uma divisão inteira num gesto ou ponha-a em ambiente (Aconchego, Relax, Fiesta, ou os seus). Os widgets fazem tudo isto a partir do ecrã principal.
 
-★ Privacidade em primeiro lugar
-Sem conta, sem anúncios, sem rastreio, sem precisar de internet. Tudo fica no seu telemóvel.
+★ Grátis e sem anúncios, a sério
+Sem anúncios, sem compras integradas, sem subscrição, sem registo. O código é aberto (GPL-3.0) e público no GitHub. Nada sai do seu telemóvel, e a aplicação funciona sem internet.
 
 Perguntas
-• Funciona com a minha fita LED? Sim, se a sua fita aparece como ELK-BLEDOM, ELK-BLEDOB ou MELK numa pesquisa Bluetooth, ou se veio com um pequeno comando por infravermelhos.
-• O meu telemóvel não tem emissor de infravermelhos? Então não é possível controlar as fitas por infravermelhos (nenhuma aplicação o consegue sem ele), mas as fitas Bluetooth funcionam em qualquer telemóvel.
-• Fitas Wi-Fi? Os dispositivos bloqueados pelo fabricante (Tuya / Smart Life) não podem ser controlados por nenhuma outra aplicação.
+• Funciona com a minha luz? Se aparecer como ELK-BLEDOM, ELK-BLEDOB ou MELK numa pesquisa Bluetooth, se falar um protocolo aberto por Wi-Fi, ou se veio com um pequeno comando por infravermelhos, sim.
+• O meu telemóvel não tem emissor de infravermelhos? Então as luzes com comando não podem ser controladas (nenhuma aplicação consegue sem ele), mas tudo o resto funciona.
+• Tuya / Smart Life? Estes dispositivos estão bloqueados pelo fabricante: nenhuma outra aplicação os pode controlar. A aplicação reconhece-os e explica-lhe o que fazer.
 
-O Controle Remoto Fita LED é uma aplicação independente, sem ligação aos fabricantes destes controladores nem às respetivas aplicações.
+Feito pela Rollando Studio. Simples, eficiente, de qualidade.
+O Controle Remoto Fita LED é uma aplicação independente, sem ligação aos fabricantes destas luzes nem às respetivas aplicações.

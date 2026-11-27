@@ -1,33 +1,32 @@
-Controla tus tiras de luces LED RGB desde una sola app sencilla: tiras LED Bluetooth y tiras con control remoto infrarrojo (IR). Gratis, sin anuncios, sin cuenta y funciona sin internet.
+Una app para gobernarlos a todos. ¿Harto de tener una app distinta para cada tira LED? Control Remoto para Tiras LED controla tus tiras LED y tus focos inteligentes, por Bluetooth, Wi-Fi o infrarrojos, desde una sola app sencilla.
 
-¿Ya no sabes qué app va con cada tira LED? ¿Perdiste el controlcito? Control Remoto para Tiras LED reúne todas tus luces LED: dormitorio, escritorio, luz detrás de la TV, setup gamer, cocina o techo.
+Gratis. Sin anuncios. Sin cuenta. Código abierto. ¿Qué más se puede pedir?
 
-★ Controlador de tiras LED Bluetooth
-La mayoría de los controladores Bluetooth económicos para tiras LED que se venden en internet (aparecen como ELK-BLEDOM, ELK-BLEDOB o MELK al buscarlos) funcionan directamente, sin código de vinculación:
-• encender y apagar
-• cualquier color, con colores rápidos y un control de blanco
-• brillo
-• efectos incluidos (fundido, salto, arcoíris, fuego…) y su velocidad
+★ Toda tu iluminación, una sola app
+• Tiras LED Bluetooth: la mayoría de los controladores baratos (ELK-BLEDOM, ELK-BLEDOB, MELK…) funcionan directamente, sin código de vinculación
+• Luces Wi-Fi con protocolo abierto: Philips Hue, Yeelight, LIFX, WLED, Govee (control local), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
+• Tiras LED con control remoto por infrarrojos (IR): si tu celular tiene emisor de infrarrojos, se convierte en el control remoto, y la app encuentra sola los códigos correctos
+La app busca por sí sola a tu alrededor: toca una luz para agregarla.
 
-★ Control remoto IR para tiras LED
-¿Perdiste o se rompió el control remoto? Si tu celular tiene emisor de infrarrojos (muchos Xiaomi, Redmi y POCO lo tienen), se convierte en el control remoto de tus luces LED. La app encuentra sola los códigos infrarrojos correctos: toca la pantalla en cuanto tu tira reaccione, y listo. Después, los colores, el brillo y los efectos funcionan como en el control original de 24 o 44 botones.
-Consejo: el emisor de infrarrojos de un celular llega mucho menos lejos que un control remoto. Acerca la parte de arriba del celular a unos 30 cm de la cajita que está en el cable de la tira.
+★ Colores, blancos y efectos
+Cualquier color, blancos del más cálido (vela) al más frío (luz de día), brillo deslizando el dedo por la tira, y los efectos incluidos de tu controlador con su velocidad.
 
-★ Habitaciones
-Agrupa tus tiras de luces LED por habitación y enciende o apaga una habitación entera con un solo toque.
+★ Ambientes listos para usar
+Navidad, Halloween, Otoño, Aurora, Romántico, Océano, Miami, Bosque: un toque y tu luz cambia de ambiente. En una tira de píxeles cobran vida de verdad (guirnaldas que centellean, aurora que ondula, hojas que caen) y siguen funcionando con el celular apagado.
 
-★ Accesos directos y automatización
-Enciende o apaga una habitación desde un acceso directo en la pantalla de inicio o desde una app de automatización, con un simple enlace.
+★ Crea tus propios ambientes
+Pinta tu tira LED por LED sobre una tira dibujada en forma de S, o elige un estilo (bandas, resplandores, guirnalda, hojas…). Pruébalo en directo en tu tira y luego guárdalo. Cualquier ambiente de la app puede servir de punto de partida.
 
-★ Otros controladores
-La app reconoce muchos otros controladores LED (Bluetooth y Wi-Fi) y te dice de qué app vienen. Si alguno venía con control remoto infrarrojo, agrégalo como infrarrojo y contrólalo todo desde aquí.
+★ Habitaciones y widgets
+Organiza tus luces por habitación, enciende una habitación entera con un gesto o ponla en ambiente (Acogedor, Relax, Fiesta, o los tuyos). Unos widgets hacen todo eso desde la pantalla de inicio.
 
-★ Privada desde el principio
-Sin cuenta, sin anuncios, sin rastreo y sin necesidad de internet. Todo se queda en tu celular.
+★ Gratis y sin anuncios, de verdad
+Sin anuncios, sin compras integradas, sin suscripción, sin registro. El código es abierto (GPL-3.0) y público en GitHub. Nada sale de tu celular, y la app funciona sin internet.
 
 Preguntas
-• ¿Funciona con mi tira LED? Sí, si tu tira aparece como ELK-BLEDOM, ELK-BLEDOB o MELK al buscar dispositivos Bluetooth, o si venía con un pequeño control remoto infrarrojo.
-• ¿Mi celular no tiene emisor de infrarrojos? Entonces no se pueden controlar las tiras infrarrojas (ninguna app puede hacerlo sin él), pero las tiras Bluetooth funcionan en cualquier celular.
-• ¿Tiras Wi-Fi? Los dispositivos bloqueados por su fabricante (Tuya / Smart Life) no se pueden controlar con ninguna otra app.
+• ¿Funciona con mi luz? Si aparece como ELK-BLEDOM, ELK-BLEDOB o MELK en una búsqueda Bluetooth, si habla un protocolo abierto por Wi-Fi, o si venía con un pequeño control remoto por infrarrojos, sí.
+• ¿Mi celular no tiene emisor de infrarrojos? Entonces las luces con control remoto no se pueden controlar (ninguna app puede sin él), pero todo lo demás funciona.
+• ¿Tuya / Smart Life? Estos dispositivos están bloqueados por su fabricante: ninguna otra app puede controlarlos. La app los reconoce y te explica qué hacer.
 
-Control Remoto para Tiras LED es una app independiente, sin relación con los fabricantes de estos controladores ni con sus apps.
+Hecho por Rollando Studio. Simple, eficaz, de calidad.
+Control Remoto para Tiras LED es una app independiente, sin relación con los fabricantes de estas luces ni con sus apps.

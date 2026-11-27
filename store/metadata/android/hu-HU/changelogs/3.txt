@@ -1,0 +1,6 @@
+Nagy frissítés!
+• Wi-Fi-s lámpák és okosizzók (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Animált hangulatok: Karácsony, Halloween, Ősz, Sarki fény…
+• Készítsd el a saját hangulataidat: fesd meg a szalagot LED-enként
+• Melegtől hidegig állítható fehérek, szobahangulatok és widgetek
+• Egyszerűbb hozzáadás, könnyebb app, rengeteg finomítás

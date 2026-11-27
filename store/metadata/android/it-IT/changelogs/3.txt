@@ -1,0 +1,6 @@
+Grande aggiornamento!
+• Luci Wi-Fi e lampadine smart (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Atmosfere animate: Natale, Halloween, Autunno, Aurora…
+• Crea le tue atmosfere: dipingi la tua striscia LED per LED
+• Bianchi dal caldo al freddo, atmosfere per stanza e widget
+• Aggiunta più semplice, app più leggera, tantissime rifiniture

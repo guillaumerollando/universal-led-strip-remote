@@ -1,33 +1,32 @@
-Controlla le tue strisce LED RGB da un’unica app semplice: strisce LED Bluetooth e strisce con telecomando a infrarossi (IR). Gratis, senza pubblicità, senza account, funziona offline.
+Un’app per domarli tutti. Stufo di avere un’app diversa per ogni striscia LED? Telecomando Striscia LED controlla le tue strisce LED e le tue lampadine smart, via Bluetooth, Wi-Fi o infrarossi, da un’unica app semplice.
 
-Non ricordi più quale app va con quale striscia LED? Hai perso il piccolo telecomando? Telecomando Striscia LED riunisce tutte le tue luci LED: camera da letto, scrivania, retroilluminazione della TV, postazione gaming, cucina o soffitto.
+Gratis. Senza pubblicità. Senza account. Open source. Che altro vuoi?
 
-★ Controller per strisce LED Bluetooth
-La maggior parte dei controller Bluetooth economici per strisce LED venduti online (che compaiono come ELK-BLEDOM, ELK-BLEDOB o MELK durante la ricerca) funziona subito, senza codice di associazione:
-• accendere e spegnere
-• qualsiasi colore, con colori rapidi e un cursore del bianco
-• luminosità
-• effetti integrati (dissolvenza, salto, arcobaleno, fuoco…) e la loro velocità
+★ Tutta la tua illuminazione, un’unica app
+• Strisce LED Bluetooth: la maggior parte dei controller economici (ELK-BLEDOM, ELK-BLEDOB, MELK…) funziona subito, senza codice di associazione
+• Luci Wi-Fi con protocollo aperto: Philips Hue, Yeelight, LIFX, WLED, Govee (controllo locale), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
+• Strisce LED con telecomando a infrarossi (IR): se il tuo telefono ha un emettitore a infrarossi, diventa il telecomando, e l’app trova da sola i codici giusti
+L’app cerca da sola intorno a te: tocca una luce per aggiungerla.
 
-★ Telecomando IR per strisce LED
-Telecomando perso o rotto? Se il tuo telefono ha un emettitore a infrarossi (molti Xiaomi, Redmi e POCO ce l’hanno), diventa il telecomando delle tue luci LED. L’app trova da sola i codici infrarossi giusti: tocca lo schermo appena la striscia reagisce, e il gioco è fatto. Poi colori, luminosità ed effetti funzionano come sul telecomando originale a 24 o 44 tasti.
-Consiglio: l’emettitore a infrarossi di un telefono arriva molto meno lontano di un telecomando. Tieni la parte alta del telefono a circa 30 cm dalla scatolina sul cavo della striscia.
+★ Colori, bianchi ed effetti
+Qualsiasi colore, bianchi dal più caldo (candela) al più freddo (luce del giorno), luminosità con uno scorrimento del dito lungo la striscia, e gli effetti integrati del tuo controller con la loro velocità.
 
-★ Stanze
-Raggruppa le strisce LED per stanza, poi accendi o spegni un’intera stanza con un tocco.
+★ Atmosfere pronte all’uso
+Natale, Halloween, Autunno, Aurora, Romantico, Oceano, Miami, Foresta: un tocco e la tua luce cambia atmosfera. Su una striscia a pixel prendono vita davvero (ghirlande che scintillano, aurora che ondeggia, foglie che cadono) e continuano anche a telefono spento.
 
-★ Scorciatoie e automazioni
-Accendi o spegni una stanza da una scorciatoia sulla schermata iniziale o da un’app di automazione, con un semplice link.
+★ Crea le tue atmosfere
+Dipingi la tua striscia LED per LED su una striscia disegnata a S, oppure scegli uno stile (bande, bagliori, ghirlanda, foglie…). Provalo dal vivo sulla tua striscia, poi salvalo. Ogni atmosfera dell’app può essere il tuo punto di partenza.
 
-★ Altri controller
-L’app riconosce molti altri controller LED (Bluetooth e Wi-Fi) e ti dice da quale app provengono. Se uno aveva in dotazione un telecomando a infrarossi, aggiungilo come infrarossi e comanda tutto da qui.
+★ Stanze e widget
+Raggruppa le tue luci per stanza, accendi un’intera stanza con un gesto o metti l’atmosfera giusta (Cocooning, Relax, Fiesta, o le tue). I widget fanno tutto questo dalla schermata iniziale.
 
-★ Privacy prima di tutto
-Niente account, niente pubblicità, niente tracciamento, nessuna connessione internet necessaria. Tutto resta sul tuo telefono.
+★ Gratis e senza pubblicità, davvero
+Niente pubblicità, niente acquisti in-app, niente abbonamento, niente registrazione. Il codice è open source (GPL-3.0) e pubblico su GitHub. Niente lascia il tuo telefono, e l’app funziona senza internet.
 
 Domande
-• Funziona con la mia striscia LED? Sì, se durante una ricerca Bluetooth la striscia compare come ELK-BLEDOM, ELK-BLEDOB o MELK, oppure se aveva in dotazione un piccolo telecomando a infrarossi.
-• Il mio telefono non ha l’emettitore IR? Allora le strisce a infrarossi non si possono comandare (nessuna app può farlo senza), ma le strisce Bluetooth funzionano su qualsiasi telefono.
-• Strisce Wi-Fi? I dispositivi bloccati dal produttore (Tuya / Smart Life) non possono essere comandati da nessun’altra app.
+• Funziona con la mia luce? Se compare come ELK-BLEDOM, ELK-BLEDOB o MELK in una ricerca Bluetooth, se parla un protocollo aperto via Wi-Fi, o se aveva in dotazione un piccolo telecomando a infrarossi, sì.
+• Il mio telefono non ha l’emettitore a infrarossi? Allora le luci con telecomando non si possono comandare (nessuna app può farlo senza), ma tutto il resto funziona.
+• Tuya / Smart Life? Questi dispositivi sono bloccati dal produttore: nessun’altra app può comandarli. L’app li riconosce e ti spiega cosa fare.
 
-Telecomando Striscia LED è un’app indipendente, non affiliata ai produttori di questi controller né alle loro app.
+Fatto da Rollando Studio. Semplice, efficiente, di qualità.
+Telecomando Striscia LED è un’app indipendente, non affiliata ai produttori di queste luci né alle loro app.

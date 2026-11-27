@@ -1,0 +1,6 @@
+Velká aktualizace!
+• Wi-Fi světla a chytré žárovky (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
+• Animované scény: Vánoce, Halloween, Podzim, Polární záře…
+• Vytvořte si vlastní scény: malujte pásek LED po LED
+• Bílé od teplé po studenou, scény místností a widgety
+• Jednodušší přidávání, lehčí aplikace, spousta vylepšení

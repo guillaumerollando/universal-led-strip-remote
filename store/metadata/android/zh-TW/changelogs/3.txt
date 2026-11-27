@@ -1,0 +1,6 @@
+重大更新！
+• Wi-Fi燈和智慧燈泡（Hue、Yeelight、LIFX、WLED、Govee、Tasmota、OpenBeken……）
+• 動態氛圍：聖誕、萬聖節、秋天、極光……
+• 建立你自己的氛圍：逐顆LED為燈條上色
+• 暖白到冷白、房間氛圍和小工具
+• 新增更簡單，App更輕巧，大量細節打磨

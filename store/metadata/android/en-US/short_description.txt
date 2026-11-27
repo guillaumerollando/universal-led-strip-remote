@@ -1,1 +1,1 @@
-Bluetooth & IR remote for RGB LED strip lights: colors, effects, rooms. No ads.
+One app to rule them all: LED strips & smart bulbs. Free, no ads, open source.

@@ -13,10 +13,6 @@ export function paintRange(pixels: Rgb[], from: number, to: number, color: Rgb):
   return pixels.map((p, i) => (i >= a && i <= b ? color : p));
 }
 
-/** Indice de la LED sous le doigt, sur une rangée de `width` points. */
-export const cellAt = (x: number, width: number, count: number): number =>
-  width > 0 ? Math.max(0, Math.min(count - 1, Math.floor((x / width) * count))) : 0;
-
 export const fill = (count: number, color: Rgb): Rgb[] => Array.from({ length: count }, () => color);
 
 /** Dégradé entre la première et la dernière LED (on peint les deux bouts, puis « Dégradé »). */
@@ -43,24 +39,6 @@ export function resize(pixels: Rgb[], count: number): Rgb[] {
   if (count <= pixels.length) return pixels.slice(0, Math.max(1, count));
   const last = pixels[pixels.length - 1] ?? OFF;
   return [...pixels, ...Array.from({ length: count - pixels.length }, () => last)];
-}
-
-/**
- * Le ruban plié en S pour le dessin (comme l'appli Tuya) : rangées de `cols` cases, la 1re de gauche à droite, la 2e
- * de droite à gauche… L'ordre des cases suit toujours le ruban.
- */
-export const GRID_COLS = 20;
-export function serpentineIndex(row: number, col: number, cols = GRID_COLS): number {
-  return row * cols + (row % 2 === 0 ? col : cols - 1 - col);
-}
-/** Case sous le doigt dans la grille en S (null hors d'une case existante). */
-export function cellAtGrid(x: number, y: number, width: number, height: number, count: number, cols = GRID_COLS): number | null {
-  const rows = Math.ceil(count / cols);
-  if (width <= 0 || height <= 0) return null;
-  const row = Math.max(0, Math.min(rows - 1, Math.floor((y / height) * rows)));
-  const col = Math.max(0, Math.min(cols - 1, Math.floor((x / width) * cols)));
-  const i = serpentineIndex(row, col, cols);
-  return i < count ? i : null;
 }
 
 /** Le ruban se dessine plié en S, en 3 passages : aller, retour, aller (souhait de Guillaume, 2026-11-27). */

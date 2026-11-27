@@ -229,6 +229,8 @@ export function LightStrip({
   // Halo d'un dessin : arrondi, pour ne pas redessiner les lueurs à chaque image de l'aperçu.
   const q = (c: Rgb): Rgb => ({ r: Math.round(c.r / 16) * 16, g: Math.round(c.g / 16) * 16, b: Math.round(c.b / 16) * 16 });
   const color = leds ? q(paletteGlow(leds)) : palette ? paletteGlow(palette) : (rgb ?? WARM_WHITE);
+  // Calculé une fois par image de l'aperçu.
+  const band = leds && leds.length > 0 ? diffused(leds) : undefined;
   const reduced = useReducedMotion();
   const shimmer = useSharedValue(0);
   const breath = useSharedValue(1);
@@ -288,8 +290,8 @@ export function LightStrip({
           // Un arrêt au centre de chaque LED, couleurs à peine mêlées à leurs voisines : comme derrière un diffuseur,
           // deux couleurs côte à côte se fondent sur une ou deux LED au lieu d'un bord net (Guillaume, 2026-11-27).
           <LinearGradient
-            colors={diffused(leds).colors as [string, string, ...string[]]}
-            locations={diffused(leds).at as [number, number, ...number[]]}
+            colors={band!.colors as [string, string, ...string[]]}
+            locations={band!.at as [number, number, ...number[]]}
             start={{ x: 0, y: 0.5 }}
             end={{ x: 1, y: 0.5 }}
             style={StyleSheet.absoluteFill}

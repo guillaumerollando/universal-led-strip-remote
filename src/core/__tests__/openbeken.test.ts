@@ -14,7 +14,6 @@ import {
   withStartupEffect,
 } from '../protocols/openbeken';
 import { parseTasmotaStatus } from '../protocols/wifi';
-import { BUILTIN_AMBIANCES, sameMotif } from '../ambiances';
 import { obkAnimStartup, OBK_BEFORE_SCRIPT, OBK_LAUNCH_SCRIPT, OBK_STARTUP_SCRIPT } from '../protocols/openbeken';
 import status0 from './fixtures/openbeken-status0.json';
 
@@ -92,7 +91,7 @@ describe('OpenBeken', () => {
     expect(normalizeMotif({ repeat: true, pixels: [] })).toEqual({ mode: 'flow', pixels: [] });
     expect(normalizeMotif({ repeat: false, pixels: [] })).toEqual({ mode: 'snake', pixels: [] });
     const m = { mode: 'flow' as const, pixels: [{ r: 1, g: 2, b: 3 }] };
-    expect(sameMotif(decodeMotif(encodeMotif(m)), m)).toBe(true);
+    expect(decodeMotif(encodeMotif(m))).toEqual(m);
     expect(decodeMotif('')).toBeUndefined();
     expect(decodeMotif('zz,00ff00')).toEqual({ mode: 'snake', pixels: [{ r: 0, g: 255, b: 0 }] });
   });

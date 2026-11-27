@@ -52,12 +52,13 @@ export function patternDuration(pattern: readonly number[]): number {
 
 /** Limite d'Android pour un appel à transmit(). */
 export const ANDROID_MAX_US = 2_000_000;
-/** Rythme entre le début de deux trames NEC (ms). */
-export const FRAME_PERIOD_MS = 108;
+
+/** Code « touche maintenue » du protocole NEC. */
+export const NEC_REPEAT: readonly number[] = [HEADER_MARK, 2250, BIT_MARK];
 
 /** Ajoute la queue protectrice : silence jusqu'à 108 ms, « touche maintenue », silence, « touche maintenue ». */
 export function withTail(pattern: readonly number[]): number[] {
-  const repeat = [HEADER_MARK, 2250, BIT_MARK];
+  const repeat = NEC_REPEAT;
   const toNext = (p: readonly number[]): number => Math.max(FRAME_US - patternDuration(p), 10000);
   return [...pattern, toNext(pattern.slice(-67)), ...repeat, toNext(repeat), ...repeat];
 }
@@ -75,20 +76,6 @@ export function pressPattern(address: readonly [number, number], command: number
 /** Une rafale de codes en UN appel (au plus 15 pour rester sous 2 s), terminée par la queue protectrice. */
 export function burstPattern(candidates: IrCandidate[]): number[] {
   return withTail(batchPattern(candidates));
-}
-
-/** Code « touche maintenue » du protocole NEC. */
-export const NEC_REPEAT: readonly number[] = [HEADER_MARK, 2250, BIT_MARK];
-
-/** Répète une trame complète `times` fois, avec le silence réglementaire entre deux (test de l'émetteur, recherche). */
-export function repeatPattern(pattern: readonly number[], times: number): number[] {
-  const gap = Math.max(FRAME_US - patternDuration(pattern), 10000);
-  const out: number[] = [];
-  for (let i = 0; i < times; i++) {
-    out.push(...pattern);
-    if (i < times - 1) out.push(gap);
-  }
-  return out;
 }
 
 // ── Télécommandes ────────────────────────────────────────────────────────
@@ -304,36 +291,11 @@ export function remoteById(id: IrRemoteId): IrRemote {
   return IR_REMOTES.find((r) => r.id === id) ?? REMOTE_24;
 }
 
-/**
- * Ordre d'essai de la recherche automatique : d'abord les télécommandes à ON / OFF séparés (on n'a qu'à voir le ruban
- * s'éteindre), la bascule unique (44 touches) en dernier, sinon elle masque un vrai OFF.
- */
-export const PROBE_ORDER: IrRemote[] = [
-  ...IR_REMOTES.filter((r) => r.keys.some((k) => k.kind === 'power-off')),
-  ...IR_REMOTES.filter((r) => !r.keys.some((k) => k.kind === 'power-off')),
-];
-
-/** La touche « éteindre » (ou marche/arrêt) d'une télécommande : celle qu'on essaie pour la reconnaître. */
-export function probeKey(remote: IrRemote): IrKey {
-  return remote.keys.find((k) => k.kind === 'power-off') ?? remote.keys.find((k) => k.kind === 'power-toggle') ?? remote.keys[0];
-}
-
-// ── Recherche approfondie ────────────────────────────────────────────────
+// ── Rafales de codes ─────────────────────────────────────────────────────
 
 export interface IrCandidate {
   address: readonly [number, number];
   command: number;
-}
-
-/** Les deux adresses de loin les plus courantes sur les télécommandes de rubans. */
-export const SWEEP_ADDRESSES: readonly (readonly [number, number])[] = [
-  [0x00, 0xef],
-  [0x00, 0xff],
-];
-
-/** Tous les codes à balayer : chaque commande 0 à 255 de chaque adresse courante. */
-export function sweepCandidates(): IrCandidate[] {
-  return SWEEP_ADDRESSES.flatMap((address) => Array.from({ length: 256 }, (_, command) => ({ address, command })));
 }
 
 /** Motif qui enchaîne plusieurs codes (moins de 2 s au total, limite d'Android). */
@@ -345,19 +307,4 @@ export function batchPattern(candidates: IrCandidate[]): number[] {
     if (i < candidates.length - 1) out.push(Math.max(FRAME_US - patternDuration(frame), 10000));
   });
   return out;
-}
-
-/** Une télécommande connue qui contient ce code, s'il y en a une. */
-export function remoteForCode(cand: IrCandidate): IrRemote | undefined {
-  return IR_REMOTES.find(
-    (r) => r.address[0] === cand.address[0] && r.address[1] === cand.address[1] && r.keys.some((k) => k.command === cand.command),
-  );
-}
-
-/** Le code en clair, au format des tables Arduino (« FF8877 »), pour le noter. */
-export function legacyCode(cand: IrCandidate): string {
-  const rev = (b: number): number => parseInt(b.toString(2).padStart(8, '0').split('').reverse().join(''), 2);
-  return [rev(cand.address[1]), rev(cand.command), rev(~cand.command & 0xff)]
-    .map((b) => b.toString(16).toUpperCase().padStart(2, '0'))
-    .join('');
 }

@@ -1,5 +1,4 @@
 import { burstPattern, fitsAndroid, NEC_CARRIER_HZ, pressPattern, type IrCandidate, type IrKey, type IrRemote } from '../core/ir';
-import { Platform } from 'react-native';
 
 import native from '../../modules/rubanix-native/src';
 import { t } from '../i18n';

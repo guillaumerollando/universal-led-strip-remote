@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { necPattern, patternDuration, REMOTE_24, REMOTE_44, repeatPattern } from '../ir';
+import { necPattern, patternDuration, REMOTE_24, REMOTE_44 } from '../ir';
 
 /** Relit un motif comme le ferait un récepteur Arduino (IRremote, ancien format MSB d'abord). */
 function decodeLegacy(pattern: number[]): number {
@@ -38,18 +38,11 @@ describe('NEC', () => {
       expect(new Set(remote.keys.map((k) => k.id)).size).toBe(n);
     }
   });
-
-  it('répète une trame avec un silence pour tenir 108 ms', () => {
-    const p = necPattern([0x00, 0xff], 0x40);
-    const twice = repeatPattern(p, 2);
-    expect(twice).toHaveLength(p.length * 2 + 1);
-    expect(patternDuration(twice.slice(0, p.length + 1))).toBe(108000);
-  });
 });
 
 describe('autres télécommandes', () => {
   it('retrouvent les codes de Flipper-IRDB', async () => {
-    const { IR_REMOTES, probeKey } = await import('../ir');
+    const { IR_REMOTES } = await import('../ir');
     const legacy = (id: string, keyId: string) => {
       const r = IR_REMOTES.find((x) => x.id === id)!;
       return decodeLegacy(necPattern(r.address, r.keys.find((k) => k.id === keyId)!.command));
@@ -61,7 +54,6 @@ describe('autres télécommandes', () => {
     expect(legacy('ove', 'off')).toBe(0x40bf40bf);
     expect(legacy('idual', 'on')).toBe(0x407f807f);
     expect(new Set(IR_REMOTES.map((r) => r.id)).size).toBe(IR_REMOTES.length);
-    for (const r of IR_REMOTES) expect(['power-off', 'power-toggle']).toContain(probeKey(r).kind);
   });
 });
 
@@ -77,26 +69,15 @@ describe('24 touches variante FF et recherche approfondie', () => {
     expect(code('w')).toBe(0x00ffd827);
   });
 
-  it('balaie 512 codes par lots de moins de 2 s', async () => {
-    const { sweepCandidates, batchPattern, legacyCode, remoteForCode } = await import('../ir');
-    const all = sweepCandidates();
-    expect(all).toHaveLength(512);
-    expect(patternDuration(batchPattern(all.slice(0, 16)))).toBeLessThan(2_000_000);
-    expect(legacyCode({ address: [0x00, 0xef], command: 0x03 })).toBe('F7C03F');
-    expect(legacyCode({ address: [0x00, 0xff], command: 0x11 })).toBe('FF8877');
-    expect(remoteForCode({ address: [0x00, 0xff], command: 0x15 })?.id).toBe('nec24ff');
+  it('enchaîne 16 codes en moins de 2 s', async () => {
+    const { batchPattern } = await import('../ir');
+    const codes = Array.from({ length: 16 }, (_, command) => ({ address: [0x00, 0xef] as const, command }));
+    expect(patternDuration(batchPattern(codes))).toBeLessThan(2_000_000);
   });
 });
 
 
 describe('ON / OFF séparés', () => {
-  it('essaie les vrais OFF avant la bascule 44 touches', async () => {
-    const { PROBE_ORDER } = await import('../ir');
-    const ids = PROBE_ORDER.map((r) => r.id);
-    expect(ids.indexOf('nec44')).toBe(ids.length - 1);
-    expect(ids.indexOf('bulb24')).toBeLessThan(ids.indexOf('nec44'));
-  });
-
   it('combine les ON / OFF d’une télécommande 00 FF avec la 44 touches', async () => {
     const { IR_REMOTES, withSeparatePower, remoteById } = await import('../ir');
     const bulb = IR_REMOTES.find((r) => r.id === 'bulb24')!;

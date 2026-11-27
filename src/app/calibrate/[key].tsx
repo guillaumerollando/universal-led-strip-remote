@@ -10,7 +10,7 @@ import { setStripLength, showCalibration, stripLength } from '../../services/con
 import { useSavedDevice } from '../../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { Chip } from '../../ui/light';
-import { colors, radius, rgbCss, space } from '../../ui/theme';
+import { colors, radius, rgbCss } from '../../ui/theme';
 import { t } from '../../i18n';
 
 /** Les couleurs de la barre : les mêmes que l'arc-en-ciel allumé sur le ruban (rouge → violet). */

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { cellAtStrip, cellLeds, stripCols, cellAt, fill, gradient, OFF, paintRange, rainbow, resize } from '../motifTools';
+import { cellAtStrip, cellLeds, stripCols, fill, gradient, OFF, paintRange, rainbow, resize } from '../motifTools';
 
 const R = { r: 255, g: 0, b: 0 };
 const B = { r: 0, g: 0, b: 255 };
@@ -9,13 +9,6 @@ describe('outils de dessin de motif', () => {
   it('peint toutes les LED survolées, dans les deux sens', () => {
     expect(paintRange(fill(5, OFF), 3, 1, R)).toEqual([OFF, R, R, R, OFF]);
     expect(paintRange(fill(3, OFF), 2, 2, R)).toEqual([OFF, OFF, R]);
-  });
-
-  it('trouve la LED sous le doigt, sans sortir de la rangée', () => {
-    expect(cellAt(0, 200, 10)).toBe(0);
-    expect(cellAt(199, 200, 10)).toBe(9);
-    expect(cellAt(250, 200, 10)).toBe(9);
-    expect(cellAt(-5, 200, 10)).toBe(0);
   });
 
   it('dégradé entre les deux bouts', () => {
@@ -29,26 +22,8 @@ describe('outils de dessin de motif', () => {
   });
 });
 
-import { cellAtGrid, serpentineIndex } from '../motifTools';
-
-describe('ruban plié en S pour le dessin', () => {
-  it('une rangée sur deux se lit de droite à gauche', () => {
-    expect(serpentineIndex(0, 0)).toBe(0);
-    expect(serpentineIndex(0, 19)).toBe(19);
-    expect(serpentineIndex(1, 19)).toBe(20);
-    expect(serpentineIndex(1, 0)).toBe(39);
-    expect(serpentineIndex(2, 0)).toBe(40);
-  });
-
-  it('trouve la case sous le doigt, rien hors des cases existantes', () => {
-    // 50 cases : 3 rangées (20, 20, 10) dans 200 × 60 points.
-    expect(cellAtGrid(5, 5, 200, 60, 50)).toBe(0);
-    expect(cellAtGrid(195, 25, 200, 60, 50)).toBe(20);
-    expect(cellAtGrid(5, 55, 200, 60, 50)).toBe(40);
-    expect(cellAtGrid(195, 55, 200, 60, 50)).toBeNull();
-  });
-
-  it('toile en S : 3 passages, aller puis retour puis aller', () => {
+describe('toile en S (3 passages)', () => {
+  it('aller, retour, aller : la case sous le doigt suit le ruban', () => {
     expect([cellLeds(84), cellLeds(200), cellLeds(40)]).toEqual([2, 4, 1]);
     const l = { width: 300, rows: 3, cols: stripCols(42), rowHeight: 30, gap: 14, inset: 37 };
     expect(l.cols).toBe(14);

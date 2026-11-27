@@ -78,17 +78,6 @@ export const POWER_FAMILIES: (PowerCodes & { id: string; layout?: LayoutId })[] 
   { id: 'idual', address: [0x02, 0xfe], on: 0x01, off: 0x02 },
 ];
 
-/** La bascule marche/arrêt de la télécommande 44 touches, essayée après les familles à allumer / éteindre séparés. */
-export const TOGGLE_44: PowerCodes = { address: [0x00, 0xff], toggle: 0x40 };
-
-
-/** Jeu de couleurs par défaut quand on n'a pas pu (ou pas eu besoin de) demander. */
-export function defaultLayout(power: PowerCodes, family?: LayoutId): LayoutId | undefined {
-  if (family) return family;
-  if (sameAddress(power.address, [0x00, 0xef])) return 'classic24';
-  if (sameAddress(power.address, [0x00, 0xff])) return 'full44';
-  return undefined;
-}
 
 // ── Le ruban configuré, sous forme de télécommande ───────────────────────
 

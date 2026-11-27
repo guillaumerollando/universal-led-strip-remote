@@ -195,6 +195,3 @@ export const BUILTIN_AMBIANCES: Ambiance[] = [
 /** Les couleurs à montrer pour une ambiance (petite rangée de LED, widgets). */
 export const ambianceColors = (a: Pick<Ambiance, 'colors' | 'motif' | 'creation'>): Rgb[] => a.creation?.colors ?? a.motif?.pixels ?? a.colors;
 
-const key = (m: Motif): string => `${m.mode}:${m.pixels.map((p) => `${p.r},${p.g},${p.b}`).join(';')}`;
-/** Deux motifs identiques ? (pour montrer l'ambiance en cours) */
-export const sameMotif = (a: Motif | undefined, b: Motif | undefined): boolean => !!a && !!b && key(a) === key(b);

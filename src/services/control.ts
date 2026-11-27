@@ -197,7 +197,6 @@ export const canMotif = (t: Target): boolean => !!driverOf(t)?.hasMotif?.(t);
 /** Le dernier motif envoyé à ce ruban (ambiance ou dessin), s'il y en a un. */
 export const motifOf = (t: Target): Motif | undefined => decodeMotif(t.meta?.motif);
 /** Un motif tourne-t-il en ce moment sur ce ruban ? */
-export const motifRunning = (t: Target): boolean => t.state?.effect === MOTIF_EFFECT_ID;
 /** L'ambiance de l'appli qui tourne sur ce ruban, s'il y en a une. */
 export const ambianceRunning = (t: Target): string | undefined =>
   t.state?.effect?.startsWith(AMBIANCE_EFFECT_PREFIX) ? t.state.effect.slice(AMBIANCE_EFFECT_PREFIX.length) : undefined;

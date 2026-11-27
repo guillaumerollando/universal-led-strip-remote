@@ -16,7 +16,7 @@ import { useSavedDevice } from '../../services/store';
 import { ColorSlider, HUE_STOPS } from '../../ui/ColorSlider';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { Chip, LightStrip, Swatch } from '../../ui/light';
-import { colors, radius, rgbCss, space } from '../../ui/theme';
+import { colors, rgbCss, space } from '../../ui/theme';
 import { t } from '../../i18n';
 
 const QUICK: { rgb: Rgb; label: string }[] = [

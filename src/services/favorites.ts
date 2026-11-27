@@ -23,7 +23,6 @@ async function load(): Promise<void> {
 
 export const ambianceFav = (id: string): string => `amb:${id}`;
 export const sceneFav = (id: string): string => `scene:${id}`;
-export const isFavorite = (key: string): boolean => favorites.includes(key);
 export const getFavorites = (): string[] => favorites;
 
 export async function toggleFavorite(key: string): Promise<void> {

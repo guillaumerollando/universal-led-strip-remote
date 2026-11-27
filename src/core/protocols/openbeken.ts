@@ -8,7 +8,7 @@
  * - `autoexec.bat`, lancé au démarrage : on y garde l'effet choisi pour qu'il revienne après une coupure.
  * Vérifié le 2026-11-27 sur le ruban LSC de Guillaume (BK7231N, 200 LED, OpenBeken 1.18.219).
  */
-import { clamp, dim, type Effect, type HttpCall, type Rgb } from './types';
+import { clamp, type Effect, type HttpCall, type Rgb } from './types';
 
 /** Une commande (envoyées une par une : on ne compte pas sur `Backlog`). */
 export const obkCmd = (c: string): HttpCall => ({ method: 'GET', path: `/cm?cmnd=${encodeURIComponent(c)}` });

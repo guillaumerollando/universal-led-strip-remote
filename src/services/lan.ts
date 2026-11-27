@@ -44,10 +44,6 @@ async function subnetBroadcast(): Promise<string | null> {
   return ip.replace(/\.\d+$/, '.255');
 }
 
-/** Dernière IP vue pour chaque appareil Tuya (son IP peut changer : la box la redistribue). */
-const tuyaIps = new Map<string, string>();
-const rememberTuyaIp = (id: string, ip: string): void => void tuyaIps.set(id, ip);
-export const lastTuyaIp = (id: string): string | undefined => tuyaIps.get(id);
 
 function openRaw(port: number, onMessage: (bytes: Uint8Array, from: RemoteInfo) => void): UdpSocket {
   const socket = dgram.createSocket({ type: 'udp4', reusePort: true });
@@ -105,9 +101,7 @@ export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: 
   for (const port of TUYA_PORTS) {
     sockets.push(
       openRaw(port, (bytes, from) => {
-        const info = decodeBroadcast(bytes);
-        if (info) rememberTuyaIp(info.gwId, info.ip);
-        report(tuyaFromBroadcast(from.address, info));
+        report(tuyaFromBroadcast(from.address, decodeBroadcast(bytes)));
       }),
     );
   }

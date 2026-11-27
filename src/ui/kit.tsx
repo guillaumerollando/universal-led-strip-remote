@@ -63,26 +63,8 @@ export function Screen({ children, safeTop, header }: { children: ReactNode; saf
   );
 }
 
-export function Card({ children, onPress }: { children: ReactNode; onPress?: () => void }): ReactNode {
-  if (!onPress) return <View style={styles.card}>{children}</View>;
-  return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.card, pressed && { backgroundColor: colors.surfaceHigh }]}>
-      {children}
-    </Pressable>
-  );
-}
-
 export function SectionTitle({ children }: { children: ReactNode }): ReactNode {
   return <Text style={styles.section}>{children}</Text>;
-}
-
-export function Badge({ label, tone = 'dim' }: { label: string; tone?: 'ok' | 'warn' | 'dim' }): ReactNode {
-  const color = tone === 'ok' ? colors.ok : tone === 'warn' ? colors.warn : colors.textDim;
-  return (
-    <View style={[styles.badge, { borderColor: color }]}>
-      <Text style={[styles.badgeText, { color }]}>{label}</Text>
-    </View>
-  );
 }
 
 export function Muted({ children }: { children: ReactNode }): ReactNode {
@@ -102,22 +84,12 @@ export const styles = StyleSheet.create({
   primary: { backgroundColor: colors.accent },
   secondary: { backgroundColor: colors.surfaceHigh, borderWidth: 1, borderColor: colors.border },
   buttonText: { color: colors.accentText, fontSize: font.body, fontWeight: '700' },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.md,
-    padding: space.lg,
-    gap: space.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
   section: { color: colors.textDim, fontSize: font.small, fontWeight: '700', letterSpacing: 1.2, textTransform: 'uppercase', marginTop: space.lg },
   title: { color: colors.text, fontSize: font.title, fontWeight: '700' },
   big: { color: colors.text, fontSize: font.big, fontWeight: '800' },
   text: { color: colors.text, fontSize: font.body },
   muted: { color: colors.textDim, fontSize: font.small, lineHeight: 19 },
   row: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  badge: { borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: space.sm, paddingVertical: 2 },
-  badgeText: { fontSize: 12, fontWeight: '600' },
   input: {
     backgroundColor: colors.surfaceHigh,
     color: colors.text,

@@ -7,6 +7,7 @@ import {
   ambiancesFor,
   canColor,
   canDim,
+  catalogFor,
   canPower,
   effectsFor,
   irRemoteOf,
@@ -23,11 +24,11 @@ import {
 import { AMBIANCE_EFFECT_PREFIX } from '../core/protocols/openbeken';
 import { decodeCreation } from '../core/creations';
 import { getDevice, rememberState, type SavedDevice } from './store';
+import { safeParse } from './safeParse';
 
 /** Ambiances de pièce enregistrées par l'utilisateur (sur le téléphone). */
 const KEY = 'rubanix.scenes.v1';
 let scenes: RoomScene[] = [];
-let loaded = false;
 const listeners = new Set<() => void>();
 const set = (next: RoomScene[]): void => {
   scenes = next;
@@ -43,12 +44,17 @@ const HIDDEN_KEY = 'rubanix.scenes.hidden.v1';
 let hidden: string[] = [];
 const hiddenId = (roomId: string, presetId: string): string => `${roomId}:${presetId}`;
 
-async function load(): Promise<void> {
-  if (loaded) return;
-  loaded = true;
+/**
+ * Lecture du téléphone, une seule fois : les appelants suivants attendent la même lecture (avant, un second appel
+ * repartait aussitôt avec une liste vide).
+ */
+let loading: Promise<void> | undefined;
+const load = (): Promise<void> => (loading ??= readStored());
+async function readStored(): Promise<void> {
   const [text, hiddenText] = await Promise.all([AsyncStorage.getItem(KEY).catch(() => null), AsyncStorage.getItem(HIDDEN_KEY).catch(() => null)]);
-  if (hiddenText) hidden = JSON.parse(hiddenText) as string[];
-  if (text) set(JSON.parse(text) as RoomScene[]);
+  hidden = safeParse<string[]>(hiddenText, []);
+  const saved = safeParse<RoomScene[] | null>(text, null);
+  if (saved) set(saved);
   else listeners.forEach((l) => l());
 }
 
@@ -127,33 +133,66 @@ function knownEffects(d: SavedDevice): string[] {
   return effectsFor(d).map((e) => e.id);
 }
 
-/** Met un ruban dans l'état voulu, avec ce qu'il sait faire. */
+/**
+ * Met un ruban dans l'état voulu, avec ce qu'il sait faire. Un seul envoi lent par ruban à pixels : son script n'est
+ * ni relancé ni réécrit pour rien avant d'être remplacé. Un ruban oublié entre-temps est simplement passé.
+ */
 async function applyItem(item: SceneItem): Promise<void> {
   const fresh = (): SavedDevice | undefined => getDevice(item.key);
   const d = fresh();
   if (!d || !canPower(d)) return;
   if (!item.on) return setPower(d, false);
 
+  // Ambiance de l'appli : `setAmbiance` sait la jouer partout (ruban à pixels, MELK, couleur, télécommande).
+  // La luminosité est retenue d'abord : le script de l'ambiance la prend.
+  if (item.effect?.startsWith(AMBIANCE_EFFECT_PREFIX)) {
+    if (item.brightness !== undefined && canDim(d)) await rememberState(item.key, { brightness: item.brightness });
+    const now = fresh();
+    if (now) await setAmbiance(now, item.effect.slice(AMBIANCE_EFFECT_PREFIX.length));
+    return;
+  }
+
   const ir = irRemoteOf(d);
   if (ir) {
-    // Infrarouge : on allume, puis la touche d'effet ou la couleur la plus proche de la télécommande.
+    // Infrarouge : on allume, puis la touche d'effet, sinon la couleur la plus proche de la télécommande.
     if (!d.state?.on) await setPower(d, true);
-    const key = item.effect ? ir.keys.find((k) => k.kind === 'effect' && k.id === item.effect) : item.rgb ? nearestColorKey(ir.keys, item.rgb) : undefined;
-    if (key) await pressIrKey(fresh()!, key);
+    const effectKey = item.effect ? ir.keys.find((k) => k.kind === 'effect' && k.id === item.effect) : undefined;
+    const key = effectKey ?? (item.rgb ? nearestColorKey(ir.keys, item.rgb) : undefined);
+    const now = fresh();
+    if (key && now) await pressIrKey(now, key);
+    return;
+  }
+
+  if (item.speed !== undefined) await rememberState(item.key, { speed: item.speed });
+  const creation = decodeCreation(item.creation);
+  const motif = decodeMotif(item.motif);
+  if (creation || motif) {
+    // Script (création, dessin) : luminosité retenue puis script envoyé une seule fois, sans rallumer l'ancien.
+    if (item.brightness !== undefined && canDim(d)) await rememberState(item.key, { brightness: item.brightness });
+    const now = fresh();
+    if (!now) return;
+    if (creation) await setCreation(now, creation);
+    else if (motif) await setMotif(now, motif, item.speed);
     return;
   }
 
   await setPower(d, true);
-  if (item.speed !== undefined) await rememberState(item.key, { speed: item.speed });
-  if (item.brightness !== undefined && canDim(d) && !item.motif) await setBrightness(fresh()!, item.brightness);
-  const motif = decodeMotif(item.motif);
-  const effect = item.effect ? effectsFor(d).find((e) => e.id === item.effect) : undefined;
-  const creation = decodeCreation(item.creation);
-  if (creation) await setCreation(fresh()!, creation);
-  else if (item.effect?.startsWith(AMBIANCE_EFFECT_PREFIX)) await setAmbiance(fresh()!, item.effect.slice(AMBIANCE_EFFECT_PREFIX.length));
-  else if (motif) await setMotif(fresh()!, motif, item.speed);
-  else if (effect) await setEffect(fresh()!, effect, item.rgb, item.speed);
-  else if (item.rgb && canColor(d)) await setColor(fresh()!, item.rgb);
+  const effect = item.effect ? [...effectsFor(d), ...catalogFor(d)].find((e) => e.id === item.effect) : undefined;
+  const dim = async (): Promise<void> => {
+    const now = fresh();
+    if (now && item.brightness !== undefined && canDim(d)) await setBrightness(now, item.brightness);
+  };
+  if (effect) {
+    // Luminosité avant l'effet : sur certains contrôleurs, elle s'envoie comme une couleur et couperait l'effet.
+    await dim();
+    const now = fresh();
+    if (now) await setEffect(now, effect, item.rgb, item.speed);
+  } else {
+    const now = fresh();
+    if (now && item.rgb && canColor(d)) await setColor(now, item.rgb);
+    // Après la couleur : un ancien script est déjà arrêté, la luminosité n'a pas à le réécrire.
+    await dim();
+  }
 }
 
 /**
@@ -176,3 +215,51 @@ export async function applyScene(items: SceneItem[]): Promise<GroupResult> {
 /** Une ambiance de l'appli, traduite pour chaque ruban de la pièce. */
 export const presetItems = (preset: PresetScene, devices: SavedDevice[]): SceneItem[] =>
   devices.filter(canPower).map((d) => presetItem(preset, d.key, knownEffects(d), irRemoteOf(d) ? [] : ambiancesFor(d)));
+
+/**
+ * Ambiance de pièce en cours : celle qu'on a touchée en dernier, tant que les rubans de la pièce sont restés dans
+ * l'état où elle les a mis (on change une couleur, la pièce n'est plus « dans » l'ambiance). Retenue sur le téléphone.
+ */
+const APPLIED_KEY = 'rubanix.scenes.applied.v1';
+let applied: Record<string, { sceneId: string; snapshot: string }> = {};
+let appliedLoaded = false;
+const appliedListeners = new Set<() => void>();
+const lightState = (devices: SavedDevice[]): string =>
+  devices
+    .map((d) => {
+      const s = d.state ?? {};
+      return `${d.key}:${s.on ? 1 : 0}:${s.rgb ? `${s.rgb.r},${s.rgb.g},${s.rgb.b}` : ''}:${s.effect ?? ''}:${s.brightness ?? ''}`;
+    })
+    .join('|');
+
+async function loadApplied(): Promise<void> {
+  if (appliedLoaded) return;
+  appliedLoaded = true;
+  const text = await AsyncStorage.getItem(APPLIED_KEY).catch(() => null);
+  if (text) {
+    applied = safeParse<typeof applied>(text, {});
+    appliedListeners.forEach((l) => l());
+  }
+}
+
+/** Retient l'ambiance qu'on vient d'appliquer à la pièce, avec l'état des rubans qu'elle a laissé. */
+export function markApplied(roomId: string, sceneId: string, deviceKeys: string[]): void {
+  const now = deviceKeys.map((k) => getDevice(k)).filter((d): d is SavedDevice => !!d);
+  applied = { ...applied, [roomId]: { sceneId, snapshot: lightState(now) } };
+  appliedListeners.forEach((l) => l());
+  void AsyncStorage.setItem(APPLIED_KEY, JSON.stringify(applied));
+}
+
+/** L'ambiance dans laquelle la pièce se trouve, s'il y en a une. */
+export function useActiveScene(roomId: string, devices: SavedDevice[]): string | undefined {
+  useEffect(() => void loadApplied(), []);
+  const all = useSyncExternalStore(
+    (l) => {
+      appliedListeners.add(l);
+      return () => appliedListeners.delete(l);
+    },
+    () => applied,
+  );
+  const a = all[roomId];
+  return a && a.snapshot === lightState(devices) ? a.sceneId : undefined;
+}

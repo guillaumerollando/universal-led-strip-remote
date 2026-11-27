@@ -54,7 +54,8 @@ const OFF = rgb(0, 0, 0);
 const XMAS = [rgb(255, 0, 0), rgb(0, 230, 0), rgb(0, 40, 255), rgb(255, 110, 0), rgb(255, 0, 140)];
 const HALLOWEEN = [rgb(255, 60, 0), rgb(140, 0, 255)];
 // Plus lumineux que la première version (Guillaume : « je préfère à l'automne classique »).
-const AUTUMN_BG = rgb(130, 32, 0);
+// Fond choisi par Guillaume dans « Créer mon ambiance » (2026-11-27) : un orange qui tire vers le rouge, assorti au néon.
+const AUTUMN_BG = rgb(210, 26, 0);
 const LEAVES = [rgb(255, 20, 0), rgb(255, 90, 0), rgb(255, 170, 0), rgb(200, 55, 0)];
 const ROMANTIC_BG = rgb(60, 0, 12);
 // Une seule teinte (rouge profond / fuchsia) en deux bandes : la seconde bande, plus claire, ne plaisait pas.

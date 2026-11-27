@@ -17,17 +17,14 @@ let timer: ReturnType<typeof setTimeout> | null = null;
 let last = '';
 
 function push(): void {
-  const rooms = widgetRooms(getRooms(), getDevices().filter(canPower), {
-    all: t('Tous les rubans'),
-    on: (name) => t('{name} : éteindre', { name }),
-    off: (name) => t('{name} : allumer', { name }),
-  });
   const labels = {
     all: t('Tous les rubans'),
     on: (name: string) => t('{name} : éteindre', { name }),
     off: (name: string) => t('{name} : allumer', { name }),
   };
-  const places = widgetPlaces(getRooms(), getDevices().filter(canPower), scenesOf, labels);
+  const devices = getDevices().filter(canPower);
+  const rooms = widgetRooms(getRooms(), devices, labels);
+  const places = widgetPlaces(getRooms(), devices, scenesOf, labels);
   const json = JSON.stringify(rooms);
   const placesJson = JSON.stringify(places);
   if (json + placesJson === last) return;

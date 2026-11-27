@@ -44,10 +44,11 @@ export function StripSlider({
   const dragging = useRef(false);
   const longTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longDone = useRef(false);
-  const live = useMemo(() => latestWins((p: number) => previewBrightness(target, p)), [target.key]);
-  const level = drag ?? saved;
   const ref = useRef({ saved, onTap, onLongPress, onError, target });
   ref.current = { saved, onTap, onLongPress, onError, target };
+  // Le ruban tel qu'il est maintenant (couleur, effet en cours), pas tel qu'il était au premier affichage.
+  const live = useMemo(() => latestWins((p: number) => previewBrightness(ref.current.target, p)), [target.key]);
+  const level = drag ?? saved;
 
   const responder = useMemo(
     () =>

@@ -59,7 +59,14 @@ export function scanBle(onDevice: (device: DetectedDevice) => void, durationMs: 
 // ── Envoi de trames (toutes familles) ────────────────────────────────────────────
 
 /** Connexions ouvertes, gardées un moment pour enchaîner les réglages sans se reconnecter. */
-const sessions = new Map<string, { ready: Promise<void>; idle?: ReturnType<typeof setTimeout> }>();
+type Session = { ready: Promise<void>; idle?: ReturnType<typeof setTimeout>; off?: { remove: () => void } };
+const sessions = new Map<string, Session>();
+/** Ferme une session : seulement si c'est toujours elle (une ancienne déconnexion ne doit pas effacer la nouvelle). */
+function endSession(address: string, session: Session): void {
+  if (session.idle) clearTimeout(session.idle);
+  session.off?.remove();
+  if (sessions.get(address) === session) sessions.delete(address);
+}
 const IDLE_MS = 20_000;
 
 function scheduleDisconnect(address: string): void {
@@ -67,7 +74,7 @@ function scheduleDisconnect(address: string): void {
   if (!session) return;
   if (session.idle) clearTimeout(session.idle);
   session.idle = setTimeout(() => {
-    sessions.delete(address);
+    endSession(address, session);
     void getManager().cancelDeviceConnection(address).catch(() => undefined);
   }, IDLE_MS);
 }
@@ -79,12 +86,13 @@ async function writeRaw(address: string, profile: BleProfile, bytes: number[]): 
   else await ble.writeCharacteristicWithoutResponseForDevice(address, profile.service, profile.write, data);
 }
 
-async function connect(address: string, profile: BleProfile): Promise<void> {
+async function connect(address: string, profile: BleProfile, session: Session): Promise<void> {
   const ble = getManager();
   await ble.connectToDevice(address, { timeout: 10_000 });
   await ble.discoverAllServicesAndCharacteristicsForDevice(address);
   for (const frame of profile.init ?? []) await writeRaw(address, profile, frame);
-  ble.onDeviceDisconnected(address, () => sessions.delete(address));
+  // Un seul écouteur par connexion, retiré avec elle (avant : un de plus à chaque reconnexion).
+  session.off = ble.onDeviceDisconnected(address, () => endSession(address, session));
 }
 
 /**
@@ -96,15 +104,17 @@ export async function sendBle(address: string, profile: BleProfile, ...frames: n
   // Un envoi commence : la déconnexion pour inactivité ne doit pas tomber au milieu.
   if (session?.idle) clearTimeout(session.idle);
   if (!session) {
-    session = { ready: connect(address, profile) };
-    sessions.set(address, session);
+    const fresh: Session = { ready: Promise.resolve() };
+    fresh.ready = connect(address, profile, fresh);
+    sessions.set(address, fresh);
+    session = fresh;
   }
   try {
     await session.ready;
     for (const f of frames) await writeRaw(address, profile, f);
   } catch {
     // Les messages de la pile Bluetooth sont techniques et en anglais : on dit simplement quoi faire.
-    sessions.delete(address);
+    endSession(address, session);
     void getManager().cancelDeviceConnection(address).catch(() => undefined);
     throw new Error(t('Rapproche-toi du ruban et ferme ses autres applis.'));
   }

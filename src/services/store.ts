@@ -60,7 +60,20 @@ function set(next: Partial<Data>): void {
   listeners.forEach((l) => l());
 }
 
+/** Lecture illisible au démarrage : on n'écrase surtout pas ce qui est sur le téléphone. */
+let unreadable = false;
+const parse = <T>(text: string | null | undefined, fallback: T): T => {
+  if (!text) return fallback;
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    unreadable = true;
+    return fallback;
+  }
+};
+
 async function persist(): Promise<void> {
+  if (unreadable) return;
   await AsyncStorage.multiSet([
     [STORAGE_KEY, JSON.stringify(data.devices)],
     [ROOMS_KEY, JSON.stringify(data.rooms)],
@@ -72,7 +85,7 @@ export async function loadDevices(): Promise<void> {
   if (loaded) return;
   const [[, devices], [, rooms]] = await AsyncStorage.multiGet([STORAGE_KEY, ROOMS_KEY]);
   loaded = true;
-  const merged = mergeDuplicateRooms(rooms ? (JSON.parse(rooms) as Room[]) : [], devices ? (JSON.parse(devices) as SavedDevice[]) : []);
+  const merged = mergeDuplicateRooms(parse<Room[]>(rooms, []), parse<SavedDevice[]>(devices, []));
   set(merged);
   if (merged.changed) await persist();
 }

@@ -21,6 +21,7 @@ export default function PowerLink() {
 
   useEffect(() => {
     let done = false;
+    let leave: ReturnType<typeof setTimeout> | undefined;
     void (async () => {
       await loadDevices();
       if (done) return;
@@ -43,7 +44,9 @@ export default function PowerLink() {
             (result.failed.length ? t(' ({n} sans réponse)', { n: result.failed.length }) : ''),
         );
       }
-      setTimeout(() => {
+      // Écran quitté entre-temps : on ne renvoie pas à l'accueil.
+      if (done) return;
+      leave = setTimeout(() => {
         router.replace('/');
         // Lancé depuis le widget : on rend la main à l'écran d'accueil du téléphone.
         if (from === 'widget') native?.moveToBack();
@@ -51,6 +54,7 @@ export default function PowerLink() {
     })();
     return () => {
       done = true;
+      if (leave) clearTimeout(leave);
     };
     // Une seule exécution par ouverture du lien.
     // eslint-disable-next-line react-hooks/exhaustive-deps

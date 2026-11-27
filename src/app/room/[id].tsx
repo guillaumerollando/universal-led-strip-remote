@@ -71,7 +71,12 @@ export default function RoomScreen() {
         placeholderTextColor={colors.textDim}
         autoFocus={isNew}
         returnKeyType="done"
-        onSubmitEditing={() => (isNew ? void create() : room && !clash && void renameRoom(room.id, name))}
+        // Mêmes conditions que les boutons (pas de nom vide ni en double depuis la touche du clavier).
+        onSubmitEditing={() => {
+          if (!name.trim() || clash) return;
+          if (isNew) void create();
+          else if (room && name.trim() !== room.name) void renameRoom(room.id, name);
+        }}
       />
       {!!clash && <Muted>{t('Une autre pièce porte déjà ce nom.')}</Muted>}
       {isNew ? (

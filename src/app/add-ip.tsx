@@ -16,6 +16,8 @@ export default function AddIpScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const search = (): void => {
+    // Touche du clavier : mêmes conditions que le bouton.
+    if (busy || !isIpv4(ip)) return;
     setBusy(true);
     setError(null);
     void probeIp(ip.trim())

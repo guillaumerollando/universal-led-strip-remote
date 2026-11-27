@@ -30,3 +30,19 @@ export function rgbToHsv({ r, g, b }: Rgb): Hsv {
   }
   return { h: (h + 360) % 360, s: max === 0 ? 0 : d / max, v: max };
 }
+
+/**
+ * Curseur « Blancheur » (0 = couleur pure, 1 = blanc) → saturation. Sur des LED, un tout petit peu de blanc se voit
+ * énormément (Guillaume, 2026-11-27 : « dès qu'on la touche un peu, ça fait tout de suite très blanc ») : la courbe
+ * monte doucement au début pour laisser des nuances (pastels), et ne devient blanche que vers la fin.
+ */
+const WHITE_CURVE = 2.6;
+export const whiteToSaturation = (white: number): number => 1 - Math.min(1, Math.max(0, white)) ** WHITE_CURVE;
+export const saturationToWhite = (s: number): number => (1 - Math.min(1, Math.max(0, s))) ** (1 / WHITE_CURVE);
+
+/** Couleurs du curseur « Blancheur » le long de la courbe (le dégradé montre ce que le ruban fera). */
+export const whiteStops = (h: number, v = 1, steps = 6): string[] =>
+  Array.from({ length: steps }, (_, i) => {
+    const c = hsvToRgb({ h, s: whiteToSaturation(i / (steps - 1)), v });
+    return `rgb(${c.r},${c.g},${c.b})`;
+  });

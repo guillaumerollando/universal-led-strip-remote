@@ -6,15 +6,30 @@ import { captureScene, type RoomScene } from '../core/scenes';
 import { canPower } from '../services/control';
 import { favoritesFirst, sceneFav, toggleFavorite, useFavorites } from '../services/favorites';
 import { pinWidget } from '../services/pinWidget';
-import { applyScene, hasHiddenPresets, hidePreset, presetItems, removeScene, restorePresets, saveScene, usePresetsOf, useRoomScenes } from '../services/scenes';
+import { applyScene, markApplied, useActiveScene, hasHiddenPresets, hidePreset, presetItems, removeScene, restorePresets, saveScene, usePresetsOf, useRoomScenes } from '../services/scenes';
 import type { Room, SavedDevice } from '../services/store';
 import { styles as kit } from './kit';
 import { RenameField, Sheet } from './Sheet';
-import { LoadingBorder } from './LoadingBorder';
+import { LoadingBorder, SelectionGlow } from './LoadingBorder';
 import { colors, radius, space } from './theme';
 import { t } from '../i18n';
 
-function SceneChip({ label, busy, onPress, onLongPress, accent }: { label: string; busy?: boolean; onPress: () => void; onLongPress?: () => void; accent?: boolean }) {
+function SceneChip({
+  label,
+  busy,
+  selected,
+  onPress,
+  onLongPress,
+  accent,
+}: {
+  label: string;
+  busy?: boolean;
+  /** La pièce est dans cette ambiance : contour orange et sa lueur. */
+  selected?: boolean;
+  onPress: () => void;
+  onLongPress?: () => void;
+  accent?: boolean;
+}) {
   return (
     <Pressable
       accessibilityRole="button"
@@ -28,12 +43,13 @@ function SceneChip({ label, busy, onPress, onLongPress, accent }: { label: strin
         borderRadius: radius.pill,
         borderWidth: 1,
         backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
-        borderColor: accent ? colors.accent : colors.border,
+        borderColor: accent || selected ? colors.accent : colors.border,
       })}
     >
-      <Text style={{ color: accent ? colors.accent : colors.text, fontWeight: '600' }}>{label}</Text>
+      <Text style={{ color: accent || selected ? colors.accent : colors.text, fontWeight: '600' }}>{label}</Text>
+      <SelectionGlow active={!!selected} radius={radius.pill} />
       {/* Pendant l'envoi, le contour devient un petit ruban de lumière qui tourne. */}
-      <LoadingBorder active={!!busy} radius={radius.pill} />
+      <LoadingBorder active={!!busy} selected={selected} radius={radius.pill} />
     </Pressable>
   );
 }
@@ -52,6 +68,7 @@ export function SceneRow({ room, devices }: { room: Room; devices: SavedDevice[]
   /** Ambiance dont on a ouvert le menu (appui long) : la poser en widget, ou l'oublier si elle est retenue. */
   const [menu, setMenu] = useState<{ id: string; name: string; mine?: RoomScene } | null>(null);
   const controllable = devices.filter(canPower);
+  const current = useActiveScene(room.id, devices);
   if (controllable.length === 0) return null;
 
   const run = (id: string, items: Parameters<typeof applyScene>[0]): void => {
@@ -61,6 +78,8 @@ export function SceneRow({ room, devices }: { room: Room; devices: SavedDevice[]
     setReport(null);
     applyScene(items)
       .then((r) => {
+        // La pièce est maintenant « dans » cette ambiance : sa pastille s'entoure d'orange.
+        if (r.failed.length < items.length) markApplied(room.id, id, devices.map((d) => d.key));
         if (r.failed.length > 0) {
           const names = r.failed.map((f) => devices.find((d) => d.key === f.key)?.name ?? f.key);
           setReport(t('Pas de réponse : {names}', { names: names.join(', ') }));
@@ -91,6 +110,7 @@ export function SceneRow({ room, devices }: { room: Room; devices: SavedDevice[]
             key={x.id}
             label={(favs.includes(sceneFav(x.id)) ? '★ ' : '') + x.label}
             busy={busy === x.id}
+            selected={current === x.id}
             onPress={() => run(x.id, x.items())}
             onLongPress={() => setMenu({ id: x.id, name: x.label, mine: x.mine })}
           />

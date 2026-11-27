@@ -68,6 +68,19 @@ function open(port: number, onMessage: (text: string, from: RemoteInfo) => void,
  * Nanoleaf, Elgato, Shelly, ESPHome, Tasmota), Yeelight (multicast 1982), LIFX (broadcast 56700).
  * Renvoie une fonction d'arrêt anticipé.
  */
+/**
+ * Verrou multicast d'Android partagé : deux recherches peuvent se chevaucher (celle du démarrage et celle de l'écran
+ * d'ajout) ; il n'est rendu qu'à la fin de la dernière, sinon les réponses Govee et mDNS seraient jetées.
+ */
+let multicastUsers = 0;
+const holdMulticast = (): void => {
+  if (multicastUsers++ === 0) native?.acquireMulticastLock();
+};
+const releaseMulticast = (): void => {
+  multicastUsers = Math.max(0, multicastUsers - 1);
+  if (multicastUsers === 0) native?.releaseMulticastLock();
+};
+
 export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: number): () => void {
   const seen = new Set<string>();
   const report = (d: DetectedDevice | null): void => {
@@ -76,15 +89,18 @@ export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: 
       onDevice(d);
     }
   };
-  native?.acquireMulticastLock();
+  holdMulticast();
 
   const sockets: UdpSocket[] = [];
   const timers: ReturnType<typeof setTimeout>[] = [];
+  /** Arrêtée : plus aucun envoi ni minuteur (des réponses asynchrones peuvent arriver après). */
+  let stopped = false;
 
   sockets.push(
     open(0, (text, from) => report(parseMagicHomeReply(text, from.address)), (s) => {
       s.setBroadcast(true);
       void subnetBroadcast().then((subnet) => {
+        if (stopped) return;
         const targets = ['255.255.255.255', ...(subnet ? [subnet] : [])];
         // Trois envois espacés : l'UDP se perd facilement en Wi-Fi.
         for (const delay of [0, 1000, 2500]) {
@@ -108,6 +124,7 @@ export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: 
 
   sockets.push(
     open(GOVEE_REPLY_PORT, (text, from) => report(parseGoveeReply(text, from.address)), () => {
+      if (stopped) return;
       const sender = dgram.createSocket({ type: 'udp4' });
       sockets.push(sender);
       sender.on('error', () => undefined);
@@ -165,6 +182,8 @@ export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: 
   );
 
   const stop = (): void => {
+    if (stopped) return;
+    stopped = true;
     timers.forEach(clearTimeout);
     for (const s of sockets) {
       try {
@@ -174,7 +193,7 @@ export function scanLan(onDevice: (device: DetectedDevice) => void, durationMs: 
       }
     }
     sockets.length = 0;
-    native?.releaseMulticastLock();
+    releaseMulticast();
   };
   timers.push(setTimeout(stop, durationMs));
   return stop;

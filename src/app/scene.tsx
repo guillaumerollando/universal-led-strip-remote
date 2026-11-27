@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import native from '../../modules/rubanix-native/src';
-import { applyScene, findScene, presetItems } from '../services/scenes';
+import { applyScene, findScene, markApplied, presetItems } from '../services/scenes';
 import { getDevices, getRooms, loadDevices } from '../services/store';
 import { styles } from '../ui/kit';
 import { space } from '../ui/theme';
@@ -19,6 +19,7 @@ export default function SceneLink() {
 
   useEffect(() => {
     let done = false;
+    let leave: ReturnType<typeof setTimeout> | undefined;
     void (async () => {
       await loadDevices();
       const found = scene ? await findScene(scene) : undefined;
@@ -32,15 +33,19 @@ export default function SceneLink() {
         const name = 'mine' in found && found.mine ? found.name : t(found.name);
         setText(t('{scene} · {room}', { scene: name, room: target.name }));
         const result = await applyScene(items);
+        if (result.failed.length < items.length && scene) markApplied(target.id, scene, devices.map((d) => d.key));
         if (result.failed.length) setText(t('{scene} · {room}', { scene: name, room: target.name }) + t(' ({n} sans réponse)', { n: result.failed.length }));
       }
-      setTimeout(() => {
+      // Écran quitté entre-temps : on ne renvoie pas à l'accueil.
+      if (done) return;
+      leave = setTimeout(() => {
         router.replace('/');
         if (from === 'widget') native?.moveToBack();
       }, from === 'widget' ? 500 : 1200);
     })();
     return () => {
       done = true;
+      if (leave) clearTimeout(leave);
     };
     // Une seule exécution par ouverture du lien.
     // eslint-disable-next-line react-hooks/exhaustive-deps

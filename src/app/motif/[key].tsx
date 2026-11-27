@@ -1,12 +1,12 @@
 import * as Haptics from 'expo-haptics';
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PanResponder, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 
 import { BUILTIN_AMBIANCES, type Ambiance } from '../../core/ambiances';
 import { CELLS, creationBytes, DEFAULTS, encodeCreation, LIMITS, SCRIPT_MAX_BYTES, SNAKE_MAX_LEDS, toFullStrip, type Creation, type CreationStyle, type Size } from '../../core/creations';
 import { previewFrame } from '../../core/creationPreview';
-import { hsvToRgb, rgbToHsv, type Hsv } from '../../core/color';
+import { hsvToRgb, rgbToHsv, saturationToWhite, whiteStops, whiteToSaturation, type Hsv } from '../../core/color';
 import type { Rgb } from '../../core/elk';
 import { cellAtStrip, fill, gradient, OFF, paintRange, rainbow, resize, sameRgb, STRIP_ROWS, stripCols } from '../../core/motifTools';
 import type { MotifMode } from '../../core/protocols/openbeken';
@@ -49,10 +49,15 @@ const lit = (c: Rgb): boolean => c.r + c.g + c.b > 0;
  * rubans du reste de l'appli (bande lumineuse, lueur et halo). */
 function CreationPreview({ creation, n }: { creation: Creation; n: number }) {
   const [frame, setFrame] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setFrame((f) => f + 1), 80);
-    return () => clearInterval(id);
-  }, []);
+  // Rien ne bouge en mode « Fixe » ; et l'animation s'arrête quand l'écran est caché (calibrage ouvert par-dessus).
+  const animated = !(creation.style === 'motif' && creation.mode === 'still');
+  useFocusEffect(
+    useCallback(() => {
+      if (!animated) return undefined;
+      const id = setInterval(() => setFrame((f) => f + 1), 80);
+      return () => clearInterval(id);
+    }, [animated]),
+  );
   return (
     <View accessible={false} style={{ paddingVertical: space.sm, paddingHorizontal: space.sm }}>
       <LightStrip on leds={previewFrame(creation, frame, n)} height={10} />
@@ -71,9 +76,8 @@ const TUBE = '#15171D';
  * du début (▶) à la fin. Chaque case couvre une ou quelques LED ; on glisse le doigt n'importe où, même d'un passage
  * à l'autre, et chaque case survolée prend la couleur.
  */
-function PaintS({ pixels, onPaint }: { pixels: Rgb[]; onPaint: (from: number, to: number) => void }) {
-  const view = useRef<View>(null);
-  const box = useRef({ x: 0, y: 0, width: 1 });
+const PaintS = memo(function PaintS({ pixels, onPaint }: { pixels: Rgb[]; onPaint: (from: number, to: number) => void }) {
+  const widthRef = useRef(1);
   const last = useRef(-1);
   const count = useRef(pixels.length);
   count.current = pixels.length;
@@ -82,10 +86,9 @@ function PaintS({ pixels, onPaint }: { pixels: Rgb[]; onPaint: (from: number, to
   const cols = stripCols(pixels.length);
   const rows = Math.min(STRIP_ROWS, Math.ceil(pixels.length / cols));
   const [width, setWidth] = useState(0);
-  const at = (px: number, py: number): number | null => {
-    const b = box.current;
-    return cellAtStrip(px - b.x, py - b.y, { width: b.width, rows, cols, rowHeight: ROW_H, gap: ROW_GAP, inset: TURN }, count.current);
-  };
+  // Position du doigt dans la toile elle-même (ses dessins ignorent le toucher) : juste dès le premier geste.
+  const at = (x: number, y: number): number | null =>
+    cellAtStrip(x, y, { width: widthRef.current, rows, cols, rowHeight: ROW_H, gap: ROW_GAP, inset: TURN }, count.current);
 
   const responder = useMemo(
     () =>
@@ -93,18 +96,14 @@ function PaintS({ pixels, onPaint }: { pixels: Rgb[]; onPaint: (from: number, to
         onStartShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponder: () => true,
         onPanResponderGrant: (e) => {
-          const { pageX, pageY } = e.nativeEvent;
-          view.current?.measureInWindow((x, y, w) => {
-            box.current = { x, y, width: w };
-            const i = at(pageX, pageY);
-            if (i === null) return;
-            last.current = i;
-            paint.current(i, i);
-            void Haptics.selectionAsync();
-          });
+          const i = at(e.nativeEvent.locationX, e.nativeEvent.locationY);
+          if (i === null) return;
+          last.current = i;
+          paint.current(i, i);
+          void Haptics.selectionAsync();
         },
         onPanResponderMove: (e) => {
-          const i = at(e.nativeEvent.pageX, e.nativeEvent.pageY);
+          const i = at(e.nativeEvent.locationX, e.nativeEvent.locationY);
           if (i === null || i === last.current) return;
           paint.current(last.current < 0 ? i : last.current, i);
           last.current = i;
@@ -121,9 +120,11 @@ function PaintS({ pixels, onPaint }: { pixels: Rgb[]; onPaint: (from: number, to
 
   return (
     <View
-      ref={view}
       {...responder.panHandlers}
-      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+      onLayout={(e) => {
+        widthRef.current = Math.max(1, e.nativeEvent.layout.width);
+        setWidth(e.nativeEvent.layout.width);
+      }}
       accessibilityLabel={t('Ruban à peindre : glisse le doigt pour colorer les LED')}
       style={{ height: rows * ROW_H + (rows - 1) * ROW_GAP }}
     >
@@ -210,7 +211,7 @@ function PaintS({ pixels, onPaint }: { pixels: Rgb[]; onPaint: (from: number, to
       />
     </View>
   );
-}
+});
 
 const STYLES: { style: CreationStyle; label: string }[] = [
   { style: 'motif', label: t('Motif') },
@@ -248,6 +249,16 @@ export default function CreateScreen() {
   const [hsv, setHsv] = useState<Hsv>({ h: 0, s: 1, v: 1 });
   /** Dernière création essayée sur le ruban (pour afficher « Sur le ruban »). */
   const [sent, setSent] = useState<string | null>(null);
+  // Le pinceau du moment, lu au toucher : la toile n'est pas redessinée à chaque mouvement d'un curseur.
+  const brushRef = useRef<Rgb>(hsvToRgb(hsv));
+  brushRef.current = hsvToRgb(hsv);
+  /** Peint de case en case à partir des couleurs les plus récentes (un glissement rapide n'en saute aucune). */
+  const paintCells = useCallback(
+    (from: number, to: number) => setCreationState((prev) => ({ ...prev, colors: paintRange(prev.colors, from, to, brushRef.current) })),
+    [],
+  );
+  const bytes = useMemo(() => creationBytes(creation, { n, level: 100 }), [creation, n]);
+  const encoded = useMemo(() => encodeCreation(creation), [creation]);
   /** Case de couleur choisie (styles sans dessin) : -1 = le fond. */
   const [slot, setSlot] = useState(0);
   const [busy, setBusy] = useState(false);
@@ -278,11 +289,10 @@ export default function CreateScreen() {
   const drawn = c.style === 'motif' || c.style === 'step';
   const limit = LIMITS[c.style];
   const full = c.style === 'motif';
-  const bytes = creationBytes(c, { n, level: 100 });
   const tooBig = bytes > SCRIPT_MAX_BYTES;
   const brush = hsvToRgb(hsv);
   const pure = hsvToRgb({ h: hsv.h, s: 1, v: 1 });
-  const onStrip = sent === encodeCreation(c);
+  const onStrip = sent === encoded;
 
   /** Pose la couleur dans la case choisie (ou le fond) ; pour le dessin, c'est le pinceau. */
   const put = (rgb: Rgb): void => {
@@ -306,19 +316,23 @@ export default function CreateScreen() {
   };
   const changeStyle = (style: CreationStyle): void => {
     const colorsNext = c.colors.slice(0, style === 'motif' ? n : LIMITS[style].max);
-    setCreationState((prev) => toFullStrip({ ...prev, style, colors: colorsNext.length > 0 ? colorsNext : DEFAULTS.colors.slice(0, 1) }, n));
+    const next = colorsNext.length > 0 ? colorsNext : DEFAULTS.colors.slice(0, 1);
+    setCreationState((prev) => toFullStrip({ ...prev, style, colors: next }, n));
+    // La case 1 est choisie : les curseurs prennent sa couleur.
     setSlot(0);
+    setHsv(rgbToHsv(next[0] ?? OFF));
   };
   const startFrom = (a: Ambiance): void => {
     if (!a.template) return;
     setCreationState({ ...DEFAULTS, ...a.template, mode: a.template.mode ?? 'flow', cell: a.template.cell ?? 1 });
     setSlot(0);
+    setHsv(rgbToHsv(a.template.colors[0] ?? OFF));
   };
   /** Essaie la création sur le ruban, sans quitter l'écran (souhait de Guillaume : voir avant de garder). */
   const tryIt = (): void => {
     setBusy(true);
     setError(null);
-    const key = encodeCreation(c);
+    const key = encoded;
     setCreation(device, c)
       .then(() => setSent(key))
       .catch((e: Error) => setError(e.message))
@@ -326,7 +340,8 @@ export default function CreateScreen() {
   };
   /** Enregistre la création dans « mes ambiances » (sur le téléphone), la met sur le ruban, puis revient. */
   const save = (): void => {
-    if (!name?.trim()) return;
+    // Touche du clavier comprise : rien de trop gros pour le ruban, et un seul enregistrement à la fois.
+    if (busy || tooBig || !name?.trim()) return;
     setBusy(true);
     saveAmbiance(name, c)
       .then(() => setCreation(device, c))
@@ -367,7 +382,7 @@ export default function CreateScreen() {
       {drawn ? (
         <>
           <SectionTitle>{t('Peins le ruban')}</SectionTitle>
-          <PaintS pixels={c.colors} onPaint={(from, to) => setColors(paintRange(c.colors, from, to, brush))} />
+          <PaintS pixels={c.colors} onPaint={paintCells} />
           <Muted>{t('Choisis une couleur, puis glisse le doigt sur le ruban.')}</Muted>
           {full && <Muted>{t('Le ruban est dessiné plié en S, du début (▶) à la fin.')}</Muted>}
         </>
@@ -402,11 +417,11 @@ export default function CreateScreen() {
       />
       <ColorSlider
         label={t('Blancheur')}
-        stops={[rgbCss(hsvToRgb({ h: hsv.h, s: 1, v: hsv.v })), rgbCss(hsvToRgb({ h: hsv.h, s: 0, v: hsv.v }))]}
-        value={1 - hsv.s}
+        stops={whiteStops(hsv.h, hsv.v)}
+        value={saturationToWhite(hsv.s)}
         thumbColor={brush}
-        onChange={(v) => tune({ s: 1 - v })}
-        onRelease={(v) => tune({ s: 1 - v })}
+        onChange={(v) => tune({ s: whiteToSaturation(v) })}
+        onRelease={(v) => tune({ s: whiteToSaturation(v) })}
       />
       <ColorSlider
         label={t('Luminosité')}

@@ -23,7 +23,7 @@ const AnimatedRect = Animated.createAnimatedComponent(Rect);
  */
 const edge = (outset: number) => ({ position: 'absolute' as const, top: -outset, left: -outset, right: -outset, bottom: -outset });
 /** Tronçons de la traîne : assez pour un fondu sans marches. */
-const SEGMENTS = 18;
+const SEGMENTS = 12;
 const TAIL = 0.42;
 const TURN_MS = 1100;
 
@@ -68,7 +68,8 @@ export function LoadingBorder({ active, selected, radius, outset = 1 }: { active
   const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (reduced) return;
+    // Rien à faire tant qu'on n'a jamais tourné (cases au repos : aucune animation lancée).
+    if (reduced || (!active && !shown)) return;
     if (active) {
       setShown(true);
       fill.value = 0;
@@ -117,8 +118,17 @@ export function LoadingBorder({ active, selected, radius, outset = 1 }: { active
  * légers qui débordent de part et d'autre du contour, apparus en fondu. Posée par-dessus la case.
  */
 export function SelectionGlow({ active, radius, outset = 1 }: { active: boolean; radius: number; outset?: number }) {
+  // Montée seulement à la première sélection : les dizaines de cases jamais choisies ne coûtent rien.
+  const [used, setUsed] = useState(active);
+  useEffect(() => {
+    if (active) setUsed(true);
+  }, [active]);
+  return used ? <Glow active={active} radius={radius} outset={outset} /> : null;
+}
+
+function Glow({ active, radius, outset }: { active: boolean; radius: number; outset: number }) {
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const opacity = useSharedValue(active ? 1 : 0);
+  const opacity = useSharedValue(0);
   useEffect(() => {
     opacity.value = withTiming(active ? 1 : 0, { duration: 260, easing: Easing.out(Easing.quad) });
   }, [active, opacity]);

@@ -1,12 +1,12 @@
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { CALIBRATION_HUE_MAX, estimateLength } from '../../core/calibration';
 import { hsvToRgb } from '../../core/color';
-import { setStripLength, showCalibration, stripLength } from '../../services/control';
+import { latestWins, setStripLength, showCalibration, stripLength } from '../../services/control';
 import { useSavedDevice } from '../../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { Chip } from '../../ui/light';
@@ -35,6 +35,14 @@ export default function CalibrateScreen() {
       .catch((e: Error) => setError(e.message))
       .finally(() => setBusy(false));
   };
+  const sendLength = useMemo(
+    () =>
+      latestWins((len: number) =>
+        device ? setStripLength(device, len).then(() => setError(null), (e: Error) => setError(e.message)) : Promise.resolve(),
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [device?.key],
+  );
   // L'arc-en-ciel s'allume à l'ouverture (et à « Recommencer »).
   useEffect(() => {
     if (device && step === 'color') run(showCalibration(device));
@@ -49,10 +57,13 @@ export default function CalibrateScreen() {
     );
   }
   const configured = Number(device.meta?.pixels) || 100;
+  /** Plusieurs appuis rapides : seule la dernière longueur part au ruban ; « C'est bon » attend qu'elle soit arrivée. */
   const apply = (next: number): void => {
     const len = Math.max(1, Math.min(configured, next));
     setLength(len);
-    run(setStripLength(device, len));
+    setBusy(true);
+    sendLength(len);
+    void sendLength.idle(false).then(() => setBusy(false));
   };
 
   return (

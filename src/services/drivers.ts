@@ -67,7 +67,7 @@ import {
 } from '../core/protocols/wifi';
 import type { HttpCall } from '../core/protocols/types';
 import { sendBle, sendElk } from './ble';
-import { obkAnim, obkRun, obkScript, obkStopEffects } from './openbeken';
+import { exclusive, obkAnim, obkRun, obkScript, obkScriptNow, obkStopEffectsNow } from './openbeken';
 import { bytesToText, http, readEvents, tcp, udpSend } from './net';
 import type { LightState } from './store';
 import { t as tr } from '../i18n';
@@ -98,6 +98,8 @@ export interface Driver {
   creation?(t: DriverTarget, c: Creation): Promise<void>;
   /** Ambiance de l'appli (identifiant de `BUILTIN_AMBIANCES`), jouée par le ruban lui-même. */
   ambiance?(t: DriverTarget, id: string): Promise<void>;
+  /** La luminosité s'envoie comme une couleur (pas de vraie commande) : elle remplace l'effet en cours. */
+  brightnessIsColor?: boolean;
   /** La luminosité peut-elle suivre le doigt en direct ? (absent : oui) */
   liveBrightness?(t: DriverTarget): boolean;
   /** Les ambiances de l'appli que ce ruban sait jouer (identifiants de `BUILTIN_AMBIANCES`). */
@@ -141,6 +143,7 @@ const triones: Driver = {
   power: (t, on) => sendBle(t.address, TRIONES, trionesPower(on)),
   color: (t, rgb) => sendBle(t.address, TRIONES, trionesColor(keepLevel(t, rgb))),
   brightness: (t, p) => sendBle(t.address, TRIONES, trionesColor(dimmed(t, p))),
+  brightnessIsColor: true,
   effects: () => LEDNET_PRESETS,
   catalog: () => LEDNET_CATALOG,
   effect: (t, e, s) => sendBle(t.address, TRIONES, trionesEffect(e.code, s)),
@@ -158,6 +161,7 @@ const zenggeBle: Driver = {
   // Deux formes de couleur : les anciens modèles comprennent 0x31, les récents 0x3B (à confirmer).
   color: (t, rgb) => zengge(t, mhColor(keepLevel(t, rgb)), zenggeHsv(keepLevel(t, rgb))),
   brightness: (t, p) => zengge(t, mhColor(dimmed(t, p)), zenggeHsv(dimmed(t, p))),
+  brightnessIsColor: true,
   effects: () => LEDNET_PRESETS,
   catalog: () => LEDNET_CATALOG,
   effect: (t, e, s) => zengge(t, mhEffect(e.code, s)),
@@ -186,7 +190,10 @@ const mhModels = new Map<string, number>();
 async function mhNine(t: DriverTarget): Promise<boolean> {
   if (!mhModels.has(t.address)) {
     const reply = await tcp(t.address, MAGIC_HOME_TCP_PORT, MH_QUERY, 14).catch(() => []);
-    mhModels.set(t.address, parseMhState(reply)?.model ?? 0);
+    const model = parseMhState(reply)?.model;
+    // Retenu seulement si la lecture a réussi : un ruban occupé sera relu au prochain envoi.
+    if (model !== undefined) mhModels.set(t.address, model);
+    return mhNineBytes(model ?? 0);
   }
   return mhNineBytes(mhModels.get(t.address) ?? 0);
 }
@@ -195,6 +202,7 @@ const magicHome: Driver = {
   power: async (t, on) => void (await mh(t, mhPower(on))),
   color: async (t, rgb) => void (await mh(t, mhColor(keepLevel(t, rgb), await mhNine(t)))),
   brightness: async (t, p) => void (await mh(t, mhColor(dimmed(t, p), await mhNine(t)))),
+  brightnessIsColor: true,
   effects: () => LEDNET_PRESETS,
   catalog: () => LEDNET_CATALOG,
   effect: async (t, e, s) => void (await mh(t, mhEffect(e.code, s))),
@@ -278,23 +286,28 @@ function runningScript(t: DriverTarget, level?: number, speed = t.state?.speed ?
   return undefined;
 }
 const openbeken: Driver = {
-  power: async (t, on) => {
-    const running = !!runningScript(t);
-    // Le script redessine les pixels : il faut l'arrêter pour éteindre, le relancer pour rallumer.
-    if (!on && running) await obkRun(t.address, ['stopAllScripts']);
-    await call(t, tasmotaPower(on));
-    if (on && running) await obkRun(t.address, OBK_START_MOTIF);
-  },
-  color: async (t, rgb) => {
-    if (t.state?.effect && pixelsOf(t)) await obkStopEffects(t.address);
-    await call(t, tasmotaColor(rgb));
-  },
-  brightness: async (t, p) => {
-    const script = runningScript(t, p);
-    // Les pixels d'un script sont posés un à un : la luminosité est dans le script, on le réécrit.
-    if (script) await obkScript(t.address, script);
-    else await call(t, tasmotaBrightness(p));
-  },
+  // Tout passe par la file du ruban (`exclusive`) : une commande ne double jamais une réécriture de script en cours.
+  power: (t, on) =>
+    exclusive(t.address, async () => {
+      const running = !!runningScript(t);
+      // Le script redessine les pixels : il faut l'arrêter pour éteindre, le relancer pour rallumer.
+      if (!on && running) await obkRun(t.address, ['stopAllScripts']);
+      await call(t, tasmotaPower(on));
+      if (on && running) await obkRun(t.address, OBK_START_MOTIF);
+    }),
+  color: (t, rgb) =>
+    exclusive(t.address, async () => {
+      // Toujours arrêter les effets d'un ruban à pixels : une ambiance peut être en route sans être encore retenue.
+      if (pixelsOf(t)) await obkStopEffectsNow(t.address);
+      await call(t, tasmotaColor(rgb));
+    }),
+  brightness: (t, p) =>
+    exclusive(t.address, async () => {
+      const script = runningScript(t, p);
+      // Les pixels d'un script sont posés un à un : la luminosité est dans le script, on le réécrit.
+      if (script) await obkScriptNow(t.address, script);
+      else await call(t, tasmotaBrightness(p));
+    }),
   // Script en cours (ambiance, dessin) : changer la luminosité réécrit tout le script (~1 s) ; seulement au lâcher.
   liveBrightness: (t) => !runningScript(t),
   effects: (t) => (pixelsOf(t) ? OBK_ANIMS : []),

@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useSyncExternalStore } from 'react';
+import { safeParse } from './safeParse';
 
 /**
  * Favoris : les ambiances (de ruban ou de pièce) que l'utilisateur veut avoir sous la main. Sur le téléphone
@@ -7,18 +8,22 @@ import { useEffect, useSyncExternalStore } from 'react';
  */
 const KEY = 'rubanix.favorites.v1';
 let favorites: string[] = [];
-let loaded = false;
 const listeners = new Set<() => void>();
 const set = (next: string[]): void => {
   favorites = next;
   listeners.forEach((l) => l());
 };
 
-async function load(): Promise<void> {
-  if (loaded) return;
-  loaded = true;
+/**
+ * Lecture du téléphone, une seule fois : les appelants suivants attendent la même lecture (avant, un second appel
+ * repartait aussitôt avec une liste vide).
+ */
+let loading: Promise<void> | undefined;
+const load = (): Promise<void> => (loading ??= readStored());
+async function readStored(): Promise<void> {
   const text = await AsyncStorage.getItem(KEY).catch(() => null);
-  if (text) set(JSON.parse(text) as string[]);
+  const saved = safeParse<string[] | null>(text, null);
+  if (saved) set(saved);
 }
 
 export const ambianceFav = (id: string): string => `amb:${id}`;

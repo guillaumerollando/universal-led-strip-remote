@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, type ReactNode } from 'react';
+import { memo, useEffect, type ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 import Animated, {
   Easing,
@@ -157,8 +157,8 @@ function diffused(leds: Rgb[]): { colors: string[]; at: number[] } {
  * bas et les deux bouts (même dessin que `Bloom`, mais une couleur par endroit).
  */
 // Les deux bouts du dégradé s'éteignent en douceur : pas de bord net au-delà du ruban.
-function LocalBloom({ leds, intensity, id, profile }: { leds: Rgb[]; intensity: number; id: string; profile: [number, number][] }) {
-  const stops = blurred(leds);
+const LocalBloom = memo(
+  function LocalBloom({ stops, intensity, id, profile }: { stops: Rgb[]; intensity: number; id: string; profile: [number, number][] }) {
   return (
     <Svg width="100%" height="100%">
       <Defs>
@@ -181,7 +181,10 @@ function LocalBloom({ leds, intensity, id, profile }: { leds: Rgb[]; intensity: 
       <Rect x="0" y="0" width="100%" height="100%" fill={`url(#${id}c)`} mask={`url(#${id}m)`} />
     </Svg>
   );
-}
+  },
+  // Redessiné seulement si les couleurs du halo changent (aperçu figé : rien à refaire).
+  (a, b) => a.id === b.id && a.intensity === b.intensity && a.stops.length === b.stops.length && a.stops.every((c, k) => c.r === b.stops[k].r && c.g === b.stops[k].g && c.b === b.stops[k].b),
+);
 /** Lueur serrée autour de la bande, et halo large qui déborde un peu plus vers le bas (la lumière qui tombe). */
 const TIGHT: [number, number][] = [[0, 0], [0.3, 0.22], [0.5, 1], [0.7, 0.22], [1, 0]];
 const WIDE: [number, number][] = [[0, 0], [0.25, 0.25], [0.42, 0.85], [0.55, 0.75], [0.8, 0.2], [1, 0]];
@@ -231,6 +234,7 @@ export function LightStrip({
   const color = leds ? q(paletteGlow(leds)) : palette ? paletteGlow(palette) : (rgb ?? WARM_WHITE);
   // Calculé une fois par image de l'aperçu.
   const band = leds && leds.length > 0 ? diffused(leds) : undefined;
+  const glow = leds && leds.length > 0 ? blurred(leds) : undefined;
   const reduced = useReducedMotion();
   const shimmer = useSharedValue(0);
   const breath = useSharedValue(1);
@@ -261,11 +265,11 @@ export function LightStrip({
         <>
           {/* Halo large, qui respire : chaque endroit de la couleur de son bout de ruban. */}
           <Animated.View pointerEvents="none" style={[{ position: 'absolute', left: -space.md, right: -space.md, top: -height * 2.5, bottom: -height * 3.2 }, breathStyle]}>
-            <LocalBloom leds={leds} intensity={0.55} id={`${id}w`} profile={WIDE} />
+            <LocalBloom stops={glow!} intensity={0.55} id={`${id}w`} profile={WIDE} />
           </Animated.View>
           {/* Lueur serrée le long de la bande. */}
           <View pointerEvents="none" style={{ position: 'absolute', left: -height / 2, right: -height / 2, top: box / 2 - height * 2, height: height * 4 }}>
-            <LocalBloom leds={leds} intensity={0.85} id={`${id}t`} profile={TIGHT} />
+            <LocalBloom stops={glow!} intensity={0.85} id={`${id}t`} profile={TIGHT} />
           </View>
         </>
       )}

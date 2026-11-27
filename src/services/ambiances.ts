@@ -4,11 +4,11 @@ import { useEffect, useSyncExternalStore } from 'react';
 import type { Ambiance } from '../core/ambiances';
 import { DEFAULTS, type Creation } from '../core/creations';
 import { normalizeMotif } from '../core/protocols/openbeken';
+import { safeParse } from './safeParse';
 
 /** Ambiances enregistrées par l'utilisateur : sur le téléphone seulement, pour tous ses rubans à pixels. */
 const KEY = 'rubanix.ambiances.v1';
 let mine: Ambiance[] = [];
-let loaded = false;
 const listeners = new Set<() => void>();
 
 const set = (next: Ambiance[]): void => {
@@ -17,13 +17,17 @@ const set = (next: Ambiance[]): void => {
 };
 const persist = (): Promise<void> => AsyncStorage.setItem(KEY, JSON.stringify(mine));
 
-async function load(): Promise<void> {
-  if (loaded) return;
-  loaded = true;
+/**
+ * Lecture du téléphone, une seule fois : les appelants suivants attendent la même lecture (avant, un second appel
+ * repartait aussitôt avec une liste vide).
+ */
+let loading: Promise<void> | undefined;
+const load = (): Promise<void> => (loading ??= readStored());
+async function readStored(): Promise<void> {
   const text = await AsyncStorage.getItem(KEY).catch(() => null);
   if (text) {
     // Ambiances de l'utilisateur : des créations. Les anciennes (motif dessiné) sont converties en style « Motif ».
-    const saved = (JSON.parse(text) as Ambiance[]).filter((a) => a.creation || a.motif);
+    const saved = safeParse<Ambiance[]>(text, []).filter((a) => a.creation || a.motif);
     set(
       saved.map((a) => {
         const creation: Creation =

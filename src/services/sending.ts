@@ -24,13 +24,14 @@ export async function track<T>(key: string, kind: SendKind, p: Promise<T>): Prom
 }
 
 /** Un envoi vers ce ruban est-il en cours (d'une de ces natures, ou de n'importe laquelle) ? */
-export function useSending(key: string | undefined, kinds: SendKind[] = ['power', 'brightness', 'color', 'effect']): boolean {
-  const snap = useSyncExternalStore(
+const ALL: SendKind[] = ['power', 'brightness', 'color', 'effect'];
+export function useSending(key: string | undefined, kinds: SendKind[] = ALL): boolean {
+  // Un booléen par ruban : un envoi vers un ruban ne redessine pas les cases des autres.
+  return useSyncExternalStore(
     (l) => {
       listeners.add(l);
       return () => listeners.delete(l);
     },
-    () => pending,
+    () => !!key && kinds.some((k) => (pending[`${key}|${k}`] ?? 0) > 0),
   );
-  return !!key && kinds.some((k) => (snap[`${key}|${k}`] ?? 0) > 0);
 }

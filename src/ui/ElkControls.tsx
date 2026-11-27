@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { hsvToRgb, rgbToHsv } from '../core/color';
+import { hsvToRgb, rgbToHsv, saturationToWhite, whiteStops, whiteToSaturation } from '../core/color';
 import type { Rgb } from '../core/elk';
 import { canColor, canDim, latestWins, previewColor, setBrightness, setColor, type Target } from '../services/control';
 import { ColorSlider, HUE_STOPS } from './ColorSlider';
@@ -35,21 +35,25 @@ export function ElkControls({ target }: { target: Target }) {
   const [sending, setSending] = useState<string | null>(null);
   const start = rgbToHsv(target.state?.rgb ?? { r: 255, g: 0, b: 0 });
   const [hue, setHue] = useState(start.h);
-  const [white, setWhite] = useState(1 - start.s);
-  const preview = useMemo(() => latestWins((rgb: Rgb) => previewColor(target, rgb)), [target.key]);
+  /** Position du curseur « Blancheur » (pas la saturation : la courbe laisse des nuances au début). */
+  const [white, setWhite] = useState(saturationToWhite(start.s));
+  // Le ruban tel qu'il est maintenant (sa luminosité du moment), pas tel qu'il était au premier affichage.
+  const latest = useRef(target);
+  latest.current = target;
+  const preview = useMemo(() => latestWins((rgb: Rgb) => previewColor(latest.current, rgb)), [target.key]);
   const pure = hsvToRgb({ h: hue, s: 1, v: 1 });
-  const current = hsvToRgb({ h: hue, s: 1 - white, v: 1 });
+  const current = hsvToRgb({ h: hue, s: whiteToSaturation(white), v: 1 });
 
   const slide = (h: number, w: number): void => {
     setHue(h);
     setWhite(w);
-    preview(hsvToRgb({ h, s: 1 - w, v: 1 }));
+    preview(hsvToRgb({ h, s: whiteToSaturation(w), v: 1 }));
   };
-  const commit = (h: number, w: number, which: string): void => run(setColor(target, hsvToRgb({ h, s: 1 - w, v: 1 })), which);
+  const commit = (h: number, w: number, which: string): void => run(setColor(target, hsvToRgb({ h, s: whiteToSaturation(w), v: 1 })), which);
   const pick = (rgb: Rgb, which: string): void => {
     const hsv = rgbToHsv(rgb);
     setHue(hsv.h);
-    setWhite(1 - hsv.s);
+    setWhite(saturationToWhite(hsv.s));
     run(setColor(target, rgb), which);
   };
 
@@ -78,7 +82,7 @@ export function ElkControls({ target }: { target: Target }) {
           />
           <ColorSlider
             label={t('Blancheur')}
-            stops={[`rgb(${pure.r},${pure.g},${pure.b})`, '#FFFFFF']}
+            stops={whiteStops(hue)}
             value={white}
             thumbColor={current}
             onChange={(v) => slide(hue, v)}

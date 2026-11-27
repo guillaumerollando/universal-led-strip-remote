@@ -46,7 +46,7 @@ export async function obkPixelMeta(ip: string): Promise<Record<string, string>> 
  * le ruban sans fichier ou le font décrocher (« pas de réponse » en glissant le ruban-curseur, 2026-11-27).
  */
 const queues = new Map<string, Promise<unknown>>();
-function exclusive<T>(ip: string, job: () => Promise<T>): Promise<T> {
+export function exclusive<T>(ip: string, job: () => Promise<T>): Promise<T> {
   const before = queues.get(ip) ?? Promise.resolve();
   const run = before.catch(() => undefined).then(job);
   queues.set(ip, run.catch(() => undefined));
@@ -84,10 +84,11 @@ async function obkAnimNow(ip: string, code: number, speedPercent: number, rgb?: 
  * préparé (cache vidé, animation intégrée coupée, journal réduit), puis le script est gardé au démarrage,
  * lancé 5 s après (sinon l'affichage se fige).
  */
-export function obkScript(ip: string, lines: string[]): Promise<void> {
-  return exclusive(ip, () => obkScriptNow(ip, lines));
+export function obkScript(ip: string, lines: string[], keep = true): Promise<void> {
+  return exclusive(ip, () => obkScriptNow(ip, lines, keep));
 }
-async function obkScriptNow(ip: string, lines: string[]): Promise<void> {
+/** `obkScript` sans la file : seulement depuis un travail déjà dans `exclusive`. */
+export async function obkScriptNow(ip: string, lines: string[], keep = true): Promise<void> {
   const text = lines.join('\n') + '\n';
   await obkRun(ip, OBK_BEFORE_SCRIPT);
   // La mémoire du ruban est petite : on efface l'ancien script (et les morceaux des anciennes versions) d'abord.
@@ -98,14 +99,16 @@ async function obkScriptNow(ip: string, lines: string[]): Promise<void> {
   // Mémoire pleine : le ruban répond « taille 0 » sans erreur.
   if (reply?.size !== undefined && reply.size < text.length) throw new Error(tr('La mémoire du ruban est pleine.'));
   await obkRun(ip, OBK_LAUNCH_SCRIPT);
-  await keepAtStartup(ip, OBK_STARTUP_SCRIPT);
+  // Calibrage (provisoire) : pas gardé au démarrage, et le démarrage ne garde plus d'effet.
+  await keepAtStartup(ip, keep ? OBK_STARTUP_SCRIPT : []);
 }
 
 /** Couleur unie : on arrête animations et motif, et on n'en relance plus au démarrage. */
 export function obkStopEffects(ip: string): Promise<void> {
   return exclusive(ip, () => obkStopEffectsNow(ip));
 }
-async function obkStopEffectsNow(ip: string): Promise<void> {
+/** `obkStopEffects` sans la file : seulement depuis un travail déjà dans `exclusive`. */
+export async function obkStopEffectsNow(ip: string): Promise<void> {
   await obkRun(ip, ['stopAllScripts', 'Anim -1']);
   await keepAtStartup(ip, []);
 }
@@ -126,4 +129,5 @@ async function obkShowEndNow(ip: string, length: number): Promise<void> {
     `SM16703P_SetPixel ${length - 1} 255 255 255`,
     'SM16703P_Start',
   ]);
+  await keepAtStartup(ip, []);
 }

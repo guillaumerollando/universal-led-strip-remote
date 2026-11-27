@@ -91,7 +91,7 @@ export async function previewColor(t: Target, rgb: Rgb): Promise<void> {
  * Expéditeur « le dernier gagne » : pendant un glissement, on n'envoie jamais plus d'une trame à la fois,
  * et seule la dernière valeur demandée part ensuite (le Bluetooth de ces contrôleurs est lent).
  */
-export function latestWins<T>(send: (value: T) => Promise<void>): ((value: T) => void) & { idle: () => Promise<void> } {
+export function latestWins<T>(send: (value: T) => Promise<void>): ((value: T) => void) & { idle: (dropPending?: boolean) => Promise<void> } {
   let busy = false;
   let pending: { value: T } | null = null;
   let waiters: (() => void)[] = [];
@@ -119,8 +119,8 @@ export function latestWins<T>(send: (value: T) => Promise<void>): ((value: T) =>
    * Attend la fin des envois en cours, et oublie celui qui attendait : la valeur finale (au lâcher du doigt) part
    * ensuite seule, sans croiser un aperçu encore en route (le ruban Wi-Fi répondait « pas de réponse »).
    */
-  const idle = (): Promise<void> => {
-    pending = null;
+  const idle = (dropPending = true): Promise<void> => {
+    if (dropPending) pending = null;
     return busy ? new Promise<void>((resolve) => waiters.push(resolve)) : Promise.resolve();
   };
   return Object.assign(fn, { idle });
@@ -128,7 +128,8 @@ export function latestWins<T>(send: (value: T) => Promise<void>): ((value: T) =>
 
 async function setBrightnessNow(t: Target, percent: number): Promise<void> {
   await need(t, 'brightness', tr('Luminosité non gérée pour cet appareil.'))(t, percent);
-  await rememberState(t.key, { brightness: percent });
+  // Luminosité envoyée comme une couleur : l'effet en cours est remplacé, l'appli ne doit plus l'afficher.
+  await rememberState(t.key, driverOf(t)?.brightnessIsColor ? { brightness: percent, effect: undefined } : { brightness: percent });
 }
 
 /** Envoie une luminosité sans la retenir : pendant qu'on fait glisser le doigt le long du ruban. */
@@ -180,7 +181,6 @@ export function lightColors(t: Target): Rgb[] | undefined {
   return list.length >= 2 ? list : undefined;
 }
 
-/** Les ambiances de l'appli que ce ruban sait jouer (rubans à pixels OpenBeken : toutes ; MELK : sa sélection). */
 /**
  * Les ambiances de l'appli que ce ruban sait jouer : les siennes (ruban à pixels, MELK), et pour tout ruban qui sait
  * prendre une couleur (ou une télécommande à touches de couleur), leur version simple — la bonne couleur.
@@ -196,7 +196,6 @@ export function ambiancesFor(t: Target): string[] {
 export const canMotif = (t: Target): boolean => !!driverOf(t)?.hasMotif?.(t);
 /** Le dernier motif envoyé à ce ruban (ambiance ou dessin), s'il y en a un. */
 export const motifOf = (t: Target): Motif | undefined => decodeMotif(t.meta?.motif);
-/** Un motif tourne-t-il en ce moment sur ce ruban ? */
 /** L'ambiance de l'appli qui tourne sur ce ruban, s'il y en a une. */
 export const ambianceRunning = (t: Target): string | undefined =>
   t.state?.effect?.startsWith(AMBIANCE_EFFECT_PREFIX) ? t.state.effect.slice(AMBIANCE_EFFECT_PREFIX.length) : undefined;
@@ -215,7 +214,8 @@ async function setCreationNow(t: Target, c: Creation): Promise<void> {
 
 /** Calibrage : le ruban s'allume en arc-en-ciel sur toute la longueur annoncée par sa configuration. */
 export async function showCalibration(t: Target): Promise<void> {
-  await obkScript(t.address, calibrationScript(Number(t.meta?.pixels) || 100));
+  // Provisoire : pas gardé au démarrage (sinon l'arc-en-ciel reviendrait après une coupure de courant).
+  await obkScript(t.address, calibrationScript(Number(t.meta?.pixels) || 100), false);
   await rememberState(t.key, { effect: undefined });
 }
 

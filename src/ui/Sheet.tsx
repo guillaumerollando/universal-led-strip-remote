@@ -63,10 +63,11 @@ export function Sheet({ visible, title, items, onClose, children }: { visible: b
 }
 
 /** Saisie d'un nouveau nom, dans un `Sheet`. */
-export function RenameField({ initial, onDone }: { initial: string; onDone: (name: string) => void }) {
+export function RenameField({ initial, onDone, taken }: { initial: string; onDone: (name: string) => void; taken?: (name: string) => boolean }) {
   const [name, setName] = useState(initial);
+  const clash = !!name.trim() && !!taken?.(name);
   const done = (): void => {
-    if (name.trim()) onDone(name.trim());
+    if (name.trim() && !clash) onDone(name.trim());
   };
   return (
     <View style={{ gap: space.md }}>
@@ -80,7 +81,8 @@ export function RenameField({ initial, onDone }: { initial: string; onDone: (nam
         onSubmitEditing={done}
         placeholderTextColor={colors.textDim}
       />
-      <Button label={t('Renommer')} onPress={done} disabled={!name.trim()} />
+      {clash && <Text style={[styles.muted, { color: colors.warn }]}>{t('Une autre pièce porte déjà ce nom.')}</Text>}
+      <Button label={t('Renommer')} onPress={done} disabled={!name.trim() || clash} />
     </View>
   );
 }

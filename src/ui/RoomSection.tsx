@@ -6,7 +6,7 @@ import { Alert, Pressable, Text, View } from 'react-native';
 import type { Rgb } from '../core/elk';
 import { canPower, setGroupPower } from '../services/control';
 import { markLongPressSeen } from '../services/hints';
-import { removeRoom, renameRoom, type Room, type SavedDevice } from '../services/store';
+import { removeRoom, renameRoom, roomNamed, type Room, type SavedDevice } from '../services/store';
 import { DeviceTile } from './DeviceTile';
 import { styles as kit } from './kit';
 import { Glow, PowerButton } from './light';
@@ -134,6 +134,7 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
           {menu === 'rename' ? (
             <RenameField
               initial={room.name}
+              taken={(n) => !!roomNamed(n, room.id)}
               onDone={(n) => {
                 void renameRoom(room.id, n);
                 setMenu(null);

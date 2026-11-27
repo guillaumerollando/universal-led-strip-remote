@@ -2,7 +2,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Pressable, Text, TextInput, View } from 'react-native';
 
-import { addRoom, removeRoom, renameRoom, updateDevice, useRooms, useSavedDevices } from '../../services/store';
+import { addRoom, removeRoom, renameRoom, roomNamed, updateDevice, useRooms, useSavedDevices } from '../../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { kindLabel } from '../../ui/labels';
 import { colors, radius, space } from '../../ui/theme';
@@ -20,6 +20,8 @@ export default function RoomScreen() {
   const room = rooms.find((r) => r.id === (createdId ?? id));
   const isNew = id === 'new' && !createdId;
   const [name, setName] = useState(room?.name ?? '');
+  // Jamais deux pièces du même nom (« Salon » et « salon » comptent pour une).
+  const clash = name.trim() ? roomNamed(name, room?.id) : undefined;
 
   if (!isNew && !room) {
     return (
@@ -30,7 +32,7 @@ export default function RoomScreen() {
   }
 
   const create = async (): Promise<void> => {
-    if (creating || !name.trim()) return;
+    if (creating || !name.trim() || clash) return;
     setCreating(true);
     const created = await addRoom(name);
     if (device) {
@@ -69,12 +71,13 @@ export default function RoomScreen() {
         placeholderTextColor={colors.textDim}
         autoFocus={isNew}
         returnKeyType="done"
-        onSubmitEditing={() => (isNew ? void create() : room && void renameRoom(room.id, name))}
+        onSubmitEditing={() => (isNew ? void create() : room && !clash && void renameRoom(room.id, name))}
       />
+      {!!clash && <Muted>{t('Une autre pièce porte déjà ce nom.')}</Muted>}
       {isNew ? (
-        <Button label={t('Créer la pièce')} onPress={() => void create()} disabled={!name.trim()} busy={creating} />
+        <Button label={t('Créer la pièce')} onPress={() => void create()} disabled={!name.trim() || !!clash} busy={creating} />
       ) : (
-        <Button label={t('Renommer')} variant="secondary" onPress={() => room && void renameRoom(room.id, name)} disabled={!name.trim() || name.trim() === room?.name} />
+        <Button label={t('Renommer')} variant="secondary" onPress={() => room && void renameRoom(room.id, name)} disabled={!name.trim() || name.trim() === room?.name || !!clash} />
       )}
 
       {room && (

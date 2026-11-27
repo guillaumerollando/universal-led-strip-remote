@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import { Linking, Pressable, Text, View } from 'react-native';
+import { Image, Linking, Pressable, Text, View } from 'react-native';
 
 import { Muted, Screen, SectionTitle, styles } from '../ui/kit';
 import { SignatureStrip } from '../ui/light';
@@ -34,7 +34,7 @@ export default function AboutScreen() {
       <View style={{ gap: space.xs, marginTop: space.md }}>
         <SignatureStrip>
           <Text style={[styles.big, { fontSize: 28, textAlign: 'center' }]}>{t('Ruban LED')}</Text>
-          <Text style={[styles.text, { color: colors.accent, fontStyle: 'italic', textAlign: 'center', marginBottom: space.sm }]}>
+          <Text style={[styles.text, { color: colors.accent, textAlign: 'center', marginBottom: space.sm }]}>
             {t('Une appli pour les gouverner tous')}
           </Text>
         </SignatureStrip>
@@ -46,13 +46,41 @@ export default function AboutScreen() {
 
       <View style={{ backgroundColor: colors.surface, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, marginTop: space.md }}>
         <LinkRow label={t('Open source')} detail="GPL-3.0" url={LINKS.source} />
-        <LinkRow label={t('Fait par {studio}', { studio: 'Rollando Studio' })} url={LINKS.studio} divider />
         <LinkRow label={t('Politique de confidentialité')} url={LINKS.privacy} divider />
       </View>
+
+      <StudioCard />
 
       <SectionTitle>{t('Crédits')}</SectionTitle>
       <Muted>{CREDITS.join(' · ')}</Muted>
     </Screen>
+  );
+}
+
+/** « Fait avec soin par » + le logo du studio, comme dans les autres applis Rollando Studio. */
+function StudioCard() {
+  const open = (): void => void Linking.openURL(LINKS.studio);
+  return (
+    <Pressable
+      accessibilityRole="link"
+      accessibilityLabel={`${t('Fait avec soin par')} Rollando Studio`}
+      onPress={open}
+      style={({ pressed }) => ({
+        alignItems: 'center',
+        gap: space.md,
+        paddingVertical: space.xl,
+        paddingHorizontal: space.lg,
+        marginTop: space.lg,
+        borderRadius: radius.lg,
+        borderWidth: 1,
+        borderColor: colors.border,
+        backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
+      })}
+    >
+      <Muted>{t('Fait avec soin par')}</Muted>
+      <Image source={require('../../assets/rollando-studio.png')} accessibilityIgnoresInvertColors style={{ width: 210, height: 210 * (249 / 900) }} resizeMode="contain" />
+      <Text style={{ color: colors.accent, fontWeight: '700', fontSize: 15 }}>{t('Découvrir nos autres applis')}</Text>
+    </Pressable>
   );
 }
 

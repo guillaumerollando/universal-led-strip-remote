@@ -44,7 +44,7 @@ export interface Room {
   name: string;
 }
 
-interface Data {
+export interface Data {
   devices: SavedDevice[];
   rooms: Room[];
 }
@@ -72,10 +72,43 @@ export async function loadDevices(): Promise<void> {
   if (loaded) return;
   const [[, devices], [, rooms]] = await AsyncStorage.multiGet([STORAGE_KEY, ROOMS_KEY]);
   loaded = true;
-  set({
-    devices: devices ? (JSON.parse(devices) as SavedDevice[]) : [],
-    rooms: rooms ? (JSON.parse(rooms) as Room[]) : [],
-  });
+  const merged = mergeDuplicateRooms(rooms ? (JSON.parse(rooms) as Room[]) : [], devices ? (JSON.parse(devices) as SavedDevice[]) : []);
+  set(merged);
+  if (merged.changed) await persist();
+}
+
+/** Nom de pièce comparable : sans espaces autour, sans majuscules ni accents (« salon » = « Salon »). */
+export const roomKey = (name: string): string =>
+  name
+    .trim()
+    .toLocaleLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ');
+
+/**
+ * Deux pièces du même nom (créées en double par l'ancienne saisie, 1.1) : on garde la première et on y range
+ * les rubans de l'autre.
+ */
+export function mergeDuplicateRooms(rooms: Room[], devices: SavedDevice[]): Data & { changed: boolean } {
+  const first = new Map<string, Room>();
+  const moved = new Map<string, string>();
+  for (const r of rooms) {
+    const keep = first.get(roomKey(r.name));
+    if (keep) moved.set(r.id, keep.id);
+    else first.set(roomKey(r.name), r);
+  }
+  if (!moved.size) return { rooms, devices, changed: false };
+  return {
+    rooms: [...first.values()],
+    devices: devices.map((d) => (d.roomId && moved.has(d.roomId) ? { ...d, roomId: moved.get(d.roomId) } : d)),
+    changed: true,
+  };
+}
+
+/** La pièce qui porte déjà ce nom, s'il y en a une (hors `exceptId`). */
+export function roomNamed(name: string, exceptId?: string): Room | undefined {
+  return data.rooms.find((r) => r.id !== exceptId && roomKey(r.name) === roomKey(name));
 }
 
 /** Lecture directe (hors React), pour les liens profonds. */
@@ -109,16 +142,22 @@ export async function removeDevice(key: string): Promise<void> {
   await persist();
 }
 
+/** Crée une pièce ; si une pièce porte déjà ce nom, c'est elle qu'on renvoie (jamais deux « Salon »). */
 export async function addRoom(name: string): Promise<Room> {
-  const room = { id: `room-${Date.now()}`, name: name.trim() };
+  const existing = roomNamed(name);
+  if (existing) return existing;
+  const room = { id: `room-${Date.now()}`, name: name.trim().replace(/\s+/g, ' ') };
   set({ rooms: [...data.rooms, room] });
   await persist();
   return room;
 }
 
-export async function renameRoom(id: string, name: string): Promise<void> {
+/** Renomme une pièce ; refusé (false) si une autre pièce porte déjà ce nom. */
+export async function renameRoom(id: string, name: string): Promise<boolean> {
+  if (roomNamed(name, id)) return false;
   set({ rooms: data.rooms.map((r) => (r.id === id ? { ...r, name: name.trim() } : r)) });
   await persist();
+  return true;
 }
 
 /** Supprime une pièce ; ses appareils restent, sans pièce. */

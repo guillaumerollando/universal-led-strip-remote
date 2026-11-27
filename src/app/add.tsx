@@ -7,7 +7,7 @@ import { productName, ownName, stripKind } from '../core/describe';
 import { FAMILIES } from '../core/families';
 import { canPower } from '../services/control';
 import { hasIrEmitter } from '../services/ir';
-import { useScan } from '../services/scan';
+import { stopScan, useScan } from '../services/scan';
 import { useSavedDevices, type SavedDevice } from '../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../ui/kit';
 import { kindLabel, signalText } from '../ui/labels';
@@ -25,6 +25,7 @@ export default function AddScreen() {
 
   useEffect(() => {
     if (!scanning && !demo) start();
+    return stopScan;
     // Une seule recherche à l'ouverture de l'écran.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

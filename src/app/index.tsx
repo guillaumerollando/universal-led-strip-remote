@@ -1,13 +1,14 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, useWindowDimensions, View } from 'react-native';
 
 import { canPower, setGroupPower } from '../services/control';
 import { markLongPressSeen, useLongPressHint } from '../services/hints';
 import { useScan } from '../services/scan';
 import { useRooms, useSavedDevices } from '../services/store';
 import { Button, Muted, Screen, styles } from '../ui/kit';
-import { PowerButton, SignatureStrip } from '../ui/light';
+import { Glow, PowerButton, SignatureStrip } from '../ui/light';
+import { LedRow } from '../ui/LedRow';
 import { RoomSection } from '../ui/RoomSection';
 import { colors, radius, space } from '../ui/theme';
 import { t } from '../i18n';
@@ -61,23 +62,51 @@ export default function HomeScreen() {
         </View>
       )}
 
-      {devices.length === 0 && rooms.length === 0 && (
-        <View style={{ gap: space.md, marginTop: space.lg }}>
-          <Text style={styles.title}>{t('Tous tes rubans, une seule appli.')}</Text>
-          <Muted>{t('Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.')}</Muted>
-        </View>
-      )}
+      {devices.length === 0 && <EmptyHome />}
 
       {rooms.map((room) => (
         <RoomSection key={room.id} room={room} devices={devices.filter((d) => d.roomId === room.id)} nearbyKeys={nearby} />
       ))}
       {loose.length > 0 && <RoomSection room={null} devices={loose} nearbyKeys={nearby} />}
 
-      <View style={{ gap: space.sm, marginTop: space.xl }}>
-        <Button label={t('Ajouter un ruban')} onPress={() => router.push('/add')} />
-        <Button label={t('Nouvelle pièce')} variant="secondary" onPress={() => router.push({ pathname: '/room/[id]', params: { id: 'new' } })} />
-      </View>
+      {devices.length > 0 && (
+        <View style={{ gap: space.sm, marginTop: space.xl }}>
+          <Button label={t('Ajouter un ruban')} onPress={() => router.push('/add')} />
+          <Button label={t('Nouvelle pièce')} variant="secondary" onPress={() => router.push({ pathname: '/room/[id]', params: { id: 'new' } })} />
+        </View>
+      )}
     </Screen>
+  );
+}
+
+/**
+ * Premier lancement : un ruban qui attend d'être allumé, et un gros bouton « + » à hauteur de pouce
+ * (bas de l'écran). Les pièces viendront pendant l'ajout : pas de « Nouvelle pièce » ici.
+ */
+function EmptyHome() {
+  const { height } = useWindowDimensions();
+  return (
+    <View style={{ minHeight: height * 0.68, justifyContent: 'space-between', alignItems: 'center', paddingTop: space.xl }}>
+      <View style={{ alignItems: 'center', gap: space.sm }}>
+        <LedRow mode="chase" count={11} size={14} />
+        <Text style={[styles.big, { fontSize: 26, textAlign: 'center' }]}>{t('Tous tes rubans, une seule appli.')}</Text>
+        <Muted>{t('Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.')}</Muted>
+      </View>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t('Ajouter mon premier ruban')}
+        onPress={() => router.push('/add')}
+        style={({ pressed }) => ({ alignItems: 'center', gap: space.md, opacity: pressed ? 0.75 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] })}
+      >
+        <View style={{ width: 96, height: 96, borderRadius: 48, alignItems: 'center', justifyContent: 'center' }}>
+          <Glow rgb={{ r: 255, g: 181, b: 71 }} intensity={0.5} style={{ top: -40, bottom: -40, left: -40, right: -40 }} />
+          <View style={{ width: 88, height: 88, borderRadius: 44, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ color: colors.accentText, fontSize: 48, fontWeight: '300', lineHeight: 52 }}>+</Text>
+          </View>
+        </View>
+        <Text style={[styles.title, { textAlign: 'center' }]}>{t('Ajouter mon premier ruban')}</Text>
+      </Pressable>
+    </View>
   );
 }
 

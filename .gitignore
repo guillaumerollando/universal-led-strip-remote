@@ -48,3 +48,6 @@ tools/.tuya-*.json
 .venv/
 modules/*/android/build/
 modules/*/android/.gradle/
+
+# Réglages d IA locaux : jamais dans le dépôt
+.claude/

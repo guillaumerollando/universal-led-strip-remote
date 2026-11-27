@@ -83,7 +83,7 @@ describe('Wi-Fi HTTP / UDP', () => {
   });
   it('Tasmota', () => {
     expect(tasmotaColor(RED).path).toBe('/cm?cmnd=Color%20FF0000');
-    expect(parseTasmotaStatus({ Status: { DeviceName: 'Ruban' }, StatusSTS: { Dimmer: 50, Color: 'FF0000' } })).toEqual({ name: 'Ruban', color: true });
+    expect(parseTasmotaStatus({ Status: { DeviceName: 'Ruban' }, StatusSTS: { Dimmer: 50, Color: 'FF0000' } })).toEqual({ name: 'Ruban', color: true, ct: false });
     expect(parseTasmotaStatus({ Status: { DeviceName: 'Prise' }, StatusSTS: { POWER: 'ON' } })).toBeNull();
   });
   it('Hue (pont)', () => {
@@ -93,8 +93,13 @@ describe('Wi-Fi HTTP / UDP', () => {
     const lights = parseHueLights({
       '1': { name: 'Télé', type: 'Extended color light', productname: 'Hue lightstrip plus' },
       '2': { name: 'Prise', type: 'On/Off plug-in unit' },
+      '3': { name: 'Bureau', type: 'Color temperature light', productname: 'Hue white ambiance' },
     });
-    expect(lights).toEqual([{ id: '1', name: 'Télé', product: 'Hue lightstrip plus', color: true }]);
+    expect(lights).toEqual([
+      { id: '1', name: 'Télé', product: 'Hue lightstrip plus', color: true, ct: true },
+      // Blancs seulement : pas de couleur, mais chaud / froid.
+      { id: '3', name: 'Bureau', product: 'Hue white ambiance', color: false, ct: true },
+    ]);
   });
   it('Elgato, ESPHome', () => {
     expect(parseElgatoInfo({ productName: 'Elgato Light Strip', displayName: '' })).toEqual({ name: 'Elgato Light Strip', color: true });

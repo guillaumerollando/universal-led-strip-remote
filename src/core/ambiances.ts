@@ -38,6 +38,11 @@ export interface Ambiance {
    * la bonne couleur, ou une touche d'effet de la télécommande (`flash`…) si elle en a une.
    */
   simple?: { color: Rgb; effect?: string };
+  /**
+   * Sur une ampoule (une seule lumière pour toute la pièce), ce qui rend mieux que la couleur vive d'un ruban :
+   * un blanc (kelvins) et / ou une luminosité plus douce. Absent : la version simple.
+   */
+  bulb?: { kelvin?: number; brightness?: number };
   /** Ambiance de l'appli : ses réglages exprimés comme une création, pour « partir de » elle dans l'éditeur. */
   template?: Omit<Creation, 'mode' | 'cell'> & Partial<Pick<Creation, 'mode' | 'cell'>>;
   /** Ambiance de l'utilisateur : sa création (style, couleurs, réglages). */
@@ -96,6 +101,8 @@ export const BUILTIN_AMBIANCES: Ambiance[] = [
   },
   {
     id: 'autumn',
+    // Cocooning sur une ampoule : un blanc très chaud, un peu tamisé.
+    bulb: { kelvin: 2200, brightness: 60 },
     simple: { color: rgb(255, 80, 0) },
     template: { style: 'leaves', bg: AUTUMN_BG, colors: LEAVES, size: 'medium', speed: 55 },
     melk: { color: rgb(255, 80, 0) },
@@ -124,6 +131,7 @@ export const BUILTIN_AMBIANCES: Ambiance[] = [
   },
   {
     id: 'romantic',
+    bulb: { brightness: 40 },
     simple: { color: rgb(255, 0, 40) },
     template: { style: 'bands', bg: ROMANTIC_BG, colors: [ROMANTIC, ROMANTIC], size: 'large', speed: 36 },
     // Flot (35), choisi par Guillaume « de loin » : même esprit que la Forêt, dans la couleur romantique.

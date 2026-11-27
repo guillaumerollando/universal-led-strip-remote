@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Linking, Pressable, Text, View } from 'react-native';
 
 import { FAMILIES, playStoreUrl } from '../../core/families';
-import { ambiancesFor, canColor, canDim, canPower, catalogFor, effectsFor, irRemoteOf, lightColors, setPower, type Target } from '../../services/control';
+import { ambiancesFor, canColor, canDim, canWhite, canPower, catalogFor, effectsFor, irRemoteOf, lightColors, setPower, type Target } from '../../services/control';
 import { foundDevice } from '../../services/scan';
 import { rememberState, useSavedDevice } from '../../services/store';
 import { AmbiancesPanel } from '../../ui/AmbiancesPanel';
@@ -54,7 +54,7 @@ export default function DeviceScreen() {
   const irRemote = saved ? irRemoteOf(saved) : undefined;
   const toggleOnly = !!irRemote && !irRemote.keys.some((k) => k.kind === 'power-off');
   const family = FAMILIES[source.family];
-  const title = saved?.name ?? kindLabel(source.transport);
+  const title = saved?.name ?? kindLabel(source);
   const on = saved?.state?.on ?? false;
   const palette = saved ? lightColors(saved) : undefined;
   // Favoris en tête de fiche : ambiances (si ce ruban en joue) et effets de son contrôleur.
@@ -131,7 +131,7 @@ export default function DeviceScreen() {
 
       {!canPower(device) && family.closed && (
         <View style={{ borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, borderStyle: 'dashed', padding: space.lg, gap: space.sm }}>
-          <Text style={styles.title}>{t('Ce ruban est à toi')}</Text>
+          <Text style={styles.title}>{t('Cet appareil est à toi')}</Text>
           <Muted>
             {t(
               'Son fabricant le verrouille, mais beaucoup peuvent recevoir un logiciel libre, souvent par Wi-Fi, sans ouvrir le boîtier. L’appli le pilote alors directement, effets compris. Selon ton pays, la loi l’autorise ou non : renseigne-toi. C’est de la bidouille, à tes risques, et la garantie peut ne plus s’appliquer.',
@@ -148,7 +148,7 @@ export default function DeviceScreen() {
           {favFx && <EffectsPanel target={saved} favoritesOnly />}
         </>
       )}
-      {saved && (canColor(device) || canDim(device)) && (
+      {saved && (canColor(device) || canWhite(device) || canDim(device)) && (
         <>
           <SectionTitle>{t('Lumière')}</SectionTitle>
           <ElkControls target={device} />

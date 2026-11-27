@@ -31,7 +31,7 @@ describe('OpenBeken', () => {
   });
 
   it('reste lisible par le pilote Tasmota', () => {
-    expect(parseTasmotaStatus(status0)).toEqual({ name: 'obkE187799A', color: true });
+    expect(parseTasmotaStatus(status0)).toEqual({ name: 'obkE187799A', color: true, ct: true });
   });
 
   it('ajout par adresse IP : famille openbeken', () => {

@@ -45,7 +45,7 @@ export default function HomeScreen() {
                 busy={busy}
                 size={30}
                 quiet
-                label={t(allOn ? '{name} : éteindre' : '{name} : allumer', { name: t('Tous les rubans') })}
+                label={t(allOn ? '{name} : éteindre' : '{name} : allumer', { name: t('Toutes les lumières') })}
               />
             )}
             <InfoButton />
@@ -55,7 +55,7 @@ export default function HomeScreen() {
 
       {hint && devices.length > 0 && (
         <View style={[styles.row, { backgroundColor: colors.surface, borderRadius: radius.md, borderWidth: 1, borderColor: colors.border, padding: space.md, marginTop: space.sm }]}>
-          <Text style={[styles.muted, { flex: 1 }]}>{t('Astuce : appui long sur une pièce ou un ruban pour ses réglages.')}</Text>
+          <Text style={[styles.muted, { flex: 1 }]}>{t('Astuce : appui long sur une pièce ou une lumière pour ses réglages.')}</Text>
           <Pressable accessibilityRole="button" hitSlop={10} onPress={markLongPressSeen}>
             <Text style={{ color: colors.accent, fontWeight: '700' }}>{t('Compris')}</Text>
           </Pressable>
@@ -71,7 +71,7 @@ export default function HomeScreen() {
 
       {devices.length > 0 && (
         <View style={{ gap: space.sm, marginTop: space.xl }}>
-          <Button label={t('Ajouter un ruban')} onPress={() => router.push('/add')} />
+          <Button label={t('Ajouter une lumière')} onPress={() => router.push('/add')} />
           <Button label={t('Nouvelle pièce')} variant="secondary" onPress={() => router.push({ pathname: '/room/[id]', params: { id: 'new' } })} />
         </View>
       )}
@@ -89,12 +89,12 @@ function EmptyHome() {
     <View style={{ minHeight: height * 0.68, justifyContent: 'space-between', alignItems: 'center', paddingTop: space.xl }}>
       <View style={{ alignItems: 'center', gap: space.sm }}>
         <LedRow mode="chase" count={11} size={14} />
-        <Text style={[styles.big, { fontSize: 26, textAlign: 'center' }]}>{t('Tous tes rubans, une seule appli.')}</Text>
-        <Muted>{t('Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban.')}</Muted>
+        <Text style={[styles.big, { fontSize: 26, textAlign: 'center' }]}>{t('Tous tes rubans et ampoules, une seule appli.')}</Text>
+        <Muted>{t('Bluetooth, Wi-Fi ou télécommande : ajoute ton premier ruban ou ta première ampoule.')}</Muted>
       </View>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={t('Ajouter mon premier ruban')}
+        accessibilityLabel={t('Ajouter ma première lumière')}
         onPress={() => router.push('/add')}
         style={({ pressed }) => ({ alignItems: 'center', gap: space.md, opacity: pressed ? 0.75 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] })}
       >
@@ -104,7 +104,7 @@ function EmptyHome() {
             <Text style={{ color: colors.accentText, fontSize: 48, fontWeight: '300', lineHeight: 52 }}>+</Text>
           </View>
         </View>
-        <Text style={[styles.title, { textAlign: 'center' }]}>{t('Ajouter mon premier ruban')}</Text>
+        <Text style={[styles.title, { textAlign: 'center' }]}>{t('Ajouter ma première lumière')}</Text>
       </Pressable>
     </View>
   );

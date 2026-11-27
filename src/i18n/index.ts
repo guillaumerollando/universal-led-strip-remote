@@ -5,7 +5,7 @@ import { EN } from './langs/en';
 
 /**
  * Langue de l'appli : la première langue du téléphone que l'appli parle, anglais sinon (`dicts.ts`).
- * Les textes s'écrivent en français dans le code (`t('Ajouter un ruban')`) ; `langs/*.ts` donnent leurs traductions.
+ * Les textes s'écrivent en français dans le code (`t('Ajouter une lumière')`) ; `langs/*.ts` donnent leurs traductions.
  */
 export const lang: Lang = pickLang(getLocales());
 const dict = DICTS[lang];

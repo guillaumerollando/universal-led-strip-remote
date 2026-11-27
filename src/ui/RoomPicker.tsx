@@ -70,7 +70,7 @@ export function NewRoomDialog({ visible, onClose, onCreated }: { visible: boolea
             returnKeyType="done"
             onSubmitEditing={() => void create()}
           />
-          {!!existing && <Text style={styles.muted}>{t('« {name} » existe déjà : le ruban y sera rangé.', { name: existing.name })}</Text>}
+          {!!existing && <Text style={styles.muted}>{t('« {name} » existe déjà : la lumière y sera rangée.', { name: existing.name })}</Text>}
           <View style={[styles.row, { gap: space.sm }]}>
             <Button label={t('Annuler')} variant="secondary" onPress={close} style={{ flex: 1 }} />
             <Button label={existing ? t('Choisir') : t('Créer')} onPress={() => void create()} disabled={!name.trim()} busy={busy} style={{ flex: 1 }} />

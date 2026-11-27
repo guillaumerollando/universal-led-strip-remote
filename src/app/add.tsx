@@ -42,8 +42,8 @@ export default function AddScreen() {
     <Screen>
       <View style={{ alignItems: 'center', gap: space.xs }}>
         <LedRow mode={scanning ? 'chase' : found.length ? 'lit' : 'off'} count={9} size={14} />
-        <Text style={[styles.title, { textAlign: 'center' }]}>{scanning ? t('Recherche en cours…') : found.length ? t('Touche un ruban pour l’ajouter') : t('Rien trouvé pour l’instant.')}</Text>
-        <Muted>{t('Allume tes rubans et approche-toi.')}</Muted>
+        <Text style={[styles.title, { textAlign: 'center' }]}>{scanning ? t('Recherche en cours…') : found.length ? t('Touche une lumière pour l’ajouter') : t('Rien trouvé pour l’instant.')}</Text>
+        <Muted>{t('Allume tes lumières et approche-toi.')}</Muted>
       </View>
       {warnings.map((w) => (
         <Text key={w} style={[styles.muted, { color: colors.warn }]}>
@@ -90,7 +90,7 @@ function FoundRow({ device, saved, quiet }: { device: DetectedDevice; saved?: Sa
   const kind = stripKind(device);
   // Marque connue : son nom ; sinon ce que c'est (« Ruban à pixels », « Ruban Bluetooth »). Le nom propre de
   // l'appareil (« WLED-Bureau », « ELK-BLEDOM ») reste en petit pour distinguer deux appareils pareils.
-  const title = saved?.name ?? product ?? (kind ? t(kind) : kindLabel(device.transport));
+  const title = saved?.name ?? product ?? (kind ? t(kind) : kindLabel(device));
   const detail = [signal, family.closed ? t('Système fermé') : ownName(device)].filter(Boolean).join(' · ');
   const open = (): void => {
     if (saved || quiet) router.push({ pathname: '/device/[key]', params: { key: device.key } });

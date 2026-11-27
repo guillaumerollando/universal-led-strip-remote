@@ -34,7 +34,7 @@ export default function PowerLink() {
         : matchedRoom
           ? devices.filter((d) => d.roomId === matchedRoom.id)
           : devices.filter((d) => device && (norm(d.name) === norm(device) || d.key === device));
-      const label = all ? t('Tous les rubans') : (matchedRoom?.name ?? device ?? '?');
+      const label = all ? t('Toutes les lumières') : (matchedRoom?.name ?? device ?? '?');
       if (targets.length === 0) {
         setText(t('Rien trouvé pour « {label} »', { label }));
       } else {

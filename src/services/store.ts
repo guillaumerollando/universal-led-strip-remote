@@ -16,6 +16,8 @@ export interface LightState {
   effect?: string;
   /** Vitesse des effets, 0 à 100. */
   speed?: number;
+  /** Blanc choisi (kelvins), quand la lumière est en blanc chaud / froid plutôt qu'en couleur. */
+  kelvin?: number;
 }
 
 /** Un appareil que l'utilisateur a gardé dans « Mes appareils ». */

@@ -11,6 +11,8 @@ import { AMBIANCE_EFFECT_PREFIX, CREATION_EFFECT_ID, decodeMotif, encodeMotif, M
 import { decodeCreation, encodeCreation, type Creation } from '../core/creations';
 import { BUILTIN_AMBIANCES } from '../core/ambiances';
 import { nearestColorKey } from '../core/scenes';
+import { kelvinToRgb } from '../core/white';
+import { lightKind } from '../core/describe';
 import { getDevice, rememberState, updateDevice, type LightState } from './store';
 import { t as tr } from '../i18n';
 import { track, type SendKind } from './sending';
@@ -79,7 +81,32 @@ async function setPowerNow(t: Target, on: boolean): Promise<void> {
 
 async function setColorNow(t: Target, rgb: Rgb): Promise<void> {
   await need(t, 'color', tr('Couleur non gérée pour cet appareil.'))(t, rgb);
-  await rememberState(t.key, { rgb, on: true, effect: undefined });
+  await rememberState(t.key, { rgb, on: true, effect: undefined, kelvin: undefined });
+}
+
+/** La lumière a de vraies LED blanches réglables (chaud / froid). */
+export function hasRealWhite(t: Target): boolean {
+  const d = driverOf(t);
+  return !!d?.white && (d.hasWhite?.(t) ?? true);
+}
+/** On peut lui donner un blanc chaud / froid : de vraies LED blanches, ou une couleur qui s'en approche. */
+export const canWhite = (t: Target): boolean => hasRealWhite(t) || canColor(t);
+
+/**
+ * Un blanc, du chaud (bougie) au froid (lumière du jour). Les lumières à LED blanches le font vraiment ; les autres
+ * prennent la couleur la plus proche.
+ */
+async function setWhiteNow(t: Target, kelvin: number): Promise<void> {
+  const rgb = kelvinToRgb(kelvin);
+  if (hasRealWhite(t)) await driverOf(t)!.white!(t, kelvin);
+  else await need(t, 'color', tr('Couleur non gérée pour cet appareil.'))(t, rgb);
+  await rememberState(t.key, { kelvin, rgb, on: true, effect: undefined });
+}
+
+/** Aperçu d'un blanc pendant qu'on fait glisser le curseur (sans le retenir). */
+export async function previewWhite(t: Target, kelvin: number): Promise<void> {
+  if (hasRealWhite(t)) await driverOf(t)!.white!(t, kelvin);
+  else await driverOf(t)?.color?.(t, kelvinToRgb(kelvin));
 }
 
 /** Envoie une couleur sans la retenir : pendant qu'on fait glisser le doigt sur l'arc-en-ciel. */
@@ -189,7 +216,9 @@ export function ambiancesFor(t: Target): string[] {
   const own = driverOf(t)?.ambiances?.(t) ?? [];
   const ir = irRemoteOf(t);
   const colorable = ir ? ir.keys.some((k) => k.kind === 'color') : canColor(t);
-  return BUILTIN_AMBIANCES.filter((a) => own.includes(a.id) || (colorable && a.simple)).map((a) => a.id);
+  // Lumière à blancs seulement (Hue White Ambiance, Elgato Key Light) : les ambiances qui ont un blanc.
+  const whiteOnly = !ir && !colorable && hasRealWhite(t);
+  return BUILTIN_AMBIANCES.filter((a) => own.includes(a.id) || (colorable && a.simple) || (whiteOnly && a.bulb?.kelvin)).map((a) => a.id);
 }
 
 /** Le ruban sait-il faire défiler un motif dessiné pixel par pixel ? */
@@ -230,18 +259,25 @@ export async function setStripLength(t: Target, length: number): Promise<void> {
 /** Lance une ambiance de l'appli (Noël, Aurore…) : le ruban la joue lui-même. */
 async function setAmbianceNow(t: Target, id: string): Promise<void> {
   const own = driverOf(t)?.ambiances?.(t) ?? [];
-  const simple = BUILTIN_AMBIANCES.find((a) => a.id === id)?.simple;
+  const ambiance = BUILTIN_AMBIANCES.find((a) => a.id === id);
+  const simple = ambiance?.simple;
   const ir = irRemoteOf(t);
+  // Une ampoule éclaire toute la pièce : sa version à elle (blanc chaud, plus doux), si l'ambiance en a une.
+  const bulb = !ir && !own.includes(id) && lightKind(t as Parameters<typeof lightKind>[0]) === 'bulb' ? ambiance?.bulb : undefined;
   if (own.includes(id)) await need(t, 'ambiance', tr('L’appli ne sait pas encore allumer cet appareil.'))(t, id);
   else if (simple && ir) {
     // Télécommande : on allume, puis sa touche d'effet si l'ambiance en prévoit une, sinon la couleur la plus proche.
     if (!t.state?.on) await setPower(t, true);
     const key = (simple.effect && ir.keys.find((k) => k.kind === 'effect' && k.id === simple.effect)) || nearestColorKey(ir.keys, simple.color);
     if (key) await pressIrKey(getDevice(t.key) ?? t, key);
+  } else if (bulb?.kelvin && canWhite(t)) {
+    if (!t.state?.on) await setPower(t, true);
+    await setWhite(getDevice(t.key) ?? t, bulb.kelvin);
   } else if (simple && canColor(t)) {
     if (!t.state?.on) await setPower(t, true);
     await setColor(getDevice(t.key) ?? t, simple.color);
   } else throw new Error(tr('L’appli ne sait pas encore allumer cet appareil.'));
+  if (bulb?.brightness !== undefined && canDim(t)) await setBrightness(getDevice(t.key) ?? t, bulb.brightness);
   await rememberState(t.key, { effect: AMBIANCE_EFFECT_PREFIX + id, on: true });
 }
 
@@ -292,6 +328,7 @@ function tracked<A extends unknown[]>(kind: SendKind, fn: (t: Target, ...a: A) =
 }
 export const setPower = tracked('power', setPowerNow);
 export const setColor = tracked('color', setColorNow);
+export const setWhite = tracked('color', setWhiteNow);
 export const setBrightness = tracked('brightness', setBrightnessNow);
 export const setEffect = tracked('effect', setEffectNow);
 export const setSpeed = tracked('effect', setSpeedNow);

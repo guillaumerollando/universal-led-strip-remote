@@ -65,7 +65,7 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
   const remove = (): void => {
     setMenu(null);
     if (!room) return;
-    Alert.alert(t('Supprimer « {name} » ?', { name: room.name }), t('Les rubans restent, ils passent dans « Sans pièce ».'), [
+    Alert.alert(t('Supprimer « {name} » ?', { name: room.name }), t('Les lumières restent, elles passent dans « Sans pièce ».'), [
       { text: t('Annuler'), style: 'cancel' },
       { text: t('Supprimer'), style: 'destructive', onPress: () => void removeRoom(room.id) },
     ]);
@@ -103,7 +103,7 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
             <Text style={kit.big}>{name}</Text>
             <Text style={kit.muted}>
               {devices.length === 0
-                ? t('Aucun ruban pour l’instant')
+                ? t('Aucune lumière pour l’instant')
                 : t(litCount > 1 ? '{lit} allumés sur {total}' : '{lit} allumé sur {total}', { lit: litCount, total: devices.length })}
             </Text>
           </View>
@@ -125,7 +125,7 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
           items={[
             { label: t('Renommer'), onPress: () => setMenu('rename') },
             {
-              label: t('Rubans de la pièce'),
+              label: t('Lumières de la pièce'),
               onPress: () => {
                 setMenu(null);
                 router.push({ pathname: '/room/[id]', params: { id: room.id } });

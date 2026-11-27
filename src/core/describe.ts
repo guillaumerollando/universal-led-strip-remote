@@ -47,3 +47,43 @@ export function ownName(d: Describable): string | undefined {
   if (!n || n === productName(d)) return undefined;
   return n;
 }
+
+/** Ce qu'est la lumière : un ruban, une ampoule, ou une autre lumière (panneau, lampe…), pour les bons mots. */
+export type LightKind = 'strip' | 'bulb' | 'light';
+
+/**
+ * Ruban, ampoule ou autre lumière, d'après la famille et le modèle connus. Dans le doute pour une famille qui fait
+ * les deux, « lumière » (jamais « ruban » pour une ampoule).
+ */
+export function lightKind(d: Describable & { transport?: string }): LightKind {
+  const model = `${d.model ?? ''} ${d.meta?.product ?? ''} ${d.rawName}`.toLowerCase();
+  const stripLike = /strip|stripe|ruban|band|tape|lightstrip/.test(model);
+  switch (d.family) {
+    case 'yeelight':
+      return /stripe|strip/.test(d.model ?? '') ? 'strip' : /color|colorc|mono|ct/.test(d.model ?? '') ? 'bulb' : 'light';
+    case 'lifx':
+      return stripLike || /\bz\b|beam/.test(model) ? 'strip' : 'bulb';
+    case 'hue':
+      return stripLike ? 'strip' : /play|bar|go|iris|signe|gradient|lamp|lampe/.test(model) ? 'light' : 'bulb';
+    case 'hue-ble':
+      return stripLike ? 'strip' : 'bulb';
+    case 'shelly':
+      return /SHCB-1|SHBLB-1|bulb/i.test(d.model ?? '') ? 'bulb' : 'strip';
+    case 'elgato':
+      return stripLike ? 'strip' : 'light';
+    case 'nanoleaf':
+    case 'esphome':
+      return 'light';
+    case 'govee':
+    case 'govee-lan':
+      // Ampoules Govee : H6003, H6004, H6008, H6009… (H60xx en dessous de H6050).
+      return /h60[0-4]\d/.test(model) ? 'bulb' : stripLike || /h6\d{3}|h61\d{2}/.test(model) ? 'strip' : 'light';
+    case 'openbeken':
+    case 'tasmota':
+      return d.meta?.pixels ? 'strip' : /bulb|ampoule|lamp/.test(model) ? 'bulb' : stripLike ? 'strip' : 'light';
+    case 'magichome-wifi':
+      return /bulb|ampoule/.test(model) ? 'bulb' : 'strip';
+    default:
+      return 'strip';
+  }
+}

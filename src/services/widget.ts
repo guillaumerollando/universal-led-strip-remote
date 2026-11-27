@@ -18,7 +18,7 @@ let last = '';
 
 function push(): void {
   const labels = {
-    all: t('Tous les rubans'),
+    all: t('Toutes les lumières'),
     on: (name: string) => t('{name} : éteindre', { name }),
     off: (name: string) => t('{name} : allumer', { name }),
   };
@@ -29,7 +29,7 @@ function push(): void {
   const placesJson = JSON.stringify(places);
   if (json + placesJson === last) return;
   last = json + placesJson;
-  native?.setWidgetRooms(json, t('Ajouter un ruban'));
+  native?.setWidgetRooms(json, t('Ajouter une lumière'));
   native?.setWidgetPlaces?.(placesJson, t('Ajoute-le depuis l’appli : appui long sur une pièce ou une ambiance.'));
 }
 

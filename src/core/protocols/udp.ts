@@ -63,6 +63,8 @@ const yee = (method: string, params: unknown[]): string => `${JSON.stringify({ i
 export const yeelightPower = (on: boolean): string => yee('set_power', [on ? 'on' : 'off', 'smooth', 300]);
 export const yeelightColor = ({ r, g, b }: Rgb): string => yee('set_rgb', [(r << 16) | (g << 8) | b, 'smooth', 300]);
 export const yeelightBrightness = (percent: number): string => yee('set_bright', [clamp(percent, 1, 100), 'smooth', 300]);
+/** Blanc chaud / froid (1700-6500 K), LED blanches de l'ampoule. À confirmer sur une vraie ampoule. */
+export const yeelightWhite = (kelvin: number): string => yee('set_ct_abx', [clamp(kelvin, 1700, 6500), 'smooth', 300]);
 /** La lampe répond `{"id":…,"result":["ok"]}` ou `{"id":…,"error":{…}}`. */
 export const yeelightOk = (reply: string): boolean => /"result"\s*:\s*\[\s*"ok"/.test(reply);
 
@@ -112,6 +114,15 @@ const le16 = (v: number): number[] => [v & 0xff, (v >> 8) & 0xff];
 const le32 = (v: number): number[] => [v & 0xff, (v >> 8) & 0xff, (v >> 16) & 0xff, (v >>> 24) & 0xff];
 
 export const lifxPower = (mac: number[], on: boolean): number[] => lifxFrame(LIFX_TYPE.SetLightPower, [...le16(on ? 0xffff : 0), ...le32(300)], mac);
+
+/** Blanc chaud / froid : saturation nulle, température 1500-9000 K. À confirmer sur une vraie ampoule. */
+export function lifxWhite(mac: number[], kelvin: number, brightnessPercent = 100): number[] {
+  return lifxFrame(
+    LIFX_TYPE.SetColor,
+    [0, ...le16(0), ...le16(0), ...le16(clamp((brightnessPercent / 100) * 0xffff, 0, 0xffff)), ...le16(clamp(kelvin, 1500, 9000)), ...le32(300)],
+    mac,
+  );
+}
 
 /** Couleur en HSBK (teinte, saturation, luminosité sur 16 bits, température 3500 K). */
 export function lifxColor(mac: number[], rgb: Rgb, brightnessPercent?: number): number[] {

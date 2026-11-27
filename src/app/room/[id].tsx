@@ -46,7 +46,7 @@ export default function RoomScreen() {
   };
 
   const remove = (): void =>
-    Alert.alert(t('Supprimer « {name} » ?', { name: room?.name ?? '' }), t('Les rubans restent, ils passent dans « Sans pièce ».'), [
+    Alert.alert(t('Supprimer « {name} » ?', { name: room?.name ?? '' }), t('Les lumières restent, elles passent dans « Sans pièce ».'), [
       { text: t('Annuler'), style: 'cancel' },
       {
         text: t('Supprimer'),
@@ -61,7 +61,7 @@ export default function RoomScreen() {
   return (
     <Screen>
       <Stack.Screen options={{ title: isNew ? t('Nouvelle pièce') : (room?.name ?? t('Pièce')) }} />
-      {createdId && <Muted>{t('Pièce créée. Coche maintenant les rubans qu’elle contient.')}</Muted>}
+      {createdId && <Muted>{t('Pièce créée. Coche maintenant les lumières qu’elle contient.')}</Muted>}
       <SectionTitle>{t('Nom')}</SectionTitle>
       <TextInput
         style={styles.input}
@@ -87,8 +87,8 @@ export default function RoomScreen() {
 
       {room && (
         <>
-          <SectionTitle>{t('Rubans de la pièce')}</SectionTitle>
-          {devices.length === 0 && <Muted>{t('Ajoute d’abord des rubans depuis l’accueil.')}</Muted>}
+          <SectionTitle>{t('Lumières de la pièce')}</SectionTitle>
+          {devices.length === 0 && <Muted>{t('Ajoute d’abord des lumières depuis l’accueil.')}</Muted>}
           {devices.map((d) => {
             const inRoom = d.roomId === room.id;
             const elsewhere = d.roomId && !inRoom ? rooms.find((r) => r.id === d.roomId)?.name : undefined;
@@ -126,7 +126,7 @@ export default function RoomScreen() {
                 <View style={{ flex: 1 }}>
                   <Text style={styles.title}>{d.name}</Text>
                   <Muted>
-                    {kindLabel(d.transport)}
+                    {kindLabel(d)}
                     {elsewhere ? t(' · actuellement : {room}', { room: elsewhere }) : ''}
                   </Muted>
                 </View>

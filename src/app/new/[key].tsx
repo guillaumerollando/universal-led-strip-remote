@@ -3,7 +3,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { ownName, productName, stripKind } from '../../core/describe';
+import { lightKind, ownName, productName, stripKind } from '../../core/describe';
 import { FAMILIES } from '../../core/families';
 import { canPower, setPower } from '../../services/control';
 import { pairHue, pairNanoleaf } from '../../services/pairing';
@@ -11,7 +11,7 @@ import { putFound, useScan } from '../../services/scan';
 import { saveDevice } from '../../services/store';
 import { AddForm } from '../../ui/AddForm';
 import { Button, Muted, Screen, styles } from '../../ui/kit';
-import { defaultStripName, kindLabel, signalText } from '../../ui/labels';
+import { defaultName, kindLabel, signalText } from '../../ui/labels';
 import { LedRow } from '../../ui/LedRow';
 import { colors, radius, space, WARM_WHITE } from '../../ui/theme';
 import { t } from '../../i18n';
@@ -27,7 +27,7 @@ export default function NewDeviceScreen() {
   const { found } = useScan();
   const device = found.find((d) => d.key === key);
   // Un appareil Wi-Fi de marque a souvent déjà un nom donné par son propriétaire (« Télé » sur le pont Hue) : on le garde.
-  const [name, setName] = useState(() => (device?.transport === 'wifi' && FAMILIES[device.family].brand && ownName(device)) || defaultStripName());
+  const [name, setName] = useState(() => (device?.transport === 'wifi' && FAMILIES[device.family].brand && ownName(device)) || defaultName(device ? lightKind(device) : 'strip'));
   const [roomId, setRoomId] = useState<string | undefined>();
   const [blinking, setBlinking] = useState(false);
   const [blinked, setBlinked] = useState(false);
@@ -90,7 +90,7 @@ export default function NewDeviceScreen() {
   const signal = signalText(device.rssi);
   const family = FAMILIES[device.family];
   const kind = stripKind(device);
-  const product = productName(device) ?? (kind ? t(kind) : kindLabel(device.transport));
+  const product = productName(device) ?? (kind ? t(kind) : kindLabel(device));
   if (family.pairing && !canPower(device)) return <PairStep device={device} product={product} />;
 
   return (

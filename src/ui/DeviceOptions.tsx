@@ -36,7 +36,7 @@ export function DeviceOptions({ device, visible, onClose, onForgotten }: { devic
       items={[
         { label: t('Renommer'), onPress: () => setMode('rename') },
         { label: t('Changer de pièce'), onPress: () => setMode('room') },
-        { label: t('Oublier ce ruban'), onPress: forget, danger: true },
+        { label: t('Oublier cette lumière'), onPress: forget, danger: true },
       ]}
     >
       {mode === 'rename' ? (

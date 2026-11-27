@@ -3,7 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { hsvToRgb, rgbToHsv, saturationToWhite, whiteStops, whiteToSaturation } from '../core/color';
 import type { Rgb } from '../core/elk';
-import { canColor, canDim, latestWins, previewColor, setBrightness, setColor, type Target } from '../services/control';
+import { canColor, canDim, canWhite, latestWins, previewColor, previewWhite, setBrightness, setColor, setWhite as sendWhite, type Target } from '../services/control';
+import { kelvinAt, kelvinPosition, kelvinToRgb, KELVIN_MAX, KELVIN_MIN, WHITES } from '../core/white';
 import { ColorSlider, HUE_STOPS } from './ColorSlider';
 import { Muted, styles as kit } from './kit';
 import { Swatch } from './light';
@@ -11,9 +12,8 @@ import { colors, radius, space } from './theme';
 import { LoadingBorder, SelectionGlow } from './LoadingBorder';
 import { t } from '../i18n';
 
+// Les blancs ont leur propre rangée (« Blancs », du chaud au froid).
 const SWATCHES: { rgb: Rgb; label: string }[] = [
-  { rgb: { r: 255, g: 196, b: 120 }, label: t('Blanc chaud') },
-  { rgb: { r: 255, g: 255, b: 255 }, label: t('Blanc') },
   { rgb: { r: 255, g: 0, b: 0 }, label: t('Rouge') },
   { rgb: { r: 255, g: 96, b: 0 }, label: t('Orange') },
   { rgb: { r: 255, g: 200, b: 0 }, label: t('Jaune') },
@@ -23,6 +23,11 @@ const SWATCHES: { rgb: Rgb; label: string }[] = [
   { rgb: { r: 160, g: 0, b: 255 }, label: t('Violet') },
   { rgb: { r: 255, g: 0, b: 140 }, label: t('Rose') },
 ];
+/** Le dégradé du curseur : du blanc bougie au blanc du jour. */
+const KELVIN_STOPS = Array.from({ length: 6 }, (_, i) => {
+  const c = kelvinToRgb(KELVIN_MIN + ((KELVIN_MAX - KELVIN_MIN) * i) / 5);
+  return `rgb(${c.r},${c.g},${c.b})`;
+});
 const LEVELS = [10, 25, 50, 75, 100];
 /** À l'arrondi près : la couleur du nuancier repasse par teinte / blancheur (quelques unités d'écart). */
 const same = (a?: Rgb, b?: Rgb): boolean =>
@@ -41,6 +46,9 @@ export function ElkControls({ target }: { target: Target }) {
   const latest = useRef(target);
   latest.current = target;
   const preview = useMemo(() => latestWins((rgb: Rgb) => previewColor(latest.current, rgb)), [target.key]);
+  const previewW = useMemo(() => latestWins((k: number) => previewWhite(latest.current, k)), [target.key]);
+  /** Blanc du curseur chaud ↔ froid (le dernier choisi, sinon un blanc chaleureux). */
+  const [kelvin, setKelvin] = useState(target.state?.kelvin ?? 2700);
   const pure = hsvToRgb({ h: hue, s: 1, v: 1 });
   const current = hsvToRgb({ h: hue, s: whiteToSaturation(white), v: 1 });
 
@@ -92,13 +100,52 @@ export function ElkControls({ target }: { target: Target }) {
           <Muted>{t('Couleurs rapides')}</Muted>
           <View style={ctl.swatches}>
             {SWATCHES.map((s) => (
-              <View key={s.label} style={{ width: '20%', alignItems: 'center' }}>
+              <View key={s.label} style={{ width: '25%', alignItems: 'center' }}>
                 {/* La pastille suit la couleur du nuancier en direct (pas la dernière enregistrée, qui ne change qu'au
                     lâcher du doigt) ; rien d'allumé quand un effet ou une ambiance tourne. */}
-                <Swatch label={s.label} rgb={s.rgb} selected={!target.state?.effect && same(s.rgb, current)} onPress={() => pick(s.rgb, s.label)} busy={sending === s.label} />
+                <Swatch label={s.label} rgb={s.rgb} selected={!target.state?.effect && !target.state?.kelvin && same(s.rgb, current)} onPress={() => pick(s.rgb, s.label)} busy={sending === s.label} />
               </View>
             ))}
           </View>
+        </>
+      )}
+      {canWhite(target) && (
+        <>
+          <Muted>{t('Blancs')}</Muted>
+          <View style={ctl.swatches}>
+            {WHITES.map((w) => (
+              <View key={w.id} style={{ width: '25%', alignItems: 'center', gap: 2 }}>
+                <Swatch
+                  label={t(w.label)}
+                  rgb={kelvinToRgb(w.kelvin)}
+                  selected={!target.state?.effect && Math.abs((target.state?.kelvin ?? 0) - w.kelvin) < 150}
+                  onPress={() => {
+                    setKelvin(w.kelvin);
+                    run(sendWhite(target, w.kelvin), w.id);
+                  }}
+                  busy={sending === w.id}
+                />
+                <Text style={[kit.muted, { fontSize: 11, textAlign: 'center' }]} numberOfLines={1}>
+                  {t(w.label)}
+                </Text>
+              </View>
+            ))}
+          </View>
+          <ColorSlider
+            label={t('Blanc chaud ou froid')}
+            stops={KELVIN_STOPS}
+            value={kelvinPosition(kelvin)}
+            thumbColor={kelvinToRgb(kelvin)}
+            onChange={(v) => {
+              setKelvin(kelvinAt(v));
+              previewW(kelvinAt(v));
+            }}
+            onRelease={(v) => {
+              setKelvin(kelvinAt(v));
+              run(sendWhite(target, kelvinAt(v)), 'kelvin');
+            }}
+            busy={sending === 'kelvin'}
+          />
         </>
       )}
       {canDim(target) && (

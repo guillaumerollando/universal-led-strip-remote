@@ -31,6 +31,9 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
   - `identify.ts` : nom Bluetooth / réponse Wi-Fi → famille (`identifyBle`, `parseMagicHomeReply`, `parseGoveeReply`…)
   - `elk.ts` : trames ELK-BLEDOM (variantes `elk`, `bledob`, `melk`), effets et vitesse
   - `color.ts` : conversions teinte / RVB (barres arc-en-ciel)
+  - `white.ts` : **blancs chaud / froid** (kelvins, `WHITES` bougie → lumière du jour, `kelvinToRgb` pour les lumières
+    sans LED blanches, mireds). Commandes par marque dans `protocols/` (`yeelightWhite`, `hueWhite`, `tasmotaWhite`…,
+    toutes « à confirmer » sur une vraie ampoule)
   - `tuya/` : lecture des annonces UDP Tuya, pour **reconnaître** ces appareils (LED Strip Remote ne pilote pas Tuya : système fermé)
   - `naming.ts` : nom proposé à l'ajout (`nextFreeName` : « Ruban 1 », « Ruban 2 »… sans doublon), force du signal en mots
   - `irSetup.ts` : **assistant d'ajout infrarouge** — `burstPlan(état)` (rafales de 16 codes avec silences, adaptées à
@@ -44,7 +47,8 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
     effet gardé au démarrage (bloc de l'appli dans `autoexec.bat`)
   - `ambiances.ts` : ambiances livrées (serpent arc-en-ciel, Noël, Automne, Océan, Halloween, Aurore)
   - `mdns.ts` (questions et réponses DNS-SD), `discover.ts` (mDNS / Yeelight / LIFX → appareil), `probe.ts` (ajout par IP)
-  - `describe.ts` : ce qu'on affiche d'un appareil trouvé — nom du produit de marque (« Govee H6159 »), jamais de nom de puce
+  - `describe.ts` : ce qu'on affiche d'un appareil trouvé — nom du produit de marque (« Govee H6159 »), jamais de nom de puce ;
+    `lightKind` : ruban, ampoule ou lumière (les mots de l'interface : « Ampoule Wi-Fi », « Ampoule 1 »)
   - `widget.ts` : pièces montrées par le widget Android
 - `src/services/` : accès au matériel — `ble.ts` (react-native-ble-plx, `sendBle` pour toutes les familles), `lan.ts`
   (découverte UDP : Magic Home, Tuya, Govee, mDNS, Yeelight, LIFX), `net.ts` (HTTP local, TCP natif, UDP), `ir.ts`,
@@ -98,6 +102,9 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
   Jamais une trame seule sans queue ; rafales de 15 codes max (limite Android de 2 s)
 - **Aucun jargon pour l'utilisateur** (Guillaume, 2026-10-08) : jamais de nom de télécommande (« 24 / 44 touches »), de
   fréquence, de protocole ou de famille de contrôleur à l'écran. L'utilisateur veut que ça marche, vite, automatiquement
+- **Toutes les lumières** (Guillaume, 2026-11-27) : rubans **et ampoules**. Les textes généraux disent « lumière »
+  (« Ajouter une lumière », « Toutes les lumières ») ; « ruban » seulement là où c'est vraiment un ruban (dessin,
+  télécommande, calibrage). Une ambiance peut avoir une version ampoule (`bulb` : blanc chaud, luminosité douce)
 - Dans l'interface, ne jamais écrire « LED Strip Remote » : dire « l'appli » (nom sous l'icône : « LED Strip Remote », « Ruban LED »
   sur un téléphone en français, traduit dans chaque langue — `locales/`)
 - **Traduction (26 langues, automatique)** : l'appli prend la première langue du téléphone qu'elle connaît, anglais sinon.

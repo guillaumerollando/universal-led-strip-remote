@@ -18,6 +18,9 @@ export interface ProbeAnswers {
 export const isIpv4 = (ip: string): boolean =>
   /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.test(ip.trim()) && ip.trim().split('.').every((n) => Number(n) <= 255);
 
+/** Blancs réglables (champ CT de l'état) : retenus pour proposer le blanc chaud / froid. */
+const tasmotaMeta = (s: { ct: boolean }): Record<string, string> => (s.ct ? { ct: '1' } : {});
+
 export function classifyProbe(ip: string, a: ProbeAnswers): DetectedDevice | null {
   const base = { confidence: 'sure' as const, transport: 'wifi' as const, address: ip };
   const wled = parseWledInfo(a.wled);
@@ -26,9 +29,9 @@ export function classifyProbe(ip: string, a: ProbeAnswers): DetectedDevice | nul
   if (shelly) return { ...base, key: `wifi:shelly:${ip}`, family: 'shelly', rawName: shelly.model, model: shelly.model, meta: { shelly: shelly.kind } };
   const tasmota = parseTasmotaStatus(a.tasmota);
   if (tasmota && isOpenBeken(a.tasmota)) {
-    return { ...base, key: `wifi:openbeken:${obkMac(a.tasmota) ?? ip}`, family: 'openbeken', rawName: tasmota.name };
+    return { ...base, key: `wifi:openbeken:${obkMac(a.tasmota) ?? ip}`, family: 'openbeken', rawName: tasmota.name, meta: tasmotaMeta(tasmota) };
   }
-  if (tasmota) return { ...base, key: `wifi:tasmota:${ip}`, family: 'tasmota', rawName: tasmota.name };
+  if (tasmota) return { ...base, key: `wifi:tasmota:${ip}`, family: 'tasmota', rawName: tasmota.name, meta: tasmotaMeta(tasmota) };
   const elgato = parseElgatoInfo(a.elgato);
   if (elgato) return { ...base, key: `wifi:elgato:${ip}`, family: 'elgato', rawName: elgato.name, model: elgato.name, meta: { color: elgato.color ? '1' : '0' } };
   if (a.magicHome && parseMhState(a.magicHome)) return { ...base, key: `wifi:magichome:${ip}`, family: 'magichome-wifi', rawName: 'Magic Home' };

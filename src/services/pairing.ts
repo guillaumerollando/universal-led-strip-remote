@@ -35,7 +35,7 @@ export async function hueLightsOf(bridge: DetectedDevice, user: string): Promise
     transport: 'wifi',
     rawName: l.name,
     address: bridge.address,
-    meta: { user, light: l.id, product: l.product, color: l.color ? '1' : '0' },
+    meta: { user, light: l.id, product: l.product, color: l.color ? '1' : '0', ct: l.ct ? '1' : '0' },
   }));
 }
 

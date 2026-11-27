@@ -179,7 +179,7 @@ export function SceneRow({ room, devices }: { room: Room; devices: SavedDevice[]
         ]}
       />
       <Sheet visible={naming} title={t('Retenir l’ambiance de la pièce')} items={[]} onClose={() => setNaming(false)}>
-        <Text style={kit.muted}>{t('Règle tes rubans comme tu aimes, puis donne un nom : un toucher la remettra.')}</Text>
+        <Text style={kit.muted}>{t('Règle tes lumières comme tu aimes, puis donne un nom : un toucher la remettra.')}</Text>
         <RenameField
           initial=""
           placeholder={t('Nom de l’ambiance (ex. Soirée)')}

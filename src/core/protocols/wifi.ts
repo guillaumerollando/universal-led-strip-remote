@@ -5,6 +5,7 @@
  * Tout est **à confirmer** sur un vrai appareil.
  */
 import { rgbToHsv } from '../color';
+import { kelvinToMired } from '../white';
 import { clamp, type Effect, type HttpCall, type Rgb } from './types';
 
 const R: Rgb = { r: 255, g: 0, b: 0 };
@@ -69,6 +70,8 @@ const govee = (cmd: string, data: unknown): string => JSON.stringify({ msg: { cm
 export const goveePower = (on: boolean): string => govee('turn', { value: on ? 1 : 0 });
 export const goveeBrightness = (percent: number): string => govee('brightness', { value: clamp(percent, 1, 100) });
 export const goveeColor = ({ r, g, b }: Rgb): string => govee('colorwc', { color: { r, g, b }, colorTemInKelvin: 0 });
+/** Blanc chaud / froid (2000-9000 K). À confirmer sur un vrai appareil. */
+export const goveeWhite = (kelvin: number): string => govee('colorwc', { color: { r: 0, g: 0, b: 0 }, colorTemInKelvin: clamp(kelvin, 2000, 9000) });
 
 // ── Shelly (shelly-api-docs.shelly.cloud) ───────────────────────────────────────────
 // 1re génération (RGBW2, Bulb) : /color/0 ; génération 2 et + (Plus RGBW PM…) : RPC RGB.Set / RGBW.Set.
@@ -119,14 +122,23 @@ export const tasmotaPower = (on: boolean): HttpCall => tasmota(`Power ${on ? 'On
 const hex2 = (n: number): string => n.toString(16).padStart(2, '0').toUpperCase();
 export const tasmotaColor = ({ r, g, b }: Rgb): HttpCall => tasmota(`Color ${hex2(r)}${hex2(g)}${hex2(b)}`);
 export const tasmotaBrightness = (percent: number): HttpCall => tasmota(`Dimmer ${clamp(percent, 1, 100)}`);
+/** Blanc chaud / froid (CT en mireds, 153-500) : ampoules à LED blanches (RGBCW, CW). À confirmer. */
+export const tasmotaWhite = (kelvin: number): HttpCall => tasmota(`CT ${kelvinToMired(kelvin)}`);
 export const TASMOTA_STATUS: HttpCall = tasmota('Status 0');
 
-/** Lit la réponse à « Status 0 » : un nom, et si c'est une lumière en couleur (champ Color dans StatusSTS). */
-export function parseTasmotaStatus(json: unknown): { name: string; color: boolean } | null {
-  const j = json as { Status?: { DeviceName?: string; FriendlyName?: string[] }; StatusSTS?: { Color?: string; Dimmer?: number } } | null;
+/**
+ * Lit la réponse à « Status 0 » : un nom, si c'est une lumière en couleur (champ Color dans StatusSTS) et si elle a
+ * des blancs réglables (champ CT).
+ */
+export function parseTasmotaStatus(json: unknown): { name: string; color: boolean; ct: boolean } | null {
+  const j = json as { Status?: { DeviceName?: string; FriendlyName?: string[] }; StatusSTS?: { Color?: string; Dimmer?: number; CT?: number } } | null;
   if (!j?.Status || !j.StatusSTS) return null;
   if (j.StatusSTS.Dimmer === undefined && j.StatusSTS.Color === undefined) return null;
-  return { name: j.Status.DeviceName ?? j.Status.FriendlyName?.[0] ?? 'Tasmota', color: (j.StatusSTS.Color ?? '').length >= 6 };
+  return {
+    name: j.Status.DeviceName ?? j.Status.FriendlyName?.[0] ?? 'Tasmota',
+    color: (j.StatusSTS.Color ?? '').length >= 6,
+    ct: j.StatusSTS.CT !== undefined,
+  };
 }
 
 // ── Nanoleaf, « Open API » (port 16021, jeton obtenu en tenant le bouton marche 5 à 7 s) ──
@@ -136,6 +148,8 @@ export const NANOLEAF_PAIR: HttpCall = { method: 'POST', path: '/api/v1/new', po
 const nano = (token: string, body: unknown): HttpCall => ({ method: 'PUT', path: `/api/v1/${token}/state`, body, port: NANOLEAF_PORT });
 export const nanoleafPower = (token: string, on: boolean): HttpCall => nano(token, { on: { value: on } });
 export const nanoleafBrightness = (token: string, percent: number): HttpCall => nano(token, { brightness: { value: clamp(percent, 0, 100) } });
+/** Blanc chaud / froid (1200-6500 K). À confirmer. */
+export const nanoleafWhite = (token: string, kelvin: number): HttpCall => nano(token, { ct: { value: clamp(kelvin, 1200, 6500) } });
 export function nanoleafColor(token: string, rgb: Rgb): HttpCall {
   const { h, s, v } = rgbToHsv(rgb);
   return nano(token, { hue: { value: clamp(h, 0, 360) }, sat: { value: clamp(s * 100, 0, 100) }, brightness: { value: clamp(v * 100, 1, 100) } });
@@ -170,11 +184,13 @@ const elgato = (light: Record<string, number>): HttpCall => ({
 });
 export const elgatoPower = (on: boolean): HttpCall => elgato({ on: on ? 1 : 0 });
 export const elgatoBrightness = (percent: number): HttpCall => elgato({ on: 1, brightness: clamp(percent, 1, 100) });
+/** Blanc chaud / froid : « temperature » 143 (7000 K) à 344 (2900 K), en mireds. À confirmer. */
+export const elgatoWhite = (kelvin: number): HttpCall => elgato({ on: 1, temperature: kelvinToMired(kelvin, 143, 344) });
 export function elgatoColor(rgb: Rgb): HttpCall {
   const { h, s } = rgbToHsv(rgb);
   return elgato({ on: 1, hue: clamp(h, 0, 360), saturation: clamp(s * 100, 0, 100) });
 }
-/** Le Light Strip est le seul Elgato en couleur ; les Key Light (blanc seulement) sont ignorés. */
+/** Le Light Strip est le seul Elgato en couleur ; les Key Light n'ont que des blancs (chaud / froid). */
 export function parseElgatoInfo(json: unknown): { name: string; color: boolean } | null {
   const j = json as { productName?: string; displayName?: string } | null;
   if (!j?.productName) return null;
@@ -189,6 +205,8 @@ const hueState = (user: string, id: string, body: unknown): HttpCall => ({ metho
 export const huePower = (user: string, id: string, on: boolean): HttpCall => hueState(user, id, { on });
 export const hueBrightness = (user: string, id: string, percent: number): HttpCall =>
   hueState(user, id, { on: true, bri: clamp((percent / 100) * 254, 1, 254) });
+/** Blanc chaud / froid (ct en mireds, 153-500) : lampes « Extended color » et « Color temperature ». */
+export const hueWhite = (user: string, id: string, kelvin: number): HttpCall => hueState(user, id, { on: true, ct: kelvinToMired(kelvin) });
 export function hueColor(user: string, id: string, rgb: Rgb): HttpCall {
   const { h, s } = rgbToHsv(rgb);
   return hueState(user, id, { on: true, hue: clamp((h / 360) * 65535, 0, 65535), sat: clamp(s * 254, 0, 254) });
@@ -207,13 +225,22 @@ export interface HueLight {
   name: string;
   product: string;
   color: boolean;
+  /** Blancs réglables (chaud / froid). */
+  ct: boolean;
 }
 /** Les lampes du pont qui savent faire de la couleur ou varier (les prises sont ignorées). */
 export function parseHueLights(json: unknown): HueLight[] {
   if (!json || typeof json !== 'object' || Array.isArray(json)) return [];
   return Object.entries(json as Record<string, { name?: string; type?: string; productname?: string }>)
     .filter(([, l]) => /color|dimmable/i.test(l.type ?? ''))
-    .map(([id, l]) => ({ id, name: l.name ?? `Hue ${id}`, product: l.productname ?? 'Philips Hue', color: /color/i.test(l.type ?? '') }));
+    .map(([id, l]) => ({
+      id,
+      name: l.name ?? `Hue ${id}`,
+      product: l.productname ?? 'Philips Hue',
+      // « Color temperature light » n'a que des blancs : pas de couleur, mais un ct.
+      color: /color light/i.test(l.type ?? ''),
+      ct: /extended color|color temperature/i.test(l.type ?? ''),
+    }));
 }
 
 // ── ESPHome, composant web_server (esphome.io/web-api) ──────────────────────────────

@@ -5,6 +5,7 @@
 import { rgbToHsv } from '../color';
 import { lednetDelay } from './presets';
 import { checksum, clamp, uuid16, type BleProfile, type Rgb } from './types';
+import { kelvinToMired } from '../white';
 
 // ── Triones / HappyLighting (noms Triones, QHM-, LEDBlue, Dream~, Flash) ──────────────
 // Source : ha-triones, « Magic Blue » (Arduino). Service FFD5, écriture FFD9.
@@ -53,9 +54,15 @@ export const HUE_BLE_ADVERT = uuid16('fe0f');
 export const HUE_BLE_POWER: BleProfile = { service: HUE_BLE_SERVICE, write: hueChar(2), withResponse: true };
 export const HUE_BLE_BRIGHTNESS: BleProfile = { service: HUE_BLE_SERVICE, write: hueChar(3), withResponse: true };
 export const HUE_BLE_COLOR: BleProfile = { service: HUE_BLE_SERVICE, write: hueChar(5), withResponse: true };
+/** Blancs chaud / froid (mireds sur 16 bits, petit-boutiste). À confirmer sur une vraie lampe Hue Bluetooth. */
+export const HUE_BLE_WHITE: BleProfile = { service: HUE_BLE_SERVICE, write: hueChar(4), withResponse: true };
 
 export const hueBlePower = (on: boolean): number[] => [on ? 0x01 : 0x00];
 export const hueBleBrightness = (percent: number): number[] => [clamp((percent / 100) * 254, 1, 254)];
+export const hueBleWhite = (kelvin: number): number[] => {
+  const m = kelvinToMired(kelvin);
+  return [m & 0xff, (m >> 8) & 0xff];
+};
 
 /** Couleur → coordonnées CIE xy (sRGB, gamma retiré, matrice D65 de Philips). */
 export function rgbToXy({ r, g, b }: Rgb): { x: number; y: number } {

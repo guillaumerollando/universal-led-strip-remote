@@ -13,6 +13,7 @@ import { ELK_CATALOG, LEDNET_CATALOG, MELK_CATALOG } from '../../core/effectCata
 import { OBK_ANIMS } from '../../core/protocols/openbeken';
 import { DICTS, pickLang } from '../dicts';
 import { EN } from '../langs/en';
+import { WHITES } from '../../core/white';
 
 const SRC = join(__dirname, '../..');
 
@@ -46,6 +47,7 @@ function dataKeys(): string[] {
     ...OBK_ANIMS.map((e) => e.label),
     ...BUILTIN_AMBIANCES.map((a) => a.label),
     ...PRESET_SCENES.map((p) => p.name),
+    ...WHITES.map((w) => w.label),
     ...[...MELK_CATALOG, ...ELK_CATALOG, ...LEDNET_CATALOG].flatMap((e) => e.parts),
     ...irKeys.filter((k) => k.kind === 'color' || k.kind === 'effect').map((k) => k.label),
   ];

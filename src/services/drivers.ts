@@ -24,6 +24,8 @@ import {
   ZENGGE,
   zenggeHsv,
   zenggeWrap,
+  HUE_BLE_WHITE,
+  hueBleWhite,
 } from '../core/protocols/ble';
 import { MAGIC_HOME_TCP_PORT, MH_QUERY, mhColor, mhEffect, mhNineBytes, mhPower, parseMhState } from '../core/protocols/magicHome';
 import { BUILTIN_AMBIANCES } from '../core/ambiances';
@@ -33,7 +35,7 @@ import { AMBIANCE_EFFECT_PREFIX, CREATION_EFFECT_ID, COLORED_ANIMS, decodeMotif,
 import { LEDNET_PRESETS } from '../core/protocols/presets';
 import { ELK_CATALOG, LEDNET_CATALOG, MELK_CATALOG } from '../core/effectCatalog';
 import { dim, type Effect, type Rgb } from '../core/protocols/types';
-import { LIFX_PORT, lifxColor, lifxPower, macBytes, yeelightBrightness, yeelightColor, yeelightOk, yeelightPower } from '../core/protocols/udp';
+import { LIFX_PORT, lifxColor, lifxPower, lifxWhite, macBytes, yeelightBrightness, yeelightColor, yeelightOk, yeelightPower, yeelightWhite } from '../core/protocols/udp';
 import {
   elgatoBrightness,
   elgatoColor,
@@ -64,6 +66,11 @@ import {
   WLED_EFFECTS,
   wledPower,
   type ShellyKind,
+  elgatoWhite,
+  goveeWhite,
+  hueWhite,
+  nanoleafWhite,
+  tasmotaWhite,
 } from '../core/protocols/wifi';
 import type { HttpCall } from '../core/protocols/types';
 import { sendBle, sendElk } from './ble';
@@ -98,6 +105,13 @@ export interface Driver {
   creation?(t: DriverTarget, c: Creation): Promise<void>;
   /** Ambiance de l'appli (identifiant de `BUILTIN_AMBIANCES`), jouée par le ruban lui-même. */
   ambiance?(t: DriverTarget, id: string): Promise<void>;
+  /**
+   * Blanc chaud / froid avec les LED blanches de la lumière (kelvins). Absent : l'appli envoie la couleur qui s'en
+   * approche (`kelvinToRgb`).
+   */
+  white?(t: DriverTarget, kelvin: number): Promise<void>;
+  /** Cette lumière a-t-elle vraiment des blancs réglables ? (absent : oui, si `white` existe) */
+  hasWhite?(t: DriverTarget): boolean;
   /** La luminosité s'envoie comme une couleur (pas de vraie commande) : elle remplace l'effet en cours. */
   brightnessIsColor?: boolean;
   /** La luminosité peut-elle suivre le doigt en direct ? (absent : oui) */
@@ -178,6 +192,7 @@ const sp110e: Driver = {
 };
 
 const hueBle: Driver = {
+  white: (t, k) => sendBle(t.address, HUE_BLE_WHITE, hueBleWhite(k)),
   power: (t, on) => sendBle(t.address, HUE_BLE_POWER, hueBlePower(on)),
   color: (t, rgb) => sendBle(t.address, HUE_BLE_COLOR, hueBleColor(rgb)),
   brightness: (t, p) => sendBle(t.address, HUE_BLE_BRIGHTNESS, hueBleBrightness(p)),
@@ -217,6 +232,7 @@ const goveeLan: Driver = {
   power: (t, on) => govee(t, goveePower(on)),
   color: (t, rgb) => govee(t, goveeColor(rgb)),
   brightness: (t, p) => govee(t, goveeBrightness(p)),
+  white: (t, k) => govee(t, goveeWhite(k)),
 };
 
 const call = (t: DriverTarget, c: HttpCall): Promise<void> => http(t.address, c).then(() => undefined);
@@ -253,6 +269,9 @@ const tasmota: Driver = {
   power: (t, on) => call(t, tasmotaPower(on)),
   color: (t, rgb) => call(t, tasmotaColor(rgb)),
   brightness: (t, p) => call(t, tasmotaBrightness(p)),
+  // Seulement si l'état annonce des blancs (CT) : sinon, la couleur approchée.
+  white: (t, k) => call(t, tasmotaWhite(k)),
+  hasWhite: (t) => t.meta?.ct === '1',
 };
 
 /**
@@ -308,6 +327,13 @@ const openbeken: Driver = {
       if (script) await obkScriptNow(t.address, script);
       else await call(t, tasmotaBrightness(p));
     }),
+  // Ampoule OpenBeken à LED blanches (CT annoncé, pas un ruban à pixels) : vrai blanc chaud / froid.
+  white: (t, k) =>
+    exclusive(t.address, async () => {
+      await obkStopEffectsNow(t.address);
+      await call(t, tasmotaWhite(k));
+    }),
+  hasWhite: (t) => t.meta?.ct === '1' && !pixelsOf(t),
   // Script en cours (ambiance, dessin) : changer la luminosité réécrit tout le script (~1 s) ; seulement au lâcher.
   liveBrightness: (t) => !runningScript(t),
   effects: (t) => (pixelsOf(t) ? OBK_ANIMS : []),
@@ -354,6 +380,7 @@ const yeelight: Driver = {
   power: (t, on) => yee(t, yeelightPower(on)),
   color: (t, rgb) => yee(t, yeelightColor(rgb)),
   brightness: (t, p) => yee(t, yeelightBrightness(p)),
+  white: (t, k) => yee(t, yeelightWhite(k)),
   hasColor: (t) => t.meta?.color !== '0',
 };
 
@@ -361,7 +388,9 @@ const lifxMac = (t: DriverTarget): number[] => macBytes(t.meta?.mac ?? '');
 const lifx: Driver = {
   power: (t, on) => udpSend(t.address, LIFX_PORT, lifxPower(lifxMac(t), on)),
   color: (t, rgb) => udpSend(t.address, LIFX_PORT, lifxColor(lifxMac(t), rgb, t.state?.brightness)),
-  brightness: (t, p) => udpSend(t.address, LIFX_PORT, lifxColor(lifxMac(t), t.state?.rgb ?? WHITE, p)),
+  brightness: (t, p) =>
+    udpSend(t.address, LIFX_PORT, t.state?.kelvin ? lifxWhite(lifxMac(t), t.state.kelvin, p) : lifxColor(lifxMac(t), t.state?.rgb ?? WHITE, p)),
+  white: (t, k) => udpSend(t.address, LIFX_PORT, lifxWhite(lifxMac(t), k, t.state?.brightness)),
 };
 
 const token = (t: DriverTarget): string => t.meta?.token ?? '';
@@ -369,12 +398,14 @@ const nanoleaf: Driver = {
   power: (t, on) => call(t, nanoleafPower(token(t), on)),
   color: (t, rgb) => call(t, nanoleafColor(token(t), rgb)),
   brightness: (t, p) => call(t, nanoleafBrightness(token(t), p)),
+  white: (t, k) => call(t, nanoleafWhite(token(t), k)),
 };
 
 const elgato: Driver = {
   power: (t, on) => call(t, elgatoPower(on)),
   color: (t, rgb) => call(t, elgatoColor(rgb)),
   brightness: (t, p) => call(t, elgatoBrightness(p)),
+  white: (t, k) => call(t, elgatoWhite(k)),
   hasColor: (t) => t.meta?.color !== '0',
 };
 
@@ -384,6 +415,9 @@ const hue: Driver = {
   power: (t, on) => call(t, huePower(hueUser(t), hueId(t), on)),
   color: (t, rgb) => call(t, hueColor(hueUser(t), hueId(t), rgb)),
   brightness: (t, p) => call(t, hueBrightness(hueUser(t), hueId(t), p)),
+  white: (t, k) => call(t, hueWhite(hueUser(t), hueId(t), k)),
+  // Lampes ajoutées avant : on suppose des blancs sur une lampe couleur.
+  hasWhite: (t) => t.meta?.ct !== '0',
   hasColor: (t) => t.meta?.color !== '0',
 };
 

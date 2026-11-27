@@ -25,7 +25,7 @@ import { AddForm } from '../ui/AddForm';
 import { Button, Muted, Screen, styles } from '../ui/kit';
 import { LedRow, type LedMode } from '../ui/LedRow';
 import { LightStrip } from '../ui/light';
-import { defaultStripName } from '../ui/labels';
+import { defaultName } from '../ui/labels';
 import { colors, radius, space, WARM_WHITE } from '../ui/theme';
 import { t } from '../i18n';
 
@@ -172,7 +172,7 @@ export default function IrWizard() {
 
   const accept = (setup: IrSetup, rgb?: Rgb): void => {
     run.current++;
-    setName((n) => n || defaultStripName());
+    setName((n) => n || defaultName());
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setPhase({ kind: 'done', setup, rgb });
   };

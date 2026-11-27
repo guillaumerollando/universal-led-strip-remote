@@ -55,7 +55,7 @@ export function AddForm({
         <RoomPicker value={roomId} onChange={onRoom} />
       </ScrollView>
       <View style={{ paddingHorizontal: space.lg, paddingTop: space.sm, paddingBottom: insets.bottom + space.lg, backgroundColor: colors.bg }}>
-        <Button label={t('Ajouter à mes rubans')} onPress={onSave} disabled={!name.trim()} busy={saving} style={{ minHeight: 56 }} />
+        <Button label={t('Ajouter à mes lumières')} onPress={onSave} disabled={!name.trim()} busy={saving} style={{ minHeight: 56 }} />
       </View>
     </KeyboardAvoidingView>
   );

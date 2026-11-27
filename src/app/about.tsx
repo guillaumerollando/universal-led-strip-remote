@@ -67,8 +67,8 @@ function StudioCard() {
       onPress={open}
       style={({ pressed }) => ({
         alignItems: 'center',
-        gap: space.md,
-        paddingVertical: space.xl,
+        gap: space.sm,
+        paddingVertical: space.lg,
         paddingHorizontal: space.lg,
         marginTop: space.lg,
         borderRadius: radius.lg,
@@ -78,7 +78,7 @@ function StudioCard() {
       })}
     >
       <Muted>{t('Fait avec soin par')}</Muted>
-      <Image source={require('../../assets/rollando-studio.png')} accessibilityIgnoresInvertColors style={{ width: 210, height: 210 * (249 / 900) }} resizeMode="contain" />
+      <Image source={require('../../assets/rollando-studio.png')} accessibilityIgnoresInvertColors style={{ width: 150, height: 150 * (249 / 900) }} resizeMode="contain" />
       <Text style={{ color: colors.accent, fontWeight: '700', fontSize: 15 }}>{t('Découvrir nos autres applis')}</Text>
     </Pressable>
   );

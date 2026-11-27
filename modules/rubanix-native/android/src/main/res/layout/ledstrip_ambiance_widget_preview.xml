@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du widget « Ambiance » : un bouton aux couleurs de Cocooning, son nom esquissé (sans texte : rien à traduire). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/ledstrip_widget_bg" android:padding="6dp">
+  <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" android:importantForAccessibility="no"
+      android:src="@drawable/ledstrip_preview_autumn" />
+  <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+    <ImageView android:layout_width="72dp" android:layout_height="10dp" android:scaleType="fitXY" android:importantForAccessibility="no" android:src="@drawable/ledstrip_widget_preview_text" />
+    <ImageView android:layout_width="44dp" android:layout_height="6dp" android:layout_marginTop="6dp" android:scaleType="fitXY" android:importantForAccessibility="no" android:src="@drawable/ledstrip_widget_preview_text" />
+  </LinearLayout>
+</FrameLayout>

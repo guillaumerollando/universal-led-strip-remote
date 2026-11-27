@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aperçu du widget « Pièce » : la pièce allumée, puis trois ambiances à leurs couleurs (sans texte : rien à traduire). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/ledstrip_widget_bg" android:orientation="vertical" android:padding="10dp">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:background="@drawable/ledstrip_widget_row_on" android:gravity="center_vertical" android:orientation="horizontal"
+      android:paddingStart="14dp" android:paddingEnd="8dp">
+    <ImageView android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1" android:layout_marginEnd="64dp" android:scaleType="fitXY" android:importantForAccessibility="no" android:src="@drawable/ledstrip_widget_preview_text" />
+    <ImageView android:layout_width="36dp" android:layout_height="36dp" android:importantForAccessibility="no" android:src="@drawable/ledstrip_power_on" />
+  </LinearLayout>
+  <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:layout_marginTop="6dp"
+      android:orientation="horizontal">
+    <ImageView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginStart="0dp"
+        android:scaleType="fitXY" android:importantForAccessibility="no" android:src="@drawable/ledstrip_preview_autumn" />
+    <ImageView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginStart="6dp"
+        android:scaleType="fitXY" android:importantForAccessibility="no" android:src="@drawable/ledstrip_preview_aurora" />
+    <ImageView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginStart="6dp"
+        android:scaleType="fitXY" android:importantForAccessibility="no" android:src="@drawable/ledstrip_preview_party" />
+  </LinearLayout>
+</LinearLayout>

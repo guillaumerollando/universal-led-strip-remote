@@ -1,12 +1,13 @@
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 
 import { addRoom, removeRoom, renameRoom, roomNamed, updateDevice, useRooms, useSavedDevices } from '../../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../../ui/kit';
 import { kindLabel } from '../../ui/labels';
 import { colors, radius, space } from '../../ui/theme';
 import { t } from '../../i18n';
+import { showDialog } from '../../ui/Dialog';
 
 /** Créer ou modifier une pièce : son nom et les rubans qu'elle contient. */
 export default function RoomScreen() {
@@ -46,7 +47,7 @@ export default function RoomScreen() {
   };
 
   const remove = (): void =>
-    Alert.alert(t('Supprimer « {name} » ?', { name: room?.name ?? '' }), t('Les lumières restent, elles passent dans « Sans pièce ».'), [
+    showDialog(t('Supprimer « {name} » ?', { name: room?.name ?? '' }), t('Les lumières restent, elles passent dans « Sans pièce ».'), [
       { text: t('Annuler'), style: 'cancel' },
       {
         text: t('Supprimer'),

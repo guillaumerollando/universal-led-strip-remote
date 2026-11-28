@@ -1,20 +1,23 @@
-O aplicație care să le stăpânească pe toate. Gata cu câte o aplicație diferită pentru fiecare bandă LED: controlează-ți benzile și becurile inteligente prin Bluetooth, Wi-Fi sau infraroșu, dintr-o singură aplicație simplă.
+O aplicație care să le stăpânească pe toate. Gata cu câte o aplicație diferită pentru fiecare bandă LED: controlează-ți, ba chiar configurează-ți, benzile și becurile inteligente prin Bluetooth, Wi-Fi sau infraroșu, dintr-o singură aplicație simplă.
 
 Fără reclame. Fără cont. Open source.
 
-★ Toată iluminarea ta, o singură aplicație
+💡 Toată iluminarea ta, o singură aplicație
 • Bluetooth: majoritatea controlerelor ieftine (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infraroșu: telefonul tău devine telecomanda și găsește singur codurile potrivite
 Aplicația caută în jurul tău: atinge o lumină ca s-o adaugi.
 
-★ Culori, alburi și ambianțe
+📶 O lumină Wi-Fi nouă? Gata în câteva secunde
+Fără pagină web de configurare, fără adresă IP de tastat: aplicația găsește luminile Wi-Fi care încă așteaptă rețeaua ta (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Tastează parola Wi-Fi-ului tău sau scanează-i codul QR, chiar și dintr-o captură de ecran, iar aplicația face restul.
+
+🎨 Culori, alburi și ambianțe
 Toate culorile, alb de la cald la rece, luminozitate dintr-o glisare. Ambianțe gata făcute (Crăciun, Halloween, Aurora, Ocean…) sau creează-ți propriile ambianțe pictând banda LED cu LED.
 
-★ Camere și widgeturi
+🏠 Camere și widgeturi
 Aprinde o cameră întreagă dintr-un gest sau alege-i ambianța direct de pe ecranul principal.
 
-★ Nimic nu iese din telefonul tău
+🔒 Nimic nu iese din telefonul tău
 Fără reclame, fără cumpărături, fără înregistrare. Funcționează fără internet.
 
 Tuya / Smart Life: aceste dispozitive sunt blocate de producătorul lor. Aplicația le recunoaște și îți spune ce poți face.

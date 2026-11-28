@@ -1,20 +1,23 @@
-One app to rule them all. No more juggling a different app for every LED strip: control your strips and smart bulbs over Bluetooth, Wi-Fi or infrared, from one simple app.
+One app to rule them all. No more juggling a different app for every LED strip: control — and even set up — your strips and smart bulbs over Bluetooth, Wi-Fi or infrared, from one simple app.
 
 No ads. No account. Open source.
 
-★ All your lights, one app
+💡 All your lights, one app
 • Bluetooth: most budget controllers (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infrared: your phone becomes the remote and finds the right codes on its own
 The app looks around you: tap a light to add it.
 
-★ Colors, whites and moods
+📶 New Wi-Fi light? Ready in seconds
+No setup web page, no IP address to type: the app spots Wi-Fi lights still waiting for your network (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Type your Wi-Fi password or scan its QR code, even from a screenshot, and the app does the rest.
+
+🎨 Colors, whites and moods
 Every color, warm to cool white, brightness with a swipe. Ready-made moods (Christmas, Halloween, Aurora, Ocean…), or create your own by painting your strip LED by LED.
 
-★ Rooms and widgets
+🏠 Rooms and widgets
 Turn on a whole room with one gesture, or set its mood right from your home screen.
 
-★ Nothing leaves your phone
+🔒 Nothing leaves your phone
 No ads, no purchases, no sign-up. Works without internet.
 
 Tuya / Smart Life: these devices are locked by their maker. The app recognizes them and tells you what to do.

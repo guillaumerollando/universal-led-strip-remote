@@ -1,1 +1,1 @@
-Comanda strisce LED e lampadine smart: ELK-BLEDOM, Hue, WLED, infrarossi.
+Comanda e configura strisce LED e lampadine: ELK-BLEDOM, Hue, WLED, infrarossi.

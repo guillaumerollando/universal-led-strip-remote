@@ -1,20 +1,23 @@
-Satu aplikasi untuk menguasai semuanya. Tak perlu lagi gonta-ganti aplikasi untuk setiap LED strip: kontrol strip dan bohlam pintarmu lewat Bluetooth, Wi-Fi, atau inframerah, dari satu aplikasi yang simpel.
+Satu aplikasi untuk menguasai semuanya. Tak perlu lagi gonta-ganti aplikasi untuk setiap LED strip: kontrol, bahkan siapkan, strip dan bohlam pintarmu lewat Bluetooth, Wi-Fi, atau inframerah, dari satu aplikasi yang simpel.
 
 Tanpa iklan. Tanpa akun. Open source.
 
-★ Semua lampumu, satu aplikasi
+💡 Semua lampumu, satu aplikasi
 • Bluetooth: kebanyakan pengontrol murah (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Inframerah: HP-mu jadi remote-nya dan mencari sendiri kode yang tepat
 Aplikasi memindai sekitarmu: sentuh lampu untuk menambahkannya.
 
-★ Warna, putih, dan suasana
+📶 Lampu Wi-Fi baru? Siap dalam hitungan detik
+Tanpa halaman web pengaturan, tanpa alamat IP yang harus diketik: aplikasi menemukan lampu Wi-Fi yang masih menunggu jaringanmu (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Ketik kata sandi Wi-Fi-mu atau pindai kode QR-nya, bahkan dari tangkapan layar, dan aplikasi mengurus sisanya.
+
+🎨 Warna, putih, dan suasana
 Semua warna, putih dari hangat sampai dingin, kecerahan dengan sekali geser. Suasana siap pakai (Natal, Halloween, Aurora, Samudra…), atau buat suasanamu sendiri dengan melukis stripmu LED demi LED.
 
-★ Ruangan dan widget
+🏠 Ruangan dan widget
 Nyalakan satu ruangan penuh dengan satu gerakan, atau atur suasananya langsung dari layar utama.
 
-★ Tak ada yang keluar dari HP-mu
+🔒 Tak ada yang keluar dari HP-mu
 Tanpa iklan, tanpa pembelian, tanpa daftar. Berfungsi tanpa internet.
 
 Tuya / Smart Life: perangkat ini dikunci oleh pembuatnya. Aplikasi mengenalinya dan memberi tahu apa yang bisa kamu lakukan.

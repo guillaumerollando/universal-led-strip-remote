@@ -1,20 +1,23 @@
-Jedna aplikace, aby vládla všem. Už žádné přepínání mezi aplikacemi pro každý LED pásek: ovládejte své pásky a chytré žárovky přes Bluetooth, Wi-Fi nebo infračervené světlo z jedné jednoduché aplikace.
+Jedna aplikace, aby vládla všem. Už žádné přepínání mezi aplikacemi pro každý LED pásek: ovládejte – a dokonce i nastavte – své pásky a chytré žárovky přes Bluetooth, Wi-Fi nebo infračervené světlo z jedné jednoduché aplikace.
 
 Bez reklam. Bez účtu. Open source.
 
-★ Všechno vaše osvětlení v jedné aplikaci
+💡 Všechno vaše osvětlení v jedné aplikaci
 • Bluetooth: většina levných ovladačů (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infračervené: z telefonu se stane dálkový ovladač a sám najde správné kódy
 Aplikace hledá ve vašem okolí: klepnutím na světlo ho přidáte.
 
-★ Barvy, bílé odstíny a scény
+📶 Nové Wi-Fi světlo? Připravené za pár sekund
+Žádná webová stránka s nastavením, žádná IP adresa k zadávání: aplikace najde Wi-Fi světla, která ještě čekají na vaši síť (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Zadejte heslo k Wi-Fi nebo naskenujte jeho QR kód, i ze snímku obrazovky, a o zbytek se postará aplikace.
+
+🎨 Barvy, bílé odstíny a scény
 Všechny barvy, bílá od teplé po studenou, jas přejetím prstu. Hotové scény (Vánoce, Halloween, Polární záře, Oceán…), nebo si vytvořte vlastní a malujte pásek LED po LED.
 
-★ Místnosti a widgety
+🏠 Místnosti a widgety
 Rozsviťte celou místnost jedním gestem nebo jí nastavte scénu přímo z domovské obrazovky.
 
-★ Nic neopustí váš telefon
+🔒 Nic neopustí váš telefon
 Žádné reklamy, žádné nákupy, žádná registrace. Funguje bez internetu.
 
 Tuya / Smart Life: tato zařízení jsou zamčená výrobcem. Aplikace je pozná a poradí vám, co dělat.

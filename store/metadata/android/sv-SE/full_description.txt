@@ -1,20 +1,23 @@
-En app för att härska över dem alla. Slut med en ny app för varje LED-list: styr dina listor och smarta lampor via Bluetooth, Wi-Fi eller infrarött, från en enda enkel app.
+En app för att härska över dem alla. Slut med en ny app för varje LED-list: styr – och till och med ställ in – dina listor och smarta lampor via Bluetooth, Wi-Fi eller infrarött, från en enda enkel app.
 
 Ingen reklam. Inget konto. Öppen källkod.
 
-★ All din belysning, en app
+💡 All din belysning, en app
 • Bluetooth: de flesta billiga styrenheter (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infrarött: telefonen blir fjärrkontrollen och hittar rätt koder själv
 Appen letar runt omkring dig: tryck på en lampa för att lägga till den.
 
-★ Färger, vita toner och stämningar
+📶 En ny wifi-lampa? Klar på några sekunder
+Ingen inställningssida, ingen IP-adress att skriva: appen hittar wifi-lampor som fortfarande väntar på ditt nätverk (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Skriv ditt wifi-lösenord eller skanna dess QR-kod, till och med från en skärmbild, så sköter appen resten.
+
+🎨 Färger, vita toner och stämningar
 Alla färger, vitt från varmt till kallt, ljusstyrka med ett svep. Färdiga stämningar (Jul, Halloween, Norrsken, Hav…), eller skapa dina egna genom att måla din list LED för LED.
 
-★ Rum och widgetar
+🏠 Rum och widgetar
 Tänd ett helt rum med en gest, eller välj dess stämning direkt från hemskärmen.
 
-★ Inget lämnar din telefon
+🔒 Inget lämnar din telefon
 Ingen reklam, inga köp, ingen registrering. Fungerar utan internet.
 
 Tuya / Smart Life: dessa enheter är låsta av tillverkaren. Appen känner igen dem och berättar vad du kan göra.

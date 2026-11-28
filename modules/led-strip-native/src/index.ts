@@ -21,6 +21,24 @@ interface LedStripNativeModule {
   /** Remet l'appli en arrière-plan. */
   moveToBack(): boolean;
   acquireMulticastLock(): void;
+  /** Configurer une lumière Wi-Fi neuve : réseaux autour, réseau actuel, état (Wi-Fi, localisation, connexion depuis l'appli). */
+  wifiScan?(): Promise<{ ssid: string; frequency: number; level: number; secure: boolean }[]>;
+  wifiCurrentSsid?(): string | null;
+  wifiSetupState?(): [wifiOn: boolean, locationOn: boolean, canConnect: boolean];
+  /** Se connecte au réseau de la lumière (Android demande l'accord) ; true une fois connecté. */
+  wifiConnectAp?(ssid: string, password: string | null, timeoutMs: number): Promise<boolean>;
+  /** Requête HTTP par le réseau de la lumière : [statut, corps] ; statut -1 si elle a coupé en route, -2 injoignable. */
+  apHttp?(method: string, url: string, body: string | null, contentType: string | null, timeoutMs: number): Promise<[number, string]>;
+  apUdp?(host: string, port: number, messages: string[], waitMs: number): Promise<string[]>;
+  wifiReleaseAp?(): void;
+  /** Lit un QR code (lecteur de Google, sans autorisation caméra) : son texte, ou null si annulé. */
+  scanQrCode?(): Promise<string | null>;
+  /** Choisit une image (capture d'écran) et y lit le QR code : son texte, "" si aucun, null si annulé. */
+  readQrFromImage?(): Promise<string | null>;
+  /** Fenêtre officielle d'avis du Play Store (Google décide s'il l'affiche). */
+  requestReview?(): Promise<boolean>;
+  /** « onShake » : le téléphone a été secoué (signaler un problème). */
+  addListener?(event: 'onShake', listener: () => void): { remove(): void };
   releaseMulticastLock(): void;
 }
 

@@ -1,9 +1,10 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
 
 import { canPower, setGroupPower } from '../services/control';
 import { markLongPressSeen, useLongPressHint } from '../services/hints';
+import { maybeAskReview } from '../services/review';
 import { useScan } from '../services/scan';
 import { useRooms, useSavedDevices } from '../services/store';
 import { Button, Muted, Screen, styles } from '../ui/kit';
@@ -13,8 +14,17 @@ import { RoomSection } from '../ui/RoomSection';
 import { colors, radius, space } from '../ui/theme';
 import { t } from '../i18n';
 
+/** L'accueil a déjà été affiché une fois : la fenêtre d'avis ne vient qu'en y revenant, jamais au démarrage. */
+let homeSeen = false;
+
 /** Accueil : les pièces et leurs rubans, à allumer en un geste (toucher = agir, appui long = réglages). */
 export default function HomeScreen() {
+  useFocusEffect(
+    useCallback(() => {
+      if (homeSeen) void maybeAskReview();
+      homeSeen = true;
+    }, []),
+  );
   const devices = useSavedDevices();
   const rooms = useRooms();
   const { found } = useScan();

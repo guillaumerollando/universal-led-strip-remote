@@ -1,15 +1,23 @@
-import { Stack } from 'expo-router';
+import { Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
+import { listenForShake } from '../services/report';
 import { refreshWifiAddresses } from '../services/scan';
 import { getDevices, loadDevices } from '../services/store';
 import { startWidgetSync } from '../services/widget';
+import { DialogHost } from '../ui/Dialog';
 import { colors } from '../ui/theme';
 import { t } from '../i18n';
 
 export default function RootLayout() {
+  // Secouer le téléphone = signaler un problème, sur n'importe quel écran (standard du studio).
+  const pathname = usePathname();
+  const screen = useRef(pathname);
+  screen.current = pathname;
+  useEffect(() => listenForShake(() => screen.current), []);
+
   useEffect(() => {
     void loadDevices().then(() => {
       startWidgetSync();
@@ -36,6 +44,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="add" options={{ title: t('Ajouter une lumière') }} />
         <Stack.Screen name="add-ip" options={{ title: t('Ajouter par adresse IP') }} />
+        <Stack.Screen name="setup-wifi" options={{ title: t('Configurer la lumière') }} />
         <Stack.Screen name="device/[key]" options={{ title: t('Lumière') }} />
         <Stack.Screen name="room/[id]" options={{ title: t('Pièce') }} />
         <Stack.Screen name="motif/[key]" options={{ title: t('Créer mon ambiance') }} />
@@ -46,6 +55,7 @@ export default function RootLayout() {
         <Stack.Screen name="power" options={{ headerShown: false, animation: 'fade' }} />
         <Stack.Screen name="scene" options={{ headerShown: false, animation: 'fade' }} />
       </Stack>
+      <DialogHost />
     </KeyboardProvider>
   );
 }

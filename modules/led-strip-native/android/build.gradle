@@ -13,3 +13,12 @@ android {
     versionName '0.1.0'
   }
 }
+
+dependencies {
+  // Lecteur de QR code de Google (Play services) : pas d'autorisation caméra, presque rien dans l'APK.
+  implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
+  // Lire un QR code dans une image choisie (capture d'écran) : modèle fourni par Play services, pas embarqué.
+  implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1'
+  // Fenêtre officielle d'avis du Play Store, sans quitter l'appli.
+  implementation 'com.google.android.play:review:2.0.2'
+}

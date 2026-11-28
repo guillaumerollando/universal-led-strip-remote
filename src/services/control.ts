@@ -16,6 +16,7 @@ import { lightKind } from '../core/describe';
 import { getDevice, rememberState, updateDevice, type LightState } from './store';
 import { t as tr } from '../i18n';
 import { track, type SendKind } from './sending';
+import { noteLightUsed } from './review';
 
 /** Ce dont la commande a besoin pour joindre un appareil (enregistré ou juste détecté). */
 export interface Target {
@@ -324,7 +325,8 @@ export async function setGroupPower(targets: Target[], on: boolean): Promise<Gro
 
 /** Les envois vers un ruban, suivis (`services/sending`) : l'interface sait qu'il va suivre. */
 function tracked<A extends unknown[]>(kind: SendKind, fn: (t: Target, ...a: A) => Promise<void>): (t: Target, ...a: A) => Promise<void> {
-  return (t, ...a) => track(t.key, kind, fn(t, ...a));
+  // Un envoi réussi compte comme un jour d'usage (fenêtre d'avis du Play Store, `services/review`).
+  return (t, ...a) => track(t.key, kind, fn(t, ...a).then(noteLightUsed));
 }
 export const setPower = tracked('power', setPowerNow);
 export const setColor = tracked('color', setColorNow);

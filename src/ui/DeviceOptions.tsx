@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+
 
 import { removeDevice, updateDevice, type SavedDevice } from '../services/store';
 import { RoomPicker } from './RoomPicker';
 import { RenameField, Sheet } from './Sheet';
 import { t } from '../i18n';
+import { showDialog } from './Dialog';
 
 /** Réglages d'un ruban (appui long sur sa tuile, ou « ⋯ » sur sa fiche) : nom, pièce, oublier. */
 export function DeviceOptions({ device, visible, onClose, onForgotten }: { device: SavedDevice; visible: boolean; onClose: () => void; onForgotten?: () => void }) {
@@ -15,7 +16,7 @@ export function DeviceOptions({ device, visible, onClose, onForgotten }: { devic
 
   const forget = (): void => {
     onClose();
-    Alert.alert(t('Oublier cet appareil ?'), device.name, [
+    showDialog(t('Oublier cet appareil ?'), device.name, [
       { text: t('Annuler'), style: 'cancel' },
       {
         text: t('Oublier'),

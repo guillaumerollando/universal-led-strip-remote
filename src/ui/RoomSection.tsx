@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import type { Rgb } from '../core/elk';
 import { canPower, setGroupPower } from '../services/control';
@@ -15,6 +15,7 @@ import { SceneRow } from './SceneRow';
 import { RenameField, Sheet } from './Sheet';
 import { colors, radius, space, WARM_WHITE } from './theme';
 import { t } from '../i18n';
+import { showDialog } from './Dialog';
 
 /** Couleur de l'interrupteur d'une pièce : le filament chaud de l'interface (`colors.accent`). */
 const ACCENT: Rgb = { r: 255, g: 181, b: 71 };
@@ -65,7 +66,7 @@ export function RoomSection({ room, devices, nearbyKeys }: { room: Room | null; 
   const remove = (): void => {
     setMenu(null);
     if (!room) return;
-    Alert.alert(t('Supprimer « {name} » ?', { name: room.name }), t('Les lumières restent, elles passent dans « Sans pièce ».'), [
+    showDialog(t('Supprimer « {name} » ?', { name: room.name }), t('Les lumières restent, elles passent dans « Sans pièce ».'), [
       { text: t('Annuler'), style: 'cancel' },
       { text: t('Supprimer'), style: 'destructive', onPress: () => void removeRoom(room.id) },
     ]);

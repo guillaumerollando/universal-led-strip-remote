@@ -1,1 +1,1 @@
-Controlează benzi LED și becuri: ELK-BLEDOM, Hue, WLED, infraroșu. Fără reclame.
+Controlează și configurează benzi LED, becuri: ELK-BLEDOM, Hue, WLED, infraroșu.

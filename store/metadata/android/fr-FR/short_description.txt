@@ -1,1 +1,1 @@
-Pilote tous tes rubans LED et ampoules : ELK-BLEDOM, Hue, WLED, infrarouge.
+Pilote et configure rubans LED et ampoules : ELK-BLEDOM, Hue, WLED, infrarouge.

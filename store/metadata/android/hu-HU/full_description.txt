@@ -1,20 +1,23 @@
-Egy app, hogy mind uralja. Vége annak, hogy minden LED szalaghoz más app kell: vezéreld a szalagjaidat és okosizzóidat Bluetoothon, Wi-Fin vagy infravörösön át, egyetlen egyszerű appból.
+Egy app, hogy mind uralja. Vége annak, hogy minden LED szalaghoz más app kell: vezéreld – sőt, állítsd be – a szalagjaidat és okosizzóidat Bluetoothon, Wi-Fin vagy infravörösön át, egyetlen egyszerű appból.
 
 Reklámmentes. Fiók nélkül. Nyílt forráskódú.
 
-★ Minden világításod egy appban
+💡 Minden világításod egy appban
 • Bluetooth: a legtöbb olcsó vezérlő (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infravörös: a telefonod lesz a távirányító, és magától megtalálja a megfelelő kódokat
 Az app körülnéz: koppints egy lámpára a hozzáadáshoz.
 
-★ Színek, fehérek és hangulatok
+📶 Új Wi-Fi lámpa? Pár másodperc, és kész
+Nincs beállítóoldal, nincs begépelendő IP-cím: az app észreveszi a Wi-Fi lámpákat, amelyek még a hálózatodra várnak (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Írd be a Wi-Fi jelszavadat, vagy olvasd be a QR-kódját, akár egy képernyőképről is, a többit az app elintézi.
+
+🎨 Színek, fehérek és hangulatok
 Minden szín, fehér a melegtől a hidegig, fényerő egy ujjhúzással. Kész hangulatok (Karácsony, Halloween, Sarki fény, Óceán…), vagy készítsd el a sajátjaidat úgy, hogy LED-enként megfested a szalagot.
 
-★ Szobák és widgetek
+🏠 Szobák és widgetek
 Kapcsolj fel egy egész szobát egyetlen mozdulattal, vagy állítsd be a hangulatát egyenesen a kezdőképernyőről.
 
-★ Semmi sem hagyja el a telefonodat
+🔒 Semmi sem hagyja el a telefonodat
 Nincs reklám, nincs vásárlás, nincs regisztráció. Internet nélkül is működik.
 
 Tuya / Smart Life: ezeket az eszközöket a gyártójuk lezárta. Az app felismeri őket, és megmondja, mit tehetsz.

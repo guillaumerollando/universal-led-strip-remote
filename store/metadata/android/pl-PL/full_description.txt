@@ -1,20 +1,23 @@
-Jedna aplikacja, by wszystkimi rządzić. Koniec z osobną aplikacją do każdej taśmy LED: steruj swoimi taśmami i inteligentnymi żarówkami przez Bluetooth, Wi-Fi lub podczerwień z jednej prostej aplikacji.
+Jedna aplikacja, by wszystkimi rządzić. Koniec z osobną aplikacją do każdej taśmy LED: steruj swoimi taśmami i inteligentnymi żarówkami – a nawet je konfiguruj – przez Bluetooth, Wi-Fi lub podczerwień z jednej prostej aplikacji.
 
 Bez reklam. Bez konta. Open source.
 
-★ Całe twoje oświetlenie, jedna aplikacja
+💡 Całe twoje oświetlenie, jedna aplikacja
 • Bluetooth: większość tanich kontrolerów (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Podczerwień: telefon staje się pilotem i sam znajduje właściwe kody
 Aplikacja szuka wokół ciebie: dotknij światła, aby je dodać.
 
-★ Kolory, biele i nastroje
+📶 Nowe światło Wi-Fi? Gotowe w kilka sekund
+Bez strony konfiguracyjnej, bez wpisywania adresu IP: aplikacja wykrywa światła Wi-Fi, które wciąż czekają na twoją sieć (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Wpisz hasło do Wi-Fi albo zeskanuj jego kod QR, nawet ze zrzutu ekranu, a resztą zajmie się aplikacja.
+
+🎨 Kolory, biele i nastroje
 Każdy kolor, biel od ciepłej do zimnej, jasność jednym przesunięciem palca. Gotowe nastroje (Boże Narodzenie, Halloween, Zorza polarna, Ocean…) albo twórz własne, malując taśmę dioda po diodzie.
 
-★ Pokoje i widżety
+🏠 Pokoje i widżety
 Włącz cały pokój jednym gestem albo ustaw jego nastrój prosto z ekranu głównego.
 
-★ Nic nie opuszcza twojego telefonu
+🔒 Nic nie opuszcza twojego telefonu
 Bez reklam, bez zakupów, bez rejestracji. Działa bez internetu.
 
 Tuya / Smart Life: te urządzenia są zablokowane przez producenta. Aplikacja je rozpoznaje i podpowiada, co możesz zrobić.

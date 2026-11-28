@@ -7,6 +7,16 @@ import java.io.ByteArrayOutputStream
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.net.SocketTimeoutException
+import android.content.Intent
+import com.google.android.play.core.review.ReviewManagerFactory
+import android.provider.MediaStore
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
+import expo.modules.kotlin.Promise
 import expo.modules.kotlin.exception.CodedException
 import expo.modules.kotlin.exception.Exceptions
 import expo.modules.kotlin.modules.Module
@@ -29,8 +39,29 @@ class LedStripNativeModule : Module() {
 
   private var multicastLock: WifiManager.MulticastLock? = null
 
+  /** Choix d'une image de QR code en cours (réponse attendue dans OnActivityResult). */
+  private var qrImagePromise: Promise? = null
+
+  /** Secousse du téléphone → événement « onShake » (écouté seulement quand l'appli s'y abonne). */
+  private var shakeDetector: ShakeDetector? = null
+
+  private var wifiSetupInstance: WifiSetup? = null
+  private val wifiSetup: WifiSetup
+    get() = wifiSetupInstance ?: WifiSetup(context).also { wifiSetupInstance = it }
+
   override fun definition() = ModuleDefinition {
     Name("LedStripNative")
+
+    Events("onShake")
+
+    OnStartObserving("onShake") {
+      shakeDetector = shakeDetector ?: ShakeDetector(context) { sendEvent("onShake", emptyMap<String, Any>()) }
+      shakeDetector?.start()
+    }
+
+    OnStopObserving("onShake") {
+      shakeDetector?.stop()
+    }
 
     Function("hasIrEmitter") {
       irManager?.hasIrEmitter() == true
@@ -136,8 +167,87 @@ class LedStripNativeModule : Module() {
       multicastLock?.takeIf { it.isHeld }?.release()
     }
 
+    // ── Configurer une lumière Wi-Fi neuve (WifiSetup.kt) ──
+
+    /** Réseaux Wi-Fi autour : [{ssid, frequency, level, secure}]. */
+    AsyncFunction("wifiScan") { wifiSetup.scan() }
+
+    Function("wifiCurrentSsid") { wifiSetup.currentSsid() }
+
+    /** [Wi-Fi allumé, localisation allumée, connexion possible depuis l'appli]. */
+    Function("wifiSetupState") { listOf(wifiSetup.isWifiOn(), wifiSetup.isLocationOn(), wifiSetup.canConnectFromApp()) }
+
+    /** Se connecte au réseau de la lumière (Android demande l'accord) ; true une fois connecté. */
+    AsyncFunction("wifiConnectAp") { ssid: String, password: String?, timeoutMs: Int, promise: Promise ->
+      wifiSetup.connect(ssid, password, timeoutMs) { ok -> promise.resolve(ok) }
+    }
+
+    /** Requête HTTP vers la lumière par son réseau : [statut, corps] (statut -1 : coupée en route). */
+    AsyncFunction("apHttp") { method: String, url: String, body: String?, contentType: String?, timeoutMs: Int ->
+      wifiSetup.http(method, url, body, contentType, timeoutMs)
+    }
+
+    /** Messages UDP vers la lumière par son réseau ; renvoie ses réponses. */
+    AsyncFunction("apUdp") { host: String, port: Int, messages: List<String>, waitMs: Int ->
+      wifiSetup.udp(host, port, messages, waitMs)
+    }
+
+    Function("wifiReleaseAp") { wifiSetup.release() }
+
+    /**
+     * Choisit une image (capture d'écran d'un QR code) avec le sélecteur de photos d'Android, sans autorisation, puis
+     * y lit le QR code : son texte, "" si l'image n'en contient pas, null si annulé.
+     */
+    AsyncFunction("readQrFromImage") { promise: Promise ->
+      val activity = appContext.currentActivity ?: return@AsyncFunction promise.resolve(null)
+      qrImagePromise?.resolve(null)
+      qrImagePromise = promise
+      val intent = if (android.os.Build.VERSION.SDK_INT >= 33) Intent(MediaStore.ACTION_PICK_IMAGES)
+        else Intent(Intent.ACTION_GET_CONTENT).setType("image/*")
+      activity.startActivityForResult(intent, QR_IMAGE_REQUEST)
+    }
+
+    /** Fenêtre officielle d'avis du Play Store (Google décide s'il l'affiche) ; true une fois le parcours fini. */
+    AsyncFunction("requestReview") { promise: Promise ->
+      val activity = appContext.currentActivity ?: return@AsyncFunction promise.resolve(false)
+      val manager = ReviewManagerFactory.create(activity)
+      manager.requestReviewFlow().addOnCompleteListener { request ->
+        if (!request.isSuccessful) return@addOnCompleteListener promise.resolve(false)
+        manager.launchReviewFlow(activity, request.result).addOnCompleteListener { promise.resolve(true) }
+      }
+    }
+
+    OnActivityResult { _, payload ->
+      if (payload.requestCode != QR_IMAGE_REQUEST) return@OnActivityResult
+      val promise = qrImagePromise ?: return@OnActivityResult
+      qrImagePromise = null
+      val uri = payload.data?.data ?: return@OnActivityResult promise.resolve(null)
+      val image = runCatching { InputImage.fromFilePath(context, uri) }.getOrNull() ?: return@OnActivityResult promise.resolve("")
+      val options = BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
+      BarcodeScanning.getClient(options).process(image)
+        .addOnSuccessListener { codes -> promise.resolve(codes.firstOrNull()?.rawValue ?: "") }
+        .addOnFailureListener { promise.resolve("") }
+    }
+
+    /**
+     * Lit un QR code avec le lecteur de Google (Play services, sans autorisation caméra) : le texte brut, ou null si
+     * on a annulé. Un QR code de Wi-Fi donne « WIFI:T:WPA;S:nom;P:mot de passe;; ».
+     */
+    AsyncFunction("scanQrCode") { promise: Promise ->
+      val activity = appContext.currentActivity ?: return@AsyncFunction promise.resolve(null)
+      val options = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
+      GmsBarcodeScanning.getClient(activity, options).startScan()
+        .addOnSuccessListener { promise.resolve(it.rawValue) }
+        .addOnCanceledListener { promise.resolve(null) }
+        .addOnFailureListener { promise.reject("QR_SCAN", it.message ?: "scan", it) }
+    }
+
     OnDestroy {
+      shakeDetector?.stop()
+      wifiSetupInstance?.release()
       multicastLock?.takeIf { it.isHeld }?.release()
     }
   }
 }
+
+private const val QR_IMAGE_REQUEST = 0x51C0

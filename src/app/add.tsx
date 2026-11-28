@@ -8,6 +8,7 @@ import { FAMILIES } from '../core/families';
 import { canPower } from '../services/control';
 import { hasIrEmitter } from '../services/ir';
 import { stopScan, useScan } from '../services/scan';
+import type { WaitingLight } from '../services/wifiSetup';
 import { useSavedDevices, type SavedDevice } from '../services/store';
 import { Button, Muted, Screen, SectionTitle, styles } from '../ui/kit';
 import { kindLabel, signalText } from '../ui/labels';
@@ -21,7 +22,7 @@ import { t } from '../i18n';
  */
 export default function AddScreen() {
   const saved = useSavedDevices();
-  const { scanning, found, warnings, demo, start } = useScan();
+  const { scanning, found, waiting, warnings, demo, start } = useScan();
 
   useEffect(() => {
     if (!scanning && !demo) start();
@@ -41,14 +42,18 @@ export default function AddScreen() {
   return (
     <Screen>
       <View style={{ alignItems: 'center', gap: space.xs }}>
-        <LedRow mode={scanning ? 'chase' : found.length ? 'lit' : 'off'} count={9} size={14} />
-        <Text style={[styles.title, { textAlign: 'center' }]}>{scanning ? t('Recherche en cours…') : found.length ? t('Touche une lumière pour l’ajouter') : t('Rien trouvé pour l’instant.')}</Text>
+        <LedRow mode={scanning ? 'chase' : found.length || waiting.length ? 'lit' : 'off'} count={9} size={14} />
+        <Text style={[styles.title, { textAlign: 'center' }]}>{scanning ? t('Recherche en cours…') : found.length || waiting.length ? t('Touche une lumière pour l’ajouter') : t('Rien trouvé pour l’instant.')}</Text>
         <Muted>{t('Allume tes lumières et approche-toi.')}</Muted>
       </View>
       {warnings.map((w) => (
         <Text key={w} style={[styles.muted, { color: colors.warn }]}>
           {w}
         </Text>
+      ))}
+
+      {waiting.map((w) => (
+        <WaitingRow key={w.ssid} light={w} />
       ))}
 
       {ready.map((d) => (
@@ -78,6 +83,41 @@ export default function AddScreen() {
         <Text style={[styles.muted, { textDecorationLine: 'underline' }]}>{t('Ajouter par adresse IP')}</Text>
       </Pressable>
     </Screen>
+  );
+}
+
+/** Une lumière Wi-Fi neuve qui attend le Wi-Fi de la maison : on la touche pour le lui donner. */
+function WaitingRow({ light }: { light: WaitingLight }) {
+  const family = FAMILIES[light.ap.family];
+  const closed = light.ap.method === 'closed';
+  const detail = [signalText(light.level), t('Attend ton Wi-Fi')].filter(Boolean).join(' · ');
+  return (
+    <Pressable
+      onPress={() => router.push({ pathname: '/setup-wifi', params: { ssid: light.ssid } })}
+      style={({ pressed }) => ({
+        backgroundColor: pressed ? colors.surfaceHigh : colors.surface,
+        borderRadius: radius.md,
+        borderWidth: 1,
+        borderColor: closed ? colors.border : colors.accent,
+        paddingHorizontal: space.lg,
+        paddingVertical: space.md,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: space.md,
+      })}
+    >
+      <View style={{ flex: 1, gap: 2 }}>
+        <Text style={styles.title} numberOfLines={1}>
+          {family.brand ?? t('Lumière Wi-Fi')}
+        </Text>
+        <Text style={styles.muted} numberOfLines={1}>
+          {detail}
+        </Text>
+      </View>
+      <Text style={[styles.muted, !closed && { color: colors.accent, fontWeight: '700', fontSize: 15 }]}>
+        {closed ? (family.apps[0] ? t('Via {app}', { app: family.apps[0].name }) : '') : t('Configurer')}
+      </Text>
+    </Pressable>
   );
 }
 

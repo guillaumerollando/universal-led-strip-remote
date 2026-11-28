@@ -1,1 +1,1 @@
-Steruj taśmami LED i żarówkami: ELK-BLEDOM, Hue, WLED, podczerwień. Bez reklam.
+Steruj i konfiguruj: taśmy LED i żarówki. ELK-BLEDOM, Hue, WLED, podczerwień.

@@ -1,20 +1,23 @@
-Một ứng dụng để cai quản tất cả. Không còn mỗi dây đèn LED một ứng dụng khác nhau: điều khiển dây đèn và bóng đèn thông minh của bạn qua Bluetooth, Wi-Fi hoặc hồng ngoại, từ một ứng dụng đơn giản.
+Một ứng dụng để cai quản tất cả. Không còn mỗi dây đèn LED một ứng dụng khác nhau: điều khiển, thậm chí cài đặt, dây đèn và bóng đèn thông minh của bạn qua Bluetooth, Wi-Fi hoặc hồng ngoại, từ một ứng dụng đơn giản.
 
 Không quảng cáo. Không tài khoản. Mã nguồn mở.
 
-★ Toàn bộ ánh sáng của bạn, một ứng dụng
+💡 Toàn bộ ánh sáng của bạn, một ứng dụng
 • Bluetooth: hầu hết bộ điều khiển giá rẻ (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Hồng ngoại: điện thoại của bạn trở thành điều khiển từ xa và tự tìm đúng mã
 Ứng dụng tìm quanh bạn: chạm vào một đèn để thêm.
 
-★ Màu sắc, ánh trắng và không khí
+📶 Đèn Wi-Fi mới? Sẵn sàng trong vài giây
+Không cần trang web cài đặt, không cần gõ địa chỉ IP: ứng dụng phát hiện các đèn Wi-Fi còn đang chờ mạng của bạn (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Nhập mật khẩu Wi-Fi hoặc quét mã QR của mạng, kể cả từ ảnh chụp màn hình, ứng dụng sẽ lo phần còn lại.
+
+🎨 Màu sắc, ánh trắng và không khí
 Mọi màu sắc, ánh trắng từ ấm đến lạnh, độ sáng chỉ với một lần vuốt. Không khí có sẵn (Giáng sinh, Halloween, Cực quang, Đại dương…), hoặc tự tạo không khí của bạn bằng cách tô dây đèn từng LED một.
 
-★ Phòng và widget
+🏠 Phòng và widget
 Bật cả căn phòng chỉ với một thao tác, hoặc chọn không khí ngay từ màn hình chính.
 
-★ Không gì rời khỏi điện thoại của bạn
+🔒 Không gì rời khỏi điện thoại của bạn
 Không quảng cáo, không mua hàng, không đăng ký. Hoạt động không cần internet.
 
 Tuya / Smart Life: các thiết bị này bị nhà sản xuất khóa. Ứng dụng nhận ra chúng và cho bạn biết nên làm gì.

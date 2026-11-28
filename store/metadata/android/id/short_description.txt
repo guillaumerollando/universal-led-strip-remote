@@ -1,1 +1,1 @@
-Atur LED strip & lampu pintar: ELK-BLEDOM, Hue, WLED, inframerah. Tanpa iklan.
+Kontrol & siapkan LED strip & lampu pintar: ELK-BLEDOM, Hue, WLED, inframerah.

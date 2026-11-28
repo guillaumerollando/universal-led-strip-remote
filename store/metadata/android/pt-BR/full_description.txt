@@ -1,20 +1,23 @@
-Um app para a todos governar. Chega de um app diferente para cada fita LED: controle suas fitas e lâmpadas inteligentes por Bluetooth, Wi-Fi ou infravermelho, em um só app simples.
+Um app para a todos governar. Chega de um app diferente para cada fita LED: controle, e até configure, suas fitas e lâmpadas inteligentes por Bluetooth, Wi-Fi ou infravermelho, em um só app simples.
 
 Sem anúncios. Sem conta. Código aberto.
 
-★ Toda a sua iluminação, um só app
+💡 Toda a sua iluminação, um só app
 • Bluetooth: a maioria dos controladores baratos (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infravermelho: seu celular vira o controle remoto e encontra sozinho os códigos certos
 O app procura ao seu redor: toque em uma luz para adicioná-la.
 
-★ Cores, brancos e ambientes
+📶 Uma luz Wi-Fi nova? Pronta em segundos
+Sem página web de configuração, sem endereço IP para digitar: o app encontra as luzes Wi-Fi que ainda esperam a sua rede (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Digite a senha do seu Wi-Fi ou escaneie o QR code dele, até de uma captura de tela, e o app faz o resto.
+
+🎨 Cores, brancos e ambientes
 Todas as cores, branco do quente ao frio, brilho com um deslizar de dedo. Ambientes prontos para usar (Natal, Halloween, Aurora, Oceano…), ou crie os seus pintando sua fita LED por LED.
 
-★ Cômodos e widgets
+🏠 Cômodos e widgets
 Acenda um cômodo inteiro com um gesto, ou escolha o ambiente direto da tela inicial.
 
-★ Nada sai do seu celular
+🔒 Nada sai do seu celular
 Sem anúncios, sem compras, sem cadastro. Funciona sem internet.
 
 Tuya / Smart Life: esses aparelhos são bloqueados pelo fabricante. O app os reconhece e explica o que fazer.

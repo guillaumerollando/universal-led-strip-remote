@@ -1,1 +1,1 @@
-Controla tiras LED y bombillas: ELK-BLEDOM, Hue, WLED, infrarrojo. Sin anuncios.
+Controla y configura tiras LED y bombillas: ELK-BLEDOM, Hue, WLED, infrarrojo.

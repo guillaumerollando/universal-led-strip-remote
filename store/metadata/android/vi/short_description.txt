@@ -1,1 +1,1 @@
-Điều khiển dây đèn LED & bóng đèn: ELK-BLEDOM, Hue, WLED, hồng ngoại.
+Điều khiển & cài đặt dây đèn LED, bóng đèn: ELK-BLEDOM, Hue, WLED, hồng ngoại.

@@ -1,20 +1,23 @@
-Hepsini yönetecek tek uygulama. Her LED şerit için ayrı bir uygulamaya son: şeritlerinizi ve akıllı ampullerinizi Bluetooth, Wi-Fi veya kızılötesiyle tek ve basit bir uygulamadan kontrol edin.
+Hepsini yönetecek tek uygulama. Her LED şerit için ayrı bir uygulamaya son: şeritlerinizi ve akıllı ampullerinizi Bluetooth, Wi-Fi veya kızılötesiyle tek ve basit bir uygulamadan kontrol edin, hatta kurun.
 
 Reklamsız. Hesap yok. Açık kaynak.
 
-★ Tüm ışıklarınız, tek uygulama
+💡 Tüm ışıklarınız, tek uygulama
 • Bluetooth: çoğu ucuz kontrolcü (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Kızılötesi: telefonunuz kumanda olur ve doğru kodları kendisi bulur
 Uygulama çevrenizi tarar: eklemek için bir ışığa dokunun.
 
-★ Renkler, beyazlar ve ambiyanslar
+📶 Yeni bir Wi-Fi ışığı mı? Saniyeler içinde hazır
+Kurulum web sayfası yok, yazılacak IP adresi yok: uygulama hâlâ ağınızı bekleyen Wi-Fi ışıklarını bulur (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Wi-Fi şifrenizi yazın ya da QR kodunu, ekran görüntüsünden bile, tarayın; gerisini uygulama halleder.
+
+🎨 Renkler, beyazlar ve ambiyanslar
 Her renk, sıcaktan soğuğa beyaz, tek kaydırmayla parlaklık. Hazır ambiyanslar (Noel, Cadılar Bayramı, Kuzey ışıkları, Okyanus…) ya da şeridinizi LED LED boyayarak kendi ambiyanslarınızı oluşturun.
 
-★ Odalar ve widget'lar
+🏠 Odalar ve widget'lar
 Tek hareketle bütün bir odayı açın ya da ambiyansını doğrudan ana ekrandan seçin.
 
-★ Hiçbir şey telefonunuzdan çıkmaz
+🔒 Hiçbir şey telefonunuzdan çıkmaz
 Reklam yok, satın alma yok, kayıt yok. İnternetsiz çalışır.
 
 Tuya / Smart Life: bu cihazlar üreticileri tarafından kilitlenmiştir. Uygulama onları tanır ve ne yapabileceğinizi söyler.

@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import { ambianceColors, BUILTIN_AMBIANCES, type Ambiance } from '../core/ambiances';
 import { removeAmbiance, useMyAmbiances } from '../services/ambiances';
@@ -12,6 +12,7 @@ import { encodeCreation } from '../core/creations';
 import { Button, styles as kit } from './kit';
 import { colors, radius, rgbCss, space } from './theme';
 import { t } from '../i18n';
+import { showDialog } from './Dialog';
 
 /** Les couleurs de l'ambiance en petite rangée de LED (fond éteint pour un serpent). */
 function MotifDots({ ambiance, count = 8 }: { ambiance: Pick<Ambiance, 'motif' | 'colors'>; count?: number }) {
@@ -56,7 +57,7 @@ export function AmbiancesPanel({ target, favoritesOnly }: { target: Target; favo
       .finally(() => setBusy(null));
   };
   const forget = (a: Ambiance): void => {
-    Alert.alert(t('Supprimer « {name} » ?', { name: a.label }), undefined, [
+    showDialog(t('Supprimer « {name} » ?', { name: a.label }), undefined, [
       { text: t('Annuler'), style: 'cancel' },
       { text: t('Supprimer'), style: 'destructive', onPress: () => void removeAmbiance(a.id) },
     ]);

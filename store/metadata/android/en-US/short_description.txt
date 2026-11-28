@@ -1,1 +1,1 @@
-Control any LED strip & smart bulb: ELK-BLEDOM, Hue, WLED, infrared. No ads.
+Control & set up LED strips and smart bulbs: ELK-BLEDOM, Hue, WLED, infrared.

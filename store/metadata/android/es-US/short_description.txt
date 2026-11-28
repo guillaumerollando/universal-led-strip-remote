@@ -1,1 +1,1 @@
-Controla tiras LED y focos: ELK-BLEDOM, Hue, WLED, infrarrojos. Sin anuncios.
+Controla y configura tiras LED y focos: ELK-BLEDOM, Hue, WLED, infrarrojos.

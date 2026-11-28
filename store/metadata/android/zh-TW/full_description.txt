@@ -1,20 +1,23 @@
-一個App統御一切。不用再為每條LED燈條切換不同的App：透過Bluetooth、Wi-Fi或紅外線，用一個簡單的App控制你的燈條和智慧燈泡。
+一個App統御一切。不用再為每條LED燈條切換不同的App：透過Bluetooth、Wi-Fi或紅外線，用一個簡單的App控制、甚至設定你的燈條和智慧燈泡。
 
 無廣告。不用帳號。開源。
 
-★ 你所有的燈光，一個App搞定
+💡 你所有的燈光，一個App搞定
 • Bluetooth：大多數平價控制器（ELK-BLEDOM、MELK……）
 • Wi-Fi：Philips Hue、Yeelight、LIFX、WLED、Govee、Shelly、Tasmota、Magic Home、Nanoleaf……
 • 紅外線：手機變身遙控器，並自動找到正確的代碼
 App會搜尋你周圍的裝置：點一下燈即可新增。
 
-★ 顏色、白光和氛圍
+📶 新的Wi-Fi燈？幾秒就緒
+不需設定網頁，不需輸入IP位址：App會發現還在等待你的網路的Wi-Fi燈（Tasmota、WLED、OpenBeken、ESPHome、Shelly、Magic Home……）。輸入Wi-Fi密碼或掃描它的QR碼（截圖也可以），剩下的交給App。
+
+🎨 顏色、白光和氛圍
 所有顏色，從暖白到冷白，滑動手指調整亮度。現成的氛圍（聖誕、萬聖節、極光、海洋……），或逐顆LED為燈條上色，建立你自己的氛圍。
 
-★ 房間和小工具
+🏠 房間和小工具
 一個手勢點亮整個房間，或直接在主畫面上切換氛圍。
 
-★ 資料不會離開你的手機
+🔒 資料不會離開你的手機
 無廣告、無購買、不用註冊。不用連網也能使用。
 
 Tuya / Smart Life：這些裝置被廠商鎖定。App會辨識它們，並告訴你可以怎麼做。

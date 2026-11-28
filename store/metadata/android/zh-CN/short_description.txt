@@ -1,1 +1,1 @@
-控制所有LED灯带和智能灯泡：ELK-BLEDOM、Hue、WLED、红外遥控。无广告。
+控制和设置LED灯带与智能灯泡：ELK-BLEDOM、Hue、WLED、红外遥控。无广告。

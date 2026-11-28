@@ -1,20 +1,23 @@
-Un’app per domarle tutte. Basta con un’app diversa per ogni striscia LED: comanda le tue strisce e le tue lampadine smart via Bluetooth, Wi-Fi o infrarossi, da un’unica app semplice.
+Un’app per domarle tutte. Basta con un’app diversa per ogni striscia LED: comanda, e persino configura, le tue strisce e le tue lampadine smart via Bluetooth, Wi-Fi o infrarossi, da un’unica app semplice.
 
 Senza pubblicità. Senza account. Open source.
 
-★ Tutta la tua illuminazione, un’unica app
+💡 Tutta la tua illuminazione, un’unica app
 • Bluetooth: la maggior parte dei controller economici (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infrarossi: il tuo telefono diventa il telecomando e trova da solo i codici giusti
 L’app cerca intorno a te: tocca una luce per aggiungerla.
 
-★ Colori, bianchi e atmosfere
+📶 Una luce Wi-Fi nuova? Pronta in pochi secondi
+Nessuna pagina web di configurazione, nessun indirizzo IP da digitare: l’app trova le luci Wi-Fi che aspettano ancora la tua rete (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Digita la password del tuo Wi-Fi o scansiona il suo codice QR, anche da uno screenshot, e l’app fa il resto.
+
+🎨 Colori, bianchi e atmosfere
 Tutti i colori, il bianco dal caldo al freddo, la luminosità con uno scorrimento. Atmosfere pronte all’uso (Natale, Halloween, Aurora, Oceano…), o crea le tue dipingendo la striscia LED per LED.
 
-★ Stanze e widget
+🏠 Stanze e widget
 Accendi un’intera stanza con un gesto, o scegli la sua atmosfera direttamente dalla schermata Home.
 
-★ Niente lascia il tuo telefono
+🔒 Niente lascia il tuo telefono
 Niente pubblicità, niente acquisti, nessuna registrazione. Funziona senza internet.
 
 Tuya / Smart Life: questi dispositivi sono bloccati dal produttore. L’app li riconosce e ti spiega cosa fare.

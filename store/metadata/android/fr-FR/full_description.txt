@@ -1,20 +1,23 @@
-Une appli pour les gouverner tous. Fini une appli différente pour chaque ruban LED : pilote tes rubans et tes ampoules en Bluetooth, en Wi-Fi ou en infrarouge, depuis une seule appli simple.
+Une appli pour les gouverner tous. Fini une appli différente pour chaque ruban LED : pilote, et même configure, tes rubans et tes ampoules en Bluetooth, en Wi-Fi ou en infrarouge, depuis une seule appli simple.
 
 Sans pub. Sans compte. Open source.
 
-★ Toutes tes lumières, une seule appli
+💡 Toutes tes lumières, une seule appli
 • Bluetooth : la plupart des contrôleurs bon marché (ELK-BLEDOM, MELK…)
 • Wi-Fi : Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infrarouge : ton téléphone devient la télécommande et trouve tout seul les bons codes
 L'appli cherche autour de toi : touche une lumière pour l'ajouter.
 
-★ Couleurs, blancs et ambiances
+📶 Lumière Wi-Fi neuve ? Prête en quelques secondes
+Pas de page de réglage, pas d'adresse IP à taper : l'appli repère les lumières Wi-Fi qui attendent encore ton réseau (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Tape le mot de passe de ton Wi-Fi ou scanne son QR code, même depuis une capture d'écran, et l'appli fait le reste.
+
+🎨 Couleurs, blancs et ambiances
 Toutes les couleurs, du blanc chaud au blanc froid, la luminosité d'un glissement de doigt. Des ambiances prêtes à l'emploi (Noël, Halloween, Aurore, Océan…), ou crée les tiennes en peignant ton ruban LED par LED.
 
-★ Pièces et widgets
+🏠 Pièces et widgets
 Allume une pièce entière d'un geste, ou mets-la en ambiance depuis l'écran d'accueil.
 
-★ Rien ne quitte ton téléphone
+🔒 Rien ne quitte ton téléphone
 Pas de pub, pas d'achat, pas d'inscription. L'appli marche sans internet.
 
 Tuya / Smart Life : ces appareils sont verrouillés par leur fabricant. L'appli les reconnaît et t'explique quoi faire.

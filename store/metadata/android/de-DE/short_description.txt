@@ -1,1 +1,1 @@
-Steuere LED-Streifen & Lampen: ELK-BLEDOM, Hue, WLED, Infrarot. Ohne Werbung.
+LED-Streifen & Lampen steuern und einrichten: ELK-BLEDOM, Hue, WLED, Infrarot.

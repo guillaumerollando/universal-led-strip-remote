@@ -1,20 +1,23 @@
-Una app para gobernarlos a todos. Se acabó tener una app distinta para cada tira LED: controla tus tiras y bombillas inteligentes por Bluetooth, Wi-Fi o infrarrojos, desde una sola app sencilla.
+Una app para gobernarlos a todos. Se acabó tener una app distinta para cada tira LED: controla —e incluso configura— tus tiras y bombillas inteligentes por Bluetooth, Wi-Fi o infrarrojos, desde una sola app sencilla.
 
 Sin anuncios. Sin cuenta. Código abierto.
 
-★ Toda tu iluminación, una sola app
+💡 Toda tu iluminación, una sola app
 • Bluetooth: la mayoría de los controladores baratos (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infrarrojos: tu móvil se convierte en el mando y encuentra solo los códigos correctos
 La app busca a tu alrededor: toca una luz para añadirla.
 
-★ Colores, blancos y ambientes
+📶 ¿Una luz Wi-Fi nueva? Lista en segundos
+Sin página web de configuración ni dirección IP que escribir: la app detecta las luces Wi-Fi que todavía esperan tu red (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Escribe la contraseña de tu Wi-Fi o escanea su código QR, incluso desde una captura de pantalla, y la app hace el resto.
+
+🎨 Colores, blancos y ambientes
 Todos los colores, blanco del cálido al frío, brillo deslizando el dedo. Ambientes listos para usar (Navidad, Halloween, Aurora, Océano…), o crea los tuyos pintando tu tira LED por LED.
 
-★ Habitaciones y widgets
+🏠 Habitaciones y widgets
 Enciende una habitación entera con un gesto, o ponle ambiente desde la pantalla de inicio.
 
-★ Nada sale de tu móvil
+🔒 Nada sale de tu móvil
 Sin anuncios, sin compras, sin registro. Funciona sin internet.
 
 Tuya / Smart Life: estos dispositivos están bloqueados por su fabricante. La app los reconoce y te explica qué hacer.

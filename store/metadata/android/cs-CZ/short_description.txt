@@ -1,1 +1,1 @@
-Ovládejte LED pásky a chytré žárovky: ELK-BLEDOM, Hue, WLED, infračervené.
+Ovládejte a nastavte LED pásky i žárovky: ELK-BLEDOM, Hue, WLED, infračervené.

@@ -1,1 +1,1 @@
-Comande fita LED e lâmpadas: ELK-BLEDOM, Hue, WLED, infravermelho. Sem anúncios.
+Comande e configure fita LED e lâmpadas: ELK-BLEDOM, Hue, WLED, infravermelho.

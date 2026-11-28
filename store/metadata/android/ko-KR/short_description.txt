@@ -1,1 +1,1 @@
-LED 스트립과 스마트 전구를 조작하세요: ELK-BLEDOM, Hue, WLED, 적외선. 광고 없음.
+LED 스트립과 스마트 전구를 조작하고 설정하세요: ELK-BLEDOM, Hue, WLED, 적외선. 광고 없음.

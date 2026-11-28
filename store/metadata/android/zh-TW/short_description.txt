@@ -1,1 +1,1 @@
-控制所有LED燈條和智慧燈泡：ELK-BLEDOM、Hue、WLED、紅外線遙控。無廣告。
+控制和設定LED燈條與智慧燈泡：ELK-BLEDOM、Hue、WLED、紅外線遙控。無廣告。

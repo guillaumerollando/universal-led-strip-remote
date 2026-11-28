@@ -1,20 +1,23 @@
-Eén app om ze allemaal te regeren. Geen aparte app meer voor elke ledstrip: bedien je strips en slimme lampen via Bluetooth, Wi-Fi of infrarood, vanuit één simpele app.
+Eén app om ze allemaal te regeren. Geen aparte app meer voor elke ledstrip: bedien je strips en slimme lampen, en stel ze zelfs in, via Bluetooth, Wi-Fi of infrarood, vanuit één simpele app.
 
 Geen reclame. Geen account. Open source.
 
-★ Al je verlichting, één app
+💡 Al je verlichting, één app
 • Bluetooth: de meeste goedkope controllers (ELK-BLEDOM, MELK…)
 • Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
 • Infrarood: je telefoon wordt de afstandsbediening en vindt zelf de juiste codes
 De app zoekt om je heen: tik op een lamp om hem toe te voegen.
 
-★ Kleuren, wit en sferen
+📶 Een nieuwe wifi-lamp? Klaar in een paar seconden
+Geen instellingenpagina, geen IP-adres om in te typen: de app ziet wifi-lampen die nog op je netwerk wachten (Tasmota, WLED, OpenBeken, ESPHome, Shelly, Magic Home…). Typ je wifi-wachtwoord of scan de QR-code, zelfs vanaf een screenshot, en de app doet de rest.
+
+🎨 Kleuren, wit en sferen
 Elke kleur, wit van warm tot koel, helderheid met één veeg. Kant-en-klare sferen (Kerst, Halloween, Noorderlicht, Oceaan…), of maak je eigen sferen door je strip led voor led te beschilderen.
 
-★ Kamers en widgets
+🏠 Kamers en widgets
 Zet een hele kamer aan met één gebaar, of kies de sfeer direct vanaf je startscherm.
 
-★ Niets verlaat je telefoon
+🔒 Niets verlaat je telefoon
 Geen reclame, geen aankopen, geen registratie. Werkt zonder internet.
 
 Tuya / Smart Life: deze apparaten zijn vergrendeld door hun fabrikant. De app herkent ze en vertelt je wat je kunt doen.

@@ -6,6 +6,7 @@ import { scanLan } from './lan';
 import { hueLightsOf, knownBridge } from './pairing';
 import { getDevice, updateDevice } from './store';
 import { sweepSubnet } from './sweep';
+import { canSetupWifi, ensureWifiScanPermission, locationNeededButOff, scanWaitingLights, type WaitingLight } from './wifiSetup';
 import { t } from '../i18n';
 
 export const SCAN_MS = 12_000;
@@ -24,12 +25,14 @@ let stopSweep: (() => void) | null = null;
 interface ScanState {
   scanning: boolean;
   found: DetectedDevice[];
+  /** Lumières Wi-Fi neuves qui attendent le Wi-Fi de la maison (leur propre petit réseau est visible). */
+  waiting: WaitingLight[];
   warnings: string[];
   /** Résultats de démonstration affichés (développement) : la recherche automatique ne les efface pas. */
   demo?: boolean;
 }
 
-let state: ScanState = { scanning: false, found: [], warnings: [] };
+let state: ScanState = { scanning: false, found: [], waiting: [], warnings: [] };
 const listeners = new Set<() => void>();
 const set = (patch: Partial<ScanState>): void => {
   state = { ...state, ...patch };
@@ -44,7 +47,7 @@ export function foundDevice(key: string): DetectedDevice | undefined {
 /** Développement seulement (`ledstrip://dev-seed?scan=1`) : affiche des résultats de recherche de démonstration. */
 export function showDemoScan(found: DetectedDevice[]): void {
   if (!__DEV__) return;
-  set({ scanning: false, found, warnings: [], demo: true });
+  set({ scanning: false, found, waiting: [], warnings: [], demo: true });
 }
 
 /** Ajoute ou remplace des appareils dans la liste (lampes d'un pont Hue autorisé, Nanoleaf avec son jeton). */
@@ -58,7 +61,7 @@ export async function startScan(): Promise<void> {
   if (state.scanning) return;
   const now = Date.now();
   const recent = [...recentWifi.values()].filter((r) => now - r.at < RECENT_MS).map((r) => r.device);
-  set({ scanning: true, found: recent, warnings: [], demo: false });
+  set({ scanning: true, found: recent, waiting: [], warnings: [], demo: false });
   const add = (d: DetectedDevice): void => {
     if (d.transport === 'wifi') recentWifi.set(d.key, { device: d, at: Date.now() });
     set({ found: [...state.found.filter((f) => f.key !== d.key), d] });
@@ -86,12 +89,22 @@ export async function startScan(): Promise<void> {
   else if (!(await isBluetoothOn())) warn(t('Le Bluetooth est éteint : allume-le pour trouver les rubans Bluetooth.'));
   else scanBle(add, SCAN_MS, (m) => warn(`Bluetooth : ${m}`));
 
+  void findWaitingLights(warn);
+
   stopLan?.();
   stopLan = scanLan(add, LAN_LISTEN_MS);
   // Rubans libérés (OpenBeken) et Tasmota : ils ne s'annoncent pas, on frappe à chaque adresse du réseau.
   stopSweep?.();
   stopSweep = sweepSubnet(add);
   setTimeout(() => set({ scanning: false }), SCAN_MS);
+}
+
+/** Lumières Wi-Fi neuves : leur petit réseau, vu dans la liste des réseaux Wi-Fi du téléphone. */
+async function findWaitingLights(warn: (w: string) => void): Promise<void> {
+  if (!canSetupWifi()) return;
+  if (!(await ensureWifiScanPermission())) return;
+  if (locationNeededButOff()) warn(t('Active la localisation du téléphone pour trouver aussi les lumières Wi-Fi neuves.'));
+  set({ waiting: await scanWaitingLights() });
 }
 
 /** Quitte l'écran d'ajout : on arrête d'écouter le Wi-Fi. */

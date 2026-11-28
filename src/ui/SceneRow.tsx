@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
-import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import { captureScene, type RoomScene } from '../core/scenes';
 import { canPower } from '../services/control';
@@ -13,6 +13,7 @@ import { RenameField, Sheet } from './Sheet';
 import { LoadingBorder, SelectionGlow } from './LoadingBorder';
 import { colors, radius, space } from './theme';
 import { t } from '../i18n';
+import { showDialog } from './Dialog';
 
 function SceneChip({
   label,
@@ -88,7 +89,7 @@ export function SceneRow({ room, devices }: { room: Room; devices: SavedDevice[]
       .finally(() => setBusy(null));
   };
   const forget = (s: RoomScene): void => {
-    Alert.alert(t('Supprimer « {name} » ?', { name: s.name }), undefined, [
+    showDialog(t('Supprimer « {name} » ?', { name: s.name }), undefined, [
       { text: t('Annuler'), style: 'cancel' },
       { text: t('Supprimer'), style: 'destructive', onPress: () => void removeScene(s.id) },
     ]);

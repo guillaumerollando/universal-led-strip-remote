@@ -1,1 +1,1 @@
-LED şerit ve ampulleri yönetin: ELK-BLEDOM, Hue, WLED, kızılötesi. Reklamsız.
+LED şerit ve ampulleri yönetin ve kurun: ELK-BLEDOM, Hue, WLED, kızılötesi.

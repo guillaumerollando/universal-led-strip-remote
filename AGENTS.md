@@ -121,6 +121,16 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
   tourne (`ui/LoadingBorder`, par-dessus : la mise en page ne bouge pas) et un second toucher est ignoré ;
   les envois sont suivis par ruban (`services/sending` : `useSending`) ; un contour orange de sélection a sa petite
   lueur (`SelectionGlow`)
+- **Incontournables du studio** (`~/Dev/Gestion de projet/standard-incontournables.md`) : dans `about`, Partager →
+  Noter → Signaler un problème (mail prérempli à rollandostudio@gmail.com, sujet `[Bug] Universal LED Strip Remote <version>`)
+  → signature. **Secouer le téléphone** (n'importe quel écran) propose « Signaler un problème ? » (`ShakeDetector.kt`,
+  `services/report.ts`, même mail avec l'écran en cours). Fenêtre officielle d'avis du Play Store : `core/review.ts` (3 jours installée, 3 jours d'usage, 3 fois
+  au plus, 4 mois d'écart), demandée en revenant à l'accueil, jamais au démarrage
+- **Lumières Wi-Fi neuves** (v1.3) : la recherche voit leur petit réseau (`core/setupAp.ts`, scan Wi-Fi = autorisation
+  de localisation, même sur Android 16) ; `app/setup-wifi` leur donne le Wi-Fi de la maison (mot de passe tapé, QR code
+  scanné ou lu dans une image) par `WifiNetworkSpecifier` (`WifiSetup.kt`). OpenBeken ✅ vérifié, les autres à confirmer
+- **Jamais de fenêtre Android** (`Alert.alert`, Guillaume 2026-11-28 : « ça fait kitsch ») : `showDialog(titre, phrase,
+  boutons)` de `ui/Dialog` (même forme d'appel, au style de l'appli, `DialogHost` posé dans `_layout`)
 - Après un ajout de ruban : retour à l'accueil (`router.dismissAll()`), avec choix de la pièce pendant l'ajout
 - Gestes (v1.1, comme Google Home) : **toucher = agir** (pièce : un seul interrupteur ; ruban : ses commandes ; bouton rond :
   marche/arrêt), **appui long = réglages** (menu du bas `ui/Sheet` : renommer, pièce, supprimer). Pas de bouton « Modifier »

@@ -11,7 +11,7 @@ describe('ambiances pour les rubans Bluetooth MELK (choisies par Guillaume sur s
       aurora: { effect: 204, speed: 40 },
       romantic: { effect: 35, speed: 60 },
       ocean: { effect: 207, speed: 60 },
-      miami: { effect: 53, speed: 60 },
+      miami: { effect: 9, speed: 35 },
       forest: { effect: 27, speed: 60 },
     });
   });

@@ -140,6 +140,11 @@ export interface Band {
   ramp: number;
   /** Position de départ. */
   offset: number;
+  /**
+   * Couleur derrière la bande (défaut : le fond). Une bande posée dans une autre (orange dans du rose) s'y fond, au
+   * lieu de passer par le fond : un vrai dégradé de coucher de soleil, violet → rose → orange (Miami).
+   */
+  under?: Rgb;
 }
 
 /**
@@ -151,16 +156,16 @@ export function bandsScript(bg: Rgb, bands: Band[], ctx: ScriptContext, delayMs:
   const B = lit(bg, ctx);
   // Sans pré-remplissage (bandes nombreuses ou longues), les bandes se construisent toutes seules en avançant : le
   // fichier reste court.
-  const fill = !prefill ? [] : bands.flatMap(({ color, width, ramp, offset }) =>
+  const fill = !prefill ? [] : bands.flatMap(({ color, width, ramp, offset, under = bg }) =>
     Array.from({ length: width }, (_, p) => {
       const r = Math.min(p, width - 1 - p);
-      return `SM16703P_SetPixel ${(offset + p) % n} ${rgb3(lit(lerp(bg, color, Math.min(1, (r + 1) / (ramp + 1))), ctx))}`;
+      return `SM16703P_SetPixel ${(offset + p) % n} ${rgb3(lit(lerp(under, color, Math.min(1, (r + 1) / (ramp + 1))), ctx))}`;
     }),
   );
-  const step = bands.flatMap(({ color, width, ramp, offset }) => [
-    `SM16703P_SetPixel (($CH33+${(n - 1 + offset) % n})%${n}) ${rgb3(B)}`,
+  const step = bands.flatMap(({ color, width, ramp, offset, under = bg }) => [
+    `SM16703P_SetPixel (($CH33+${(n - 1 + offset) % n})%${n}) ${rgb3(lit(under, ctx))}`,
     ...Array.from({ length: ramp + 1 }, (_, r) => {
-      const c = rgb3(lit(lerp(bg, color, (r + 1) / (ramp + 1)), ctx));
+      const c = rgb3(lit(lerp(under, color, (r + 1) / (ramp + 1)), ctx));
       return [`SM16703P_SetPixel (($CH33+${(offset + r) % n})%${n}) ${c}`, `SM16703P_SetPixel (($CH33+${(offset + width - 1 - r) % n})%${n}) ${c}`];
     }).flat(),
   ]);

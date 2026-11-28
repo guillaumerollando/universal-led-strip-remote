@@ -69,9 +69,11 @@ const ROMANTIC = rgb(255, 0, 15);
 // Fond encore assombri (Guillaume, 2026-11-27 : « le bleu du fond est trop lumineux ») : 35 → 24.
 const AURORA_BG = rgb(0, 3, 24);
 const AURORA = [rgb(30, 110, 170), rgb(200, 0, 255)];
-// Plus lumineux que la nuit de l'aurore (Guillaume : « même si c'est profond, il faut que ce soit plus lumineux »).
-const MIAMI_BG = rgb(150, 0, 255);
-const MIAMI = [rgb(255, 0, 45), rgb(0, 210, 255)];
+// Coucher de soleil de Miami (Guillaume, 2026-11-28, devant le ruban : « on est pas mal, c'est propre, il y a du
+// flow ») : violet → rose → orange, violet rougeâtre (le bleu ressort trop sur les LED), violet ~20 %, rose ~35 %,
+// orange ~45 % de chaque période. Remplace l'ancien rose / turquoise, trop cyberpunk.
+const MIAMI_BG = rgb(140, 0, 150);
+const MIAMI = [rgb(255, 0, 80), rgb(255, 45, 0)];
 // Sans aucun bleu : le vert du ruban tire déjà vers le turquoise (Guillaume : « pas assez vert »). Le jaune-vert donne
 // le peps qu'il aime. Contraste adouci (fond plus clair, bandes moins vives) : « pas l'effet de l'aurore ».
 const FOREST_BG = rgb(10, 75, 0);
@@ -163,22 +165,36 @@ export const BUILTIN_AMBIANCES: Ambiance[] = [
   },
   {
     id: 'miami',
-    simple: { color: rgb(255, 0, 160) },
-    template: { style: 'bands', bg: MIAMI_BG, colors: [MIAMI[0], MIAMI[1], MIAMI[0], MIAMI[1]], size: 'large', speed: 100 },
-    // Effet « Flash » (53), préféré par Guillaume aux blocs rose-bleu-cyan (8).
-    melk: { effect: 53, speed: 60 },
+    // Couleur unie (télécommande, rubans sans animation) : le corail, « fusion » du rose et de l'orange (Guillaume,
+    // 2026-11-28 : « si on doit faire une couleur unie pour Miami, ce serait celle-là »).
+    simple: { color: rgb(255, 15, 40) },
+    template: { style: 'bands', bg: MIAMI_BG, colors: [MIAMI[0], MIAMI[1]], size: 'large', speed: 60 },
+    // MELK : effet 9 (rose, jaune, violet) ralenti, le plus proche du coucher de soleil parmi ses effets intégrés
+    // (12 essayés devant le ruban, 2026-11-28 ; aucun n'a exactement violet / rose / orange).
+    melk: { effect: 9, speed: 35 },
     label: 'Miami',
-    colors: [MIAMI[0], MIAMI_BG, MIAMI[1]],
-    // Dégradé synthwave rose / turquoise qui glisse sur un violet (finale gagnée contre l'enseigne néon : « il tue »).
-    // Sans pré-remplissage : quatre bandes longues, le fichier doit rester court.
-    build: (ctx) =>
-      bandsScript(
+    colors: [MIAMI_BG, MIAMI[0], MIAMI[1]],
+    // Soleils qui glissent : une bande rose avec une bande orange dedans (fondue dans le rose, pas dans le violet),
+    // une période tous les ~100 pixels. Sans pré-remplissage : le fichier reste court.
+    build: (ctx) => {
+      const count = Math.max(1, Math.round(ctx.n / 100));
+      const period = ctx.n / count;
+      const pink = Math.round(period * 0.8);
+      const orange = Math.round(period * 0.44);
+      return bandsScript(
         MIAMI_BG,
-        [MIAMI[0], MIAMI[1], MIAMI[0], MIAMI[1]].map((color, i) => ({ color, width: 38, ramp: 9, offset: Math.round((i * ctx.n) / 4) })),
+        Array.from({ length: count }, (_, i) => {
+          const start = Math.round(i * period);
+          return [
+            { color: MIAMI[0], width: pink, ramp: 5, offset: start },
+            { color: MIAMI[1], width: orange, ramp: 5, offset: start + Math.round((pink - orange) / 2), under: MIAMI[0] },
+          ];
+        }).flat(),
         ctx,
-        50,
+        60,
         false,
-      ),
+      );
+    },
   },
   {
     id: 'forest',

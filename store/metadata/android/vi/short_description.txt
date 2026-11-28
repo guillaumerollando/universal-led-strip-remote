@@ -1,1 +1,1 @@
-Một ứng dụng để cai trị tất cả: đèn LED dây & bóng đèn. Không quảng cáo.
+Điều khiển dây đèn LED & bóng đèn: ELK-BLEDOM, Hue, WLED, hồng ngoại.

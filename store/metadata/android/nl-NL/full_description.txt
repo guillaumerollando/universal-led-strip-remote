@@ -1,6 +1,6 @@
 Eén app om ze allemaal te regeren. Geen aparte app meer voor elke ledstrip: bedien je strips en slimme lampen via Bluetooth, Wi-Fi of infrarood, vanuit één simpele app.
 
-Gratis. Geen reclame. Geen account. Open source.
+Geen reclame. Geen account. Open source.
 
 ★ Al je verlichting, één app
 • Bluetooth: de meeste goedkope controllers (ELK-BLEDOM, MELK…)

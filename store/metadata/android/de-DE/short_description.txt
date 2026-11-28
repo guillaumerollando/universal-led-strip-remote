@@ -1,1 +1,1 @@
-Eine App, sie zu knechten: LED-Streifen & smarte Lampen. Gratis, ohne Werbung.
+Steuere LED-Streifen & Lampen: ELK-BLEDOM, Hue, WLED, Infrarot. Ohne Werbung.

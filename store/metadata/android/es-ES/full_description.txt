@@ -1,6 +1,6 @@
 Una app para gobernarlos a todos. Se acabó tener una app distinta para cada tira LED: controla tus tiras y bombillas inteligentes por Bluetooth, Wi-Fi o infrarrojos, desde una sola app sencilla.
 
-Gratis. Sin anuncios. Sin cuenta. Código abierto.
+Sin anuncios. Sin cuenta. Código abierto.
 
 ★ Toda tu iluminación, una sola app
 • Bluetooth: la mayoría de los controladores baratos (ELK-BLEDOM, MELK…)

@@ -1,1 +1,1 @@
-Jedna aplikacja, by wszystkimi rządzić: taśmy LED i żarówki. Bez reklam.
+Steruj taśmami LED i żarówkami: ELK-BLEDOM, Hue, WLED, podczerwień. Bez reklam.

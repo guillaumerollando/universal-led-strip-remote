@@ -1,6 +1,6 @@
 Jedna aplikacja, by wszystkimi rządzić. Koniec z osobną aplikacją do każdej taśmy LED: steruj swoimi taśmami i inteligentnymi żarówkami przez Bluetooth, Wi-Fi lub podczerwień z jednej prostej aplikacji.
 
-Za darmo. Bez reklam. Bez konta. Open source.
+Bez reklam. Bez konta. Open source.
 
 ★ Całe twoje oświetlenie, jedna aplikacja
 • Bluetooth: większość tanich kontrolerów (ELK-BLEDOM, MELK…)

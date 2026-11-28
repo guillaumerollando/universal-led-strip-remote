@@ -1,6 +1,6 @@
 Un’app per domarle tutte. Basta con un’app diversa per ogni striscia LED: comanda le tue strisce e le tue lampadine smart via Bluetooth, Wi-Fi o infrarossi, da un’unica app semplice.
 
-Gratis. Senza pubblicità. Senza account. Open source.
+Senza pubblicità. Senza account. Open source.
 
 ★ Tutta la tua illuminazione, un’unica app
 • Bluetooth: la maggior parte dei controller economici (ELK-BLEDOM, MELK…)

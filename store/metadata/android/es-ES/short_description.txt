@@ -1,1 +1,1 @@
-Una app para gobernarlos a todos: tiras LED y bombillas. Gratis, sin anuncios.
+Controla tiras LED y bombillas: ELK-BLEDOM, Hue, WLED, infrarrojo. Sin anuncios.

@@ -1,6 +1,6 @@
 En app för att härska över dem alla. Slut med en ny app för varje LED-list: styr dina listor och smarta lampor via Bluetooth, Wi-Fi eller infrarött, från en enda enkel app.
 
-Gratis. Ingen reklam. Inget konto. Öppen källkod.
+Ingen reklam. Inget konto. Öppen källkod.
 
 ★ All din belysning, en app
 • Bluetooth: de flesta billiga styrenheter (ELK-BLEDOM, MELK…)

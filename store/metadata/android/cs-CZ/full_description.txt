@@ -1,6 +1,6 @@
 Jedna aplikace, aby vládla všem. Už žádné přepínání mezi aplikacemi pro každý LED pásek: ovládejte své pásky a chytré žárovky přes Bluetooth, Wi-Fi nebo infračervené světlo z jedné jednoduché aplikace.
 
-Zdarma. Bez reklam. Bez účtu. Open source.
+Bez reklam. Bez účtu. Open source.
 
 ★ Všechno vaše osvětlení v jedné aplikaci
 • Bluetooth: většina levných ovladačů (ELK-BLEDOM, MELK…)

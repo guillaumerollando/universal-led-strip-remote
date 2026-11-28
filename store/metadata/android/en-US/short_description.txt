@@ -1,1 +1,1 @@
-One app to rule them all: LED strips & smart bulbs. Free, no ads, open source.
+Control any LED strip & smart bulb: ELK-BLEDOM, Hue, WLED, infrared. No ads.

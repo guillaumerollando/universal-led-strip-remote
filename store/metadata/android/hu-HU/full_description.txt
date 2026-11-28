@@ -1,6 +1,6 @@
 Egy app, hogy mind uralja. Vége annak, hogy minden LED szalaghoz más app kell: vezéreld a szalagjaidat és okosizzóidat Bluetoothon, Wi-Fin vagy infravörösön át, egyetlen egyszerű appból.
 
-Ingyenes. Reklámmentes. Fiók nélkül. Nyílt forráskódú.
+Reklámmentes. Fiók nélkül. Nyílt forráskódú.
 
 ★ Minden világításod egy appban
 • Bluetooth: a legtöbb olcsó vezérlő (ELK-BLEDOM, MELK…)

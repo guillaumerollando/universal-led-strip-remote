@@ -1,1 +1,1 @@
-Una app para gobernarlos a todos: tiras LED y focos. Gratis, sin anuncios.
+Controla tiras LED y focos: ELK-BLEDOM, Hue, WLED, infrarrojos. Sin anuncios.

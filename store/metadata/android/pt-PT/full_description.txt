@@ -1,6 +1,6 @@
 Uma aplicação para a todos governar. Acabou-se uma aplicação diferente para cada fita LED: controle as suas fitas e lâmpadas inteligentes por Bluetooth, Wi-Fi ou infravermelhos, numa só aplicação simples.
 
-Grátis. Sem anúncios. Sem conta. Código aberto.
+Sem anúncios. Sem conta. Código aberto.
 
 ★ Toda a sua iluminação, uma só aplicação
 • Bluetooth: a maioria dos controladores baratos (ELK-BLEDOM, MELK…)

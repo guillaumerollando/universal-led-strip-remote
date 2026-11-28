@@ -1,6 +1,6 @@
 One app to rule them all. No more juggling a different app for every LED strip: control your strips and smart bulbs over Bluetooth, Wi-Fi or infrared, from one simple app.
 
-Free. No ads. No account. Open source.
+No ads. No account. Open source.
 
 ★ All your lights, one app
 • Bluetooth: most budget controllers (ELK-BLEDOM, MELK…)

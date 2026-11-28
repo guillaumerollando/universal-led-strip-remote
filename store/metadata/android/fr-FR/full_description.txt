@@ -1,6 +1,6 @@
 Une appli pour les gouverner tous. Fini une appli différente pour chaque ruban LED : pilote tes rubans et tes ampoules en Bluetooth, en Wi-Fi ou en infrarouge, depuis une seule appli simple.
 
-Gratuite. Sans pub. Sans compte. Open source.
+Sans pub. Sans compte. Open source.
 
 ★ Toutes tes lumières, une seule appli
 • Bluetooth : la plupart des contrôleurs bon marché (ELK-BLEDOM, MELK…)

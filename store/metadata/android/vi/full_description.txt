@@ -1,6 +1,6 @@
 Một ứng dụng để cai quản tất cả. Không còn mỗi dây đèn LED một ứng dụng khác nhau: điều khiển dây đèn và bóng đèn thông minh của bạn qua Bluetooth, Wi-Fi hoặc hồng ngoại, từ một ứng dụng đơn giản.
 
-Miễn phí. Không quảng cáo. Không tài khoản. Mã nguồn mở.
+Không quảng cáo. Không tài khoản. Mã nguồn mở.
 
 ★ Toàn bộ ánh sáng của bạn, một ứng dụng
 • Bluetooth: hầu hết bộ điều khiển giá rẻ (ELK-BLEDOM, MELK…)

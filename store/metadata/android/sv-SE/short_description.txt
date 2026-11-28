@@ -1,1 +1,1 @@
-En app att härska över dem alla: LED-lister och lampor. Gratis, ingen reklam.
+Styr LED-lister och smarta lampor: ELK-BLEDOM, Hue, WLED, infrarött. Reklamfri.

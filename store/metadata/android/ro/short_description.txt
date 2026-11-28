@@ -1,1 +1,1 @@
-O aplicație să le stăpânească pe toate: benzi LED și becuri. Fără reclame.
+Controlează benzi LED și becuri: ELK-BLEDOM, Hue, WLED, infraroșu. Fără reclame.

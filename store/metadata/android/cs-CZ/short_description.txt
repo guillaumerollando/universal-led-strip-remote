@@ -1,1 +1,1 @@
-Jedna aplikace, aby vládla všem: LED pásky a chytré žárovky. Zdarma, bez reklam.
+Ovládejte LED pásky a chytré žárovky: ELK-BLEDOM, Hue, WLED, infračervené.

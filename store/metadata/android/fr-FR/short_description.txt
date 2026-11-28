@@ -1,1 +1,1 @@
-Une appli pour les gouverner tous : rubans LED et ampoules. Gratuite, sans pub.
+Pilote tous tes rubans LED et ampoules : ELK-BLEDOM, Hue, WLED, infrarouge.

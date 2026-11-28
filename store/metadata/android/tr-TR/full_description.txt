@@ -1,6 +1,6 @@
 Hepsini yönetecek tek uygulama. Her LED şerit için ayrı bir uygulamaya son: şeritlerinizi ve akıllı ampullerinizi Bluetooth, Wi-Fi veya kızılötesiyle tek ve basit bir uygulamadan kontrol edin.
 
-Ücretsiz. Reklamsız. Hesap yok. Açık kaynak.
+Reklamsız. Hesap yok. Açık kaynak.
 
 ★ Tüm ışıklarınız, tek uygulama
 • Bluetooth: çoğu ucuz kontrolcü (ELK-BLEDOM, MELK…)

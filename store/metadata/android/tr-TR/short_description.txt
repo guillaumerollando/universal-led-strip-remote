@@ -1,1 +1,1 @@
-Hepsine hükmedecek tek uygulama: LED şerit ve akıllı ampul. Ücretsiz, reklamsız.
+LED şerit ve ampulleri yönetin: ELK-BLEDOM, Hue, WLED, kızılötesi. Reklamsız.

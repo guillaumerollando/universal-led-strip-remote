@@ -1,1 +1,1 @@
-Um app para a todos governar: fitas LED e lâmpadas. Grátis, sem anúncios.
+Controle fita LED e lâmpada: ELK-BLEDOM, Hue, WLED, infravermelho. Sem anúncios.

@@ -1,1 +1,1 @@
-Egy app, hogy mind uralja: LED szalagok és okosizzók. Ingyenes, reklámmentes.
+Vezérelj minden LED szalagot és okosizzót: ELK-BLEDOM, Hue, WLED, infravörös.

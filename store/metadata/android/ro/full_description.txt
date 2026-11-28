@@ -1,6 +1,6 @@
 O aplicație care să le stăpânească pe toate. Gata cu câte o aplicație diferită pentru fiecare bandă LED: controlează-ți benzile și becurile inteligente prin Bluetooth, Wi-Fi sau infraroșu, dintr-o singură aplicație simplă.
 
-Gratuită. Fără reclame. Fără cont. Open source.
+Fără reclame. Fără cont. Open source.
 
 ★ Toată iluminarea ta, o singură aplicație
 • Bluetooth: majoritatea controlerelor ieftine (ELK-BLEDOM, MELK…)

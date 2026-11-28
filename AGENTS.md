@@ -175,5 +175,8 @@ cd android && ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a && 
 - `python3 tools/make_icon.py [échantillons]` : régénère l'icône dans `assets/` — néon LED photoréaliste à la forme de la vague du néon du salon de Guillaume (forme « extrait », 2026-11-27), rendu par Blender
   (`tools/icon_blender.py`, Cycles GPU, `blender` dans le PATH) puis halo et teinte de nuit (Pillow), et l'écran de démarrage
   (`splash-icon.png`, plugin `expo-splash-screen`, fond `#0A0B0F`) ; ensuite `pnpm prebuild`
+- `python3 tools/store_captures.py` : captures du Play Store avec phrase d'accroche (`store/screenshots-store/`), à partir
+  des captures brutes de `store/screenshots/`. Fiche : jamais « gratuit / free » (mot de prix pour Google) ; brève
+  description = verbe + mot cherché dans la langue + ELK-BLEDOM, Hue, WLED, infrarouge
 - `tools/probe_lan.py` : cherche Magic Home, Tuya, Govee, mDNS, SSDP sur le réseau
 - `tools/ble_onoff.py <adresse> elk|melk` : éteint 4 s puis rallume un ruban ELK (venv avec `bleak`)

@@ -1,6 +1,6 @@
 Eine App, sie zu knechten. Schluss mit einer anderen App für jeden LED-Streifen: Steuere deine Streifen und smarten Lampen per Bluetooth, WLAN oder Infrarot, mit einer einzigen, einfachen App.
 
-Gratis. Ohne Werbung. Ohne Konto. Open Source.
+Ohne Werbung. Ohne Konto. Open Source.
 
 ★ Deine ganze Beleuchtung, eine App
 • Bluetooth: die meisten günstigen Controller (ELK-BLEDOM, MELK…)

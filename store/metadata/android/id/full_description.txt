@@ -1,6 +1,6 @@
 Satu aplikasi untuk menguasai semuanya. Tak perlu lagi gonta-ganti aplikasi untuk setiap LED strip: kontrol strip dan bohlam pintarmu lewat Bluetooth, Wi-Fi, atau inframerah, dari satu aplikasi yang simpel.
 
-Gratis. Tanpa iklan. Tanpa akun. Open source.
+Tanpa iklan. Tanpa akun. Open source.
 
 ★ Semua lampumu, satu aplikasi
 • Bluetooth: kebanyakan pengontrol murah (ELK-BLEDOM, MELK…)

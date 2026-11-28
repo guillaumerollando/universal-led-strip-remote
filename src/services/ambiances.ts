@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getStored } from './storage';
 import { useEffect, useSyncExternalStore } from 'react';
 
 import type { Ambiance } from '../core/ambiances';
@@ -7,7 +8,7 @@ import { normalizeMotif } from '../core/protocols/openbeken';
 import { safeParse } from './safeParse';
 
 /** Ambiances enregistrées par l'utilisateur : sur le téléphone seulement, pour tous ses rubans à pixels. */
-const KEY = 'rubanix.ambiances.v1';
+const KEY = 'ledstrip.ambiances.v1';
 let mine: Ambiance[] = [];
 const listeners = new Set<() => void>();
 
@@ -24,7 +25,7 @@ const persist = (): Promise<void> => AsyncStorage.setItem(KEY, JSON.stringify(mi
 let loading: Promise<void> | undefined;
 const load = (): Promise<void> => (loading ??= readStored());
 async function readStored(): Promise<void> {
-  const text = await AsyncStorage.getItem(KEY).catch(() => null);
+  const text = await getStored(KEY);
   if (text) {
     // Ambiances de l'utilisateur : des créations. Les anciennes (motif dessiné) sont converties en style « Motif ».
     const saved = safeParse<Ambiance[]>(text, []).filter((a) => a.creation || a.motif);

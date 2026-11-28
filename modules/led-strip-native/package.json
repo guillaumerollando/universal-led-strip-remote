@@ -1,0 +1,7 @@
+{
+  "name": "led-strip-native",
+  "version": "0.1.0",
+  "description": "Module Android de LED Strip Remote : émetteur infrarouge, réseau local, widgets",
+  "main": "src/index.ts",
+  "private": true
+}

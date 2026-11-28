@@ -1,5 +1,7 @@
 // Configuration Metro : celle d'Expo, plus un remplaçant vide pour deux paquets inutiles sur Android
 // (voir stubs/native-ui-absent.js) — l'appli publiée y gagne la place de Jetpack Compose et d'une police d'icônes.
+// expo-glass-effect, exclu lui aussi de l'autolinking (package.json), n'a pas besoin de remplaçant : sa partie JS
+// se passe de son module natif absent (effet de verre réservé à iOS).
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
 

@@ -1,32 +1,22 @@
-Uma aplicação para a todos governar. Cansado de ter uma aplicação diferente para cada fita LED? O Controle Remoto Fita LED controla as suas fitas LED e as suas lâmpadas inteligentes, por Bluetooth, Wi-Fi ou infravermelhos, a partir de uma só aplicação simples.
+Uma aplicação para a todos governar. Acabou-se uma aplicação diferente para cada fita LED: controle as suas fitas e lâmpadas inteligentes por Bluetooth, Wi-Fi ou infravermelhos, numa só aplicação simples.
 
-Grátis. Sem anúncios. Sem conta. Código aberto. Quer mais?
+Grátis. Sem anúncios. Sem conta. Código aberto.
 
 ★ Toda a sua iluminação, uma só aplicação
-• Fitas LED Bluetooth: a maioria dos controladores baratos (ELK-BLEDOM, ELK-BLEDOB, MELK…) funciona logo, sem código de emparelhamento
-• Luzes Wi-Fi com protocolo aberto: Philips Hue, Yeelight, LIFX, WLED, Govee (controlo local), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Fitas LED com comando por infravermelhos (IR): se o seu telemóvel tem emissor de infravermelhos, passa a ser o comando, e a aplicação encontra sozinha os códigos certos
-A aplicação procura sozinha à sua volta: toque numa luz para a adicionar.
+• Bluetooth: a maioria dos controladores baratos (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infravermelhos: o seu telemóvel passa a ser o comando e encontra sozinho os códigos certos
+A aplicação procura à sua volta: toque numa luz para a adicionar.
 
-★ Cores, brancos e efeitos
-Qualquer cor, brancos do mais quente (vela) ao mais frio (luz do dia), brilho deslizando o dedo pela fita, e os efeitos incluídos do seu controlador com a respetiva velocidade.
-
-★ Ambientes prontos a usar
-Natal, Halloween, Outono, Aurora, Romântico, Oceano, Miami, Floresta: um toque e a sua luz muda de ambiente. Numa fita de píxeis ganham vida a sério (grinaldas que cintilam, aurora que ondula, folhas que caem) e continuam com o telemóvel desligado.
-
-★ Crie os seus próprios ambientes
-Pinte a sua fita LED por LED numa fita desenhada em S, ou escolha um estilo (faixas, brilhos, grinalda, folhas…). Experimente em direto na sua fita e depois guarde. Qualquer ambiente da aplicação pode servir de ponto de partida.
+★ Cores, brancos e ambientes
+Todas as cores, branco do quente ao frio, brilho com um deslizar do dedo. Ambientes prontos a usar (Natal, Halloween, Aurora, Oceano…), ou crie os seus pintando a sua fita LED por LED.
 
 ★ Divisões e widgets
-Organize as suas luzes por divisão, ligue uma divisão inteira num gesto ou ponha-a em ambiente (Aconchego, Relax, Fiesta, ou os seus). Os widgets fazem tudo isto a partir do ecrã principal.
+Acenda uma divisão inteira com um gesto, ou escolha o ambiente diretamente no ecrã principal.
 
-★ Grátis e sem anúncios, a sério
-Sem anúncios, sem compras integradas, sem subscrição, sem registo. O código é aberto (GPL-3.0) e público no GitHub. Nada sai do seu telemóvel, e a aplicação funciona sem internet.
+★ Nada sai do seu telemóvel
+Sem anúncios, sem compras, sem registo. Funciona sem internet.
 
-Perguntas
-• Funciona com a minha luz? Se aparecer como ELK-BLEDOM, ELK-BLEDOB ou MELK numa pesquisa Bluetooth, se falar um protocolo aberto por Wi-Fi, ou se veio com um pequeno comando por infravermelhos, sim.
-• O meu telemóvel não tem emissor de infravermelhos? Então as luzes com comando não podem ser controladas (nenhuma aplicação consegue sem ele), mas tudo o resto funciona.
-• Tuya / Smart Life? Estes dispositivos estão bloqueados pelo fabricante: nenhuma outra aplicação os pode controlar. A aplicação reconhece-os e explica-lhe o que fazer.
+Tuya / Smart Life: estes dispositivos estão bloqueados pelo fabricante. A aplicação reconhece-os e explica-lhe o que fazer.
 
-Feito pela Rollando Studio. Simples, eficiente, de qualidade.
-O Controle Remoto Fita LED é uma aplicação independente, sem ligação aos fabricantes destas luzes nem às respetivas aplicações.
+O Controle Remoto Fita LED é uma aplicação independente, sem ligação aos fabricantes destas luzes.

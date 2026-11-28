@@ -104,7 +104,7 @@ export async function obkScriptNow(ip: string, lines: string[], keep = true): Pr
 }
 
 /** Couleur unie : on arrête animations et motif, et on n'en relance plus au démarrage. */
-export function obkStopEffects(ip: string): Promise<void> {
+function obkStopEffects(ip: string): Promise<void> {
   return exclusive(ip, () => obkStopEffectsNow(ip));
 }
 /** `obkStopEffects` sans la file : seulement depuis un travail déjà dans `exclusive`. */

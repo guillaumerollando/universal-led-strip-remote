@@ -1,6 +1,6 @@
 import { burstPattern, fitsAndroid, NEC_CARRIER_HZ, pressPattern, type IrCandidate, type IrKey, type IrRemote } from '../core/ir';
 
-import native from '../../modules/rubanix-native/src';
+import native from '../../modules/led-strip-native/src';
 import { t } from '../i18n';
 
 function realEmitter(): boolean {

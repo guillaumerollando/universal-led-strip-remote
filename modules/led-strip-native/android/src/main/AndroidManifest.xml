@@ -3,19 +3,19 @@
   <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
   <uses-feature android:name="android.hardware.consumerir" android:required="false" />
   <application>
-    <receiver android:name="expo.modules.rubanixnative.LedStripWidget" android:exported="false" android:label="@string/ledstrip_widget_label">
+    <receiver android:name="expo.modules.ledstripnative.LedStripWidget" android:exported="false" android:label="@string/ledstrip_widget_label">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
       </intent-filter>
       <meta-data android:name="android.appwidget.provider" android:resource="@xml/ledstrip_widget_info" />
     </receiver>
-    <receiver android:name="expo.modules.rubanixnative.RoomWidget" android:exported="false" android:label="@string/ledstrip_room_widget_label">
+    <receiver android:name="expo.modules.ledstripnative.RoomWidget" android:exported="false" android:label="@string/ledstrip_room_widget_label">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
       </intent-filter>
       <meta-data android:name="android.appwidget.provider" android:resource="@xml/ledstrip_room_widget_info" />
     </receiver>
-    <receiver android:name="expo.modules.rubanixnative.AmbianceWidget" android:exported="false" android:label="@string/ledstrip_ambiance_widget_label">
+    <receiver android:name="expo.modules.ledstripnative.AmbianceWidget" android:exported="false" android:label="@string/ledstrip_ambiance_widget_label">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
       </intent-filter>

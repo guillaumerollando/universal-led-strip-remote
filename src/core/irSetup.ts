@@ -65,7 +65,7 @@ export const LAYOUTS: Record<LayoutId, { address: Address; keys: IrKey[] }> = {
 };
 
 /** Familles connues à allumer / éteindre séparés, les plus répandues d'abord (tables Arduino et Flipper-IRDB). */
-export const POWER_FAMILIES: (PowerCodes & { id: string; layout?: LayoutId })[] = [
+const POWER_FAMILIES: (PowerCodes & { id: string; layout?: LayoutId })[] = [
   { id: 'classic24', address: [0x00, 0xef], on: 0x03, off: 0x02, layout: 'classic24' },
   { id: 'ff24', address: [0x00, 0xff], on: 0x11, off: 0x15, layout: 'ff24' },
   { id: 'bulb24', address: [0x00, 0xff], on: 0x07, off: 0x06, layout: 'bulb24' },
@@ -160,7 +160,7 @@ export function burstPlan(state: StripState): IrCandidate[][] {
 }
 
 /** Temps de réaction moyen entre le changement du ruban et la tape. */
-export const REACTION_MS = 700;
+const REACTION_MS = 700;
 
 export interface BurstWindow {
   index: number;

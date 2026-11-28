@@ -1,6 +1,4 @@
-Grosse mise à jour !
-• Lumières Wi-Fi et ampoules connectées (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
-• Ambiances animées : Noël, Halloween, Automne, Aurore…
-• Crée tes ambiances : peins ton ruban LED par LED
-• Blancs du chaud au froid, ambiances de pièce et widgets
-• Ajout plus simple, appli plus légère, plein de finitions
+Nouveau !
+• Lumières Wi-Fi et ampoules connectées
+• Ambiances animées, et crée les tiennes
+• Pièces et widgets

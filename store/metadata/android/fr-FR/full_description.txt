@@ -1,32 +1,22 @@
-Une appli pour les gouverner tous. Marre d'avoir une appli différente pour chaque ruban LED ? Télécommande Ruban LED pilote tes rubans LED et tes ampoules connectées, en Bluetooth, en Wi-Fi ou en infrarouge, depuis une seule appli simple.
+Une appli pour les gouverner tous. Fini une appli différente pour chaque ruban LED : pilote tes rubans et tes ampoules en Bluetooth, en Wi-Fi ou en infrarouge, depuis une seule appli simple.
 
-Gratuite. Sans pub. Sans compte. Open source. Que demande le peuple ?
+Gratuite. Sans pub. Sans compte. Open source.
 
-★ Tout ton éclairage, une seule appli
-• Rubans LED Bluetooth : la plupart des contrôleurs bon marché (ELK-BLEDOM, ELK-BLEDOB, MELK…) marchent directement, sans code d'appairage
-• Lumières Wi-Fi à protocole ouvert : Philips Hue, Yeelight, LIFX, WLED, Govee (contrôle local), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Rubans à télécommande infrarouge : si ton téléphone a un émetteur infrarouge, il devient la télécommande, et l'appli trouve toute seule les bons codes
-L'appli cherche autour de toi toute seule : touche une lumière pour l'ajouter.
+★ Toutes tes lumières, une seule appli
+• Bluetooth : la plupart des contrôleurs bon marché (ELK-BLEDOM, MELK…)
+• Wi-Fi : Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infrarouge : ton téléphone devient la télécommande et trouve tout seul les bons codes
+L'appli cherche autour de toi : touche une lumière pour l'ajouter.
 
-★ Couleurs, blancs et effets
-Toutes les couleurs, des blancs du plus chaud (bougie) au plus froid (lumière du jour), la luminosité d'un glissement de doigt sur le ruban, et les effets intégrés de ton contrôleur avec leur vitesse.
-
-★ Des ambiances prêtes à l'emploi
-Noël, Halloween, Automne, Aurore, Romantique, Océan, Miami, Forêt : un toucher et ta lumière change d'ambiance. Sur un ruban à pixels, elles s'animent vraiment (guirlandes qui scintillent, aurore qui ondule, feuilles qui tombent) et continuent téléphone éteint.
-
-★ Crée tes propres ambiances
-Peins ton ruban LED par LED sur un ruban dessiné en S, ou choisis un style (bandes, lueurs, guirlande, feuilles…). Essaie-le en direct sur ton ruban, puis garde-le. Chaque ambiance de l'appli peut servir de point de départ.
+★ Couleurs, blancs et ambiances
+Toutes les couleurs, du blanc chaud au blanc froid, la luminosité d'un glissement de doigt. Des ambiances prêtes à l'emploi (Noël, Halloween, Aurore, Océan…), ou crée les tiennes en peignant ton ruban LED par LED.
 
 ★ Pièces et widgets
-Range tes lumières par pièce, allume une pièce entière d'un geste ou mets-la en ambiance (Cocooning, Relaxation, Fiesta, ou les tiennes). Des widgets font tout ça depuis l'écran d'accueil.
+Allume une pièce entière d'un geste, ou mets-la en ambiance depuis l'écran d'accueil.
 
-★ Gratuite et sans pub, pour de vrai
-Pas de pub, pas d'achat intégré, pas d'abonnement, pas d'inscription. Le code est open source (GPL-3.0) et public sur GitHub. Rien ne quitte ton téléphone, et l'appli marche sans internet.
+★ Rien ne quitte ton téléphone
+Pas de pub, pas d'achat, pas d'inscription. L'appli marche sans internet.
 
-Questions
-• Ça marche avec ma lumière ? Si elle apparaît comme ELK-BLEDOM, ELK-BLEDOB ou MELK en Bluetooth, si elle parle un protocole ouvert en Wi-Fi, ou si elle a une petite télécommande infrarouge, oui.
-• Mon téléphone n'a pas d'émetteur infrarouge ? Les lumières à télécommande ne peuvent alors pas être pilotées (aucune appli ne le peut sans), mais tout le reste marche.
-• Tuya / Smart Life ? Ces appareils sont verrouillés par leur fabricant : aucune autre appli ne peut les piloter. L'appli les reconnaît et t'explique quoi faire.
+Tuya / Smart Life : ces appareils sont verrouillés par leur fabricant. L'appli les reconnaît et t'explique quoi faire.
 
-Fait par Rollando Studio. Simple, efficace, de qualité.
-Télécommande Ruban LED est une appli indépendante, sans lien avec les fabricants de ces lumières ni leurs applis.
+Télécommande Ruban LED est une appli indépendante, sans lien avec les fabricants de ces lumières.

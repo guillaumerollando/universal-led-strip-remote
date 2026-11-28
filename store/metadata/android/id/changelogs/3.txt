@@ -1,6 +1,4 @@
-Pembaruan besar!
-• Lampu Wi-Fi dan bohlam pintar (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
-• Suasana beranimasi: Natal, Halloween, Musim gugur, Aurora…
-• Buat suasanamu sendiri: lukis stripmu LED demi LED
-• Putih hangat sampai dingin, suasana per ruangan, dan widget
-• Penambahan lebih mudah, aplikasi lebih ringan, banyak penyempurnaan
+Baru!
+• Lampu Wi-Fi dan bohlam pintar
+• Suasana beranimasi, dan buat suasanamu sendiri
+• Ruangan dan widget

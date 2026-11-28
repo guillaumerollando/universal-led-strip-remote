@@ -1,6 +1,4 @@
-Stor uppdatering!
-• Wi-Fi-lampor och smarta lampor (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
-• Animerade stämningar: Jul, Halloween, Höst, Norrsken…
-• Skapa dina egna stämningar: måla din list LED för LED
-• Vita toner från varma till kalla, rumsstämningar och widgetar
-• Enklare att lägga till, lättare app, massor av finlir
+Nyheter!
+• Wi-Fi-lampor och smarta lampor
+• Animerade stämningar, och skapa dina egna
+• Rum och widgetar

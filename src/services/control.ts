@@ -85,7 +85,7 @@ async function setColorNow(t: Target, rgb: Rgb): Promise<void> {
 }
 
 /** La lumière a de vraies LED blanches réglables (chaud / froid). */
-export function hasRealWhite(t: Target): boolean {
+function hasRealWhite(t: Target): boolean {
   const d = driverOf(t);
   return !!d?.white && (d.hasWhite?.(t) ?? true);
 }

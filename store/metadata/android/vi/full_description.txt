@@ -1,32 +1,22 @@
-Một ứng dụng để cai trị tất cả. Chán cảnh mỗi dây đèn LED lại một ứng dụng riêng? Điều khiển dây đèn LED điều khiển dây đèn LED và bóng đèn thông minh của bạn qua Bluetooth, Wi-Fi hoặc hồng ngoại, chỉ bằng một ứng dụng đơn giản.
+Một ứng dụng để cai quản tất cả. Không còn mỗi dây đèn LED một ứng dụng khác nhau: điều khiển dây đèn và bóng đèn thông minh của bạn qua Bluetooth, Wi-Fi hoặc hồng ngoại, từ một ứng dụng đơn giản.
 
-Miễn phí. Không quảng cáo. Không tài khoản. Mã nguồn mở. Còn đòi gì nữa?
+Miễn phí. Không quảng cáo. Không tài khoản. Mã nguồn mở.
 
 ★ Toàn bộ ánh sáng của bạn, một ứng dụng
-• Dây đèn LED Bluetooth: hầu hết bộ điều khiển giá rẻ (ELK-BLEDOM, ELK-BLEDOB, MELK…) dùng được ngay, không cần mã ghép nối
-• Đèn Wi-Fi dùng giao thức mở: Philips Hue, Yeelight, LIFX, WLED, Govee (điều khiển trong mạng nội bộ), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Dây đèn LED hồng ngoại: nếu điện thoại có cổng hồng ngoại IR, nó sẽ thành chiếc điều khiển, và ứng dụng tự tìm đúng mã
-Ứng dụng tự quét xung quanh bạn: chạm vào một chiếc đèn để thêm.
+• Bluetooth: hầu hết bộ điều khiển giá rẻ (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Hồng ngoại: điện thoại của bạn trở thành điều khiển từ xa và tự tìm đúng mã
+Ứng dụng tìm quanh bạn: chạm vào một đèn để thêm.
 
-★ Màu sắc, ánh trắng và hiệu ứng
-Mọi màu sắc, ánh trắng từ ấm nhất (nến) đến lạnh nhất (ánh sáng ban ngày), độ sáng chỉnh bằng một cú vuốt dọc dây đèn, cùng các hiệu ứng có sẵn của bộ điều khiển với tốc độ của chúng.
-
-★ Không khí có sẵn
-Giáng sinh, Halloween, Mùa thu, Cực quang, Lãng mạn, Đại dương, Miami, Rừng: chạm một cái, ánh sáng của bạn đổi không khí. Trên dây đèn địa chỉ (điểm ảnh), chúng sống động thật sự (dây đèn trang trí lấp lánh, cực quang lượn sóng, lá rơi) và vẫn chạy khi điện thoại đã tắt.
-
-★ Tự tạo không khí của riêng bạn
-Tô dây đèn từng LED một trên dây đèn vẽ hình chữ S, hoặc chọn một kiểu (dải, ánh sáng tỏa, dây đèn trang trí, lá…). Thử trực tiếp trên dây đèn của bạn rồi lưu lại. Bất kỳ không khí nào trong ứng dụng đều có thể làm điểm xuất phát.
+★ Màu sắc, ánh trắng và không khí
+Mọi màu sắc, ánh trắng từ ấm đến lạnh, độ sáng chỉ với một lần vuốt. Không khí có sẵn (Giáng sinh, Halloween, Cực quang, Đại dương…), hoặc tự tạo không khí của bạn bằng cách tô dây đèn từng LED một.
 
 ★ Phòng và widget
-Xếp đèn theo phòng, bật cả phòng chỉ với một chạm hoặc đặt không khí cho phòng (Ấm cúng, Thư giãn, Fiesta, hoặc của riêng bạn). Widget làm tất cả những việc này ngay từ màn hình chính.
+Bật cả căn phòng chỉ với một thao tác, hoặc chọn không khí ngay từ màn hình chính.
 
-★ Miễn phí và không quảng cáo, thật sự
-Không quảng cáo, không mua hàng trong ứng dụng, không đăng ký gói, không cần đăng ký tài khoản. Mã nguồn mở (GPL-3.0) và công khai trên GitHub. Không có gì rời khỏi điện thoại của bạn, và ứng dụng chạy được khi không có internet.
+★ Không gì rời khỏi điện thoại của bạn
+Không quảng cáo, không mua hàng, không đăng ký. Hoạt động không cần internet.
 
-Câu hỏi
-• Có dùng được với đèn của tôi không? Nếu nó hiện tên ELK-BLEDOM, ELK-BLEDOB hoặc MELK khi quét Bluetooth, dùng giao thức mở qua Wi-Fi, hoặc đi kèm một chiếc điều khiển hồng ngoại nhỏ, thì có.
-• Điện thoại của tôi không có cổng hồng ngoại? Khi đó không thể điều khiển đèn dùng điều khiển từ xa (không ứng dụng nào làm được nếu thiếu cổng này), nhưng mọi thứ khác vẫn dùng được.
-• Tuya / Smart Life? Các thiết bị này bị nhà sản xuất khóa: không ứng dụng nào khác điều khiển được. Ứng dụng nhận ra chúng và cho bạn biết nên làm gì.
+Tuya / Smart Life: các thiết bị này bị nhà sản xuất khóa. Ứng dụng nhận ra chúng và cho bạn biết nên làm gì.
 
-Do Rollando Studio tạo ra. Đơn giản, hiệu quả, chất lượng.
-Điều khiển dây đèn LED là ứng dụng độc lập, không liên kết với các nhà sản xuất của những chiếc đèn này hay ứng dụng của họ.
+Điều khiển dây đèn LED là ứng dụng độc lập, không liên kết với các nhà sản xuất của những chiếc đèn này.

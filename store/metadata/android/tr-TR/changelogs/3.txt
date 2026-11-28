@@ -1,6 +1,4 @@
-Büyük güncelleme!
-• Wi-Fi ışıklar ve akıllı ampuller (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
-• Canlı ambiyanslar: Noel, Cadılar Bayramı, Sonbahar, Kuzey ışıkları…
-• Kendi ambiyanslarınızı oluşturun: şeridinizi LED LED boyayın
-• Sıcaktan soğuğa beyazlar, oda ambiyansları ve widget'lar
-• Daha kolay kurulum, daha hafif uygulama, bir sürü iyileştirme
+Yeni!
+• Wi-Fi ışıklar ve akıllı ampuller
+• Canlı ambiyanslar ve kendi ambiyanslarınız
+• Odalar ve widget'lar

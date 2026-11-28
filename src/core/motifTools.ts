@@ -44,7 +44,7 @@ export function resize(pixels: Rgb[], count: number): Rgb[] {
 /** Le ruban se dessine plié en S, en 3 passages : aller, retour, aller (souhait de Guillaume, 2026-11-27). */
 export const STRIP_ROWS = 3;
 /** Au plus 60 cases à peindre : au-delà, chaque case couvre plusieurs LED (« on n'est pas à une LED près »). */
-export const MAX_CELLS = 60;
+const MAX_CELLS = 60;
 /** LED couvertes par une case, pour un ruban de `n` LED. */
 export const cellLeds = (n: number): number => Math.max(1, Math.ceil(n / MAX_CELLS));
 /** Cases par passage du S. */

@@ -1,32 +1,22 @@
-Jedna aplikace, aby vládla všem. Už vás nebaví mít jinou aplikaci pro každý LED pásek? Univerzální ovladač LED pásků ovládá vaše LED pásky a chytré žárovky přes Bluetooth, Wi-Fi nebo infračervené světlo z jedné jednoduché aplikace.
+Jedna aplikace, aby vládla všem. Už žádné přepínání mezi aplikacemi pro každý LED pásek: ovládejte své pásky a chytré žárovky přes Bluetooth, Wi-Fi nebo infračervené světlo z jedné jednoduché aplikace.
 
-Zdarma. Bez reklam. Bez účtu. Open source. Co víc si přát?
+Zdarma. Bez reklam. Bez účtu. Open source.
 
 ★ Všechno vaše osvětlení v jedné aplikaci
-• LED pásky s Bluetooth: většina levných ovladačů (ELK-BLEDOM, ELK-BLEDOB, MELK…) funguje hned, bez párovacího kódu
-• Wi-Fi světla s otevřeným protokolem: Philips Hue, Yeelight, LIFX, WLED, Govee (místní ovládání), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• LED pásky s infračerveným ovladačem: pokud má váš telefon IR vysílač, stane se z něj dálkový ovladač a aplikace sama najde správné kódy
-Aplikace sama hledá ve vašem okolí: klepnutím na světlo ho přidáte.
+• Bluetooth: většina levných ovladačů (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infračervené: z telefonu se stane dálkový ovladač a sám najde správné kódy
+Aplikace hledá ve vašem okolí: klepnutím na světlo ho přidáte.
 
-★ Barvy, bílé odstíny a efekty
-Jakákoli barva, bílé od nejteplejší (svíčka) po nejchladnější (denní světlo), jas přejetím prstu po pásku a vestavěné efekty vašeho ovladače s jejich rychlostí.
-
-★ Hotové scény
-Vánoce, Halloween, Podzim, Polární záře, Romantika, Oceán, Miami, Les: jedno klepnutí a vaše světlo změní náladu. Na adresovatelném (pixelovém) pásku opravdu ožijí (blikající girlandy, vlnící se polární záře, padající listí) a běží dál i s vypnutým telefonem.
-
-★ Vytvořte si vlastní scény
-Malujte svůj pásek LED po LED na pásku nakresleném do tvaru S, nebo si vyberte styl (pruhy, záře, girlanda, listí…). Vyzkoušejte ho živě na svém pásku a pak si ho uložte. Výchozím bodem může být jakákoli scéna z aplikace.
+★ Barvy, bílé odstíny a scény
+Všechny barvy, bílá od teplé po studenou, jas přejetím prstu. Hotové scény (Vánoce, Halloween, Polární záře, Oceán…), nebo si vytvořte vlastní a malujte pásek LED po LED.
 
 ★ Místnosti a widgety
-Seskupte světla podle místností, celou místnost zapněte jedním klepnutím nebo jí nastavte náladu (Útulno, Relax, Fiesta, nebo vlastní). Widgety to všechno zvládnou přímo z plochy.
+Rozsviťte celou místnost jedním gestem nebo jí nastavte scénu přímo z domovské obrazovky.
 
-★ Opravdu zdarma a bez reklam
-Žádné reklamy, žádné nákupy v aplikaci, žádné předplatné, žádná registrace. Kód je open source (GPL-3.0) a veřejný na GitHubu. Nic neopouští váš telefon a aplikace funguje bez internetu.
+★ Nic neopustí váš telefon
+Žádné reklamy, žádné nákupy, žádná registrace. Funguje bez internetu.
 
-Otázky
-• Funguje to s mým světlem? Pokud se při hledání Bluetooth zařízení zobrazí jako ELK-BLEDOM, ELK-BLEDOB nebo MELK, komunikuje otevřeným protokolem přes Wi-Fi, nebo k němu patří malý infračervený ovladač, ano.
-• Můj telefon nemá IR vysílač? Pak světla s dálkovým ovladačem ovládat nelze (bez vysílače to nedokáže žádná aplikace), ale vše ostatní funguje.
-• Tuya / Smart Life? Tato zařízení jsou zamčená výrobcem: žádná jiná aplikace je ovládat nemůže. Aplikace je pozná a poradí vám, co dělat.
+Tuya / Smart Life: tato zařízení jsou zamčená výrobcem. Aplikace je pozná a poradí vám, co dělat.
 
-Vytvořilo Rollando Studio. Jednoduše, efektivně, kvalitně.
-Univerzální ovladač LED pásků je nezávislá aplikace bez vazby na výrobce těchto světel nebo jejich aplikace.
+Univerzální ovladač LED pásků je nezávislá aplikace bez vazby na výrobce těchto světel.

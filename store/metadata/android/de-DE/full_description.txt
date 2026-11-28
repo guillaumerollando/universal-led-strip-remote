@@ -1,32 +1,22 @@
-Eine App, sie zu knechten. Keine Lust mehr auf eine andere App für jeden LED-Streifen? LED-Streifen-Fernbedienung steuert deine LED-Streifen und smarten Lampen per Bluetooth, WLAN oder Infrarot, mit einer einzigen, einfachen App.
+Eine App, sie zu knechten. Schluss mit einer anderen App für jeden LED-Streifen: Steuere deine Streifen und smarten Lampen per Bluetooth, WLAN oder Infrarot, mit einer einzigen, einfachen App.
 
-Gratis. Ohne Werbung. Ohne Konto. Open Source. Was will man mehr?
+Gratis. Ohne Werbung. Ohne Konto. Open Source.
 
 ★ Deine ganze Beleuchtung, eine App
-• Bluetooth-LED-Streifen: die meisten günstigen Controller (ELK-BLEDOM, ELK-BLEDOB, MELK…) funktionieren sofort, ohne Kopplungscode
-• WLAN-Lampen mit offenem Protokoll: Philips Hue, Yeelight, LIFX, WLED, Govee (lokale Steuerung), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• LED-Streifen mit Infrarot-Fernbedienung: Hat dein Handy einen IR-Sender, wird es zur Fernbedienung, und die App findet die passenden Codes von selbst
-Die App sucht von allein in deiner Umgebung: Tippe auf eine Lampe, um sie hinzuzufügen.
+• Bluetooth: die meisten günstigen Controller (ELK-BLEDOM, MELK…)
+• WLAN: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infrarot: Dein Handy wird zur Fernbedienung und findet die passenden Codes von selbst
+Die App sucht in deiner Umgebung: Tippe auf eine Lampe, um sie hinzuzufügen.
 
-★ Farben, Weißtöne und Effekte
-Jede Farbe, Weißtöne vom wärmsten (Kerzenlicht) bis zum kältesten (Tageslicht), die Helligkeit per Wisch über den Streifen und die eingebauten Effekte deines Controllers samt Tempo.
-
-★ Fertige Stimmungen
-Weihnachten, Halloween, Herbst, Polarlicht, Romantisch, Ozean, Miami, Wald: ein Tipp, und deine Beleuchtung wechselt die Stimmung. Auf einem adressierbaren (Pixel-)Streifen werden sie richtig lebendig (funkelnde Lichterketten, wogendes Polarlicht, fallende Blätter) und laufen auch bei ausgeschaltetem Handy weiter.
-
-★ Eigene Stimmungen erstellen
-Male deinen Streifen LED für LED auf einem S-förmig gezeichneten Streifen oder wähle einen Stil (Bänder, Schimmer, Lichterkette, Blätter…). Probiere ihn live auf deinem Streifen aus und behalte ihn dann. Jede Stimmung der App kann dein Ausgangspunkt sein.
+★ Farben, Weißtöne und Stimmungen
+Jede Farbe, Weiß von warm bis kalt, die Helligkeit per Wisch. Fertige Stimmungen (Weihnachten, Halloween, Polarlicht, Ozean…), oder erstelle eigene, indem du deinen Streifen LED für LED bemalst.
 
 ★ Räume und Widgets
-Ordne deine Lampen nach Räumen, schalte einen ganzen Raum mit einem Tipp oder gib ihm eine Stimmung (Gemütlich, Entspannung, Fiesta oder deine eigene). Widgets erledigen all das direkt vom Startbildschirm.
+Schalte einen ganzen Raum mit einer Geste ein oder wähle seine Stimmung direkt vom Startbildschirm.
 
-★ Wirklich gratis und werbefrei
-Keine Werbung, keine In-App-Käufe, kein Abo, keine Anmeldung. Der Code ist Open Source (GPL-3.0) und öffentlich auf GitHub. Nichts verlässt dein Handy, und die App funktioniert ohne Internet.
+★ Nichts verlässt dein Handy
+Keine Werbung, keine Käufe, keine Anmeldung. Funktioniert ohne Internet.
 
-Fragen
-• Funktioniert es mit meiner Lampe? Wenn sie bei einem Bluetooth-Scan als ELK-BLEDOM, ELK-BLEDOB oder MELK erscheint, über WLAN ein offenes Protokoll spricht oder mit einer kleinen Infrarot-Fernbedienung geliefert wurde, ja.
-• Mein Handy hat keinen IR-Sender? Dann lassen sich Lampen mit Fernbedienung nicht steuern (ohne Sender kann das keine App), aber alles andere funktioniert.
-• Tuya / Smart Life? Diese Geräte sind vom Hersteller gesperrt: Keine andere App kann sie steuern. Die App erkennt sie und sagt dir, was du tun kannst.
+Tuya / Smart Life: Diese Geräte sind vom Hersteller gesperrt. Die App erkennt sie und sagt dir, was du tun kannst.
 
-Von Rollando Studio. Einfach, effizient, hochwertig.
-LED-Streifen-Fernbedienung ist eine unabhängige App und steht in keiner Verbindung zu den Herstellern dieser Lampen oder ihren Apps.
+LED-Streifen-Fernbedienung ist eine unabhängige App und steht in keiner Verbindung zu den Herstellern dieser Lampen.

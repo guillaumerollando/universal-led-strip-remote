@@ -1,6 +1,4 @@
-Bản cập nhật lớn!
-• Đèn Wi-Fi và bóng đèn thông minh (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
-• Không khí chuyển động: Giáng sinh, Halloween, Mùa thu, Cực quang…
-• Tự tạo không khí của bạn: tô dây đèn từng LED một
-• Ánh trắng từ ấm đến lạnh, không khí theo phòng và widget
-• Thêm đèn dễ hơn, ứng dụng nhẹ hơn, nhiều chỉnh sửa tinh tế
+Mới!
+• Đèn Wi-Fi và bóng đèn thông minh
+• Không khí chuyển động, và tự tạo không khí của bạn
+• Phòng và widget

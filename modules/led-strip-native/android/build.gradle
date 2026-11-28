@@ -3,11 +3,11 @@ plugins {
   id 'expo-module-gradle-plugin'
 }
 
-group = 'com.rollandostudio.rubanix'
+group = 'com.rollandostudio.ledstripremote'
 version = '0.1.0'
 
 android {
-  namespace "expo.modules.rubanixnative"
+  namespace "expo.modules.ledstripnative"
   defaultConfig {
     versionCode 1
     versionName '0.1.0'

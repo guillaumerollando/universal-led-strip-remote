@@ -43,16 +43,20 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
     SP110E, Hue Bluetooth), `magicHome.ts` (TCP 5577), `wifi.ts` (WLED, Govee LAN, Shelly, Tasmota, ESPHome, Nanoleaf,
     Elgato, pont Hue), `udp.ts` (Yeelight, LIFX), `presets.ts` (effets communs Magic Home / Triones)
   - `protocols/openbeken.ts` : **rubans Tuya libérés** (OpenBeken, ✅ vérifié 2026-11-27) — reconnaissance (`Status 0`),
-    6 animations intégrées, **motifs** pixel par pixel (script exécuté dans le ruban, coupé en fichiers chaînés d'un bloc),
+    6 animations intégrées, **motifs** pixel par pixel (un script court qui boucle, exécuté dans le ruban : `obkScripts.ts`),
     effet gardé au démarrage (bloc de l'appli dans `autoexec.bat`)
-  - `ambiances.ts` : ambiances livrées (serpent arc-en-ciel, Noël, Automne, Océan, Halloween, Aurore)
+  - `ambiances.ts` : ambiances d'un ruban livrées (Noël, Halloween, Automne, Aurore, Romantique, Océan, Miami, Forêt),
+    avec leurs versions MELK, simple (couleur ou touche de télécommande) et ampoule ; `creations.ts` / `creationPreview.ts`
+    (« Créer mon ambiance » et son aperçu), `motifTools.ts`, `effectCatalog.ts`
+  - `scenes.ts` : **« scène » dans le code = « ambiance de pièce » à l'écran** (Cocooning, Relaxation, Fiesta, et
+    celles de l'utilisateur) ; chaque lumière suit avec ce qu'elle sait faire
   - `mdns.ts` (questions et réponses DNS-SD), `discover.ts` (mDNS / Yeelight / LIFX → appareil), `probe.ts` (ajout par IP)
   - `describe.ts` : ce qu'on affiche d'un appareil trouvé — nom du produit de marque (« Govee H6159 »), jamais de nom de puce ;
     `lightKind` : ruban, ampoule ou lumière (les mots de l'interface : « Ampoule Wi-Fi », « Ampoule 1 »)
   - `widget.ts` : pièces montrées par le widget Android
 - `src/services/` : accès au matériel — `ble.ts` (react-native-ble-plx, `sendBle` pour toutes les familles), `lan.ts`
   (découverte UDP : Magic Home, Tuya, Govee, mDNS, Yeelight, LIFX), `net.ts` (HTTP local, TCP natif, UDP), `ir.ts`,
-  `scan.ts` (état du scan), `store.ts` (appareils enregistrés, AsyncStorage), `drivers.ts` (**un pilote par famille**),
+  `scan.ts` (état du scan), `store.ts` (appareils enregistrés, AsyncStorage ; `storage.ts` relit les clés d'avant le nom définitif), `drivers.ts` (**un pilote par famille**),
   `pairing.ts` (clés « par bouton » du pont Hue et de Nanoleaf), `probe.ts` (ajout par IP), `widget.ts` (synchro du widget),
   `sweep.ts` (balayage HTTP du /24 : OpenBeken et Tasmota ne s'annoncent pas), `openbeken.ts` (fichiers et démarrage
   d'un ruban OpenBeken), `ambiances.ts` (ambiances enregistrées par l'utilisateur, sur le téléphone)
@@ -75,7 +79,7 @@ Usage perso d'abord, Play Store ensuite. Android seulement (iOS cache les adress
 - `src/ui/` : `theme.ts` (DA « la lumière d'abord »), `kit.tsx` (Screen avec clavier, Button, Card…), `light.tsx` (Glow,
   LightStrip avec halo / bloom / LED, PowerButton, SignatureStrip avec sa lueur, Swatch, Chip), `AddForm`, `labels.ts` (« Ruban Bluetooth »…), `DeviceTile`, `RoomSection`, `RoomPicker`, `ElkControls`, `EffectsPanel`, `IrControls` (fiche infrarouge dans le
   style Bluetooth), `LedRow` (LED illuminées à la fin de l'ajout)
-- `modules/rubanix-native/` : module Expo local en Kotlin — émetteur infrarouge (`ConsumerIrManager`), verrou
+- `modules/led-strip-native/` : module Expo local en Kotlin — émetteur infrarouge (`ConsumerIrManager`), verrou
   multicast Wi-Fi, requête TCP courte (`tcpRequest`), widget « Pièces » (`LedStripWidget.kt`, ressources `res/`,
   `setWidgetRooms`, `moveToBack`). Autolinké ; `null` hors Android
 - `src/ui/StripSlider.tsx` : le ruban dessiné sert de **curseur de luminosité** (accueil et fiche)

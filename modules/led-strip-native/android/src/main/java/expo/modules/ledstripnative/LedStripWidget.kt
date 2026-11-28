@@ -1,4 +1,4 @@
-package expo.modules.rubanixnative
+package expo.modules.ledstripnative
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager

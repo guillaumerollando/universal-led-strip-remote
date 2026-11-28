@@ -51,13 +51,13 @@ export function patternDuration(pattern: readonly number[]): number {
 // tronquée sans dommage.
 
 /** Limite d'Android pour un appel à transmit(). */
-export const ANDROID_MAX_US = 2_000_000;
+const ANDROID_MAX_US = 2_000_000;
 
 /** Code « touche maintenue » du protocole NEC. */
 export const NEC_REPEAT: readonly number[] = [HEADER_MARK, 2250, BIT_MARK];
 
 /** Ajoute la queue protectrice : silence jusqu'à 108 ms, « touche maintenue », silence, « touche maintenue ». */
-export function withTail(pattern: readonly number[]): number[] {
+function withTail(pattern: readonly number[]): number[] {
   const repeat = NEC_REPEAT;
   const toNext = (p: readonly number[]): number => Math.max(FRAME_US - patternDuration(p), 10000);
   return [...pattern, toNext(pattern.slice(-67)), ...repeat, toNext(repeat), ...repeat];

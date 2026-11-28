@@ -1,32 +1,22 @@
-En app att härska över dem alla. Trött på en egen app för varje LED-list? Fjärrkontroll för LED-list styr dina LED-lister och smarta lampor, via Bluetooth, Wi-Fi eller infraröd, från en enda enkel app.
+En app för att härska över dem alla. Slut med en ny app för varje LED-list: styr dina listor och smarta lampor via Bluetooth, Wi-Fi eller infrarött, från en enda enkel app.
 
-Gratis. Ingen reklam. Inget konto. Öppen källkod. Vad mer kan man önska?
+Gratis. Ingen reklam. Inget konto. Öppen källkod.
 
 ★ All din belysning, en app
-• Bluetooth-LED-lister: de flesta billiga styrenheter (ELK-BLEDOM, ELK-BLEDOB, MELK…) fungerar direkt, utan parkopplingskod
-• Wi-Fi-lampor med öppet protokoll: Philips Hue, Yeelight, LIFX, WLED, Govee (lokal styrning), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• LED-lister med infraröd fjärrkontroll: har din telefon en IR-sändare blir den fjärrkontrollen, och appen hittar rätt koder själv
-Appen söker själv runt omkring dig: tryck på en lampa för att lägga till den.
+• Bluetooth: de flesta billiga styrenheter (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infrarött: telefonen blir fjärrkontrollen och hittar rätt koder själv
+Appen letar runt omkring dig: tryck på en lampa för att lägga till den.
 
-★ Färger, vita toner och effekter
-Alla färger, vita toner från den varmaste (stearinljus) till den kallaste (dagsljus), ljusstyrka med ett svep längs listen och styrenhetens inbyggda effekter med deras hastighet.
-
-★ Färdiga stämningar
-Jul, Halloween, Höst, Norrsken, Romantiskt, Hav, Miami, Skog: en tryckning och ditt ljus byter stämning. På en adresserbar (pixel-)list väcks de på riktigt till liv (blinkande ljusslingor, böljande norrsken, fallande löv) och fortsätter med telefonen avstängd.
-
-★ Skapa dina egna stämningar
-Måla din list LED för LED på en list ritad i S-form, eller välj en stil (band, sken, ljusslinga, löv…). Prova direkt på din list och spara sedan. Varje stämning i appen kan vara din utgångspunkt.
+★ Färger, vita toner och stämningar
+Alla färger, vitt från varmt till kallt, ljusstyrka med ett svep. Färdiga stämningar (Jul, Halloween, Norrsken, Hav…), eller skapa dina egna genom att måla din list LED för LED.
 
 ★ Rum och widgetar
-Gruppera dina lampor per rum, tänd ett helt rum med en tryckning eller ge det en stämning (Mysigt, Avkoppling, Fiesta eller dina egna). Widgetar gör allt detta från startskärmen.
+Tänd ett helt rum med en gest, eller välj dess stämning direkt från hemskärmen.
 
-★ Gratis och reklamfri på riktigt
-Ingen reklam, inga köp i appen, ingen prenumeration, ingen registrering. Koden har öppen källkod (GPL-3.0) och är offentlig på GitHub. Inget lämnar din telefon, och appen fungerar utan internet.
+★ Inget lämnar din telefon
+Ingen reklam, inga köp, ingen registrering. Fungerar utan internet.
 
-Frågor
-• Fungerar den med min lampa? Om den visas som ELK-BLEDOM, ELK-BLEDOB eller MELK vid en Bluetooth-sökning, talar ett öppet protokoll via Wi-Fi eller levererades med en liten infraröd fjärrkontroll: ja.
-• Har min telefon ingen IR-sändare? Då går lampor med fjärrkontroll inte att styra (ingen app klarar det utan), men allt annat fungerar.
-• Tuya / Smart Life? Dessa enheter är låsta av tillverkaren: ingen annan app kan styra dem. Appen känner igen dem och berättar vad du kan göra.
+Tuya / Smart Life: dessa enheter är låsta av tillverkaren. Appen känner igen dem och berättar vad du kan göra.
 
-Gjord av Rollando Studio. Enkelt, effektivt, hög kvalitet.
-Fjärrkontroll för LED-list är en oberoende app, utan koppling till tillverkarna av dessa lampor eller deras appar.
+Fjärrkontroll för LED-list är en oberoende app, utan koppling till tillverkarna av dessa lampor.

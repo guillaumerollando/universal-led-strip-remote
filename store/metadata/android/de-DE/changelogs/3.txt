@@ -1,6 +1,4 @@
-Großes Update!
-• WLAN-Lampen und smarte Lampen (Hue, Yeelight, LIFX, WLED, Govee, Tasmota, OpenBeken…)
-• Animierte Stimmungen: Weihnachten, Halloween, Herbst, Polarlicht…
-• Eigene Stimmungen: male deinen Streifen LED für LED
-• Weißtöne von warm bis kalt, Raumstimmungen und Widgets
-• Einfacheres Hinzufügen, schlankere App, viele Feinschliffe
+Neu!
+• WLAN-Leuchten und smarte Lampen
+• Animierte Stimmungen, und eigene erstellen
+• Räume und Widgets

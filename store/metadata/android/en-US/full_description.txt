@@ -1,32 +1,22 @@
-One app to rule them all. Tired of juggling a different app for every LED strip? Universal LED Strip Remote controls your LED strips and smart bulbs, over Bluetooth, Wi-Fi or infrared, from one simple app.
+One app to rule them all. No more juggling a different app for every LED strip: control your strips and smart bulbs over Bluetooth, Wi-Fi or infrared, from one simple app.
 
-Free. No ads. No account. Open source. What more could you ask for?
+Free. No ads. No account. Open source.
 
-★ All your lighting, one app
-• Bluetooth LED strips: most cheap controllers (ELK-BLEDOM, ELK-BLEDOB, MELK…) work right away, no pairing code
-• Wi-Fi lights with an open protocol: Philips Hue, Yeelight, LIFX, WLED, Govee (LAN control), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Infrared LED strips: if your phone has an IR blaster, it becomes the remote, and the app finds the right codes by itself
-The app scans around you on its own: tap a light to add it.
+★ All your lights, one app
+• Bluetooth: most budget controllers (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infrared: your phone becomes the remote and finds the right codes on its own
+The app looks around you: tap a light to add it.
 
-★ Colors, whites and effects
-Any color, whites from warmest (candle) to coolest (daylight), brightness with a swipe along the strip, and your controller's built-in effects with their speed.
-
-★ Ready-made moods
-Christmas, Halloween, Autumn, Aurora, Romantic, Ocean, Miami, Forest: one tap and your light changes mood. On an addressable (pixel) strip they truly come alive (twinkling garlands, rippling aurora, falling leaves) and keep running with your phone off.
-
-★ Create your own moods
-Paint your strip LED by LED on a strip drawn in an S shape, or pick a style (bands, glows, garland, leaves…). Try it live on your strip, then keep it. Any mood from the app can be your starting point.
+★ Colors, whites and moods
+Every color, warm to cool white, brightness with a swipe. Ready-made moods (Christmas, Halloween, Aurora, Ocean…), or create your own by painting your strip LED by LED.
 
 ★ Rooms and widgets
-Group your lights by room, switch a whole room in one tap or set its mood (Cozy, Relax, Fiesta, or your own). Widgets do all of this from your home screen.
+Turn on a whole room with one gesture, or set its mood right from your home screen.
 
-★ Free and ad-free, for real
-No ads, no in-app purchases, no subscription, no sign-up. The code is open source (GPL-3.0) and public on GitHub. Nothing leaves your phone, and the app works without internet.
+★ Nothing leaves your phone
+No ads, no purchases, no sign-up. Works without internet.
 
-Questions
-• Does it work with my light? If it shows up as ELK-BLEDOM, ELK-BLEDOB or MELK in a Bluetooth scan, speaks an open protocol over Wi-Fi, or came with a small infrared remote, yes.
-• My phone has no IR blaster? Then remote-controlled lights can't be used (no app can do it without one), but everything else works.
-• Tuya / Smart Life? These devices are locked by their maker: no other app can control them. The app recognizes them and tells you what you can do.
+Tuya / Smart Life: these devices are locked by their maker. The app recognizes them and tells you what to do.
 
-Made by Rollando Studio. Simple, efficient, quality.
-Universal LED Strip Remote is an independent app, not affiliated with the makers of these lights or their apps.
+Universal LED Strip Remote is an independent app, not affiliated with the makers of these lights.

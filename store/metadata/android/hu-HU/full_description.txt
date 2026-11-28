@@ -1,32 +1,22 @@
-Egy app, hogy mind uralja. Elegem van abból, hogy minden LED szalaghoz más app kell? A LED szalag távirányító egyetlen egyszerű appból vezérli a LED szalagjaidat és az okosizzóidat, Bluetoothon, Wi-Fin vagy infravörösön át.
+Egy app, hogy mind uralja. Vége annak, hogy minden LED szalaghoz más app kell: vezéreld a szalagjaidat és okosizzóidat Bluetoothon, Wi-Fin vagy infravörösön át, egyetlen egyszerű appból.
 
-Ingyenes. Reklámmentes. Fiók nélkül. Nyílt forráskódú. Mit kívánhatnál még?
+Ingyenes. Reklámmentes. Fiók nélkül. Nyílt forráskódú.
 
 ★ Minden világításod egy appban
-• Bluetooth LED szalagok: a legtöbb olcsó vezérlő (ELK-BLEDOM, ELK-BLEDOB, MELK…) azonnal működik, párosítási kód nélkül
-• Wi-Fi-s lámpák nyílt protokollal: Philips Hue, Yeelight, LIFX, WLED, Govee (helyi vezérlés), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Infravörös LED szalagok: ha a telefonodban van IR-adó, ő lesz a távirányító, és az app magától megtalálja a megfelelő kódokat
-Az app magától keresgél körülötted: koppints egy lámpára a hozzáadáshoz.
+• Bluetooth: a legtöbb olcsó vezérlő (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infravörös: a telefonod lesz a távirányító, és magától megtalálja a megfelelő kódokat
+Az app körülnéz: koppints egy lámpára a hozzáadáshoz.
 
-★ Színek, fehérek és effektek
-Bármilyen szín, a legmelegebb (gyertyafény) és a leghidegebb (nappali fény) közötti fehérek, fényerő egy ujjhúzással a szalagon, és a vezérlőd beépített effektjei a sebességükkel együtt.
-
-★ Kész hangulatok
-Karácsony, Halloween, Ősz, Sarki fény, Romantikus, Óceán, Miami, Erdő: egy koppintás, és a fényed hangulatot vált. Címezhető (pixeles) szalagon igazán életre kelnek (pislákoló füzérek, hullámzó sarki fény, hulló levelek), és kikapcsolt telefonnal is futnak tovább.
-
-★ Készítsd el a saját hangulataidat
-Fesd meg a szalagodat LED-enként egy S alakban megrajzolt szalagon, vagy válassz stílust (sávok, fényfoltok, füzér, levelek…). Próbáld ki élőben a szalagodon, aztán tartsd meg. Az app bármelyik hangulata kiindulópont lehet.
+★ Színek, fehérek és hangulatok
+Minden szín, fehér a melegtől a hidegig, fényerő egy ujjhúzással. Kész hangulatok (Karácsony, Halloween, Sarki fény, Óceán…), vagy készítsd el a sajátjaidat úgy, hogy LED-enként megfested a szalagot.
 
 ★ Szobák és widgetek
-Csoportosítsd a lámpáidat szobák szerint, kapcsolj be egy egész szobát egy koppintással, vagy állíts be neki hangulatot (Otthonos, Pihenés, Fiesta, vagy a saját). A widgetekkel mindez elérhető a kezdőképernyőről.
+Kapcsolj fel egy egész szobát egyetlen mozdulattal, vagy állítsd be a hangulatát egyenesen a kezdőképernyőről.
 
-★ Tényleg ingyenes és reklámmentes
-Nincs reklám, nincs alkalmazáson belüli vásárlás, nincs előfizetés, nincs regisztráció. A kód nyílt forráskódú (GPL-3.0), és nyilvános a GitHubon. Semmi nem hagyja el a telefonodat, és az app internet nélkül is működik.
+★ Semmi sem hagyja el a telefonodat
+Nincs reklám, nincs vásárlás, nincs regisztráció. Internet nélkül is működik.
 
-Kérdések
-• Működik az én lámpámmal? Ha a Bluetooth-keresésben ELK-BLEDOM, ELK-BLEDOB vagy MELK néven jelenik meg, nyílt protokollon beszél Wi-Fin, vagy kis infravörös távirányító járt hozzá, akkor igen.
-• Nincs IR-adó a telefonomban? Akkor a távirányítós lámpákat nem lehet vezérelni (adó nélkül egyetlen app sem képes rá), de minden más működik.
-• Tuya / Smart Life? Ezeket az eszközöket a gyártójuk lezárta: semmilyen más app nem tudja vezérelni őket. Az app felismeri őket, és megmondja, mit tehetsz.
+Tuya / Smart Life: ezeket az eszközöket a gyártójuk lezárta. Az app felismeri őket, és megmondja, mit tehetsz.
 
-Készítette: Rollando Studio. Egyszerű, hatékony, minőségi.
-A LED szalag távirányító független app, nincs kapcsolatban ezeknek a lámpáknak és appjaiknak a gyártóival.
+A LED szalag távirányító független app, nincs kapcsolatban ezeknek a lámpáknak a gyártóival.

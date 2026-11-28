@@ -1,4 +1,4 @@
-package expo.modules.rubanixnative
+package expo.modules.ledstripnative
 
 import android.content.Context
 import android.hardware.ConsumerIrManager
@@ -20,7 +20,7 @@ internal class NoIrEmitterException :
  * l'émetteur infrarouge (ConsumerIrManager) et le verrou multicast Wi-Fi,
  * sans lequel Android jette les paquets de découverte (Govee, mDNS).
  */
-class RubanixNativeModule : Module() {
+class LedStripNativeModule : Module() {
   private val context: Context
     get() = appContext.reactContext ?: throw Exceptions.ReactContextLost()
 
@@ -30,7 +30,7 @@ class RubanixNativeModule : Module() {
   private var multicastLock: WifiManager.MulticastLock? = null
 
   override fun definition() = ModuleDefinition {
-    Name("RubanixNative")
+    Name("LedStripNative")
 
     Function("hasIrEmitter") {
       irManager?.hasIrEmitter() == true

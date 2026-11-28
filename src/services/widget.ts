@@ -2,7 +2,7 @@
  * Widget « Pièces » (écran d'accueil Android) : l'appli lui pousse ses pièces et leur état à chaque changement.
  * Le widget ouvre `ledstrip://power?room=…` ; mêmes données prévues pour le widget iPhone (App Group).
  */
-import native from '../../modules/rubanix-native/src';
+import native from '../../modules/led-strip-native/src';
 import { decodeMotif } from '../core/protocols/openbeken';
 import type { Rgb } from '../core/protocols/types';
 import { BUILTIN_AMBIANCES } from '../core/ambiances';

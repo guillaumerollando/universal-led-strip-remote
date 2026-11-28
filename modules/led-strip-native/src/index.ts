@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo';
 
-interface RubanixNativeModule {
+interface LedStripNativeModule {
   hasIrEmitter(): boolean;
   getIrCarrierFrequencies(): [number, number][];
   transmitIr(frequency: number, pattern: number[]): Promise<void>;
@@ -26,6 +26,6 @@ interface RubanixNativeModule {
 
 /** Module natif (Android seulement) ; `null` ailleurs ou dans Expo Go. */
 const native =
-  Platform.OS === 'android' ? requireOptionalNativeModule<RubanixNativeModule>('RubanixNative') : null;
+  Platform.OS === 'android' ? requireOptionalNativeModule<LedStripNativeModule>('LedStripNative') : null;
 
 export default native;

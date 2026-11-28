@@ -2,7 +2,7 @@
 """Fabrique l'icône de l'appli (« LED Strip Remote ») : un néon LED flexible photoréaliste rendu dans Blender
 (tools/icon_blender.py), puis une diffusion lumineuse (« bloom ») et une teinte de nuit ajoutées ici avec Pillow.
 
-    python3 tools/make_icon.py [échantillons]   → assets/icon.png, android-icon-*.png, splash-icon.png, favicon.png,
+    python3 tools/make_icon.py [échantillons]   → assets/icon.png, android-icon-*.png, splash-icon.png,
                                                   store/icon-512.png, store/feature-graphic.png (bannière Play Store)
 """
 
@@ -63,7 +63,6 @@ def main() -> None:
         banner = finish(render(Path(tmp) / "banner.png", 22, (2048, 1000)))
         small = finish(render(Path(tmp) / "adaptive.png", 24))
     big.save(ASSETS / "icon.png")
-    big.resize((48, 48), Image.LANCZOS).save(ASSETS / "favicon.png")
 
     # Android adaptatif : tout le visuel en arrière-plan (néon assez petit pour le rond), premier plan vide.
     small.resize((512, 512), Image.LANCZOS).save(ASSETS / "android-icon-background.png")

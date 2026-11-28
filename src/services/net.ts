@@ -2,7 +2,7 @@ import { Buffer } from 'buffer';
 import dgram from 'react-native-udp';
 
 import type { HttpCall } from '../core/protocols/types';
-import native from '../../modules/rubanix-native/src';
+import native from '../../modules/led-strip-native/src';
 import { t } from '../i18n';
 
 const noAnswer = (): Error => new Error(t('Pas de réponse : vérifie qu’il est allumé et sur le même Wi-Fi.'));

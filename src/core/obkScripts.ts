@@ -37,7 +37,7 @@ const HEAD = ['Anim -1'];
  * Motif répété tout le long, dessiné par boucles (une par couleur, cinq lignes chacune) : léger quel que soit le
  * nombre de LED. Décalé de `$CH30` (0 si fixe).
  */
-export function garlandDraw(pattern: Rgb[], ctx: ScriptContext, label = 'g', moving = true): string[] {
+function garlandDraw(pattern: Rgb[], ctx: ScriptContext, label = 'g', moving = true): string[] {
   const p = pattern.length;
   // LED voisines de même couleur regroupées en « séries » : une boucle par série, pas par LED (motifs à grandes cases).
   const runs: { start: number; len: number; color: Rgb }[] = [];
@@ -271,9 +271,9 @@ export function glowScript(bg: Rgb, colors: Rgb | Rgb[], profile: number[], ctx:
 }
 
 /** Vitesse 0-100 % → pause entre deux pas d'un serpent (ms), jamais sous le minimum sûr. */
-export const snakeDelay = (percent: number): number => clamp(MIN_DELAY_MS + (100 - clamp(percent, 0, 100)) * 1.3, MIN_DELAY_MS, 170);
+const snakeDelay = (percent: number): number => clamp(MIN_DELAY_MS + (100 - clamp(percent, 0, 100)) * 1.3, MIN_DELAY_MS, 170);
 /** Vitesse 0-100 % → pause entre deux crans d'une guirlande qui avance (ms). */
-export const stepDelay = (percent: number): number => clamp(300 + (100 - clamp(percent, 0, 100)) * 7, 300, 1000);
+const stepDelay = (percent: number): number => clamp(300 + (100 - clamp(percent, 0, 100)) * 7, 300, 1000);
 
 /** Le script d'un motif dessiné par l'utilisateur. */
 export function motifScript(motif: { pixels: Rgb[]; mode: 'snake' | 'flow' | 'still' }, ctx: ScriptContext, speedPercent: number): string[] {

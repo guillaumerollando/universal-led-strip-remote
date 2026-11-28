@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getStored } from './storage';
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { nearestColorKey, presetItem, PRESET_SCENES, type PresetScene, type RoomScene, type SceneItem } from '../core/scenes';
@@ -27,7 +28,7 @@ import { getDevice, rememberState, type SavedDevice } from './store';
 import { safeParse } from './safeParse';
 
 /** Ambiances de pièce enregistrées par l'utilisateur (sur le téléphone). */
-const KEY = 'rubanix.scenes.v1';
+const KEY = 'ledstrip.scenes.v1';
 let scenes: RoomScene[] = [];
 const listeners = new Set<() => void>();
 const set = (next: RoomScene[]): void => {
@@ -40,7 +41,7 @@ const persist = (): Promise<void> => AsyncStorage.setItem(KEY, JSON.stringify(sc
  * Ambiances proposées par l'appli que l'utilisateur ne veut plus voir dans une pièce (`pièce:ambiance`) : on propose
  * au début pour ne pas laisser de vide, mais chacun garde seulement ce qui lui plaît (Guillaume, 2026-11-27).
  */
-const HIDDEN_KEY = 'rubanix.scenes.hidden.v1';
+const HIDDEN_KEY = 'ledstrip.scenes.hidden.v1';
 let hidden: string[] = [];
 const hiddenId = (roomId: string, presetId: string): string => `${roomId}:${presetId}`;
 
@@ -51,7 +52,7 @@ const hiddenId = (roomId: string, presetId: string): string => `${roomId}:${pres
 let loading: Promise<void> | undefined;
 const load = (): Promise<void> => (loading ??= readStored());
 async function readStored(): Promise<void> {
-  const [text, hiddenText] = await Promise.all([AsyncStorage.getItem(KEY).catch(() => null), AsyncStorage.getItem(HIDDEN_KEY).catch(() => null)]);
+  const [text, hiddenText] = await Promise.all([getStored(KEY), getStored(HIDDEN_KEY)]);
   hidden = safeParse<string[]>(hiddenText, []);
   const saved = safeParse<RoomScene[] | null>(text, null);
   if (saved) set(saved);
@@ -220,7 +221,7 @@ export const presetItems = (preset: PresetScene, devices: SavedDevice[]): SceneI
  * Ambiance de pièce en cours : celle qu'on a touchée en dernier, tant que les rubans de la pièce sont restés dans
  * l'état où elle les a mis (on change une couleur, la pièce n'est plus « dans » l'ambiance). Retenue sur le téléphone.
  */
-const APPLIED_KEY = 'rubanix.scenes.applied.v1';
+const APPLIED_KEY = 'ledstrip.scenes.applied.v1';
 let applied: Record<string, { sceneId: string; snapshot: string }> = {};
 let appliedLoaded = false;
 const appliedListeners = new Set<() => void>();
@@ -235,7 +236,7 @@ const lightState = (devices: SavedDevice[]): string =>
 async function loadApplied(): Promise<void> {
   if (appliedLoaded) return;
   appliedLoaded = true;
-  const text = await AsyncStorage.getItem(APPLIED_KEY).catch(() => null);
+  const text = await getStored(APPLIED_KEY);
   if (text) {
     applied = safeParse<typeof applied>(text, {});
     appliedListeners.forEach((l) => l());

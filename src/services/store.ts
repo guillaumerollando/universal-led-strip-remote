@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getStored } from './storage';
 import { useSyncExternalStore } from 'react';
 
 import type { Rgb } from '../core/elk';
@@ -51,8 +52,8 @@ export interface Data {
   rooms: Room[];
 }
 
-const STORAGE_KEY = 'rubanix.devices.v1';
-const ROOMS_KEY = 'rubanix.rooms.v1';
+const STORAGE_KEY = 'ledstrip.devices.v1';
+const ROOMS_KEY = 'ledstrip.rooms.v1';
 let data: Data = { devices: [], rooms: [] };
 let loaded = false;
 const listeners = new Set<() => void>();
@@ -85,7 +86,7 @@ async function persist(): Promise<void> {
 /** Charge appareils et pièces (une fois, au démarrage). */
 export async function loadDevices(): Promise<void> {
   if (loaded) return;
-  const [[, devices], [, rooms]] = await AsyncStorage.multiGet([STORAGE_KEY, ROOMS_KEY]);
+  const [devices, rooms] = await Promise.all([getStored(STORAGE_KEY), getStored(ROOMS_KEY)]);
   loaded = true;
   const merged = mergeDuplicateRooms(parse<Room[]>(rooms, []), parse<SavedDevice[]>(devices, []));
   set(merged);

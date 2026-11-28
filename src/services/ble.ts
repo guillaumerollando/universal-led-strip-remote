@@ -122,6 +122,6 @@ export async function sendBle(address: string, profile: BleProfile, ...frames: n
 }
 
 /** Profil d'un contrôleur ELK-BLEDOM (service FFF0, trames d'ouverture selon la variante). */
-export const elkProfile = (model: ElkModel): BleProfile => ({ service: ELK_SERVICE, write: ELK_WRITE_CHAR, init: elkInit(model) });
+const elkProfile = (model: ElkModel): BleProfile => ({ service: ELK_SERVICE, write: ELK_WRITE_CHAR, init: elkInit(model) });
 
 export const sendElk = (address: string, model: ElkModel, bytes: number[]): Promise<void> => sendBle(address, elkProfile(model), bytes);

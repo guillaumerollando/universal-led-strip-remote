@@ -1,32 +1,22 @@
-Jedna aplikacja, by wszystkimi rządzić. Masz dość osobnej aplikacji do każdej taśmy LED? Pilot do taśmy LED steruje twoimi taśmami LED i inteligentnymi żarówkami przez Bluetooth, Wi-Fi lub podczerwień, z jednej prostej aplikacji.
+Jedna aplikacja, by wszystkimi rządzić. Koniec z osobną aplikacją do każdej taśmy LED: steruj swoimi taśmami i inteligentnymi żarówkami przez Bluetooth, Wi-Fi lub podczerwień z jednej prostej aplikacji.
 
-Za darmo. Bez reklam. Bez konta. Open source. Czego chcieć więcej?
+Za darmo. Bez reklam. Bez konta. Open source.
 
 ★ Całe twoje oświetlenie, jedna aplikacja
-• Taśmy LED na Bluetooth: większość tanich sterowników (ELK-BLEDOM, ELK-BLEDOB, MELK…) działa od razu, bez kodu parowania
-• Światła Wi-Fi z otwartym protokołem: Philips Hue, Yeelight, LIFX, WLED, Govee (sterowanie lokalne), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Taśmy LED na podczerwień: jeśli twój telefon ma nadajnik IR, staje się pilotem, a aplikacja sama znajduje właściwe kody
-Aplikacja sama szuka wokół ciebie: dotknij światła, żeby je dodać.
+• Bluetooth: większość tanich kontrolerów (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Podczerwień: telefon staje się pilotem i sam znajduje właściwe kody
+Aplikacja szuka wokół ciebie: dotknij światła, aby je dodać.
 
-★ Kolory, biele i efekty
-Dowolny kolor, biele od najcieplejszego (świeca) do najzimniejszego (światło dzienne), jasność przesunięciem palca po taśmie oraz wbudowane efekty twojego sterownika wraz z ich szybkością.
-
-★ Gotowe nastroje
-Boże Narodzenie, Halloween, Jesień, Zorza polarna, Romantycznie, Ocean, Miami, Las: jedno dotknięcie i twoje światło zmienia nastrój. Na taśmie adresowalnej (pikselowej) ożywają naprawdę (migoczące girlandy, falująca zorza, spadające liście) i działają dalej przy wyłączonym telefonie.
-
-★ Twórz własne nastroje
-Maluj taśmę dioda po diodzie na taśmie narysowanej w kształcie litery S albo wybierz styl (pasy, poświaty, girlanda, liście…). Wypróbuj na żywo na swojej taśmie, a potem zachowaj. Każdy nastrój z aplikacji może być punktem wyjścia.
+★ Kolory, biele i nastroje
+Każdy kolor, biel od ciepłej do zimnej, jasność jednym przesunięciem palca. Gotowe nastroje (Boże Narodzenie, Halloween, Zorza polarna, Ocean…) albo twórz własne, malując taśmę dioda po diodzie.
 
 ★ Pokoje i widżety
-Grupuj światła według pokoi, włączaj cały pokój jednym dotknięciem albo ustaw w nim nastrój (Przytulnie, Relaks, Fiesta lub własny). Widżety robią to wszystko z ekranu głównego.
+Włącz cały pokój jednym gestem albo ustaw jego nastrój prosto z ekranu głównego.
 
-★ Naprawdę za darmo i bez reklam
-Bez reklam, bez zakupów w aplikacji, bez subskrypcji, bez rejestracji. Kod jest open source (GPL-3.0) i publiczny na GitHubie. Nic nie opuszcza twojego telefonu, a aplikacja działa bez internetu.
+★ Nic nie opuszcza twojego telefonu
+Bez reklam, bez zakupów, bez rejestracji. Działa bez internetu.
 
-Pytania
-• Czy działa z moim światłem? Jeśli w skanowaniu Bluetooth widać je jako ELK-BLEDOM, ELK-BLEDOB lub MELK, jeśli mówi otwartym protokołem przez Wi-Fi albo miało małego pilota na podczerwień: tak.
-• Mój telefon nie ma nadajnika IR? Wtedy świateł z pilotem nie da się sterować (żadna aplikacja tego nie potrafi bez nadajnika), ale reszta działa.
-• Tuya / Smart Life? Te urządzenia są zablokowane przez producenta: żadna inna aplikacja nie może nimi sterować. Aplikacja je rozpoznaje i podpowiada, co możesz zrobić.
+Tuya / Smart Life: te urządzenia są zablokowane przez producenta. Aplikacja je rozpoznaje i podpowiada, co możesz zrobić.
 
-Stworzone przez Rollando Studio. Prosto, skutecznie, z jakością.
-Pilot do taśmy LED to niezależna aplikacja, niezwiązana z producentami tych świateł ani z ich aplikacjami.
+Pilot do taśmy LED to niezależna aplikacja, niezwiązana z producentami tych świateł.

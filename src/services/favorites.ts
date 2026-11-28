@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getStored } from './storage';
 import { useEffect, useSyncExternalStore } from 'react';
 import { safeParse } from './safeParse';
 
@@ -6,7 +7,7 @@ import { safeParse } from './safeParse';
  * Favoris : les ambiances (de ruban ou de pièce) que l'utilisateur veut avoir sous la main. Sur le téléphone
  * seulement. Identifiants : `amb:<id>` pour une ambiance de ruban, `scene:<id>` pour une ambiance de pièce.
  */
-const KEY = 'rubanix.favorites.v1';
+const KEY = 'ledstrip.favorites.v1';
 let favorites: string[] = [];
 const listeners = new Set<() => void>();
 const set = (next: string[]): void => {
@@ -21,7 +22,7 @@ const set = (next: string[]): void => {
 let loading: Promise<void> | undefined;
 const load = (): Promise<void> => (loading ??= readStored());
 async function readStored(): Promise<void> {
-  const text = await AsyncStorage.getItem(KEY).catch(() => null);
+  const text = await getStored(KEY);
   const saved = safeParse<string[] | null>(text, null);
   if (saved) set(saved);
 }

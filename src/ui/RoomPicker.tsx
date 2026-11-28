@@ -36,7 +36,7 @@ export function RoomPicker({ value, onChange }: { value?: string; onChange: (roo
 }
 
 /** Petite fenêtre « Nouvelle pièce » : un nom, « Créer ». Un nom déjà pris choisit la pièce existante. */
-export function NewRoomDialog({ visible, onClose, onCreated }: { visible: boolean; onClose: () => void; onCreated: (room: Room) => void }) {
+function NewRoomDialog({ visible, onClose, onCreated }: { visible: boolean; onClose: () => void; onCreated: (room: Room) => void }) {
   const [name, setName] = useState('');
   const [busy, setBusy] = useState(false);
   const existing = name.trim() ? roomNamed(name) : undefined;

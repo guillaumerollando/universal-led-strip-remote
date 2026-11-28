@@ -1,7 +1,0 @@
-{
-  "name": "rubanix-native",
-  "version": "0.1.0",
-  "description": "Émetteur infrarouge et verrou multicast Android pour Rubanix",
-  "main": "src/index.ts",
-  "private": true
-}

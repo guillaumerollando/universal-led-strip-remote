@@ -76,7 +76,7 @@ export interface PresetScene {
 export const PRESET_SCENES: PresetScene[] = [
   { id: 'cosy', name: 'Cocooning', ambiance: 'autumn', rgb: { r: 255, g: 80, b: 0 }, brightness: 60 },
   { id: 'cinema', name: 'Relaxation', ambiance: 'aurora', rgb: { r: 60, g: 0, b: 200 }, brightness: 40 },
-  { id: 'party', name: 'Fiesta', rgb: { r: 255, g: 0, b: 160 }, brightness: 100, effects: ['obk-rainbow', 'rainbow', 'jump7', 'fade7', 'blink7'] },
+  { id: 'party', name: 'Fiesta', rgb: { r: 255, g: 0, b: 160 }, brightness: 100, effects: ['obk-rainbow', 'rainbow', 'smooth', 'jump7', 'fade7', 'blink7'] },
 ];
 
 /**

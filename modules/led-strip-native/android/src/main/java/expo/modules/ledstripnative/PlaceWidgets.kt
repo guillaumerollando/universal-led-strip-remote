@@ -1,4 +1,4 @@
-package expo.modules.rubanixnative
+package expo.modules.ledstripnative
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -28,7 +28,7 @@ import org.json.JSONObject
  */
 object PlaceWidgets {
   const val PREFS = "ledstrip_places"
-  const val ACTION_PIN_DONE = "expo.modules.rubanixnative.PIN_DONE"
+  const val ACTION_PIN_DONE = "expo.modules.ledstripnative.PIN_DONE"
 
   fun places(context: Context): JSONArray =
     runCatching { JSONArray(prefs(context).getString("places", "[]")) }.getOrDefault(JSONArray())

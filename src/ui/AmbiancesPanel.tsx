@@ -14,7 +14,7 @@ import { colors, radius, rgbCss, space } from './theme';
 import { t } from '../i18n';
 
 /** Les couleurs de l'ambiance en petite rangée de LED (fond éteint pour un serpent). */
-export function MotifDots({ ambiance, count = 8 }: { ambiance: Pick<Ambiance, 'motif' | 'colors'>; count?: number }) {
+function MotifDots({ ambiance, count = 8 }: { ambiance: Pick<Ambiance, 'motif' | 'colors'>; count?: number }) {
   const colorsOf = ambianceColors(ambiance);
   const snake = ambiance.motif?.mode === 'snake';
   return (

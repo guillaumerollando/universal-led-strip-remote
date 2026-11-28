@@ -1,32 +1,22 @@
-O aplicație să le stăpânească pe toate. Te-ai săturat de o aplicație diferită pentru fiecare bandă LED? Telecomandă Bandă LED îți controlează benzile LED și becurile inteligente, prin Bluetooth, Wi-Fi sau infraroșu, dintr-o singură aplicație simplă.
+O aplicație care să le stăpânească pe toate. Gata cu câte o aplicație diferită pentru fiecare bandă LED: controlează-ți benzile și becurile inteligente prin Bluetooth, Wi-Fi sau infraroșu, dintr-o singură aplicație simplă.
 
-Gratuită. Fără reclame. Fără cont. Open source. Ce mai poți cere?
+Gratuită. Fără reclame. Fără cont. Open source.
 
 ★ Toată iluminarea ta, o singură aplicație
-• Benzi LED Bluetooth: majoritatea controlerelor ieftine (ELK-BLEDOM, ELK-BLEDOB, MELK…) merg direct, fără cod de asociere
-• Lumini Wi-Fi cu protocol deschis: Philips Hue, Yeelight, LIFX, WLED, Govee (control local), Shelly, Tasmota, OpenBeken, Magic Home, Nanoleaf, Elgato
-• Benzi LED cu telecomandă cu infraroșu: dacă telefonul tău are emițător IR, devine telecomanda, iar aplicația găsește singură codurile potrivite
-Aplicația caută singură în jurul tău: atinge o lumină ca s-o adaugi.
+• Bluetooth: majoritatea controlerelor ieftine (ELK-BLEDOM, MELK…)
+• Wi-Fi: Philips Hue, Yeelight, LIFX, WLED, Govee, Shelly, Tasmota, Magic Home, Nanoleaf…
+• Infraroșu: telefonul tău devine telecomanda și găsește singur codurile potrivite
+Aplicația caută în jurul tău: atinge o lumină ca s-o adaugi.
 
-★ Culori, alburi și efecte
-Orice culoare, alburi de la cel mai cald (lumânare) la cel mai rece (lumina zilei), luminozitatea dintr-o glisare pe bandă și efectele incluse ale controlerului tău, cu viteza lor.
-
-★ Ambianțe gata făcute
-Crăciun, Halloween, Toamnă, Aurora, Romantic, Ocean, Miami, Pădure: o atingere și lumina ta își schimbă atmosfera. Pe o bandă adresabilă (cu pixeli) prind cu adevărat viață (ghirlande care scânteiază, aurora care unduiește, frunze care cad) și merg mai departe cu telefonul oprit.
-
-★ Creează-ți propriile ambianțe
-Pictează banda LED cu LED, pe o bandă desenată în formă de S, sau alege un stil (benzi, străluciri, ghirlandă, frunze…). Încearc-o în direct pe banda ta, apoi păstreaz-o. Orice ambianță din aplicație poate fi punctul tău de plecare.
+★ Culori, alburi și ambianțe
+Toate culorile, alb de la cald la rece, luminozitate dintr-o glisare. Ambianțe gata făcute (Crăciun, Halloween, Aurora, Ocean…) sau creează-ți propriile ambianțe pictând banda LED cu LED.
 
 ★ Camere și widgeturi
-Grupează-ți luminile pe camere, aprinde o cameră întreagă dintr-o atingere sau pune-i o ambianță (Cocooning, Relaxare, Fiesta sau ale tale). Widgeturile fac toate acestea de pe ecranul de pornire.
+Aprinde o cameră întreagă dintr-un gest sau alege-i ambianța direct de pe ecranul principal.
 
-★ Gratuită și fără reclame, pe bune
-Fără reclame, fără achiziții în aplicație, fără abonament, fără înregistrare. Codul este open source (GPL-3.0) și public pe GitHub. Nimic nu părăsește telefonul tău, iar aplicația merge fără internet.
+★ Nimic nu iese din telefonul tău
+Fără reclame, fără cumpărături, fără înregistrare. Funcționează fără internet.
 
-Întrebări
-• Merge cu lumina mea? Dacă apare ca ELK-BLEDOM, ELK-BLEDOB sau MELK la o scanare Bluetooth, dacă vorbește un protocol deschis prin Wi-Fi sau dacă a venit cu o telecomandă mică cu infraroșu, da.
-• Telefonul meu nu are emițător IR? Atunci luminile cu telecomandă nu pot fi controlate (nicio aplicație nu poate fără), dar tot restul merge.
-• Tuya / Smart Life? Aceste dispozitive sunt blocate de producătorul lor: nicio altă aplicație nu le poate controla. Aplicația le recunoaște și îți spune ce poți face.
+Tuya / Smart Life: aceste dispozitive sunt blocate de producătorul lor. Aplicația le recunoaște și îți spune ce poți face.
 
-Făcută de Rollando Studio. Simplu, eficient, de calitate.
-Telecomandă Bandă LED este o aplicație independentă, fără legătură cu producătorii acestor lumini sau cu aplicațiile lor.
+Telecomandă Bandă LED este o aplicație independentă, fără legătură cu producătorii acestor lumini.

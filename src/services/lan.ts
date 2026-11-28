@@ -29,7 +29,7 @@ import {
   YEELIGHT_PROBE,
 } from '../core/protocols/udp';
 import { Buffer } from 'buffer';
-import native from '../../modules/rubanix-native/src';
+import native from '../../modules/led-strip-native/src';
 
 type UdpSocket = ReturnType<typeof dgram.createSocket>;
 interface RemoteInfo {

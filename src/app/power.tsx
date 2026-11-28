@@ -2,7 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
-import native from '../../modules/rubanix-native/src';
+import native from '../../modules/led-strip-native/src';
 import { setGroupPower } from '../services/control';
 import { getDevices, getRooms, loadDevices } from '../services/store';
 import { styles } from '../ui/kit';

@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 
-import native from '../../modules/rubanix-native/src';
+import native from '../../modules/led-strip-native/src';
 import { t } from '../i18n';
 
 /**
